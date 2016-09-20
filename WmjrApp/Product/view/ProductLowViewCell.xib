@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="lowCell" selectionStyle="default" indentationWidth="10" rowHeight="30" id="FI6-gk-Z7i" customClass="ProductLowViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="379" height="30"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FI6-gk-Z7i" id="vFa-zU-i3Z">
+                <rect key="frame" x="0.0" y="0.0" width="379" height="29"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="22o-Tq-iS2">
+                        <rect key="frame" x="23" y="7" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="XPi-Bk-Z2P"/>
+                            <constraint firstAttribute="width" constant="15" id="jvj-TW-fV7"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="一次性本息归还" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVY-1t-i8S">
+                        <rect key="frame" x="43" y="7" width="84" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="safe_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Vs1-BQ-HGW">
+                        <rect key="frame" x="300" y="7" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="4Rk-ul-Nf1"/>
+                            <constraint firstAttribute="width" constant="15" id="vnO-cP-0cr"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="低风险" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MW7-sr-dJW">
+                        <rect key="frame" x="320" y="7" width="36" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="pJt-AJ-N9G"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="card_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="rIK-Xw-vsm">
+                        <rect key="frame" x="160" y="7" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="Wrm-Q1-e6J"/>
+                            <constraint firstAttribute="width" constant="15" id="ZO7-OY-2X9"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200.00元起购" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L4T-2t-rkx">
+                        <rect key="frame" x="180" y="7" width="77" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="y7J-fN-aEq"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="qVY-1t-i8S" firstAttribute="leading" secondItem="22o-Tq-iS2" secondAttribute="trailing" constant="5" id="8E5-GL-bFz"/>
+                    <constraint firstItem="MW7-sr-dJW" firstAttribute="leading" secondItem="Vs1-BQ-HGW" secondAttribute="trailing" constant="5" id="DHM-fu-yl3"/>
+                    <constraint firstItem="22o-Tq-iS2" firstAttribute="leading" secondItem="vFa-zU-i3Z" secondAttribute="leadingMargin" constant="15" id="P7e-vl-kNx"/>
+                    <constraint firstItem="L4T-2t-rkx" firstAttribute="centerY" secondItem="rIK-Xw-vsm" secondAttribute="centerY" id="Tbg-Nm-Mdf"/>
+                    <constraint firstItem="MW7-sr-dJW" firstAttribute="centerY" secondItem="vFa-zU-i3Z" secondAttribute="centerY" id="WBX-Og-CcQ"/>
+                    <constraint firstItem="L4T-2t-rkx" firstAttribute="leading" secondItem="rIK-Xw-vsm" secondAttribute="trailing" constant="5" id="Weh-Pc-kEc"/>
+                    <constraint firstItem="qVY-1t-i8S" firstAttribute="centerY" secondItem="22o-Tq-iS2" secondAttribute="centerY" id="cKY-E4-z6p"/>
+                    <constraint firstItem="rIK-Xw-vsm" firstAttribute="centerX" secondItem="vFa-zU-i3Z" secondAttribute="centerX" constant="-22" id="gsP-LK-HOu"/>
+                    <constraint firstItem="MW7-sr-dJW" firstAttribute="centerY" secondItem="Vs1-BQ-HGW" secondAttribute="centerY" id="jKS-e7-4Z7"/>
+                    <constraint firstItem="22o-Tq-iS2" firstAttribute="centerY" secondItem="vFa-zU-i3Z" secondAttribute="centerY" id="qhP-1Z-uLd"/>
+                    <constraint firstItem="rIK-Xw-vsm" firstAttribute="centerY" secondItem="vFa-zU-i3Z" secondAttribute="centerY" id="v3r-vb-8Su"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Vs1-BQ-HGW" secondAttribute="trailing" constant="50" id="ytb-gL-Mx8"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="MW7-sr-dJW" secondAttribute="trailing" constant="15" id="zRJ-as-ATg"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="ytb-gL-Mx8"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="lable1" destination="qVY-1t-i8S" id="0Ta-WI-Ktw"/>
+                <outlet property="lable2" destination="MW7-sr-dJW" id="dc6-ms-9kG"/>
+                <outlet property="lowpurchase" destination="L4T-2t-rkx" id="run-WJ-USy"/>
+            </connections>
+            <point key="canvasLocation" x="440.5" y="239"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="card_icon.png" width="13" height="10"/>
+        <image name="safe_icon.png" width="12" height="14"/>
+        <image name="time_icon.png" width="11" height="12"/>
+    </resources>
+</document>
