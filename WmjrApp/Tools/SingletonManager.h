@@ -12,6 +12,7 @@
 @property (nonatomic, copy) NSString *photoUrl;/* 头像 */
 @property (nonatomic, copy) NSString *uid;  /* 用户id */
 @property (nonatomic, copy) NSString *isRealName;  /* 是否认证 */
+@property (nonatomic, copy) NSString *invitationcode;/* 我的推荐码 */
 @property (nonatomic, copy) NSString *isCard_id;  /* 是否绑卡 */
 //@property (nonatomic, assign) NSInteger sIndex;   /* 产品列表点击索引 */
 @property (nonatomic, copy) NSString *bankPhone;

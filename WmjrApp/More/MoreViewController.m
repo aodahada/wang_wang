@@ -8,7 +8,7 @@
 
 #import "MoreViewController.h"
 #import "AccountSettingViewController.h"
-#import "MyselfRecommendatController.h"
+#import "MyRecommendatViewController.h"
 #import "AboutUsViewController.h"
 #import "JoinUsViewController.h"
 #import "FeedbackViewController.h"
@@ -51,6 +51,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     if ([[SingletonManager sharedManager].uid isEqualToString:@""]) {
         LoginViewController *loginVC = [[LoginViewController alloc] init];
         loginVC.loginIden = @"login";
@@ -60,6 +61,24 @@
         return;
     }
     self.tabBarController.tabBar.hidden = NO;
+    /*  设置颜色 */
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    /*  设置字体颜色 */
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor]};
+    /* 渲染颜色 */
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    /*  去掉边线 */
+    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navibar_color"] forBarMetrics:UIBarMetricsDefault];
+    
+    UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
+    
+    self.navigationItem.leftBarButtonItem = backButton;
+}
+
+- (void)backBtnAction {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UITableView delegate dataSource -
@@ -148,7 +167,7 @@
             case 1:
             {
                 /* 邀请好友 */
-                MyselfRecommendatController *myselfRecommVC = [[MyselfRecommendatController alloc] init];
+                MyRecommendatViewController *myselfRecommVC = [[MyRecommendatViewController alloc] initWithNibName:@"MyRecommendatViewController" bundle:nil];
                 [self.navigationController pushViewController:myselfRecommVC animated:YES];
             }
                 break;

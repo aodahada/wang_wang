@@ -133,16 +133,18 @@
     [manager postDataWithUrlActionStr:@"User/login" withParamDictionary:@{@"mobile":_phoneNum.text, @"pwd":_passWord.text} withBlock:^(id obj) {
         if (obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
+                NSLog(@"我的登录数据:%@",obj);
                 [SVProgressHUD showSuccessWithStatus:@"登录成功" maskType:(SVProgressHUDMaskTypeNone)];
                 NSDictionary *dataDic = obj[@"data"];
                 [SingletonManager sharedManager].uid = dataDic[@"id"];
 //                NSLog(@"iddddd:%@",dataDic[@"id"]);
                 [SingletonManager sharedManager].isRealName = dataDic[@"is_real_name"];
 //                [SingletonManager sharedManager].isCard_id = dataDic[@"card_id"];
-                
+                [SingletonManager sharedManager].invitationcode = dataDic[@"invitationcode"];
                 /* 设置uid, 是否认证, 是否绑卡 */
                 [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].uid forKey:@"uid"];
                 [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].isRealName forKey:@"isRealName"];
+                [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].invitationcode forKey:@"invitationcode"];
                 [[NSUserDefaults standardUserDefaults] setObject:_phoneNum.text forKey:@"mobile"];
                 [[NSUserDefaults standardUserDefaults] setObject:_passWord.text forKey:@"passWord"];
 //                [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].isCard_id forKey:@"isCard_id"];

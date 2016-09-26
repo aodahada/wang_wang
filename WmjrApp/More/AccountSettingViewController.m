@@ -112,7 +112,7 @@
     if (section == 0) {
         return 1;
     } else if (section == 1) {
-        return 5;
+        return 3;
     } else {
         return 1;
     }
@@ -152,50 +152,50 @@
                 }
             }
                 break;
+//            case 1:
+//            {
+//                [self separatorLineShowInView:cell];
+//                /*  实名认证 */
+//                cell.textLabel.text = @"实名认证";
+//                /* 通过属性若是实名认证成功,变为 "认证" */
+//                NSString *isRealName = model4.is_real_name;
+//                _isRealNameStr = isRealName;
+//                NSString *realNameStr = nil;
+//                if ([isRealName isEqualToString:@"0"]) {
+//                    realNameStr = @"未认证";
+//                }
+//                if ([isRealName isEqualToString:@"1"]) {
+//                    realNameStr = @"已认证";
+//                }
+//                [cell addSubview:[self detailLableTitle:realNameStr withRealNameId:isRealName]];
+//            }
+//                break;
+//            case 2:
+//            {
+//                [self separatorLineShowInView:cell];
+//                /*  我的银行卡 */
+//                cell.textLabel.text = @"我的银行卡";
+//                /* 通过属性若是银行卡绑定成功,变为 "认证" */
+//                NSString *isCard_id = model4.card_id;
+//                NSString *card_idStr = nil;
+//                if (isCard_id != nil) {
+//                    if ([isCard_id isEqualToString:@"0"]) {
+//                        card_idStr = @"未绑定";
+//                    } else {
+//                        card_idStr = @"已绑定";
+//                    }
+//                    [cell addSubview:[self detailLableTitle:card_idStr withRealNameId:isCard_id]];
+//                }
+//            }
+//                break;
             case 1:
-            {
-                [self separatorLineShowInView:cell];
-                /*  实名认证 */
-                cell.textLabel.text = @"实名认证";
-                /* 通过属性若是实名认证成功,变为 "认证" */
-                NSString *isRealName = model4.is_real_name;
-                _isRealNameStr = isRealName;
-                NSString *realNameStr = nil;
-                if ([isRealName isEqualToString:@"0"]) {
-                    realNameStr = @"未认证";
-                }
-                if ([isRealName isEqualToString:@"1"]) {
-                    realNameStr = @"已认证";
-                }
-                [cell addSubview:[self detailLableTitle:realNameStr withRealNameId:isRealName]];
-            }
-                break;
-            case 2:
-            {
-                [self separatorLineShowInView:cell];
-                /*  我的银行卡 */
-                cell.textLabel.text = @"我的银行卡";
-                /* 通过属性若是银行卡绑定成功,变为 "认证" */
-                NSString *isCard_id = model4.card_id;
-                NSString *card_idStr = nil;
-                if (isCard_id != nil) {
-                    if ([isCard_id isEqualToString:@"0"]) {
-                        card_idStr = @"未绑定";
-                    } else {
-                        card_idStr = @"已绑定";
-                    }
-                    [cell addSubview:[self detailLableTitle:card_idStr withRealNameId:isCard_id]];
-                }
-            }
-                break;
-            case 3:
             {
                 [self separatorLineShowInView:cell];
                 /*  修改登录密码 */
                 cell.textLabel.text = @"修改登录密码";
             }
                 break;
-            case 4:
+            case 2:
             {
                 /*  修改交易密码 */
                 cell.textLabel.text = @"修改交易密码";
@@ -412,15 +412,15 @@
         
     } else if (indexPath.section == 1) {
         switch (indexPath.row) {
-            case 1:
-            {
-                //实名认证
-                if ([[SingletonManager sharedManager].isRealName isEqualToString:@"0"] && [_isRealNameStr isEqualToString:@"0"]) {
-                    RealNameCertificationViewController *realNameCerVC = [[RealNameCertificationViewController alloc] init];
-                    [self.navigationController pushViewController:realNameCerVC animated:YES];
-                }
-            }
-                break;
+//            case 1:
+//            {
+//                //实名认证
+//                if ([[SingletonManager sharedManager].isRealName isEqualToString:@"0"] && [_isRealNameStr isEqualToString:@"0"]) {
+//                    RealNameCertificationViewController *realNameCerVC = [[RealNameCertificationViewController alloc] init];
+//                    [self.navigationController pushViewController:realNameCerVC animated:YES];
+//                }
+//            }
+//                break;
             case 0:
             {
                 //修改手机号
@@ -473,30 +473,30 @@
                 }];
             }
                 break;
-            case 2:
-            {
-                
-                if ([[SingletonManager sharedManager].isCard_id isEqualToString:@"0"]) {
-                    /*  我的银行卡 */
-                    UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
-                    AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
-                    addBankVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:addBankVC animated:YES];
-                } else {
-                    MyselfBankViewController *myselfBankVC = [[MyselfBankViewController alloc] init];
-                    myselfBankVC.card_id = [SingletonManager sharedManager].isCard_id;
-                    [self.navigationController pushViewController:myselfBankVC animated:YES];
-                }
-            }
-                break;
-            case 3:
+//            case 2:
+//            {
+//                
+//                if ([[SingletonManager sharedManager].isCard_id isEqualToString:@"0"]) {
+//                    /*  我的银行卡 */
+//                    UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
+//                    AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
+//                    addBankVC.hidesBottomBarWhenPushed = YES;
+//                    [self.navigationController pushViewController:addBankVC animated:YES];
+//                } else {
+//                    MyselfBankViewController *myselfBankVC = [[MyselfBankViewController alloc] init];
+//                    myselfBankVC.card_id = [SingletonManager sharedManager].isCard_id;
+//                    [self.navigationController pushViewController:myselfBankVC animated:YES];
+//                }
+//            }
+//                break;
+            case 1:
             {
                 /* 修改登录密码 */
                 ResetLoginPasswordViewController *resetLoginPVC = [[ResetLoginPasswordViewController alloc] init];
                 [self.navigationController pushViewController:resetLoginPVC animated:YES];
             }
                 break;
-            case 4:
+            case 2:
             {
                 /* 修改交易密码 */
 //                ResetTradePasswordViewController *resetTradeVC = [[ResetTradePasswordViewController alloc] init];

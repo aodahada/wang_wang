@@ -56,33 +56,33 @@
     
     if ([_isPay isEqualToString:@"YES"]) {
         
-//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"购买成功" message:@"购买成功,可能会由于银行系统问题导致延迟，请您稍等" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
-//        [alertView show];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"购买成功" message:@"购买成功,可能会由于银行系统问题导致延迟，请您稍等" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        [alertView show];
         
-        //1.创建本地通知
-        UILocalNotification *locaNote = [[UILocalNotification alloc]init];
-        //2.设置本地通知内容
-        //2.1设置通知发出时间
-        locaNote.fireDate = [NSDate dateWithTimeIntervalSinceNow:1.0];
-        //2.2设置通知的内容
-        locaNote.alertBody = @"您有新产品购买成功，可能由于银行系统原因导致延迟，请您谅解";
-        //2.3设置滑块文字
-        locaNote.alertAction = @"好的";
-        //2.4决定alertAction是否生效
-        locaNote.hasAction = NO;
-        //2.5设置点击启动的图片
-        locaNote.alertLaunchImage = @"";//这里不管写什么都是按照工程启动图片显示
-        //2.6设置alertTitle
-        locaNote.alertTitle = @"有新产品购买成功";
-        //2.7设置通知音效
-        locaNote.soundName = UILocalNotificationDefaultSoundName;//自定义的话写@"buyao.wav"
-        //2.8设置图标右上角的数字
-        locaNote.applicationIconBadgeNumber = 0;
-        
-        locaNote.userInfo = @{@"newBuy":@"newBuy"};
-        
-        //3.调用通知
-        [[UIApplication sharedApplication]scheduleLocalNotification:locaNote];
+//        //1.创建本地通知
+//        UILocalNotification *locaNote = [[UILocalNotification alloc]init];
+//        //2.设置本地通知内容
+//        //2.1设置通知发出时间
+//        locaNote.fireDate = [NSDate dateWithTimeIntervalSinceNow:1.0];
+//        //2.2设置通知的内容
+//        locaNote.alertBody = @"您有新产品购买成功，可能由于银行系统原因导致延迟，请您谅解";
+//        //2.3设置滑块文字
+//        locaNote.alertAction = @"好的";
+//        //2.4决定alertAction是否生效
+//        locaNote.hasAction = NO;
+//        //2.5设置点击启动的图片
+//        locaNote.alertLaunchImage = @"";//这里不管写什么都是按照工程启动图片显示
+//        //2.6设置alertTitle
+//        locaNote.alertTitle = @"有新产品购买成功";
+//        //2.7设置通知音效
+//        locaNote.soundName = UILocalNotificationDefaultSoundName;//自定义的话写@"buyao.wav"
+//        //2.8设置图标右上角的数字
+//        locaNote.applicationIconBadgeNumber = 0;
+//        
+//        locaNote.userInfo = @{@"newBuy":@"newBuy"};
+//        
+//        //3.调用通知
+//        [[UIApplication sharedApplication]scheduleLocalNotification:locaNote];
         
     }
     
@@ -91,26 +91,6 @@
 - (void)backBtnAction {
     
     [self.navigationController popViewControllerAnimated:YES];
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor]};
-    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-    /*  去掉边线 */
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navibar_color"] forBarMetrics:UIBarMetricsDefault];
-    
-    UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
-    
     
 }
 

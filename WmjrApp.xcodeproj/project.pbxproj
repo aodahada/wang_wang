@@ -25,6 +25,11 @@
 		8B34021D1D7EAC1000320072 /* BGTopSilderBarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3402181D7EAC1000320072 /* BGTopSilderBarCell.xib */; };
 		8B34021E1D7EAC1000320072 /* global.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B34021A1D7EAC1000320072 /* global.m */; };
 		8B3402211D7EAE2000320072 /* ProductClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3402201D7EAE2000320072 /* ProductClassViewController.m */; };
+		8B44467D1D98F60F00EDCDBC /* MyRecommendatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B44467B1D98F60F00EDCDBC /* MyRecommendatViewController.m */; };
+		8B44467E1D98F60F00EDCDBC /* MyRecommendatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B44467C1D98F60F00EDCDBC /* MyRecommendatViewController.xib */; };
+		8B4446821D990EB100EDCDBC /* MyRecommandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4446801D990EB100EDCDBC /* MyRecommandTableViewCell.m */; };
+		8B4446831D990EB100EDCDBC /* MyRecommandTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B4446811D990EB100EDCDBC /* MyRecommandTableViewCell.xib */; };
+		8B4446861D990EC500EDCDBC /* MyReCommandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4446851D990EC500EDCDBC /* MyReCommandModel.m */; };
 		8B84C4A91D7D434100232A70 /* ModifyGesPassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B84C4A81D7D434100232A70 /* ModifyGesPassView.m */; };
 		8BF3F84A1D8248BD00E669B2 /* AliPayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF3F8451D8248BD00E669B2 /* AliPayItem.m */; };
 		8BF3F84B1D8248BD00E669B2 /* AlipaySubItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF3F8471D8248BD00E669B2 /* AlipaySubItem.m */; };
@@ -101,7 +106,6 @@
 		C51B42AC1C78531F001679B5 /* TrandDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C51B42A91C78531F001679B5 /* TrandDetailViewController.xib */; };
 		C51B42B21C78532E001679B5 /* MyselfManageFinanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42AF1C78532E001679B5 /* MyselfManageFinanceCell.m */; };
 		C51B42B31C78532E001679B5 /* FinancialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42B11C78532E001679B5 /* FinancialModel.m */; };
-		C51B42B91C78533E001679B5 /* MyselfRecommendatController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42B51C78533E001679B5 /* MyselfRecommendatController.m */; };
 		C51B42BA1C78533E001679B5 /* FRuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42B71C78533E001679B5 /* FRuleViewController.m */; };
 		C51B42BB1C78533E001679B5 /* FRuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C51B42B81C78533E001679B5 /* FRuleViewController.xib */; };
 		C51B42BF1C785358001679B5 /* MyselfPrivilegeStandardController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42BD1C785358001679B5 /* MyselfPrivilegeStandardController.m */; };
@@ -599,6 +603,14 @@
 		8B34021A1D7EAC1000320072 /* global.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = global.m; path = BGTopSilderBar/global.m; sourceTree = "<group>"; };
 		8B34021F1D7EAE2000320072 /* ProductClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductClassViewController.h; sourceTree = "<group>"; };
 		8B3402201D7EAE2000320072 /* ProductClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductClassViewController.m; sourceTree = "<group>"; };
+		8B44467A1D98F60F00EDCDBC /* MyRecommendatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRecommendatViewController.h; sourceTree = "<group>"; };
+		8B44467B1D98F60F00EDCDBC /* MyRecommendatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRecommendatViewController.m; sourceTree = "<group>"; };
+		8B44467C1D98F60F00EDCDBC /* MyRecommendatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRecommendatViewController.xib; sourceTree = "<group>"; };
+		8B44467F1D990EB100EDCDBC /* MyRecommandTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRecommandTableViewCell.h; sourceTree = "<group>"; };
+		8B4446801D990EB100EDCDBC /* MyRecommandTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRecommandTableViewCell.m; sourceTree = "<group>"; };
+		8B4446811D990EB100EDCDBC /* MyRecommandTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRecommandTableViewCell.xib; sourceTree = "<group>"; };
+		8B4446841D990EC500EDCDBC /* MyReCommandModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyReCommandModel.h; sourceTree = "<group>"; };
+		8B4446851D990EC500EDCDBC /* MyReCommandModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyReCommandModel.m; sourceTree = "<group>"; };
 		8B84C4A71D7D434100232A70 /* ModifyGesPassView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyGesPassView.h; sourceTree = "<group>"; };
 		8B84C4A81D7D434100232A70 /* ModifyGesPassView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyGesPassView.m; sourceTree = "<group>"; };
 		8BF3F8441D8248BD00E669B2 /* AliPayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AliPayItem.h; path = AliSDK/AliPayItem.h; sourceTree = "<group>"; };
@@ -722,8 +734,6 @@
 		C51B42AF1C78532E001679B5 /* MyselfManageFinanceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyselfManageFinanceCell.m; sourceTree = "<group>"; };
 		C51B42B01C78532E001679B5 /* FinancialModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinancialModel.h; sourceTree = "<group>"; };
 		C51B42B11C78532E001679B5 /* FinancialModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinancialModel.m; sourceTree = "<group>"; };
-		C51B42B41C78533E001679B5 /* MyselfRecommendatController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyselfRecommendatController.h; sourceTree = "<group>"; };
-		C51B42B51C78533E001679B5 /* MyselfRecommendatController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyselfRecommendatController.m; sourceTree = "<group>"; };
 		C51B42B61C78533E001679B5 /* FRuleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRuleViewController.h; sourceTree = "<group>"; };
 		C51B42B71C78533E001679B5 /* FRuleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRuleViewController.m; sourceTree = "<group>"; };
 		C51B42B81C78533E001679B5 /* FRuleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FRuleViewController.xib; sourceTree = "<group>"; };
@@ -1719,11 +1729,17 @@
 		C51B42A11C7852DC001679B5 /* mytuijian */ = {
 			isa = PBXGroup;
 			children = (
-				C51B42B41C78533E001679B5 /* MyselfRecommendatController.h */,
-				C51B42B51C78533E001679B5 /* MyselfRecommendatController.m */,
 				C51B42B61C78533E001679B5 /* FRuleViewController.h */,
 				C51B42B71C78533E001679B5 /* FRuleViewController.m */,
 				C51B42B81C78533E001679B5 /* FRuleViewController.xib */,
+				8B44467A1D98F60F00EDCDBC /* MyRecommendatViewController.h */,
+				8B44467B1D98F60F00EDCDBC /* MyRecommendatViewController.m */,
+				8B44467C1D98F60F00EDCDBC /* MyRecommendatViewController.xib */,
+				8B44467F1D990EB100EDCDBC /* MyRecommandTableViewCell.h */,
+				8B4446801D990EB100EDCDBC /* MyRecommandTableViewCell.m */,
+				8B4446811D990EB100EDCDBC /* MyRecommandTableViewCell.xib */,
+				8B4446841D990EC500EDCDBC /* MyReCommandModel.h */,
+				8B4446851D990EC500EDCDBC /* MyReCommandModel.m */,
 			);
 			name = mytuijian;
 			sourceTree = "<group>";
@@ -2797,6 +2813,7 @@
 				C51B46621C785BC6001679B5 /* xinlang.png in Resources */,
 				C51B447C1C785B55001679B5 /* biaoti@3x.png in Resources */,
 				C51B47281C786CD5001679B5 /* fenxiang_icon.png in Resources */,
+				8B4446831D990EB100EDCDBC /* MyRecommandTableViewCell.xib in Resources */,
 				C51B45C21C785B98001679B5 /* icon_bangzhu@3x.png in Resources */,
 				C51B45C11C785B98001679B5 /* icon_bangzhu@2x.png in Resources */,
 				C51B44791C785B55001679B5 /* textframe@3x.png in Resources */,
@@ -3001,6 +3018,7 @@
 				C51B44431C785B44001679B5 /* icon_licai1@3x.png in Resources */,
 				C51B44241C785A9B001679B5 /* loading_1.png in Resources */,
 				C51B42811C785236001679B5 /* MessageWViewController.xib in Resources */,
+				8B44467E1D98F60F00EDCDBC /* MyRecommendatViewController.xib in Resources */,
 				C51B45BE1C785B98001679B5 /* yqhy_icon.png in Resources */,
 				C51B44411C785B44001679B5 /* icon_licai1.png in Resources */,
 				C51B46441C785BBE001679B5 /* tab_btn_me_sel.png in Resources */,
@@ -3161,6 +3179,7 @@
 				C51B42391C784FD9001679B5 /* AdModel.m in Sources */,
 				C51B42BA1C78533E001679B5 /* FRuleViewController.m in Sources */,
 				8B1611501D81384E00C9B954 /* HomeProductCatModel.m in Sources */,
+				8B4446861D990EC500EDCDBC /* MyReCommandModel.m in Sources */,
 				8B84C4A91D7D434100232A70 /* ModifyGesPassView.m in Sources */,
 				C51B43631C785620001679B5 /* PopMenu.m in Sources */,
 				C51B43BA1C78572F001679B5 /* AgreementViewController.m in Sources */,
@@ -3228,14 +3247,15 @@
 				C51B43891C78566B001679B5 /* TADotView.m in Sources */,
 				C51B43301C78555A001679B5 /* JoinUsViewController.m in Sources */,
 				C51B438C1C78566B001679B5 /* SDCycleScrollView.m in Sources */,
+				8B4446821D990EB100EDCDBC /* MyRecommandTableViewCell.m in Sources */,
 				C51B42E51C7853E3001679B5 /* MoreViewController.m in Sources */,
 				C51B43071C7854C5001679B5 /* PhoneChangeView.m in Sources */,
 				8B3402121D7EABAC00320072 /* ProductListViewController.m in Sources */,
 				C51B42311C784FB3001679B5 /* HomeListViewCell.m in Sources */,
+				8B44467D1D98F60F00EDCDBC /* MyRecommendatViewController.m in Sources */,
 				8B3343071D80169A004DB390 /* ViewForShuoMing.m in Sources */,
 				C51B41B21C784B02001679B5 /* main.m in Sources */,
 				C51B425C1C7850BF001679B5 /* SepcialModel.m in Sources */,
-				C51B42B91C78533E001679B5 /* MyselfRecommendatController.m in Sources */,
 				BDE0EF7F1D61BD8800729C15 /* WebViewForPayViewController.m in Sources */,
 				C51B42E21C7853CE001679B5 /* TradeModel.m in Sources */,
 				8BF3F84B1D8248BD00E669B2 /* AlipaySubItem.m in Sources */,

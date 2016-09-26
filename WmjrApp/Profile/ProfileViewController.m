@@ -8,7 +8,8 @@
 
 #import "ProfileViewController.h"
 #import "MyselfManageFinanceController.h"
-#import "MyselfRecommendatController.h"
+//#import "MyselfRecommendatController.h"
+#import "MyRecommendatViewController.h"
 #import "MyselfPrivilegeStandardController.h"
 #import "MyselfTransactionController.h"
 #import "MyselfAccountController.h"
@@ -46,7 +47,7 @@
 
 //头视图
 - (UIView *)setUpProfileHeadView {
-    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, RESIZE_UI(200))];
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 289)];
 //    UIImageView *imgView = [[UIImageView alloc] initWithFrame:headView.bounds];
 //    imgView.image = [UIImage imageNamed:@"bg_person"];
 //    [headView addSubview:imgView];
@@ -54,7 +55,7 @@
     
     /*  消息  */
     _messageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _messageBtn.frame = CGRectMake(SCREEN_WIDTH - 50, 40, 40, 30);
+    _messageBtn.frame = CGRectMake(SCREEN_WIDTH - 50, RESIZE_UI(37), 40, 30);
     [_messageBtn setTitle:@"消息" forState:UIControlStateNormal];
     [_messageBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _messageBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
@@ -68,12 +69,12 @@
     lable.textColor = VIEWBACKCOLOR;
     lable.font = [UIFont systemFontOfSize:RESIZE_UI(15.0f)];
     [headView addSubview:lable];
-    _ydayEarn = [[UILabel alloc] initWithFrame:CGRectMake(RESIZE_UI(45), RESIZE_UI(80), RESIZE_UI(280), RESIZE_UI(70))];
+    _ydayEarn = [[UILabel alloc] initWithFrame:CGRectMake(RESIZE_UI(45), 120, RESIZE_UI(280), RESIZE_UI(70))];
     _ydayEarn.textAlignment = NSTextAlignmentCenter;
     _ydayEarn.textColor = VIEWBACKCOLOR;
-    _ydayEarn.font = [UIFont systemFontOfSize:RESIZE_UI(70.0f)];
+    _ydayEarn.font = [UIFont systemFontOfSize:RESIZE_UI(80.0f)];
     [headView addSubview:_ydayEarn];
-    _accountEarn = [[UILabel alloc] initWithFrame:CGRectMake(RESIZE_UI(45), RESIZE_UI(165), RESIZE_UI(280), RESIZE_UI(20))];
+    _accountEarn = [[UILabel alloc] initWithFrame:CGRectMake(RESIZE_UI(45), 220, RESIZE_UI(280), RESIZE_UI(20))];
     _accountEarn.textAlignment = NSTextAlignmentCenter;
     _accountEarn.textColor = VIEWBACKCOLOR;
     _accountEarn.font = [UIFont systemFontOfSize:RESIZE_UI(15.0f)];
@@ -110,6 +111,22 @@
     [super viewWillAppear:animated];
     
     self.tabBarController.tabBar.hidden = NO;
+    
+    /*  设置颜色 */
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    /*  设置字体颜色 */
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor]};
+    /* 渲染颜色 */
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    /*  去掉边线 */
+    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navibar_color"] forBarMetrics:UIBarMetricsDefault];
+    
+    UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
+    
+    self.navigationItem.leftBarButtonItem = backButton;
+    
     if ([[SingletonManager sharedManager].uid isEqualToString:@""]) {
         LoginViewController *loginVC = [[LoginViewController alloc] init];
         loginVC.loginIden = @"login";
@@ -138,6 +155,10 @@
         }
     }];
     
+}
+
+- (void)backBtnAction {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -251,8 +272,9 @@
             }
             if (indexPath.row == 1) {
                 /* 我的推荐 */
-                MyselfRecommendatController *myselfRecommVC = [[MyselfRecommendatController alloc] init];
-                [self.navigationController pushViewController:myselfRecommVC animated:YES];
+//                MyselfRecommendatController *myselfRecommVC = [[MyselfRecommendatController alloc] init];
+                MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]initWithNibName:@"MyRecommendatViewController" bundle:nil];
+                [self.navigationController pushViewController:myrecommendVC animated:YES];
             }
         }
             break;
