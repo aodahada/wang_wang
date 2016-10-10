@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MBProgressHUD.h"
 @interface SingletonManager : NSObject
 
 @property (nonatomic, copy) NSString *photoUrl;/* 头像 */
@@ -31,7 +32,7 @@
 + (SingletonManager *)sharedManager;
 
 - (BOOL)isIncludeSpecialCharact:(NSString *)textStr;//是否包含特殊字符串
-- (BOOL)isValidateMobile:(NSString *)mobile;//验证手机号码是否合法
+//- (BOOL)isValidateMobile:(NSString *)mobile;//验证手机号码是否合法
 - (BOOL)checkPassword:(NSString *)password;//正则匹配用户密码4-18位数字和字母组合
 //- (void)makeMoveUpToInputBox:(UITextField *)textField;//使输入框上移
 - (BOOL)isPureInt:(NSString *)string;//判断字符串是否都是数字
@@ -49,5 +50,6 @@
 - (BOOL)isSecondInputRight:(NSString *)str;
 - (BOOL)isFirstInput:(NSString *)str;
 - (BOOL)isSave;
+- (void)showHUDView:(id)theView title:(NSString *)theTitle content:(NSString *)theContent time:(NSTimeInterval)thTime andCodes:(void (^)())finish;
 
 @end

@@ -99,27 +99,26 @@
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             /* 充值 */
-            /* 判断是否实名认证 ->  是否开通支付 */
-//            if ([[SingletonManager sharedManager].isRealName isEqualToString:@"0"]) {
-//                MMPopupItemHandler block = ^(NSInteger index){
-//                    if (index == 0) {
-//                        return ;
-//                    }
-//                    if (index == 1) {
-//                        /*  实名认证 */
-//                        RealNameCertificationViewController *realNameAuth = [[RealNameCertificationViewController alloc] init];
-//                        [self.navigationController pushViewController:realNameAuth animated:YES];
-//                        return;
-//                    }
-//                };
-//                NSArray *items =
-//                @[MMItemMake(@"取消", MMItemTypeNormal, block),
-//                  MMItemMake(@"确定", MMItemTypeNormal, block)];
-//                MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
-//                                                                     detail:@"你还未认证,请实名认证"
-//                                                                      items:items];
-//                [alertView show];
-//            }
+            if ([[SingletonManager sharedManager].isRealName isEqualToString:@"0"]) {
+                MMPopupItemHandler block = ^(NSInteger index){
+                    if (index == 0) {
+                        return ;
+                    }
+                    if (index == 1) {
+                        /*  实名认证 */
+                        RealNameCertificationViewController *realNameAuth = [[RealNameCertificationViewController alloc] init];
+                        [self.navigationController pushViewController:realNameAuth animated:YES];
+                        return;
+                    }
+                };
+                NSArray *items =
+                @[MMItemMake(@"取消", MMItemTypeNormal, block),
+                  MMItemMake(@"确定", MMItemTypeNormal, block)];
+                MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
+                                                                     detail:@"你还未认证,请实名认证"
+                                                                      items:items];
+                [alertView show];
+            }
 //            if ([[SingletonManager sharedManager].isCard_id isEqualToString:@"0"]) {
 //                /* 开通快捷支付 */
 //                UIStoryboard *openFast = [UIStoryboard storyboardWithName:@"OpenFastPaymentController" bundle:[NSBundle mainBundle]];
@@ -132,11 +131,13 @@
 //                [self.navigationController pushViewController:openFastPayment animated:YES];
 //                return;
 //            }
-            RechargeViewController *rechangeVC = [[RechargeViewController alloc] init];
-            rechangeVC.accountChangeBlock = ^(CGFloat account) {
-                _myAccoutLab.text = [NSString stringWithFormat:@"%.2f", account];
-            };
-            [self.navigationController pushViewController:rechangeVC animated:YES];
+            else {
+                RechargeViewController *rechangeVC = [[RechargeViewController alloc] init];
+                rechangeVC.accountChangeBlock = ^(CGFloat account) {
+                    _myAccoutLab.text = [NSString stringWithFormat:@"%.2f", account];
+                };
+                [self.navigationController pushViewController:rechangeVC animated:YES];
+            }
         }
         if (indexPath.row == 1) {
             /* 提现 */

@@ -73,6 +73,15 @@
         }
     }
     self.tabBarController.tabBar.hidden = NO;
+    /*  设置颜色 */
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    /*  设置字体颜色 */
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor]};
+    /* 渲染颜色 */
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    /*  去掉边线 */
+    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navibar_color"] forBarMetrics:UIBarMetricsDefault];
     
 }
 

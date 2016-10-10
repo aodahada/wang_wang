@@ -92,8 +92,12 @@
     
     //产品列表分类
     [self getProductListTypeClass];
+    /*
+    //是否提示版本更新
+    [self isAlertUpdate];
     //看看是不是最新版本
     [self getNewVersionMethod];
+     */
     
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     BOOL isNull = [self isNullString:uid];
@@ -149,6 +153,33 @@
     }];
 }
 
+/*
+#pragma mark - 是否提示版本更新
+- (void)isAlertUpdate {
+    
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"加载中"];
+    [manager postDataWithUrlActionStr:@"App/ios_update" withParamDictionary:@{@"platform":@"ios"} withBlock:^(id obj) {
+        if (obj) {
+            if ([obj[@"result"] isEqualToString:@"1"]) {
+                
+                NSLog(@"我评分提示:%@",obj);
+                
+                return ;
+            } else {
+                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+                NSLog(@"我的错误信息:%@",msgStr);
+                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+                alertConfig.defaultTextOK = @"确定";
+                [SVProgressHUD dismiss];
+                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+                [alertView show];
+            }
+        }
+    }];
+    
+}
+
 #pragma mark - 获取最新版本号
 - (void)getNewVersionMethod {
     
@@ -192,6 +223,7 @@
     }
     
 }
+ */
 
 #pragma mark - 获取产品列表分类
 - (void)getProductListTypeClass {

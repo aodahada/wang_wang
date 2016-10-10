@@ -122,13 +122,13 @@
         _nPhoneCard.font = [UIFont systemFontOfSize:13.0];
         return;
     }
-    if (![[SingletonManager sharedManager] isValidateMobile:_nPhoneCard.text]) {
-        _nPhoneCard.textColor = BASECOLOR;
-        _nPhoneCard.text = @"手机号不正确";
-        _nPhoneCard.font = [UIFont systemFontOfSize:13.0];
-        _nPhoneCard.clearsOnBeginEditing = YES;
-        return;
-    }
+//    if (![[SingletonManager sharedManager] isValidateMobile:_nPhoneCard.text]) {
+//        _nPhoneCard.textColor = BASECOLOR;
+//        _nPhoneCard.text = @"手机号不正确";
+//        _nPhoneCard.font = [UIFont systemFontOfSize:13.0];
+//        _nPhoneCard.clearsOnBeginEditing = YES;
+//        return;
+//    }
     /* 手机号验证成功后,点击获取验证码后让手机号输入框不可编辑 */
     _nPhoneCard.enabled = NO;
     _getVerfitionBtn.enabled = NO;
@@ -221,11 +221,12 @@
             return YES;
         }
     } else {
-        if ([[SingletonManager sharedManager] isValidateMobile:_nPhoneCard.text] == NO) {
-            //                textField.text = @"";
-            ALERTVIEW_SHOW(@"请输入正确的手机号");
-            return NO;
-        } else if ([[SingletonManager sharedManager] isPureInt:_verfitionNum.text] == NO) {
+//        if ([[SingletonManager sharedManager] isValidateMobile:_nPhoneCard.text] == NO) {
+//            //                textField.text = @"";
+//            ALERTVIEW_SHOW(@"请输入正确的手机号");
+//            return NO;
+//        }
+        if ([[SingletonManager sharedManager] isPureInt:_verfitionNum.text] == NO) {
             //            _password.text = @"";
             ALERTVIEW_SHOW(@"验证码不正确");
             return NO;

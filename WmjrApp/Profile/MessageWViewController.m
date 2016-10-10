@@ -23,14 +23,11 @@
 - (void)dealloc {
 }
 
-- (void)setUpNaviagtionBar {
-    self.title = @"消息";
-    self.tabBarController.tabBar.hidden = YES;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setUpNaviagtionBar];
+    self.title = @"消息";
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.tabBarController.tabBar.hidden = YES;
     _messArray = [NSMutableArray array];
     
     [_messTbale registerNib:[UINib nibWithNibName:@"MessageViewCell" bundle:nil] forCellReuseIdentifier:@"messCell"];

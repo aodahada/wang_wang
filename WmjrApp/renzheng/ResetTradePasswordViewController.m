@@ -86,10 +86,10 @@
         [[SingletonManager sharedManager] alert1PromptInfo:@"手机号不能为空"];
         return ;
     }
-    if ([[SingletonManager sharedManager] isValidateMobile:_phoneNum.text] == NO) {
-        [[SingletonManager sharedManager] alert1PromptInfo:@"请输入正确的手机号"];
-        return ;
-    }
+//    if ([[SingletonManager sharedManager] isValidateMobile:_phoneNum.text] == NO) {
+//        [[SingletonManager sharedManager] alert1PromptInfo:@"请输入正确的手机号"];
+//        return ;
+//    }
     
     _verificationBtn.enabled = NO;
     [_verificationBtn setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];

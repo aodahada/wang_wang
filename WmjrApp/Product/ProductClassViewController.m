@@ -176,6 +176,24 @@
     if ([[SingletonManager sharedManager].uid isEqualToString:@""]) {
         /* 未登录需登录 */
         [[NSNotificationCenter defaultCenter] postNotificationName:PRESENTLOGINVCNOTIFICATION object:nil];
+    } else if ([[SingletonManager sharedManager].isRealName isEqualToString:@"0"]) {
+        [[MMPopupWindow sharedWindow] cacheWindow];
+        MMPopupItemHandler block = ^(NSInteger index){
+            if (index == 0) {
+                return ;
+            }
+            if (index == 1) {
+                /*  实名认证 */
+                [[NSNotificationCenter defaultCenter]postNotificationName:PUSHREALNAMEAUTHVCNOTIFICATION object:nil];
+            }
+        };
+        NSArray *items =
+        @[MMItemMake(@"取消", MMItemTypeNormal, block),
+          MMItemMake(@"确定", MMItemTypeNormal, block)];
+        MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
+                                                             detail:@"你还未认证,请实名认证"
+                                                              items:items];
+        [alertView show];
     } else{
         [[NSNotificationCenter defaultCenter] postNotificationName:PUSHTOFUNDBUYVCNOTIFICATION object:productModel];
     }

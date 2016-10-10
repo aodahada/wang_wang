@@ -90,15 +90,6 @@
 
 /* 登录 */
 - (IBAction)loginBtnAction:(id)sender {
-//    if ([_phoneNum.text isEqualToString:@"18357027828"] || [_passWord.text isEqualToString:@"123456"]) {
-//        _passWord.text = @"asdf1234";
-//        [self getDataWithNetManager];
-//        return;
-//    }
-    if ([_phoneNum.text isEqualToString:@"18888888888"] || [_passWord.text isEqualToString:@"123456"]) {
-        [self getDataWithNetManager];
-        return;
-    }
     if ([self checkResult]) {
         [self getDataWithNetManager];
     }
@@ -133,11 +124,9 @@
     [manager postDataWithUrlActionStr:@"User/login" withParamDictionary:@{@"mobile":_phoneNum.text, @"pwd":_passWord.text} withBlock:^(id obj) {
         if (obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
-                NSLog(@"我的登录数据:%@",obj);
                 [SVProgressHUD showSuccessWithStatus:@"登录成功" maskType:(SVProgressHUDMaskTypeNone)];
                 NSDictionary *dataDic = obj[@"data"];
                 [SingletonManager sharedManager].uid = dataDic[@"id"];
-//                NSLog(@"iddddd:%@",dataDic[@"id"]);
                 [SingletonManager sharedManager].isRealName = dataDic[@"is_real_name"];
 //                [SingletonManager sharedManager].isCard_id = dataDic[@"card_id"];
                 [SingletonManager sharedManager].invitationcode = dataDic[@"invitationcode"];
@@ -207,45 +196,45 @@
 }
 
 - (BOOL)checkResult {
-    if (_phoneNum.text.length == 0 || _passWord.text.length == 0) {
-        if (_phoneNum.text.length == 0) {
-            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
-            alertConfig.defaultTextOK = @"确定";
-            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:@"手机号不能为空"];
-            [alertView show];
-            return NO;
-        } else if (_passWord.text.length == 0) {
-            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
-            alertConfig.defaultTextOK = @"确定";
-            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:@"密码不能为空"];
-            [alertView show];
-            return NO;
-        } else {
-            return YES;
-        }
+    if (_phoneNum.text.length == 0) {
+        MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+        alertConfig.defaultTextOK = @"确定";
+        MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:@"手机号不能为空"];
+        [alertView show];
+        return NO;
+    } else if (_passWord.text.length == 0) {
+        MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+        alertConfig.defaultTextOK = @"确定";
+        MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:@"密码不能为空"];
+        [alertView show];
+        return NO;
     } else {
-        if ([[SingletonManager sharedManager] isValidateMobile:_phoneNum.text] == NO) {
-            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
-            alertConfig.defaultTextOK = @"确定";
-            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:@"手机号输入错误"];
-            [alertView show];
-            return NO;
-        } else if (_passWord.text.length < 6 && _passWord.text.length > 18) {
-            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
-            alertConfig.defaultTextOK = @"确定";
-            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:@"密码错误"];
-            [alertView show];
-            return NO;
-        }
-//        else if ([[SingletonManager sharedManager] checkPassword:_passWord.text] == NO) {
-//            ALERTVIEW_SHOW(@"密码格式不正确");
-//            return NO;
-//        }
-        else {
-            return YES;
-        }
+        return YES;
     }
 }
+//    else {
+//        if ([[SingletonManager sharedManager] isValidateMobile:_phoneNum.text] == NO) {
+//            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+//            alertConfig.defaultTextOK = @"确定";
+//            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:@"手机号输入错误"];
+//            [alertView show];
+//            return NO;
+//        } else if (_passWord.text.length < 6 && _passWord.text.length > 18) {
+//            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+//            alertConfig.defaultTextOK = @"确定";
+//            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:@"密码错误"];
+//            [alertView show];
+//            return NO;
+//        }
+////        else if ([[SingletonManager sharedManager] checkPassword:_passWord.text] == NO) {
+////            ALERTVIEW_SHOW(@"密码格式不正确");
+////            return NO;
+////        }
+//        else {
+//            return YES;
+//        }
+//    }
+//}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
 }

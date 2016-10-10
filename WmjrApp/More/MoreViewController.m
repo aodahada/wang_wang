@@ -71,15 +71,15 @@
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navibar_color"] forBarMetrics:UIBarMetricsDefault];
     
-    UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
+//    UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
+//    
+//    self.navigationItem.leftBarButtonItem = backButton;
 }
 
-- (void)backBtnAction {
-    [self.navigationController popViewControllerAnimated:YES];
-}
+//- (void)backBtnAction {
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
 
 #pragma mark - UITableView delegate dataSource -
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -90,7 +90,7 @@
     if (section == 0) {
         return 4;
     } else {
-        return 3;
+        return 2;
     }
 }
 
@@ -235,13 +235,13 @@
                 [self.navigationController pushViewController:feedbackVC animated:YES];
             }
                 break;
-            case 2:
-            {
-                /*检查更新*/
-                [self getNewVersionMethod];
-                
-            }
-                break;
+//            case 2:
+//            {
+//                /*检查更新*/
+//                [self getNewVersionMethod];
+//                
+//            }
+//                break;
             default:
                 break;
         }

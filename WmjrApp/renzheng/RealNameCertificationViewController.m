@@ -59,7 +59,7 @@
     [SVProgressHUD showWithStatus:@"正在提交认证信息"];
     [manager postDataWithUrlActionStr:@"User/realName" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"real_name":_nameField.text, @"cert_no":_selfCardField.text} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
-            [SVProgressHUD showSuccessWithStatus:@"已实名认证"];
+            [SVProgressHUD dismiss];
             /*  改变实名认证状态 */
             [SingletonManager sharedManager].isRealName = @"1";
             [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].isRealName forKey:@"isRealName"];
@@ -68,8 +68,9 @@
             if (_isShowAlert == YES) {
                 self.block();
             }
-            
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [[SingletonManager sharedManager] showHUDView:self.view title:@"实名认证成功" content:@"" time:1.0 andCodes:^{
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }];
         } else {
             [SVProgressHUD dismiss];
             MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];

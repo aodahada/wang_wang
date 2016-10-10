@@ -55,13 +55,31 @@
     }
 }
 
-/*手机号码验证 MODIFIED BY HELENSONG*/
-- (BOOL)isValidateMobile:(NSString *)mobile {
-    //手机号以13， 15，18开头，八个 \d 数字字符
-    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
-    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
-    return [phoneTest evaluateWithObject:mobile];
+- (void)showHUDView:(id)theView title:(NSString *)theTitle content:(NSString *)theContent time:(NSTimeInterval)thTime andCodes:(void (^)())finish{
+    UIView *aView        = (id)theView;
+    MBProgressHUD*HUD    = [[MBProgressHUD alloc] initWithView:aView];
+    [aView addSubview:HUD];
+    HUD.labelText        = [NSString stringWithFormat:@"%@",theTitle];
+    HUD.detailsLabelText = [NSString stringWithFormat:@"%@",theContent];
+    HUD.mode             = MBProgressHUDModeText;
+    
+    [HUD showAnimated:YES whileExecutingBlock:^{
+        sleep(thTime);
+    } completionBlock:^{
+        [HUD removeFromSuperview];
+        if (finish) {
+            finish();
+        };
+    }];
 }
+
+/*手机号码验证 MODIFIED BY HELENSONG*/
+//- (BOOL)isValidateMobile:(NSString *)mobile {
+//    //手机号以13， 15，18开头，八个 \d 数字字符
+//    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
+//    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
+//    return [phoneTest evaluateWithObject:mobile];
+//}
 
 //正则匹配用户密码6-18位数字和字母组合
 - (BOOL)checkPassword:(NSString *)password {

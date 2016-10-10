@@ -143,11 +143,11 @@
         [[SingletonManager sharedManager] alert1PromptInfo:@"手机号不能为空"];
         return ;
     }
-    if ([[SingletonManager sharedManager] isValidateMobile:_phoneNum.text] == NO) {
-        [[SingletonManager sharedManager] alert1PromptInfo:@"请输入正确的手机号"];
-        [_phoneNum resignFirstResponder];
-        return ;
-    }
+//    if ([[SingletonManager sharedManager] isValidateMobile:_phoneNum.text] == NO) {
+//        [[SingletonManager sharedManager] alert1PromptInfo:@"请输入正确的手机号"];
+//        [_phoneNum resignFirstResponder];
+//        return ;
+//    }
     _getVerificatwordBtn.enabled = NO;
     [_getVerificatwordBtn setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
     _count = 60;
@@ -286,10 +286,12 @@
         if ([[SingletonManager sharedManager] isIncludeSpecialCharact:_userName.text]) {
             [[SingletonManager sharedManager] alert1PromptInfo:@"昵称含有特殊字符"];
             return NO;
-        } else if ([[SingletonManager sharedManager] isValidateMobile:_phoneNum.text] == NO) {
-            [[SingletonManager sharedManager] alert1PromptInfo:@"请输入正确的手机号"];
-            return NO;
-        } else if (_password.text.length < 6 || _password.text.length > 18) {
+        }
+//        else if ([[SingletonManager sharedManager] isValidateMobile:_phoneNum.text] == NO) {
+//            [[SingletonManager sharedManager] alert1PromptInfo:@"请输入正确的手机号"];
+//            return NO;
+//        }
+        else if (_password.text.length < 6 || _password.text.length > 18) {
             [[SingletonManager sharedManager] alert1PromptInfo:@"登录密码格式不正确"];
             return NO;
         } else if (![[SingletonManager sharedManager] checkPassword:_password.text]) {

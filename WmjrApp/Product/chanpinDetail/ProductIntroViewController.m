@@ -159,7 +159,9 @@
     [manager postDataWithUrlActionStr:@"Product/new_detail" withParamDictionary:paramDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             _productModel = [ProductModel mj_objectWithKeyValues:obj[@"data"]];
+//            NSLog(@"哈哈哈哈哈:%@",_productModel.proIntro_id);
             _productModel.type_id = _type_id;
+            _productModel.proIntro_id = self.getPro_id;
             
             /* 立即购买 */
             [self configViewWithBuy];

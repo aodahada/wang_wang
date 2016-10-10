@@ -53,22 +53,29 @@
 //    [headView addSubview:imgView];
     headView.backgroundColor = GERENCOLOR;
     
-    /*  消息  */
-    _messageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _messageBtn.frame = CGRectMake(SCREEN_WIDTH - 50, RESIZE_UI(37), 40, 30);
-    [_messageBtn setTitle:@"消息" forState:UIControlStateNormal];
-    [_messageBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _messageBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
-    [headView addSubview:_messageBtn];
-    [_messageBtn addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
-
-    
-    UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(RESIZE_UI(10), RESIZE_UI(40), RESIZE_UI(150), RESIZE_UI(20))];
+    UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(10, RESIZE_UI(40), RESIZE_UI(150), RESIZE_UI(20))];
     lable.text = @"今日预计收益(元)";
     lable.textAlignment = NSTextAlignmentLeft;
     lable.textColor = VIEWBACKCOLOR;
     lable.font = [UIFont systemFontOfSize:RESIZE_UI(15.0f)];
     [headView addSubview:lable];
+    
+    /*  消息  */
+//    _messageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _messageBtn = [[UIButton alloc]init];
+//    _messageBtn.frame = CGRectMake(SCREEN_WIDTH - 50, RESIZE_UI(35), 40, 30);
+    [_messageBtn setTitle:@"消息" forState:UIControlStateNormal];
+    [_messageBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _messageBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
+    [headView addSubview:_messageBtn];
+    [_messageBtn addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [_messageBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(headView.mas_right).with.offset(-10);
+        make.width.mas_offset(40);
+        make.height.mas_offset(30);
+        make.centerY.equalTo(lable.mas_centerY);
+    }];
+    
     _ydayEarn = [[UILabel alloc] initWithFrame:CGRectMake(RESIZE_UI(45), 120, RESIZE_UI(280), RESIZE_UI(70))];
     _ydayEarn.textAlignment = NSTextAlignmentCenter;
     _ydayEarn.textColor = VIEWBACKCOLOR;
@@ -85,7 +92,7 @@
 
 /* 消息页面 */
 - (void)messageBtnAction {
-    MessageWViewController *messageVC = [[MessageWViewController alloc] init];
+    MessageWViewController *messageVC = [[MessageWViewController alloc] initWithNibName:@"MessageWViewController" bundle:nil];
     [self.navigationController pushViewController:messageVC animated:YES];
 }
 
@@ -285,6 +292,7 @@
                 /* 我的红包  待定 目前是我的积分*/
 //                MyselfPrivilegeStandardController *myselfPSVC = [[MyselfPrivilegeStandardController alloc] init];
 //                [self.navigationController pushViewController:myselfPSVC animated:YES];
+                [[[UIAlertView alloc]initWithTitle:@"该功能正在开发中" message:nil delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil]show];
             }
             if (indexPath.row == 1) {
                 /* 我的存钱罐 */
