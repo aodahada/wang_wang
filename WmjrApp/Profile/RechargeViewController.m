@@ -90,6 +90,12 @@
     
     /* 余额数 */
     NetManager *manager = [[NetManager alloc] init];
+    NSDictionary *dict;
+    if ([_isPayJump isEqualToString:@"yes"]) {
+        dict = @{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"};
+    } else {
+        dict = @{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"};
+    }
     [manager postDataWithUrlActionStr:@"User/queryBalance" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"} withBlock:^(id obj) {
         if (obj) {
             NSString *balanceValue = [obj[@"data"] objectForKey:@"available_balance"];
@@ -134,6 +140,7 @@
             NSDictionary *dataDic = obj[@"data"];
             WebViewForPayViewController *webViewForPayVC = [[WebViewForPayViewController alloc]initWithNibName:@"WebViewForPayViewController" bundle:nil];
             webViewForPayVC.htmlString = dataDic[@"html"];
+            webViewForPayVC.isPayJump = _isPayJump;
             webViewForPayVC.title = @"充值界面";
             [self.navigationController pushViewController:webViewForPayVC animated:YES];
         } else {

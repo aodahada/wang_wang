@@ -25,7 +25,7 @@
 @property (nonatomic, copy) NSString *enddate;
 @property (nonatomic, copy) NSString *type_id;//属于哪个种类1,2,3
 @property (nonatomic, copy) NSString *pic;//图片
-@property (nonatomic, copy) NSString *balance;//
+@property (nonatomic, copy) NSString *balance;//产品余额
 @property (nonatomic, copy) NSString *purchasable;//融资金额
 @property (nonatomic, copy) NSString *duedate; /* 到期日 */
 @property (nonatomic, copy) NSString *expirydate;  /* 结息日 */

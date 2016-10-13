@@ -9,6 +9,7 @@
 #import "WebViewForPayViewController.h"
 #import "MyselfManageFinanceController.h"
 #import "MyselfTransactionController.h"
+#import "HRBuyViewController.h"
 
 @interface WebViewForPayViewController ()<UIWebViewDelegate>
 
@@ -58,31 +59,66 @@
         //不带参数的情况
 //        NSString *methodName = [url substringFromIndex:scheme.length];
 //        [self performSelector:NSSelectorFromString(methodName) withObject:nil];
-        
         if ([path isEqualToString:@"openWangmaDeposit"]) {
-            MyselfTransactionController *myselftransVC = [[MyselfTransactionController alloc]init];
-            [self.navigationController pushViewController:myselftransVC animated:YES];
+            if ([_isPayJump isEqualToString:@"yes"]) {
+                NSArray * ctrlArray = self.navigationController.viewControllers;
+                for (UIViewController *ctrl in ctrlArray) {
+                    
+//                    NSLog(@"ctrl ---- %@", ctrl);
+                    if ([ctrl isKindOfClass:[HRBuyViewController class]]) {
+                        [self.navigationController popToViewController:ctrl animated:YES];
+                    }
+                    
+                }
+            } else {
+                MyselfTransactionController *myselftransVC = [[MyselfTransactionController alloc]init];
+                [self.navigationController pushViewController:myselftransVC animated:YES];
+                
+                NSMutableArray *tempVCA = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+                for(UIViewController *tempVC in tempVCA)
+                {
+                    if([tempVC isKindOfClass:[WebViewForPayViewController class]])
+                    {
+                        
+                        [tempVCA removeObject:tempVC];
+                        [self.navigationController setViewControllers:tempVCA animated:YES];
+                        break;
+                    }
+                }
+            }
         } else if ([path isEqualToString:@"openWangmaWithdraw"]) {
             MyselfTransactionController *myselftransVC = [[MyselfTransactionController alloc]init];
             myselftransVC.isWithDraw = @"yes";
             [self.navigationController pushViewController:myselftransVC animated:YES];
+            
+            NSMutableArray *tempVCA = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+            for(UIViewController *tempVC in tempVCA)
+            {
+                if([tempVC isKindOfClass:[WebViewForPayViewController class]])
+                {
+                    
+                    [tempVCA removeObject:tempVC];
+                    [self.navigationController setViewControllers:tempVCA animated:YES];
+                    break;
+                }
+            }
         } else {
             MyselfManageFinanceController *mySelfFianceVC = [[MyselfManageFinanceController alloc]init];
             mySelfFianceVC.isPay = @"YES";
             [self.navigationController pushViewController:mySelfFianceVC animated:YES];
             
-        }
-        
-        NSMutableArray *tempVCA = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
-        for(UIViewController *tempVC in tempVCA)
-        {
-            if([tempVC isKindOfClass:[WebViewForPayViewController class]])
+            NSMutableArray *tempVCA = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+            for(UIViewController *tempVC in tempVCA)
             {
-                
-                [tempVCA removeObject:tempVC];
-                [self.navigationController setViewControllers:tempVCA animated:YES];
-                break;
+                if([tempVC isKindOfClass:[WebViewForPayViewController class]])
+                {
+                    
+                    [tempVCA removeObject:tempVC];
+                    [self.navigationController setViewControllers:tempVCA animated:YES];
+                    break;
+                }
             }
+            
         }
         
         return NO;

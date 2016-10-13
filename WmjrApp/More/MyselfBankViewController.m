@@ -26,7 +26,7 @@
 @property (nonatomic, copy) NSString *mySavin_pot;   /* 我的存钱罐 */
 
 @property (nonatomic, strong) NSMutableArray *bankInfoArray;  /* 银行卡信息数组 */
-@property (nonatomic, strong) UIButton *button;
+@property (nonatomic, strong) UIBarButtonItem *button;
 
 @end
 
@@ -35,11 +35,16 @@
 - (void)setUpNavigationBar {
     self.view.backgroundColor = VIEWBACKCOLOR;
     
-    _button = [UIButton buttonWithType:UIButtonTypeCustom];
-    _button.frame = CGRectMake(0, 0, 100, 44);
-    _button.backgroundColor = [UIColor whiteColor];
-    [_button addTarget:self action:@selector(buttonAction) forControlEvents:(UIControlEventTouchUpInside)];
-    [self.navigationController.navigationBar addSubview:_button];
+//    _button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    _button.frame = CGRectMake(0, 0, 100, 44);
+//    _button.backgroundColor = [UIColor whiteColor];
+//    [_button addTarget:self action:@selector(buttonAction) forControlEvents:(UIControlEventTouchUpInside)];
+//    [_button setBackgroundImage:[UIImage imageNamed:@"arrow_back"] forState:UIControlStateNormal];
+//    [self.navigationController.navigationBar addSubview:_button];
+    
+    UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _button = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(buttonAction)];
+    self.navigationItem.leftBarButtonItem = _button;
 
     
     [[MMPopupWindow sharedWindow] cacheWindow];
@@ -48,17 +53,20 @@
     [_comfirmBtn setTitleColor:VIEWBACKCOLOR forState:UIControlStateNormal];
     
 }
+
 - (void)buttonAction {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-   [_button removeFromSuperview];
+//   [_button removeFromSuperview];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpNavigationBar];
-    
+//    self.title = @"我的银行卡";
     _bankInfoArray = [NSMutableArray array];
     
     /* 获取数据 */
@@ -71,24 +79,45 @@
     [manager postDataWithUrlActionStr:@"Card/query" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             NSString *dataStr = obj[@"data"];
-            NSArray *dataArray = [dataStr componentsSeparatedByString:@"^"];
-            [_bankInfoArray addObjectsFromArray:dataArray];
-            /* Card信息id ^银行编号 ^银行卡号 ^户名 ^卡类型 ^卡属性 ^VerifyMode是否是Sign ^创建时间 ^安全卡标识 */
-            
-            NSDictionary *bankDic = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"banks.plist" ofType:nil]];
-            NSDictionary *dic = [bankDic objectForKey:@"bank"];
-            /* 银行图标 */
-            _bankNameImg.image = [UIImage imageNamed:_bankInfoArray[1]];
-            /* 银行名称 */
-            NSString *bankName = [[dic objectForKey:_bankInfoArray[1]] firstObject];
-            /* 银行尾号 */
-            NSString *bankNum = _bankInfoArray[2];
-            NSString *bankTail = [bankNum substringWithRange:NSMakeRange(bankNum.length - 4, 4)];
-            _bankNameLab.text = [NSString stringWithFormat:@"%@尾号%@", bankName, bankTail];
-            /* 持卡人 */
-            _holdBankLab.text = _bankInfoArray[3];
+            dataStr = [self convertNullString:dataStr];
+            if ([dataStr isEqualToString:@""]) {
+//                NSLog(@"haha1");
+            } else {
+                NSArray *dataArray = [dataStr componentsSeparatedByString:@"^"];
+                [_bankInfoArray addObjectsFromArray:dataArray];
+                /* Card信息id ^银行编号 ^银行卡号 ^户名 ^卡类型 ^卡属性 ^VerifyMode是否是Sign ^创建时间 ^安全卡标识 */
+                self.card_id = dataArray[0];
+                NSDictionary *bankDic = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"banks.plist" ofType:nil]];
+                NSDictionary *dic = [bankDic objectForKey:@"bank"];
+                /* 银行图标 */
+                _bankNameImg.image = [UIImage imageNamed:_bankInfoArray[1]];
+                /* 银行名称 */
+                NSString *bankName = [[dic objectForKey:_bankInfoArray[1]] firstObject];
+                /* 银行尾号 */
+                NSString *bankNum = _bankInfoArray[2];
+                NSString *bankTail = [bankNum substringWithRange:NSMakeRange(bankNum.length - 4, 4)];
+                _bankNameLab.text = [NSString stringWithFormat:@"%@尾号%@", bankName, bankTail];
+                /* 持卡人 */
+                _holdBankLab.text = _bankInfoArray[3];
+            }
         }
     }];
+}
+
+- (NSString*)convertNullString:(NSString*)oldString{
+    if (oldString!=nil && (NSNull *)oldString != [NSNull null]) {
+        if ([oldString length]!=0) {
+            if ([oldString isEqualToString:@"(null)"]) {
+                return @"";
+            }
+            return  oldString;
+        }else{
+            return @"";
+        }
+    }
+    else{
+        return @"";
+    }
 }
 
 /* 解绑银行卡 */
@@ -142,11 +171,6 @@
                                                          detail:@"你确定解绑绑定银行卡?"
                                                           items:items];
     [alertView show];
-}
-
-/*确定 */
-- (IBAction)comfirmBtnAction:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

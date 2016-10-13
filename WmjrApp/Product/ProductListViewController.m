@@ -106,7 +106,7 @@
                 [self addChildViewController];
                 
                 [SingletonManager sharedManager].isProductListViewWillAppear = 2;
-                NSInteger row = [SingletonManager sharedManager].isJumpGun;
+//                NSInteger row = [SingletonManager sharedManager].isJumpGun;
                 if ([SingletonManager sharedManager].isJumpGun == 2) {
                     
                     NSInteger productId = [SingletonManager sharedManager].whichOneTypeIsSelected;

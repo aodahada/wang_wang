@@ -14,4 +14,6 @@ typedef void(^accountChangeBlock)(CGFloat account);
 
 @property (nonatomic,copy)accountChangeBlock accountChangeBlock;
 
+@property (nonatomic, copy) NSString *isPayJump;
+
 @end

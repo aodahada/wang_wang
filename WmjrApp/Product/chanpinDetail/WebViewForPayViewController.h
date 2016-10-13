@@ -11,5 +11,6 @@
 @interface WebViewForPayViewController : UIViewController
 
 @property (nonatomic, copy) NSString *htmlString;
+@property (nonatomic, copy) NSString *isPayJump;
 
 @end
