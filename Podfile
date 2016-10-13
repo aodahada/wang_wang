@@ -10,5 +10,7 @@ pod 'IQKeyboardManager'
 pod 'SSKeychain'
 pod 'Masonry'
 pod 'DZNEmptyDataSet'
+pod 'XHLaunchAd'
+pod 'MBProgressHUD'
 end
 

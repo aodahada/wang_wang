@@ -30,8 +30,6 @@
 		8B4446821D990EB100EDCDBC /* MyRecommandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4446801D990EB100EDCDBC /* MyRecommandTableViewCell.m */; };
 		8B4446831D990EB100EDCDBC /* MyRecommandTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B4446811D990EB100EDCDBC /* MyRecommandTableViewCell.xib */; };
 		8B4446861D990EC500EDCDBC /* MyReCommandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4446851D990EC500EDCDBC /* MyReCommandModel.m */; };
-		8B79A46D1DAB2FD70068910C /* MBProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B79A46C1DAB2FD70068910C /* MBProgressView.m */; };
-		8B79A4721DAB323B0068910C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B79A4711DAB323B0068910C /* MBProgressHUD.m */; };
 		8B84C4A91D7D434100232A70 /* ModifyGesPassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B84C4A81D7D434100232A70 /* ModifyGesPassView.m */; };
 		8BBF1F231DAF0F79009682D9 /* InvestConfirmView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF1F221DAF0F79009682D9 /* InvestConfirmView.m */; };
 		8BEAAC511DAF592400983730 /* ABC.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BEAABE81DAF592300983730 /* ABC.png */; };
@@ -720,10 +718,6 @@
 		8B4446811D990EB100EDCDBC /* MyRecommandTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRecommandTableViewCell.xib; sourceTree = "<group>"; };
 		8B4446841D990EC500EDCDBC /* MyReCommandModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyReCommandModel.h; sourceTree = "<group>"; };
 		8B4446851D990EC500EDCDBC /* MyReCommandModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyReCommandModel.m; sourceTree = "<group>"; };
-		8B79A46B1DAB2FD70068910C /* MBProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressView.h; sourceTree = "<group>"; };
-		8B79A46C1DAB2FD70068910C /* MBProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressView.m; sourceTree = "<group>"; };
-		8B79A4701DAB323B0068910C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		8B79A4711DAB323B0068910C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		8B84C4A71D7D434100232A70 /* ModifyGesPassView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyGesPassView.h; sourceTree = "<group>"; };
 		8B84C4A81D7D434100232A70 /* ModifyGesPassView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyGesPassView.m; sourceTree = "<group>"; };
 		8BBF1F211DAF0F79009682D9 /* InvestConfirmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestConfirmView.h; sourceTree = "<group>"; };
@@ -1775,10 +1769,6 @@
 		C51B42271C784F29001679B5 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				8B79A4701DAB323B0068910C /* MBProgressHUD.h */,
-				8B79A4711DAB323B0068910C /* MBProgressHUD.m */,
-				8B79A46B1DAB2FD70068910C /* MBProgressView.h */,
-				8B79A46C1DAB2FD70068910C /* MBProgressView.m */,
 				C5D3CE371C9808DF00C8B919 /* ShowImage */,
 				C51B43931C78569A001679B5 /* GuideViewController.h */,
 				C51B43941C78569A001679B5 /* GuideViewController.m */,
@@ -3618,7 +3608,6 @@
 				8B1611501D81384E00C9B954 /* HomeProductCatModel.m in Sources */,
 				8B4446861D990EC500EDCDBC /* MyReCommandModel.m in Sources */,
 				8B84C4A91D7D434100232A70 /* ModifyGesPassView.m in Sources */,
-				8B79A46D1DAB2FD70068910C /* MBProgressView.m in Sources */,
 				C51B43631C785620001679B5 /* PopMenu.m in Sources */,
 				C51B43BA1C78572F001679B5 /* AgreementViewController.m in Sources */,
 				C51B43261C785535001679B5 /* CapitalAccountViewCell.m in Sources */,
@@ -3658,7 +3647,6 @@
 				C51B431A1C785528001679B5 /* NounExplanViewCell.m in Sources */,
 				C51B430A1C7854CB001679B5 /* UserInfoModel.m in Sources */,
 				C51B43481C7855AD001679B5 /* RegisterModel.m in Sources */,
-				8B79A4721DAB323B0068910C /* MBProgressHUD.m in Sources */,
 				C51B43511C7855D6001679B5 /* SingletonManager.m in Sources */,
 				C51B42F81C7854AC001679B5 /* MyselfBankViewController.m in Sources */,
 				C51B42CF1C7853A2001679B5 /* PopView.m in Sources */,
