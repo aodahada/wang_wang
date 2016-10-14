@@ -151,8 +151,8 @@
              */
             
             //定义一个weakLaunchAd
-            __weak __typeof(launchAd) weakLaunchAd = launchAd;
-            [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
+//            __weak __typeof(launchAd) weakLaunchAd = launchAd;
+            [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
                 
                 //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
                 //weakLaunchAd.adFrame = ...;
@@ -210,7 +210,7 @@
         
         if(imageData)
         {
-            imageData(ImgUrlString2,5,@"http://www.returnoc.com");
+            imageData(@"http://api.wmjr888.com/Uploads/bootstrap.jpg",3,@"http://www.returnoc.com");
         }
     });
 }
