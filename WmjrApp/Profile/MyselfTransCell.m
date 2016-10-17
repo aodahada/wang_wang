@@ -52,34 +52,58 @@
 - (void)setModel:(TradeModel *)model {
     NSString *payStr = nil;
     if ([model.type isEqualToString:@"1"]) {
+//        NSLog(@"我的类型:%@",model.state);
         _imgView.image = [UIImage imageNamed:@"icon_chongzhi"];
         payStr = @"向存钱罐充值";
         _payMoney.text = [NSString stringWithFormat:@"+%@元", model.money];
-        _paySuccess.text = @"充值成功";
+//        _paySuccess.text = @"充值成功";
+        if ([model.state isEqualToString:@"SUCCESS"] || [model.state isEqualToString:@"PAY_FINISHED"] || [model.state isEqualToString:@"TRADE_FINISHED"]) {
+            _paySuccess.text = @"充值成功";
+        }
+        if ([model.state isEqualToString:@"FAILED"] || [model.state isEqualToString:@"TRADE_FAILED"] || [model.state isEqualToString:@"TRADE_CLOSED"]) {
+            _paySuccess.text = @"充值失败";
+        }
+        if ([model.state isEqualToString:@"PROCESSING"] || [model.state isEqualToString:@"WAIT_PAY"]) {
+            _paySuccess.text = @"处理中";
+        }
     }
     if ([model.type isEqualToString:@"2"]) {
+        NSLog(@"我的状态:%@",model.state);
+        NSLog(@"我的内容:%@",model.comment);
         if ([model.comment hasPrefix:@"购入"]) {
             _imgView.image = [UIImage imageNamed:@"icon_goumai"];
             _payMoney.text = [NSString stringWithFormat:@"-%@元", model.money];
         }
-        if ([model.comment hasPrefix:@"赎回"]) {
+        if ([model.comment hasPrefix:@"发放"]) {
             _imgView.image = [UIImage imageNamed:@"icon_shuhui"];
             _payMoney.text = [NSString stringWithFormat:@"+%@元", model.money];
         }
-        payStr = [model.comment substringFromIndex:2];
-        _paySuccess.text = [NSString stringWithFormat:@"%@成功", [model.comment substringToIndex:2]];
+//        payStr = [model.comment substringFromIndex:2];
+        payStr = model.comment;
+//        _paySuccess.text = [NSString stringWithFormat:@"%@成功", [model.comment substringToIndex:2]];
+        if ([model.state isEqualToString:@"WAIT_PAY"]) {
+            _paySuccess.text = @"等待付款";
+        } else if([model.state isEqualToString:@"PAY_FINISHED"]) {
+            _paySuccess.text = @"交易成功";
+        } else if ([model.state isEqualToString:@"TRADE_FAILED"] || [model.state isEqualToString:@"TRADE_CLOSED"]) {
+            _paySuccess.text = @"交易失败";
+        } else if ([model.state isEqualToString:@"TRADE_FINISHED"]) {
+            _paySuccess.text = @"交易结束";
+        } else {
+            _paySuccess.text = @"状态不明";
+        }
     }
     if ([model.type isEqualToString:@"3"]) {
         _imgView.image = [UIImage imageNamed:@"icon_tixian"];
         payStr = @"向银行卡提现";
         _payMoney.text = [NSString stringWithFormat:@"-%@元", model.money];
-        if ([model.state isEqualToString:@"SUCCESS"]) {
+        if ([model.state isEqualToString:@"SUCCESS"] || [model.state isEqualToString:@"PAY_FINISHED"] || [model.state isEqualToString:@"TRADE_FINISHED"]) {
             _paySuccess.text = @"提现成功";
         }
-        if ([model.state isEqualToString:@"FAILED"]) {
+        if ([model.state isEqualToString:@"FAILED"] || [model.state isEqualToString:@"RETURNT_TICKET"] || [model.state isEqualToString:@"TRADE_CLOSED"]|| [model.state isEqualToString:@"TRADE_FAILED"]) {
             _paySuccess.text = @"提现失败";
         }
-        if ([model.state isEqualToString:@"PROCESSING"] || [model.state isEqualToString:@"RETURNT_TICKET"]) {
+        if ([model.state isEqualToString:@"PROCESSING"] || [model.state isEqualToString:@"INIT"] || [model.state isEqualToString:@"WAIT_PAY"]) {
             _paySuccess.text = @"处理中";
         }
     }

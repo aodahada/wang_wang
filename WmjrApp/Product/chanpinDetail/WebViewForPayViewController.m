@@ -102,6 +102,8 @@
                     break;
                 }
             }
+        } else if([path isEqualToString:@"openWangmaPassword"]) {
+            [self.navigationController popViewControllerAnimated:YES];
         } else {
             MyselfManageFinanceController *mySelfFianceVC = [[MyselfManageFinanceController alloc]init];
             mySelfFianceVC.isPay = @"YES";
