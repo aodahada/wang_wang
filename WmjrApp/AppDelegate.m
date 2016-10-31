@@ -8,7 +8,8 @@
 
 #import "AppDelegate.h"
 #import "BaseNavigationController.h"
-#import "HomeViewController.h"
+//#import "HomeViewController.h"
+#import "HomePageViewController.h"
 #import "ProductListViewController.h"
 #import "ProfileViewController.h"
 #import "MoreViewController.h"
@@ -275,7 +276,8 @@
 
 - (void)initTabbarCWithControllers {
     /*导航条上的视图控制器*/
-    HomeViewController *homeVC = [[HomeViewController alloc] init];
+//    HomeViewController *homeVC = [[HomeViewController alloc] init];
+    HomePageViewController *homeVC = [[HomePageViewController alloc]init];
     BaseNavigationController *homeNa = [[BaseNavigationController alloc] initWithRootViewController:homeVC];
     UITabBarItem *homeTab = [[UITabBarItem alloc] initWithTitle:@"首页" image:[[UIImage imageNamed:@"tab_btn_home_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_home_sel"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
     homeVC.tabBarItem = homeTab;

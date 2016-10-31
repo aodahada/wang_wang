@@ -52,7 +52,6 @@
 - (void)setModel:(TradeModel *)model {
     NSString *payStr = nil;
     if ([model.type isEqualToString:@"1"]) {
-//        NSLog(@"我的类型:%@",model.state);
         _imgView.image = [UIImage imageNamed:@"icon_chongzhi"];
         payStr = @"向存钱罐充值";
         _payMoney.text = [NSString stringWithFormat:@"+%@元", model.money];
@@ -68,17 +67,15 @@
         }
     }
     if ([model.type isEqualToString:@"2"]) {
-        NSLog(@"我的状态:%@",model.state);
-        NSLog(@"我的内容:%@",model.comment);
         if ([model.comment hasPrefix:@"购入"]) {
             _imgView.image = [UIImage imageNamed:@"icon_goumai"];
             _payMoney.text = [NSString stringWithFormat:@"-%@元", model.money];
         }
-        if ([model.comment hasPrefix:@"发放"]) {
+        if ([model.comment hasPrefix:@"发放"]||[model.comment hasPrefix:@"赎回"]) {
             _imgView.image = [UIImage imageNamed:@"icon_shuhui"];
             _payMoney.text = [NSString stringWithFormat:@"+%@元", model.money];
         }
-//        payStr = [model.comment substringFromIndex:2];
+        //        payStr = [model.comment substringFromIndex:2];
         payStr = model.comment;
 //        _paySuccess.text = [NSString stringWithFormat:@"%@成功", [model.comment substringToIndex:2]];
         if ([model.state isEqualToString:@"WAIT_PAY"]) {

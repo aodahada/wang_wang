@@ -127,6 +127,7 @@
                 [SVProgressHUD showSuccessWithStatus:@"登录成功" maskType:(SVProgressHUDMaskTypeNone)];
                 NSDictionary *dataDic = obj[@"data"];
                 [SingletonManager sharedManager].uid = dataDic[@"id"];
+//                NSLog(@"我的id:%@",dataDic[@"id"]);
                 [SingletonManager sharedManager].isRealName = dataDic[@"is_real_name"];
 //                [SingletonManager sharedManager].isCard_id = dataDic[@"card_id"];
                 [SingletonManager sharedManager].invitationcode = dataDic[@"invitationcode"];

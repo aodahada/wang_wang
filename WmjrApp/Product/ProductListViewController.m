@@ -40,6 +40,8 @@
     // Do any additional setup after loading the view.
     self.title = @"产品列表";
     
+    self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
+    
     [self initScrollView];
     [self initSilderBar];//初始化顶部BGTopSilderBar
     

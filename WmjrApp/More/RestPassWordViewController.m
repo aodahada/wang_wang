@@ -32,13 +32,40 @@
     }];
 }
 
-//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-//
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
 //    NSLog(@"我拦截的超链接请求:%@",request.URL);
-//
-//    return YES;
-//
-//}
+    
+    NSString *url = request.URL.absoluteString;
+    
+    NSString *scheme = @"xmg://";
+    
+    
+    if ([url hasPrefix:scheme]) {
+        
+        NSString *path = [url substringFromIndex:scheme.length];
+        //        NSLog(@"我的路径:%@",path);
+        //不带参数的情况
+        //        NSString *methodName = [url substringFromIndex:scheme.length];
+        //        [self performSelector:NSSelectorFromString(methodName) withObject:nil];
+        if([path isEqualToString:@"openWangmaPassword"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+        
+        return NO;
+    }
+    //    NSLog(@"想加载其他请求，不是调用OC方法");
+    
+    return YES;
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

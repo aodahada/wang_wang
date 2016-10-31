@@ -99,6 +99,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, VIEW_WIDTH, VIEW_HEIGHT - 49 + 20) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;

@@ -30,6 +30,13 @@
 		8B4446821D990EB100EDCDBC /* MyRecommandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4446801D990EB100EDCDBC /* MyRecommandTableViewCell.m */; };
 		8B4446831D990EB100EDCDBC /* MyRecommandTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B4446811D990EB100EDCDBC /* MyRecommandTableViewCell.xib */; };
 		8B4446861D990EC500EDCDBC /* MyReCommandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4446851D990EC500EDCDBC /* MyReCommandModel.m */; };
+		8B44C4431DC6D5DB00DE0EA5 /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B44C4421DC6D5DB00DE0EA5 /* HomePageViewController.m */; };
+		8B44C4461DC6D9FF00DE0EA5 /* HomeTableViewCellFirst.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B44C4451DC6D9FF00DE0EA5 /* HomeTableViewCellFirst.m */; };
+		8B44C4491DC6DA1D00DE0EA5 /* HomeTableViewCellSecond.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B44C4481DC6DA1D00DE0EA5 /* HomeTableViewCellSecond.m */; };
+		8B44C4521DC6DA4100DE0EA5 /* HomeTableViewCellForth.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B44C4501DC6DA4100DE0EA5 /* HomeTableViewCellForth.m */; };
+		8B44C4531DC6DA4100DE0EA5 /* HomeTableViewCellForth.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B44C4511DC6DA4100DE0EA5 /* HomeTableViewCellForth.xib */; };
+		8B44C4561DC7281A00DE0EA5 /* HomeTableViewCellThird.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B44C4551DC7281A00DE0EA5 /* HomeTableViewCellThird.m */; };
+		8B44C4591DC7495400DE0EA5 /* NewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B44C4581DC7495400DE0EA5 /* NewsModel.m */; };
 		8B84C4A91D7D434100232A70 /* ModifyGesPassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B84C4A81D7D434100232A70 /* ModifyGesPassView.m */; };
 		8BBF1F231DAF0F79009682D9 /* InvestConfirmView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF1F221DAF0F79009682D9 /* InvestConfirmView.m */; };
 		8BEAAC511DAF592400983730 /* ABC.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BEAABE81DAF592300983730 /* ABC.png */; };
@@ -718,6 +725,19 @@
 		8B4446811D990EB100EDCDBC /* MyRecommandTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRecommandTableViewCell.xib; sourceTree = "<group>"; };
 		8B4446841D990EC500EDCDBC /* MyReCommandModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyReCommandModel.h; sourceTree = "<group>"; };
 		8B4446851D990EC500EDCDBC /* MyReCommandModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyReCommandModel.m; sourceTree = "<group>"; };
+		8B44C4411DC6D5DB00DE0EA5 /* HomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
+		8B44C4421DC6D5DB00DE0EA5 /* HomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
+		8B44C4441DC6D9FF00DE0EA5 /* HomeTableViewCellFirst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCellFirst.h; sourceTree = "<group>"; };
+		8B44C4451DC6D9FF00DE0EA5 /* HomeTableViewCellFirst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCellFirst.m; sourceTree = "<group>"; };
+		8B44C4471DC6DA1D00DE0EA5 /* HomeTableViewCellSecond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCellSecond.h; sourceTree = "<group>"; };
+		8B44C4481DC6DA1D00DE0EA5 /* HomeTableViewCellSecond.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCellSecond.m; sourceTree = "<group>"; };
+		8B44C44F1DC6DA4100DE0EA5 /* HomeTableViewCellForth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCellForth.h; sourceTree = "<group>"; };
+		8B44C4501DC6DA4100DE0EA5 /* HomeTableViewCellForth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCellForth.m; sourceTree = "<group>"; };
+		8B44C4511DC6DA4100DE0EA5 /* HomeTableViewCellForth.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTableViewCellForth.xib; sourceTree = "<group>"; };
+		8B44C4541DC7281A00DE0EA5 /* HomeTableViewCellThird.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCellThird.h; sourceTree = "<group>"; };
+		8B44C4551DC7281A00DE0EA5 /* HomeTableViewCellThird.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCellThird.m; sourceTree = "<group>"; };
+		8B44C4571DC7495400DE0EA5 /* NewsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsModel.h; sourceTree = "<group>"; };
+		8B44C4581DC7495400DE0EA5 /* NewsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsModel.m; sourceTree = "<group>"; };
 		8B84C4A71D7D434100232A70 /* ModifyGesPassView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyGesPassView.h; sourceTree = "<group>"; };
 		8B84C4A81D7D434100232A70 /* ModifyGesPassView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyGesPassView.m; sourceTree = "<group>"; };
 		8BBF1F211DAF0F79009682D9 /* InvestConfirmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestConfirmView.h; sourceTree = "<group>"; };
@@ -1673,6 +1693,8 @@
 		C51B42211C784EFF001679B5 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				8B44C4411DC6D5DB00DE0EA5 /* HomePageViewController.h */,
+				8B44C4421DC6D5DB00DE0EA5 /* HomePageViewController.m */,
 				C51B42291C784F3E001679B5 /* HomeViewController.h */,
 				C51B422A1C784F3E001679B5 /* HomeViewController.m */,
 				C51B422E1C784FA3001679B5 /* view */,
@@ -1804,6 +1826,8 @@
 				C51B42381C784FD9001679B5 /* ImgHomeModel.m */,
 				8B16114E1D81384E00C9B954 /* HomeProductCatModel.h */,
 				8B16114F1D81384E00C9B954 /* HomeProductCatModel.m */,
+				8B44C4571DC7495400DE0EA5 /* NewsModel.h */,
+				8B44C4581DC7495400DE0EA5 /* NewsModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1827,6 +1851,15 @@
 				C51B42301C784FB3001679B5 /* HomeListViewCell.m */,
 				8B1611481D81373400C9B954 /* ViewForProductCategory.h */,
 				8B1611491D81373400C9B954 /* ViewForProductCategory.m */,
+				8B44C4441DC6D9FF00DE0EA5 /* HomeTableViewCellFirst.h */,
+				8B44C4451DC6D9FF00DE0EA5 /* HomeTableViewCellFirst.m */,
+				8B44C4471DC6DA1D00DE0EA5 /* HomeTableViewCellSecond.h */,
+				8B44C4481DC6DA1D00DE0EA5 /* HomeTableViewCellSecond.m */,
+				8B44C4541DC7281A00DE0EA5 /* HomeTableViewCellThird.h */,
+				8B44C4551DC7281A00DE0EA5 /* HomeTableViewCellThird.m */,
+				8B44C44F1DC6DA4100DE0EA5 /* HomeTableViewCellForth.h */,
+				8B44C4501DC6DA4100DE0EA5 /* HomeTableViewCellForth.m */,
+				8B44C4511DC6DA4100DE0EA5 /* HomeTableViewCellForth.xib */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -3017,6 +3050,7 @@
 			files = (
 				8BEAACAF1DAF592400983730 /* SXJS@2x.png in Resources */,
 				8BEAAC5D1DAF592400983730 /* BOS.png in Resources */,
+				8B44C4531DC6DA4100DE0EA5 /* HomeTableViewCellForth.xib in Resources */,
 				8BEAAC5C1DAF592400983730 /* BOC@3x.png in Resources */,
 				BD3A619E1D112B7F004B56D9 /* MFLiHei_Noncommercial-Regular.otf in Resources */,
 				8BEAAC751DAF592400983730 /* COMM.png in Resources */,
@@ -3599,6 +3633,7 @@
 				C51B43761C78564E001679B5 /* BaseNavigationController.m in Sources */,
 				C51B429F1C7852B4001679B5 /* SmartModel.m in Sources */,
 				C51B435C1C785600001679B5 /* NSString+StringCode.m in Sources */,
+				8B44C4561DC7281A00DE0EA5 /* HomeTableViewCellThird.m in Sources */,
 				BDE0EFAC1D61C4DA00729C15 /* ResultDetailViewController.m in Sources */,
 				C51B43441C7855AD001679B5 /* RegisterViewController.m in Sources */,
 				C51B43881C78566B001679B5 /* TAAnimatedDotView.m in Sources */,
@@ -3641,8 +3676,10 @@
 				C51B423E1C784FE3001679B5 /* TodayEarnViewController.m in Sources */,
 				C51B432D1C785554001679B5 /* AboutUsViewController.m in Sources */,
 				C51B435A1C785600001679B5 /* NSData+Zlib.m in Sources */,
+				8B44C4521DC6DA4100DE0EA5 /* HomeTableViewCellForth.m in Sources */,
 				C51B43621C785620001679B5 /* UIView+Extension.m in Sources */,
 				8B3402211D7EAE2000320072 /* ProductClassViewController.m in Sources */,
+				8B44C4591DC7495400DE0EA5 /* NewsModel.m in Sources */,
 				C5DAE4921CDAEB8000184048 /* AgViewController.m in Sources */,
 				C51B431A1C785528001679B5 /* NounExplanViewCell.m in Sources */,
 				C51B430A1C7854CB001679B5 /* UserInfoModel.m in Sources */,
@@ -3677,11 +3714,13 @@
 				C51B438C1C78566B001679B5 /* SDCycleScrollView.m in Sources */,
 				8B4446821D990EB100EDCDBC /* MyRecommandTableViewCell.m in Sources */,
 				C51B42E51C7853E3001679B5 /* MoreViewController.m in Sources */,
+				8B44C4431DC6D5DB00DE0EA5 /* HomePageViewController.m in Sources */,
 				C51B43071C7854C5001679B5 /* PhoneChangeView.m in Sources */,
 				8B3402121D7EABAC00320072 /* ProductListViewController.m in Sources */,
 				C51B42311C784FB3001679B5 /* HomeListViewCell.m in Sources */,
 				8B44467D1D98F60F00EDCDBC /* MyRecommendatViewController.m in Sources */,
 				8B3343071D80169A004DB390 /* ViewForShuoMing.m in Sources */,
+				8B44C4461DC6D9FF00DE0EA5 /* HomeTableViewCellFirst.m in Sources */,
 				C51B41B21C784B02001679B5 /* main.m in Sources */,
 				C51B425C1C7850BF001679B5 /* SepcialModel.m in Sources */,
 				BDE0EF7F1D61BD8800729C15 /* WebViewForPayViewController.m in Sources */,
@@ -3691,6 +3730,7 @@
 				C51B42771C78519B001679B5 /* MyselfAccountController.m in Sources */,
 				C51B42C71C785391001679B5 /* GoldModel.m in Sources */,
 				C51B430D1C7854DD001679B5 /* HelpViewController.m in Sources */,
+				8B44C4491DC6DA1D00DE0EA5 /* HomeTableViewCellSecond.m in Sources */,
 				C51B43871C78566B001679B5 /* TAAbstractDotView.m in Sources */,
 				C51B42491C78507B001679B5 /* ProductModel.m in Sources */,
 				C51B43951C78569A001679B5 /* GuideViewController.m in Sources */,

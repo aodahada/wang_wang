@@ -61,7 +61,7 @@
     [self.earnOfPercent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).with.offset(48);
         make.left.equalTo(self.contentView.mas_left).with.offset(12);
-        make.height.mas_offset(45);
+//        make.height.mas_offset(45);
     }];
     
     self.earnOfYearLable = [[UILabel alloc] init];

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ProductModel.h"
 
-@class ProductViewCell;
+//@class ProductViewCell;
 @protocol ClickBtnResponseDelegate <NSObject>
 
 /* 点击购买 */

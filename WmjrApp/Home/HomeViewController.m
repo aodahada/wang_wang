@@ -56,6 +56,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
+    
     [self setUpNavigationBar];
     
     [SingletonManager sharedManager].isProductListViewWillAppear = 1;
