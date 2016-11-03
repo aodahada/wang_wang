@@ -26,8 +26,11 @@
 
 - (void)setModel:(ProductModel *)model {
     _lowpurchase.text = [NSString stringWithFormat:@"%@起购", model.lowpurchase];
+    _lowpurchase.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     _lable1.text = [NSString stringWithFormat:@"理财期限:%@天",model.day];
+    _lable1.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     _lable2.text = model.risk;
+    _lable2.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

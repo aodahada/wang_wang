@@ -47,7 +47,19 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     /* 余额数 */
-    _accountLab.text = self.accountStr;
+//    _accountLab.text = self.accountStr;
+    self.tabBarController.tabBar.hidden = YES;
+    
+    /* 余额数 */
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"更新数据中"];
+    [manager postDataWithUrlActionStr:@"User/queryBalance" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"} withBlock:^(id obj) {
+        if (obj) {
+            NSString *balanceValue = [obj[@"data"] objectForKey:@"available_balance"];
+            _accountLab.text = balanceValue;
+            [SVProgressHUD dismiss];
+        }
+    }];
 }
 
 /* 确认提现 */

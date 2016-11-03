@@ -31,6 +31,7 @@
     _messArray = [NSMutableArray array];
     
     [_messTbale registerNib:[UINib nibWithNibName:@"MessageViewCell" bundle:nil] forCellReuseIdentifier:@"messCell"];
+    _messTbale.tableFooterView = [[UIView alloc]init];
     
     //下拉刷新
     _messTbale.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -56,10 +57,9 @@
 #pragma mark - 数据处理 －
 - (void)getDataWithNetManager:(NSInteger)currentPage {
     NetManager *manager = [[NetManager alloc] init];
-    [SVProgressHUD showWithStatus:@"消息获取中" maskType:(SVProgressHUDMaskTypeBlack)];
+    [SVProgressHUD showWithStatus:@"消息获取中"];
     [manager postDataWithUrlActionStr:@"User/msg" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"page":@(currentPage), @"size":@""} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
-//            NSLog(@"%@", obj[@"data"]);
             [SVProgressHUD dismiss];
             NSArray *array = [MessageModel mj_keyValuesArrayWithObjectArray:obj[@"data"]];
             for (NSDictionary *dic in array) {
@@ -91,6 +91,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MessageModel *model = _messArray[indexPath.row];
     MessageViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"messCell" forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if ([model.type isEqualToString:@"1"]) {
         cell.cerLab.text = @"充值";
@@ -110,14 +111,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 80;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 15;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 20;
 }
 
 - (void)didReceiveMemoryWarning {

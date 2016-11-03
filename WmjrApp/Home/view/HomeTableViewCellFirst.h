@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class PersonInvestModel;
 @interface HomeTableViewCellFirst : UITableViewCell
+
+- (instancetype)initWithDic:(PersonInvestModel *)personModel;
+
+@property (nonatomic, strong)void(^contactWangma)();
+@property (nonatomic, strong)void(^learnWangma)();
+@property (nonatomic, strong)void(^jumpToMessageCenter)();
 
 @end

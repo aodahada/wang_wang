@@ -198,8 +198,7 @@
                     NSString *card_id = [obj[@"data"] objectForKey:@"card_id"];
                     
                     /* 开通快捷支付和绑定银行卡等同 */
-                    [SingletonManager sharedManager].isCard_id = card_id;
-                    [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].isCard_id forKey:@"isCard_id"];
+                    [SingletonManager sharedManager].userModel.card_id = card_id;
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
                     [self.navigationController popViewControllerAnimated:YES];

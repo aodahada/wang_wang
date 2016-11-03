@@ -32,7 +32,10 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableViewForList;/*推荐人列表*/
 @property (nonatomic, strong) NSMutableArray *arrayForModel;
 @property (nonatomic, copy) NSString *invitationcode;//我的推荐码
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *yujishouyiHeight;//预计获得总收益距离顶部距离
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelJinHeight;//金额距离预计总收益距离
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightForHeaderConstraint;//头部高度
 @end
 
 @implementation MyRecommendatViewController
@@ -44,11 +47,11 @@
     
     self.view.backgroundColor = RGBA(239, 239, 239, 1.0);
     /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = GERENCOLOR;
+    self.navigationController.navigationBar.barTintColor = RGBA(0, 108, 175, 1.0);
     /*  设置字体颜色 */
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor = RGBA(0, 108, 175, 1.0);
     
     /*  去掉边线 */
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
@@ -119,11 +122,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"我的推荐";
-    _viewForHead.backgroundColor = GERENCOLOR;
-    _viewForMidOne.backgroundColor = RGBA(223, 90, 49, 1.0);
-    _viewForMidTwo.backgroundColor = RGBA(223, 90, 49, 1.0);
-    _labelForMidOne.textColor = RGBA(255, 191, 168, 1.0);
-    _labelForMidTwo.textColor = RGBA(255, 191, 168, 1.0);
+    _heightForHeaderConstraint.constant = RESIZE_UI(240);
+    _yujishouyiHeight.constant = RESIZE_UI(35);
+    _labelJinHeight.constant = RESIZE_UI(30);
+    self.view.backgroundColor = RGBA(238, 238, 238, 1.0);
+    _viewForHead.backgroundColor = RGBA(0, 108, 175, 1.0);
+    _viewForMidOne.backgroundColor = RGBA(0, 102, 166, 1.0);
+    _viewForMidTwo.backgroundColor = RGBA(0, 102, 166, 1.0);
+    _labelForMidOne.textColor = RGBA(171, 199, 214, 1.0);
+    _labelForMidTwo.textColor = RGBA(171, 199, 214, 1.0);
     _invitationcode = [[NSUserDefaults standardUserDefaults] objectForKey:@"invitationcode"];
     _myRecommandNumber.text = _invitationcode;
     _tableViewForList.delegate = self;

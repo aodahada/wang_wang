@@ -112,11 +112,11 @@
 - (void)addCenterLabel{
     NSString *percent = @"";
     
-    float fontSize = 12;
+    float fontSize = RESIZE_UI(12);
     UIColor *arcColor = [UIColor blueColor];
     if (_percent == 1) {
         percent = @"100%";
-        fontSize = 12;
+        fontSize = RESIZE_UI(12);
         arcColor = (_arcFinishColor == nil) ? [UIColor greenColor] : RGBA(67, 68, 67, 1.0);
         
     }else if(_percent < 1 && _percent >= 0){

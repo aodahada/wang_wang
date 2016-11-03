@@ -61,8 +61,7 @@
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];
             /*  改变实名认证状态 */
-            [SingletonManager sharedManager].isRealName = @"1";
-            [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].isRealName forKey:@"isRealName"];
+            [SingletonManager sharedManager].userModel.is_real_name = @"1";
             [[NSUserDefaults standardUserDefaults] synchronize];
             /* 是否显示警示框 */
             if (_isShowAlert == YES) {

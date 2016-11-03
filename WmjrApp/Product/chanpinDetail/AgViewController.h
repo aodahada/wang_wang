@@ -12,4 +12,6 @@
 
 @property (nonatomic, copy) NSString *webUrl;
 
+@property (nonatomic, copy) NSString *htmlContent;
+
 @end

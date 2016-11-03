@@ -15,7 +15,6 @@
 #import "ProductIntroViewController.h"
 #import "ProductModel.h"
 #import "LoginViewController.h"
-#import "BuyPrivilViewController.h"
 #import "RealNameCertificationViewController.h"
 //#import "MMPopupItem.h"
 //#import "MMPopupWindow.h"
@@ -38,7 +37,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"产品列表";
+//    self.navigationItem.title = @"产品列表";
+    
     
     self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
     
@@ -56,10 +56,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushFundBuyViewController:) name:PUSHTOFUNDBUYVCNOTIFICATION object:nil];
     /* 进入产品详情 */
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushProductIntroViewController:) name:PUSHPRODUCTINTROVCNOTIFICATION object:nil];
-    /* 购买特权金 */
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushBuyPrivilVCAction:) name:PUSHBUYPRIVILVCNOTIFICATION object:nil];
     
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    self.navigationController.navigationBar.hidden = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -75,6 +77,7 @@
         }
     }
     self.tabBarController.tabBar.hidden = NO;
+    self.navigationController.navigationBar.hidden = YES;
     /*  设置颜色 */
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     /*  设置字体颜色 */
@@ -144,10 +147,10 @@
     _silderBar.contentCollectionView = _scrollView;//_scrollView必须要在前面初始化,不然这里值为nil
     [self.view addSubview:_silderBar];
     [_silderBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top);
+        make.top.equalTo(self.view.mas_top).with.offset(20);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.height.mas_offset(40);
+        make.height.mas_offset(RESIZE_UI(44));
     }];
 }
 
@@ -162,7 +165,7 @@
     _scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_scrollView];
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).with.offset(45);
+        make.top.equalTo(self.view.mas_top).with.offset(RESIZE_UI(45));
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.bottom.equalTo(self.view.mas_bottom);
@@ -226,19 +229,6 @@
     loginVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
     [self presentViewController:loginNa animated:YES completion:nil];
-}
-
-/* 进入购买特权金 */
-- (void)pushBuyPrivilVCAction:(NSNotification *)notifi {
-    BuyPrivilViewController *buyPrivilVC = [[BuyPrivilViewController alloc] init];
-    NSArray *array = notifi.object;
-    buyPrivilVC.sep_idStr = array[0];
-    buyPrivilVC.sep_nameStr = array[1];
-    buyPrivilVC.yearRate = array[2];
-    buyPrivilVC.day = array[3];
-    buyPrivilVC.lowpurchase = array[4];
-    buyPrivilVC.availableStr = array[5];
-    [self.navigationController pushViewController:buyPrivilVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

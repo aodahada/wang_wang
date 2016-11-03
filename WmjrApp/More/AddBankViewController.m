@@ -171,7 +171,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
-        if (![[SingletonManager sharedManager].isCard_id isEqualToString:@"0"]) {
+        if (![[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
             return;
         }
         if ([_yanzhengNum.text isEqualToString:@""]) {
@@ -188,10 +188,7 @@
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 [SVProgressHUD showSuccessWithStatus:@"银行卡绑定成功" maskType:(SVProgressHUDMaskTypeNone)];
                 NSString *card_id = [obj[@"data"] objectForKey:@"card_id"];
-                [SingletonManager sharedManager].isCard_id = card_id;
-                [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].isCard_id forKey:@"isCard_id"];
-//                [SingletonManager sharedManager].isRealName = @"1";
-//                [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].isRealName forKey:@"isRealName"];
+                [SingletonManager sharedManager].userModel.card_id = card_id;
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
                 MyselfBankViewController *myselfBankVC = [[MyselfBankViewController alloc] init];

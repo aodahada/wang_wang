@@ -12,9 +12,11 @@
 #define NormalColor color(93.0,93.0,93.0,1.0)
 //被选中状态的颜色
 //#define SelectedColor color(243.0,39.0,66.0,1.0)
-#define SelectedColor color(52.0,35.0,52.0,1.0)
+//#define SelectedColor color(52.0,35.0,52.0,1.0)
+#define SelectedColor color(0,103,172,1.0)
 //下划线的颜色
-#define UnderlineColor color(243.0,39.0,66.0,1.0)
+//#define UnderlineColor color(243.0,39.0,66.0,1.0)
+#define UnderlineColor [UIColor whiteColor]
 //设置一页标题item有几个,默认6个
 //#define itemNum 5
 

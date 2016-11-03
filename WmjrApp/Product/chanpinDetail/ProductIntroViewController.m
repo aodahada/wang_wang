@@ -99,6 +99,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
+    self.navigationController.navigationBar.hidden = NO;
     [self setUpNavigationBar];
 }
 
@@ -158,9 +159,7 @@
     NSDictionary *paramDic = @{@"product_id":self.getPro_id};
     [manager postDataWithUrlActionStr:@"Product/new_detail" withParamDictionary:paramDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
-//            NSLog(@"我的详情数据:%@",obj[@"data"]);
             _productModel = [ProductModel mj_objectWithKeyValues:obj[@"data"]];
-//            NSLog(@"哈哈哈哈哈:%@",_productModel.repay);
             _productModel.type_id = _type_id;
             _productModel.proIntro_id = self.getPro_id;
             /* 立即购买 */
@@ -226,17 +225,17 @@
         make.top.equalTo(bottomView.mas_top);
         make.left.equalTo(bottomView.mas_left);
         make.right.equalTo(bottomView.mas_right);
-        make.height.mas_equalTo(180);
+        make.height.mas_equalTo(RESIZE_UI(180));
     }];
     
     _imageViewForTitle = [[UIImageView alloc]init];
     _imageViewForTitle.image = [UIImage imageNamed:@"icon_touzi"];
     [viewForTop addSubview:_imageViewForTitle];
     [_imageViewForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(viewForTop.mas_top).with.offset(12);
-        make.left.equalTo(viewForTop.mas_left).with.offset(12);
-        make.height.mas_offset(27);
-        make.width.mas_offset(23);
+        make.top.equalTo(viewForTop.mas_top).with.offset(RESIZE_UI(12));
+        make.left.equalTo(viewForTop.mas_left).with.offset(RESIZE_UI(12));
+        make.height.mas_offset(RESIZE_UI(27));
+        make.width.mas_offset(RESIZE_UI(23));
     }];
     
     /* 票据 */
@@ -248,7 +247,7 @@
     [viewForTop addSubview:_billLable];
     [_billLable mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_imageViewForTitle.mas_centerY);
-        make.left.equalTo(viewForTop.mas_left).with.offset(45);
+        make.left.equalTo(viewForTop.mas_left).with.offset(RESIZE_UI(45));
     }];
     
     /* 收益  */
@@ -256,25 +255,25 @@
     _earnOfPercent.textAlignment = NSTextAlignmentCenter;
     _earnOfPercent.textColor = VIEWBACKCOLOR;
         _earnOfPercent.text = [NSString stringWithFormat:@"%.1lf", [_productModel.returnrate floatValue] * 100];
-    _earnOfPercent.font = [UIFont systemFontOfSize:64];
+    _earnOfPercent.font = [UIFont systemFontOfSize:RESIZE_UI(64)];
     [viewForTop addSubview:_earnOfPercent];
     [_earnOfPercent mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_billLable.mas_bottom).with.offset(30);
+        make.top.equalTo(_billLable.mas_bottom).with.offset(RESIZE_UI(30));
         make.left.equalTo(viewForTop.mas_left);
         make.right.equalTo(viewForTop.mas_right);
-        make.height.mas_offset(64);
+        make.height.mas_offset(RESIZE_UI(64));
     }];
     
     _earnOfYearLable = [[UILabel alloc] init];
     _earnOfYearLable.text = @"预期年化益(%)";
     _earnOfYearLable.textAlignment = NSTextAlignmentCenter;
     _earnOfYearLable.textColor = VIEWBACKCOLOR;
-    _earnOfYearLable.font = [UIFont systemFontOfSize:12];
+    _earnOfYearLable.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [viewForTop addSubview:_earnOfYearLable];
     [_earnOfYearLable mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_earnOfPercent.mas_centerX);
-        make.top.equalTo(_earnOfPercent.mas_bottom).with.offset(12);
-        make.height.mas_offset(15);
+        make.top.equalTo(_earnOfPercent.mas_bottom).with.offset(RESIZE_UI(12));
+        make.height.mas_offset(RESIZE_UI(15));
     }];
     
     //三个平分的框
@@ -286,19 +285,19 @@
         make.top.equalTo(viewForTop.mas_bottom);
         make.left.equalTo(bottomView.mas_left);
         make.width.mas_equalTo(SCREEN_WIDTH/3-0.5);
-        make.height.mas_equalTo(74);
+        make.height.mas_equalTo(RESIZE_UI(74));
     }];
     
     _financingLable = [[UILabel alloc] init];
     _financingLable.text = @"融资金额";
     _financingLable.textAlignment = NSTextAlignmentCenter;
     _financingLable.textColor = AUXILY_COLOR;
-    _financingLable.font = [UIFont boldSystemFontOfSize:14];
+    _financingLable.font = [UIFont boldSystemFontOfSize:RESIZE_UI(14)];
     [viewForSum addSubview:_financingLable];
     [_financingLable mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(viewForSum.mas_top).with.offset(17);
+        make.top.equalTo(viewForSum.mas_top).with.offset(RESIZE_UI(17));
         make.centerX.equalTo(viewForSum.mas_centerX);
-        make.height.mas_offset(15);
+        make.height.mas_offset(RESIZE_UI(15));
     }];
     
     /* 融资金额数 */
@@ -306,10 +305,10 @@
     _financingNum.textAlignment = NSTextAlignmentCenter;
     _financingNum.textColor = TITLE_COLOR;
     _financingNum.text = [NSString stringWithFormat:@"%.2f万", [_productModel.balance floatValue] / 10000];;
-    _financingNum.font = [UIFont systemFontOfSize:16];
+    _financingNum.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [viewForSum addSubview:_financingNum];
     [_financingNum mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(viewForSum.mas_top).with.offset(40);
+        make.top.equalTo(viewForSum.mas_top).with.offset(RESIZE_UI(40));
         make.centerX.equalTo(_financingLable.mas_centerX);
     }];
     
@@ -328,12 +327,12 @@
     _financingTermLable.text = @"融资期限";
     _financingTermLable.textAlignment = NSTextAlignmentCenter;
     _financingTermLable.textColor = AUXILY_COLOR;
-    _financingTermLable.font = [UIFont boldSystemFontOfSize:14];
+    _financingTermLable.font = [UIFont boldSystemFontOfSize:RESIZE_UI(14)];
     [viewForLimit addSubview:_financingTermLable];
     [_financingTermLable mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(viewForLimit.mas_top).with.offset(17);
+        make.top.equalTo(viewForLimit.mas_top).with.offset(RESIZE_UI(17));
         make.centerX.equalTo(viewForLimit.mas_centerX);
-        make.height.mas_offset(15);
+        make.height.mas_offset(RESIZE_UI(15));
     }];
     
     /* 融资期限天数 */
@@ -341,12 +340,12 @@
     _financingOfdays.textAlignment = NSTextAlignmentCenter;
     _financingOfdays.textColor = TITLE_COLOR;
     _financingOfdays.text = [NSString stringWithFormat:@"%@天", _productModel.day];
-    _financingOfdays.font = [UIFont systemFontOfSize:16];
+    _financingOfdays.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [viewForLimit addSubview:_financingOfdays];
     [_financingOfdays mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(viewForLimit.mas_top).with.offset(40);
+        make.top.equalTo(viewForLimit.mas_top).with.offset(RESIZE_UI(40));
         make.centerX.equalTo(_financingTermLable.mas_centerX);
-        make.height.mas_offset(20);
+        make.height.mas_offset(RESIZE_UI(20));
     }];
     
     //融资风险
@@ -364,12 +363,12 @@
     _riskLable.text = @"融资风险";
     _riskLable.textAlignment = NSTextAlignmentCenter;
     _riskLable.textColor = AUXILY_COLOR;
-    _riskLable.font = [UIFont boldSystemFontOfSize:14];
+    _riskLable.font = [UIFont boldSystemFontOfSize:RESIZE_UI(14)];
     [viewForRisk addSubview:_riskLable];
     [_riskLable mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(viewForRisk.mas_top).with.offset(17);
+        make.top.equalTo(viewForRisk.mas_top).with.offset(RESIZE_UI(17));
         make.centerX.equalTo(viewForRisk.mas_centerX);
-        make.height.mas_offset(15);
+        make.height.mas_offset(RESIZE_UI(15));
     }];
     
     /* 风险程度 */
@@ -377,12 +376,12 @@
     _financingRisk.textAlignment = NSTextAlignmentCenter;
     _financingRisk.textColor = TITLE_COLOR;
     _financingRisk.text = _productModel.risk;
-    _financingRisk.font = [UIFont systemFontOfSize:16];
+    _financingRisk.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [viewForRisk addSubview:_financingRisk];
     [_financingRisk mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(viewForRisk.mas_top).with.offset(40);
+        make.top.equalTo(viewForRisk.mas_top).with.offset(RESIZE_UI(40));
         make.centerX.equalTo(_riskLable.mas_centerX);
-        make.height.mas_offset(20);
+        make.height.mas_offset(RESIZE_UI(20));
     }];
     
     //产品信息按钮
@@ -391,13 +390,13 @@
     [_buttonForShuoMing setTitle:@"产品信息" forState:UIControlStateNormal];
     [_buttonForShuoMing addTarget:self action:@selector(buttonShuoMingMethod) forControlEvents:UIControlEventTouchUpInside];
     [_buttonForShuoMing setTitleColor:RGBA(0, 102, 177, 1.0) forState:UIControlStateNormal];
-    _buttonForShuoMing.titleLabel.font = [UIFont systemFontOfSize:18];
+    _buttonForShuoMing.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(18)];
     [bottomView addSubview:_buttonForShuoMing];
     [_buttonForShuoMing mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(viewForSum.mas_bottom).with.offset(16);
+        make.top.equalTo(viewForSum.mas_bottom).with.offset(RESIZE_UI(16));
         make.left.equalTo(bottomView.mas_left);
         make.width.mas_offset(SCREEN_WIDTH/2-0.5);
-        make.height.mas_offset(40);
+        make.height.mas_offset(RESIZE_UI(40));
     }];
     
     _labelForShuoMing = [[UILabel alloc]init];
@@ -407,7 +406,7 @@
         make.top.equalTo(_buttonForShuoMing.mas_bottom);
         make.left.equalTo(_buttonForShuoMing.mas_left);
         make.right.equalTo(_buttonForShuoMing.mas_right);
-        make.height.mas_offset(3);
+        make.height.mas_offset(RESIZE_UI(3));
     }];
     
     //产品说明按钮
@@ -416,13 +415,13 @@
     [_buttonForJianJie setTitle:@"产品说明" forState:UIControlStateNormal];
     [_buttonForJianJie setTitleColor:RGBA(102, 102, 102, 1.0) forState:UIControlStateNormal];
     [_buttonForJianJie addTarget:self action:@selector(buttonForJianJieMethod) forControlEvents:UIControlEventTouchUpInside];
-    _buttonForJianJie.titleLabel.font = [UIFont systemFontOfSize:18];
+    _buttonForJianJie.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(18)];
     [bottomView addSubview:_buttonForJianJie];
     [_buttonForJianJie mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_buttonForShuoMing.mas_top);
         make.right.equalTo(bottomView.mas_right);
         make.width.mas_offset(SCREEN_WIDTH/2-0.5);
-        make.height.mas_offset(40);
+        make.height.mas_offset(RESIZE_UI(40));
     }];
     
     _labelForJianJie = [[UILabel alloc]init];
@@ -433,7 +432,7 @@
         make.top.equalTo(_buttonForJianJie.mas_bottom);
         make.left.equalTo(_buttonForJianJie.mas_left);
         make.right.equalTo(_buttonForJianJie.mas_right);
-        make.height.mas_offset(3);
+        make.height.mas_offset(RESIZE_UI(3));
     }];
     
 //    _viewForBottomIntroduce = [[UIView alloc]init];
@@ -595,7 +594,7 @@
         [self presentViewController:loginNa animated:YES completion:nil];
     } else {
         /* 是否实名认证 */
-        if ([[SingletonManager sharedManager].isRealName isEqualToString:@"1"]) {
+        if ([[SingletonManager sharedManager].userModel.is_real_name isEqualToString:@"1"]) {
             if (!_isCheck) {
                 MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
                 alertConfig.defaultTextOK = @"确认";

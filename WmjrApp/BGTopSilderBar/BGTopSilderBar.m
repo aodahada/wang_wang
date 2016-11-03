@@ -49,7 +49,7 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
  */
 -(void)initUnderline{
     CGSize titleSize = [global sizeWithText:[_items firstObject] font:BGFont(17) maxSize:CGSizeMake(screenW/itemNum, MAXFLOAT)];
-    UIView* uline = [[UIView alloc] initWithFrame:CGRectMake((screenW/itemNum - titleSize.width)*0.5-8,38,titleSize.width+16,2)];
+    UIView* uline = [[UIView alloc] initWithFrame:CGRectMake((screenW/itemNum - titleSize.width)*0.5-RESIZE_UI(8),RESIZE_UI(38),titleSize.width+RESIZE_UI(16),RESIZE_UI(2))];
     uline.backgroundColor = UnderlineColor;
     _underline  = uline;
     [_collectView addSubview:uline];
@@ -60,7 +60,7 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
 -(void)initCollectView{
     CGFloat Margin = 0;
     CGFloat W = screenW/itemNum;
-    CGFloat H = 50;
+    CGFloat H = RESIZE_UI(50);
     CGRect rect = CGRectMake(Margin,0,screenW,H);
     //初始化布局类(UICollectionViewLayout的子类)
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
@@ -97,8 +97,10 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
     BGTopSilderBarCell* toCell = (BGTopSilderBarCell*)[_collectView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:toIndex inSection:0]];
     [fromCell setTitleColor:color(93.0,93.0,93.0,1.0)];
     [fromCell setFontScale:NO];
+    fromCell.BGTitleFont = [UIFont fontWithName:@"Arial" size:RESIZE_UI(17)];
     [toCell setTitleColor:SelectedColor];
     [toCell setFontScale:YES];
+    toCell.BGTitleFont = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(19)];
     _currentBarIndex = toIndex;
     
     if ([SingletonManager sharedManager].currentBGTopSliderNum == 1) {
@@ -160,10 +162,12 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
     BGTopSilderBarCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ALCELLID forIndexPath:indexPath];
     if (indexPath.row == _currentBarIndex) {
         [cell setTitleColor:SelectedColor];
-        cell.BGTitleFont = BGFont(17);
+        //cell.BGTitleFont = BGFont(RESIZE_UI(17));
+        cell.BGTitleFont = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(19)];
     }else{
         [cell setTitleColor:NormalColor];
-        cell.BGTitleFont = BGFont(17);
+        cell.BGTitleFont = BGFont(RESIZE_UI(17));
+       // cell.BGTitleFont = [UIFont fontWithName:@"Arial" size:RESIZE_UI(17)];
     }
     cell.item = _items[indexPath.row];
     return cell;

@@ -18,6 +18,9 @@
 #import "BaseNavigationController.h"
 #import "ProductIntroViewController.h"
 #import "NewsModel.h"
+#import "PersonInvestModel.h"
+#import "MessageWViewController.h"
+#import "UserInfoModel.h"
 
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -25,11 +28,17 @@
 
 @property (nonatomic, strong) UIView * naviView;
 
+@property (nonatomic, strong) UIImageView *imageViewForLeft;
+
+@property (nonatomic, strong) UIButton *buttonForMess;
+
 @property (nonatomic, strong) NSMutableArray *arrayForTopImage;//轮播图数组
 
 @property (nonatomic, strong) NSMutableArray *arrayForRecommendPro;//推荐产品列表
 
 @property (nonatomic, strong) NSMutableArray *arrayForNewsList;//新闻列表
+
+@property (nonatomic, strong) PersonInvestModel *personInvestModel;//个人投资信息
 
 @end
 
@@ -38,17 +47,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationController.navigationBar.hidden = YES;
-    
-    /* 获取数据 */
-    [self getDataWithNetManager];
+    self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
     
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     BOOL isNull = [self isNullString:uid];
     if (!isNull) {
+        [SingletonManager sharedManager].uid = uid;
         [self getDataWithLogin];
     }
-    
+    /* 获取数据 */
+    [self getDataWithNetManager];
     //如果有手势密码让他验证手势密码
     //    BOOL isSave = [KeychainData isSave]; //是否有保存
     BOOL isSave = [[SingletonManager sharedManager] isSave]; //是否有保存
@@ -60,13 +68,59 @@
         
     }
     
+    //退出登录时响应执行还有在主页重新登录的时候响应
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutMethod) name:@"logout" object:nil];
+    
 }
 
-#pragma mark - 数据处理 －
+- (void)logoutMethod{
+    [_homeTableView reloadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    //[super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = NO;
+    self.navigationController.navigationBar.hidden = YES;
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+    BOOL isNull = [self isNullString:uid];
+    if (!isNull) {
+        [self getPersonalMessage];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.hidden = NO;
+}
+
+#pragma mark - 获取个人信息
+- (void)getPersonalMessage {
+    
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"加载中"];
+    [manager postDataWithUrlActionStr:@"User/income" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            _personInvestModel = [PersonInvestModel mj_objectWithKeyValues:obj[@"data"]];
+            [_homeTableView reloadData];
+            [SVProgressHUD dismiss];
+        } else {
+            NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+            alertConfig.defaultTextOK = @"确定";
+            [SVProgressHUD dismiss];
+            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+            [alertView show];
+        }
+    }];
+    
+}
+
+#pragma mark - 数据处理
 - (void)getDataWithNetManager {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"Home/index" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
+    [manager postDataWithUrlActionStr:@"Home/index" withParamDictionary:@{@"member_id":@"ss"} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             NSDictionary *dicSum = obj[@"data"];
             NSArray *arrayTopAd = dicSum[@"topad"];
@@ -134,8 +188,9 @@
             [self setUpTableViewMethod];
             //设置自定义navgationview
             [self setReplaceNavMethod];
-            //获取产品列表分类 为产品列表页所用
-            [self getProductListTypeClass];
+            //获取客服电话
+            [self getCompanyTelphoneMethod];
+            
         } else {
             [SVProgressHUD dismiss];
             NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
@@ -144,6 +199,23 @@
             [SVProgressHUD dismiss];
             MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
             [alertView show];
+        }
+    }];
+    
+}
+
+#pragma mark - 获取客服电话
+- (void)getCompanyTelphoneMethod {
+    
+    NetManager *manager = [[NetManager alloc] init];
+    [manager postDataWithUrlActionStr:@"App/setting" withParamDictionary:@{@"name":@"assistant"} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            NSDictionary *dic = obj[@"data"];
+            [SingletonManager sharedManager].companyTel = dic[@"value"];
+            //获取产品列表分类 为产品列表页所用
+            [self getProductListTypeClass];
+        }else {
+            [SVProgressHUD showErrorWithStatus:@"请求失败"];
         }
     }];
     
@@ -186,7 +258,12 @@
     [manager postDataWithUrlActionStr:@"User/login" withParamDictionary:@{@"mobile":mobile, @"pwd":pwd} withBlock:^(id obj) {
         if (obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
-                
+                NSDictionary *dataDic = obj[@"data"];
+                [UserInfoModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                    return @{@"user_id" : @"id"};
+                }];
+                UserInfoModel *userModel = [UserInfoModel mj_objectWithKeyValues:dataDic];
+                [SingletonManager sharedManager].userModel = userModel;
                 return ;
             } else {
                 [SVProgressHUD showInfoWithStatus:@"账号密码有误,请重新登录"];
@@ -210,27 +287,33 @@
 
 - (void)setReplaceNavMethod {
     
-    self.naviView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
-    self.naviView.backgroundColor = RGBA(0, 104, 178, 1.0);
+    self.naviView = [[UIView alloc] init];
+    self.naviView.backgroundColor = RGBA(0, 104, 178, 0.0);
     [self.view addSubview:self.naviView];
-    [self.view bringSubviewToFront:self.naviView];
-    
-    UIImageView *imageViewForLeft = [[UIImageView alloc]init];
-    imageViewForLeft.image = [UIImage imageNamed:@"navi_bar"];
-    [self.naviView addSubview:imageViewForLeft];
-    [imageViewForLeft mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.naviView.mas_top).with.offset(35);
-        make.left.equalTo(self.naviView.mas_left).with.offset(13);
-        make.height.mas_offset(17);
-        make.width.mas_offset(100);
+    [self.naviView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.height.mas_offset(64);
     }];
     
-    UIButton *buttonForMess = [[UIButton alloc]init];
-    [buttonForMess setTitle:@"消息中心" forState:UIControlStateNormal];
-    buttonForMess.titleLabel.font = [UIFont systemFontOfSize:14];
-    [buttonForMess setTitleColor:RGBA(255, 255, 255, 1.0) forState:UIControlStateNormal];
-    [self.naviView addSubview:buttonForMess];
-    [buttonForMess mas_makeConstraints:^(MASConstraintMaker *make) {
+    _imageViewForLeft = [[UIImageView alloc]init];
+    _imageViewForLeft.image = [UIImage imageNamed:@"navi_bar"];
+    [self.naviView addSubview:_imageViewForLeft];
+    [_imageViewForLeft mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.naviView.mas_top).with.offset(35);
+        make.left.equalTo(self.naviView.mas_left).with.offset(13);
+        make.height.mas_offset(RESIZE_UI(17));
+        make.width.mas_offset(RESIZE_UI(100));
+    }];
+    
+    _buttonForMess = [[UIButton alloc]init];
+    [_buttonForMess setTitle:@"消息中心" forState:UIControlStateNormal];
+    _buttonForMess.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    [_buttonForMess setTitleColor:RGBA(255, 255, 255, 1.0) forState:UIControlStateNormal];
+    [_buttonForMess addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.naviView addSubview:_buttonForMess];
+    [_buttonForMess mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.naviView.mas_top).with.offset(38);
         make.right.equalTo(self.naviView.mas_right).with.offset(-12);
         make.height.mas_offset(14);
@@ -304,7 +387,7 @@
         
         UILabel *labelForTitle = [[UILabel alloc]init];
         labelForTitle.text = @"旺马优选";
-        labelForTitle.font = [UIFont systemFontOfSize:12];
+        labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         labelForTitle.textColor = RGBA(153, 153, 153, 1.0);
         [viewForHeader addSubview:labelForTitle];
         [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -325,7 +408,7 @@
         
         UILabel *labelForTitle = [[UILabel alloc]init];
         labelForTitle.text = @"行业头条";
-        labelForTitle.font = [UIFont systemFontOfSize:12];
+        labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         labelForTitle.textColor = RGBA(153, 153, 153, 1.0);
         [viewForHeader addSubview:labelForTitle];
         [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -347,19 +430,19 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
-        CGFloat height = 202;
+        CGFloat height = RESIZE_UI(202);
         return height;
     } else if (indexPath.section == 1) {
-        CGFloat height = SCREEN_WIDTH/375*109;
+        CGFloat height = RESIZE_UI(109);
         return height;
     } else if (indexPath.section == 2) {
         if (indexPath.row == _arrayForRecommendPro.count-1) {
-            return 120;
+            return RESIZE_UI(120);
         } else {
-            return 134;
+            return RESIZE_UI(134);
         }
     } else {
-        return 90;
+        return RESIZE_UI(90);
     }
     
 }
@@ -368,7 +451,19 @@
     
     if (indexPath.section==0) {
         
-        HomeTableViewCellFirst *cell = [[HomeTableViewCellFirst alloc]init];
+        HomeTableViewCellFirst *cell = [[HomeTableViewCellFirst alloc]initWithDic:_personInvestModel];
+        cell.learnWangma = ^(){
+            [self jumpToAdWebView:@"新浪资金托管平台" WebUrl:@"https://pay.sina.com.cn/zjtg"];
+        };
+        
+        cell.contactWangma = ^(){
+            NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",[SingletonManager sharedManager].companyTel];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+        };
+        
+        cell.jumpToMessageCenter = ^(){
+            [self messageBtnAction];
+        };
         return cell;
         
     } else if(indexPath.section == 1) {
@@ -377,7 +472,6 @@
         cell.cycleImage = ^(ImgHomeModel *imgModel) {
             NSString *productId = imgModel.product_id;
             NSString *url = imgModel.url;
-            NSLog(@"我的url:%@",url);
             productId = [self convertNullString:productId];
             url = [self convertNullString:url];
             if ([url isEqualToString:@""] && [productId isEqualToString:@""]) {
@@ -406,7 +500,6 @@
         [cell configCellWithModel:_arrayForRecommendPro[indexPath.row]];
         return cell;
     } else {
-//        HomeTableViewCellForth *cell = [[HomeTableViewCellForth alloc]i];
         HomeTableViewCellForth *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeTableViewCellForth"];
         if (cell == nil) {
             NSBundle *bundle = [NSBundle mainBundle];
@@ -423,16 +516,44 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 2) {
+        ProductModel *productModel = _arrayForRecommendPro[indexPath.row];
+        ProductIntroViewController *proIntroVC = [[ProductIntroViewController alloc] init];
+        proIntroVC.getPro_id = productModel.proIntro_id;
+        [self.navigationController pushViewController:proIntroVC animated:YES];
+    }
+    if (indexPath.section == 3) {
+        
+        NewsModel *newsModel = _arrayForNewsList[indexPath.row];
+        AgViewController *agVC =[[AgViewController alloc] init];
+        agVC.title = newsModel.title;
+        agVC.htmlContent = newsModel.content;
+        BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+        [self presentViewController:baseNa animated:YES completion:^{
+        }];
+    }
+    
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat alpha = (scrollView.contentOffset.y-18) / 100;
+    CGFloat alpha = (RESIZE_UI(scrollView.contentOffset.y)-RESIZE_UI(18)) / 100;
     if (alpha >= 1) {
         alpha = 1;
     }else if (alpha <= 0)
     {
         alpha = 0;
     }
-    self.naviView.backgroundColor = [RGBA(0, 104, 178, 1.0) colorWithAlphaComponent:alpha];
+    //self.naviView.backgroundColor = [RGBA(0, 104, 178, 1.0) colorWithAlphaComponent:alpha];
+    self.naviView.backgroundColor = RGBA(0, 104, 178, alpha);
+    _imageViewForLeft.alpha = alpha;
+    if (alpha<0.05) {
+        _buttonForMess.alpha = 0.05;
+    }else {
+        _buttonForMess.alpha = alpha;
+    }
     
     CGFloat sectionHeaderHeight = -20;
     if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
@@ -441,6 +562,23 @@
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
     }
 
+}
+
+- (void)jumpToAdWebView:(NSString *)title WebUrl:(NSString *)url{
+    
+    AgViewController *agVC =[[AgViewController alloc] init];
+    agVC.title = title;
+    agVC.webUrl = url;
+    BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+    [self presentViewController:baseNa animated:YES completion:^{
+    }];
+    
+}
+
+#pragma mark - 跳转到消息页面
+- (void)messageBtnAction {
+    MessageWViewController *messageVC = [[MessageWViewController alloc] initWithNibName:@"MessageWViewController" bundle:nil];
+    [self.navigationController pushViewController:messageVC animated:YES];
 }
 
 #pragma mark - 判断字符串是否为空

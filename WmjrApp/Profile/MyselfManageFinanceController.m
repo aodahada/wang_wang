@@ -38,11 +38,11 @@
 - (void)setUpNavigationBar {
     self.title = @"我的理财";
     /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = GERENCOLOR;
-    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
-    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barTintColor = RGBA(0, 108, 175, 1.0);
+    //    /*  设置字体颜色 */
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:VIEWBACKCOLOR};
+    //    /* 渲染颜色 */
+    self.navigationController.navigationBar.tintColor = RGBA(0, 108, 175, 1.0);
     
     /*  去掉边线 */
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
@@ -97,7 +97,7 @@
 //头视图
 - (UIView *)setUpProfileHeadView {
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, RESIZE_UI(280))];
-    headView.backgroundColor = GERENCOLOR;
+    headView.backgroundColor = RGBA(0, 108, 175, 1.0);
     UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(RESIZE_UI(45), RESIZE_UI(10), RESIZE_UI(280), RESIZE_UI(20))];
     lable.text = @"今日预计收益(元)";
     lable.textAlignment = NSTextAlignmentCenter;
@@ -142,7 +142,7 @@
         button.tag = 101 + i;
         [button setTitle:titArray[i] forState:UIControlStateNormal];
         if (i == 0) {
-            [button setTitleColor:BASECOLOR forState:UIControlStateNormal];
+            [button setTitleColor:RGBA(0, 108, 175, 1.0) forState:UIControlStateNormal];
         } else {
             [button setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
         }
@@ -151,7 +151,7 @@
         [_aView addSubview:button];
     }
     _redLine = [[UIView alloc] initWithFrame:CGRectMake(0, RESIZE_UI(288), SCREEN_WIDTH / 2, RESIZE_UI(2))];
-    _redLine.backgroundColor = [UIColor redColor];
+    _redLine.backgroundColor = RGBA(0, 108, 175, 1.0);
     [headView addSubview:_redLine];
     
     return headView;
@@ -159,7 +159,7 @@
 
 - (void)buttonAction:(UIButton *)btn {
     NSString *stateStr = nil;
-    [btn setTitleColor:BASECOLOR forState:UIControlStateNormal];
+    [btn setTitleColor:RGBA(0, 108, 175, 1.0) forState:UIControlStateNormal];
     if ([btn.titleLabel.text isEqualToString:@"持有中"]) {
         stateStr = @"4";
         [UIView animateWithDuration:.3 animations:^{
@@ -179,7 +179,7 @@
     
     [_financeArray removeAllObjects];
     NetManager *manager = [[NetManager alloc] init];
-    [SVProgressHUD showWithStatus:@"正在加载" maskType:(SVProgressHUDMaskTypeBlack)];
+    [SVProgressHUD showWithStatus:@"正在加载"];
     [manager postDataWithUrlActionStr:@"Product/myProduct" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"page":@"", @"size":@"",@"state":stateStr} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];
@@ -209,7 +209,7 @@
     [_tableView registerClass:[MyselfManageFinanceCell class] forCellReuseIdentifier:@"cell1"];
     
     NetManager *manager = [[NetManager alloc] init];
-    [SVProgressHUD showWithStatus:@"正在加载" maskType:(SVProgressHUDMaskTypeBlack)];
+    [SVProgressHUD showWithStatus:@"正在加载"];
     [manager postDataWithUrlActionStr:@"Product/myProduct" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"page":@"", @"size":@"",@"state":@"4"} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];

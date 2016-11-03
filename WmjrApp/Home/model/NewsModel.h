@@ -17,5 +17,6 @@
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *sort;
 @property (nonatomic, copy) NSString *create_time;
+@property (nonatomic, copy) NSString *url;
 
 @end

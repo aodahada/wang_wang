@@ -33,22 +33,22 @@
     self.billLable = [[UILabel alloc] init];
     self.billLable.textAlignment = NSTextAlignmentLeft;
     self.billLable.textColor = TITLE_COLOR;
-    self.billLable.font = [UIFont systemFontOfSize:17];
+//    self.billLable.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+    [self.billLable setFont:[UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(17)]];
     [self.contentView addSubview:self.billLable];
     [self.billLable mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView.mas_top).with.offset(15);
-        make.left.equalTo(self.contentView.mas_left).with.offset(12);
-//        make.height.mas_offset(20);
+        make.top.equalTo(self.contentView.mas_top).with.offset(RESIZE_UI(15));
+        make.left.equalTo(self.contentView.mas_left).with.offset(RESIZE_UI(12));
     }];
 
     self.imageViewForNewer = [[UIImageView alloc]init];
     self.imageViewForNewer.image = [UIImage imageNamed:@"icon_xrg"];
     [self.contentView addSubview:self.imageViewForNewer];
     [self.imageViewForNewer mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).with.offset(18);
-        make.right.equalTo(self.mas_right).with.offset(-10);
-        make.width.mas_offset(50);
-        make.height.mas_offset(19);
+        make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(18));
+        make.right.equalTo(self.mas_right).with.offset(RESIZE_UI(-10));
+        make.width.mas_offset(RESIZE_UI(50));
+        make.height.mas_offset(RESIZE_UI(19));
     }];
     
     
@@ -56,38 +56,37 @@
     self.earnOfPercent.textAlignment = NSTextAlignmentCenter;
 //    self.earnOfPercent.text = @"5.50%";
     self.earnOfPercent.textColor = ORANGE_COLOR;
-    self.earnOfPercent.font = [UIFont systemFontOfSize:50];
+    self.earnOfPercent.font = [UIFont systemFontOfSize:RESIZE_UI(48)];
     [self.contentView addSubview:self.earnOfPercent];
     [self.earnOfPercent mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).with.offset(48);
-        make.left.equalTo(self.contentView.mas_left).with.offset(12);
-//        make.height.mas_offset(45);
+        make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(48));
+        make.left.equalTo(self.contentView.mas_left).with.offset(RESIZE_UI(12));
     }];
     
     self.earnOfYearLable = [[UILabel alloc] init];
     self.earnOfYearLable.text = @"预期年化收益";
     self.earnOfYearLable.textAlignment = NSTextAlignmentLeft;
     self.earnOfYearLable.textColor = TITLE_COLOR ;
-    self.earnOfYearLable.font = [UIFont systemFontOfSize:12];
+    self.earnOfYearLable.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [self.contentView addSubview:self.earnOfYearLable];
     [self.earnOfYearLable mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.earnOfPercent.mas_bottom).with.offset(10);
+        make.top.equalTo(self.earnOfPercent.mas_bottom).with.offset(RESIZE_UI(10));
         make.left.equalTo(self.earnOfPercent.mas_left);
-        make.bottom.equalTo(self.mas_bottom).with.offset(-14);
-        make.height.mas_offset(15);
+        make.bottom.equalTo(self.mas_bottom).with.offset(RESIZE_UI(-14));
+        make.height.mas_offset(RESIZE_UI(15));
     }];
     
     self.buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    self.buyBtn.frame = RESIZE_FRAME(CGRectMake(275, 15, 85, 20));
     [self.buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.buyBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    self.buyBtn.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     [self.buyBtn addTarget:self action:@selector(buyBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.buyBtn];
     [self.buyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).with.offset(61);
-        make.right.equalTo(self.mas_right).with.offset(-12);
-        make.height.mas_offset(33);
-        make.width.mas_offset(77);
+        make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(61));
+        make.right.equalTo(self.mas_right).with.offset(RESIZE_UI(-12));
+        make.height.mas_offset(RESIZE_UI(33));
+        make.width.mas_offset(RESIZE_UI(77));
     }];
     
     _progressView = [[ProgressView alloc]init];
@@ -95,12 +94,13 @@
     _progressView.arcUnfinishColor = RGBA(0, 108, 175, 1.0);
     _progressView.centerColor = [UIColor whiteColor];
     _progressView.arcBackColor = RGBA(246, 246, 246, 1.0);
-    _progressView.width = 6.0f;
+    _progressView.width = RESIZE_UI(6);
     _progressView.percent = 0.9;
     [self.contentView addSubview:_progressView];
     [_progressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.width.mas_offset(49);
-        make.centerY.equalTo(self.earnOfPercent.mas_centerY).with.offset(-2);
+        make.height.width.mas_offset(RESIZE_UI(46));
+//        make.centerY.equalTo(self.earnOfPercent.mas_centerY).with.offset(RESIZE_UI(-4));
+        make.bottom.equalTo(self.earnOfPercent.mas_bottom);
 //        make.left.equalTo(self.earnOfPercent.mas_right).with.offset(20);
         make.centerX.equalTo(self.mas_centerX);
     }];
@@ -109,12 +109,12 @@
     self.progressLable.text = @"购买进度";
     self.progressLable.textAlignment = NSTextAlignmentCenter;
     self.progressLable.textColor = TITLE_COLOR;
-    self.progressLable.font = [UIFont systemFontOfSize:12];
+    self.progressLable.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [self.contentView addSubview:self.progressLable];
     [self.progressLable mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_progressView.mas_centerX);
         make.bottom.equalTo(self.earnOfYearLable.mas_bottom);
-        make.height.mas_offset(15);
+        make.height.mas_offset(RESIZE_UI(15));
     }];
     
 }
@@ -148,7 +148,7 @@
 
     _progressView.percent = [model.buyrate floatValue];
     NSString *earnOfPercentStr = [NSString stringWithFormat:@"%.2lf％", [model.returnrate floatValue] * 100];
-    self.earnOfPercent.attributedText =  [self changeStringWithString:earnOfPercentStr withFrontColor:RGBA(255, 86, 30, 1.0) WithBehindColor:RGBA(255, 86, 30, 1.0) withFrontFont:[UIFont systemFontOfSize:45] WithBehindFont:[UIFont systemFontOfSize:22]];
+    self.earnOfPercent.attributedText =  [self changeStringWithString:earnOfPercentStr withFrontColor:RGBA(255, 86, 30, 1.0) WithBehindColor:RGBA(255, 86, 30, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(33)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(22)]];
 
 }
 

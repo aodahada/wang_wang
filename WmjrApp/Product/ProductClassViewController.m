@@ -36,30 +36,31 @@
     //    _isRealNameAuth = @"1";
     
     _dataSource = [NSMutableArray array];
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - RESIZE_UI(40) - 64 - 49) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - RESIZE_UI(44) - 20 - 49) style:UITableViewStyleGrouped];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     [_tableView registerClass:[ProductViewCell class] forCellReuseIdentifier:@"productCell"];
     
     /* 刷新 */
-    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
-    _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+//    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
+//    _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    
+    //下拉刷新
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self refreshData];
+    }];
+    
+    // 设置自动切换透明度(在导航栏下面自动隐藏)
+    _tableView.mj_header.automaticallyChangeAlpha = YES;
+    
+    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self loadMoreData];
+    }];
     
     /*  请求数据 */
     [self getDataWithNetManager];
-  
-//    UILabel *label = [[UILabel alloc]init];
-//    label.text = @"哈哈哈";
-//    label.textAlignment = NSTextAlignmentCenter;
-//    label.font = [UIFont systemFontOfSize:25];
-//    [self.view addSubview:label];
-//    [label mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.center.equalTo(self.view);
-//////        make.left.equalTo(self.view.mas_left);
-////        make.centerX.equalTo(self.view.mas_centerX);
-////        make.top.equalTo(self.view.mas_top);
-//    }];
     
 }
 
@@ -101,6 +102,8 @@
                 [_dataSource  addObjectsFromArray:array];
             }
             [_tableView reloadData];
+            [_tableView.mj_header endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     }];
 }
@@ -111,7 +114,6 @@
     _isRefresh = YES;
     _pageNum = 1;
     [self getDataWithNetManager];
-    [_tableView.mj_header endRefreshing];
 }
 
 // 加载更多数据
@@ -119,7 +121,6 @@
 {
     _pageNum++;
     [self getDataWithNetManager];
-    [_tableView.mj_footer endRefreshing];
 }
 
 
@@ -164,9 +165,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        return 134;
+        return RESIZE_UI(134);
     } else {
-        return 33;
+        return RESIZE_UI(33);
     }
 }
 
@@ -176,7 +177,7 @@
     if ([[SingletonManager sharedManager].uid isEqualToString:@""]) {
         /* 未登录需登录 */
         [[NSNotificationCenter defaultCenter] postNotificationName:PRESENTLOGINVCNOTIFICATION object:nil];
-    } else if ([[SingletonManager sharedManager].isRealName isEqualToString:@"0"]) {
+    } else if ([[SingletonManager sharedManager].userModel.is_real_name isEqualToString:@"0"]) {
         [[MMPopupWindow sharedWindow] cacheWindow];
         MMPopupItemHandler block = ^(NSInteger index){
             if (index == 0) {

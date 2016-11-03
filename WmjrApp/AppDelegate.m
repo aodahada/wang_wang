@@ -12,8 +12,8 @@
 #import "HomePageViewController.h"
 #import "ProductListViewController.h"
 #import "ProfileViewController.h"
-#import "MoreViewController.h"
-#import "GuideViewController.h"
+#import "UserInfoModel.h"
+#import "LoginViewController.h"
 
 #import <ShareSDKConnector/ShareSDKConnector.h>
 #import <TencentOpenAPI/QQApiInterface.h>
@@ -29,7 +29,7 @@
 //动态广告
 #define ImgUrlString2 @"http://c.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a6a943c180b3b5bb5c8eab8e7.jpg"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<UITabBarControllerDelegate>
 
 @end
 
@@ -104,33 +104,6 @@
     return YES;
 }
 
-- (void)loadingGuide {
-    [self loadLogin];
-}
-
-- (void)loadLogin {
-    NSString *uidStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-    if (!uidStr) {
-        uidStr = @"";
-    }
-    [SingletonManager sharedManager].uid = uidStr;
-    NSString *isRealNameStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"isRealName"];
-    if (!isRealNameStr) {
-        isRealNameStr = @"0";
-    }
-    [SingletonManager sharedManager].isRealName = isRealNameStr;
-    NSString *isCard_idStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"isCard_id"];
-    if (!isCard_idStr) {
-        isCard_idStr = @"0";
-    }
-    [SingletonManager sharedManager].isCard_id = isCard_idStr;
-    
-    
-    [self initTabbarCWithControllers];
-    
-    
-}
-
 /**
  *  启动页广告
  */
@@ -179,23 +152,7 @@
         //广告展示完成回调,设置window根控制器
 //        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
         
-        NSString *versionKey = (__bridge NSString *)kCFBundleVersionKey;
-        // 记录中的版本
-        NSString *lastVersion = [[NSUserDefaults standardUserDefaults] objectForKey:versionKey];
-        // 当前版本
-        NSString *currentVersion = [NSBundle mainBundle].infoDictionary[versionKey];
-        
-        if (![lastVersion isEqualToString:currentVersion]) {
-            GuideViewController *guideVC = [[GuideViewController alloc] init];
-            self.window.rootViewController = guideVC;
-            [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:versionKey];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        } else {
-            [self loadLogin];
-        }
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadingGuide) name:@"LoadingGuide" object:nil];
-        
-//        [self initTabbarCWithControllers];
+        [self initTabbarCWithControllers];
         
     }];
 }
@@ -279,32 +236,61 @@
 //    HomeViewController *homeVC = [[HomeViewController alloc] init];
     HomePageViewController *homeVC = [[HomePageViewController alloc]init];
     BaseNavigationController *homeNa = [[BaseNavigationController alloc] initWithRootViewController:homeVC];
-    UITabBarItem *homeTab = [[UITabBarItem alloc] initWithTitle:@"首页" image:[[UIImage imageNamed:@"tab_btn_home_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_home_sel"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
+    UITabBarItem *homeTab = [[UITabBarItem alloc] initWithTitle:@"首页" image:[[UIImage imageNamed:@"tab_btn_home_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_home_pre"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
     homeVC.tabBarItem = homeTab;
     
 //    ProductViewController *productVC = [ProductViewController sharedManager];
     ProductListViewController *productVC = [[ProductListViewController alloc]init];
     BaseNavigationController *productNa = [[BaseNavigationController alloc] initWithRootViewController:productVC];
-    UITabBarItem *productTab = [[UITabBarItem alloc] initWithTitle:@"投资" image:[[UIImage imageNamed:@"tab_btn_invest_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_invest_sel"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
+    UITabBarItem *productTab = [[UITabBarItem alloc] initWithTitle:@"理财" image:[[UIImage imageNamed:@"tab_btn_licai_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_licai_pre"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
     productVC.tabBarItem = productTab;
     
     
     ProfileViewController *profileVC = [[ProfileViewController alloc] init];
     BaseNavigationController *profileNa = [[BaseNavigationController alloc] initWithRootViewController:profileVC];
-    UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"个人" image:[[UIImage imageNamed:@"tab_btn_me_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_me_sel"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
+    UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"账户中心" image:[[UIImage imageNamed:@"tab_btn_zhanghui_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_zhanghui_pre"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
     profileVC.tabBarItem = profileTab;
     
-    MoreViewController *moreVC = [[MoreViewController alloc] init];
-    BaseNavigationController *moreNa = [[BaseNavigationController alloc] initWithRootViewController:moreVC];
-    UITabBarItem *moreTab = [[UITabBarItem alloc] initWithTitle:@"更多" image:[[UIImage imageNamed:@"tab_btn_more_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_more_sel"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
-    moreVC.tabBarItem = moreTab;
-    
     self.tabbarC = [[UITabBarController alloc] init];
-    self.tabbarC.viewControllers = @[homeNa, productNa, profileNa, moreNa];
-    self.tabbarC.tabBar.tintColor = [UIColor redColor];
+    self.tabbarC.viewControllers = @[homeNa, productNa, profileNa];
+    self.tabbarC.tabBar.tintColor = RGBA(0, 102, 177, 1.0);
+    self.tabbarC.delegate = self;
     
     self.window.rootViewController = self.tabbarC;
     
+}
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    if ([viewController.tabBarItem.title isEqualToString:@"账户中心"]) {
+        NSString *uid = [[NSUserDefaults standardUserDefaults]objectForKey:@"uid"];
+        uid = [self convertNullString:uid];
+        if ([uid isEqualToString:@""]) {
+            LoginViewController *loginVC = [[LoginViewController alloc] init];
+            UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
+            [((UINavigationController *)tabBarController.selectedViewController) presentViewController:loginNa animated:YES completion:nil];
+            return NO;
+        } else {
+            return YES;
+        }
+    } else {
+        return YES;
+    }
+}
+
+- (NSString*)convertNullString:(NSString*)oldString{
+    if (oldString!=nil && (NSNull *)oldString != [NSNull null]) {
+        if ([oldString length]!=0) {
+            if ([oldString isEqualToString:@"(null)"]) {
+                return @"";
+            }
+            return  oldString;
+        }else{
+            return @"";
+        }
+    }
+    else{
+        return @"";
+    }
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

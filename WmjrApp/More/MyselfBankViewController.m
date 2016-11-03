@@ -35,13 +35,6 @@
 - (void)setUpNavigationBar {
     self.view.backgroundColor = VIEWBACKCOLOR;
     
-//    _button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    _button.frame = CGRectMake(0, 0, 100, 44);
-//    _button.backgroundColor = [UIColor whiteColor];
-//    [_button addTarget:self action:@selector(buttonAction) forControlEvents:(UIControlEventTouchUpInside)];
-//    [_button setBackgroundImage:[UIImage imageNamed:@"arrow_back"] forState:UIControlStateNormal];
-//    [self.navigationController.navigationBar addSubview:_button];
-    
     UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _button = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(buttonAction)];
     self.navigationItem.leftBarButtonItem = _button;
@@ -153,8 +146,7 @@
                 if ([obj[@"result"] isEqualToString:@"1"]) {
                     [SVProgressHUD showSuccessWithStatus:@"解绑成功" maskType:(SVProgressHUDMaskTypeNone)];
                     
-                    [SingletonManager sharedManager].isCard_id = @"0";
-                    [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].isCard_id forKey:@"isCard_id"];
+                    [SingletonManager sharedManager].userModel.card_id = @"0";
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
                     [self.navigationController popToRootViewControllerAnimated:YES];

@@ -104,8 +104,8 @@
             break;
     }
     
-    cell.textLabel.font= [UIFont systemFontOfSize:15.0f];
-    cell.detailTextLabel.font= [UIFont systemFontOfSize:15.0f];
+    cell.textLabel.font= [UIFont systemFontOfSize:RESIZE_UI(15)];
+    cell.detailTextLabel.font= [UIFont systemFontOfSize:RESIZE_UI(15)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.textColor = AUXILY_COLOR;
     cell.detailTextLabel.textColor = TITLE_COLOR;
@@ -128,11 +128,11 @@
     cdLable.text = @"存单原件照:";
     cdLable.textAlignment = NSTextAlignmentLeft;
     cdLable.textColor = AUXILY_COLOR;
-    cdLable.font = [UIFont systemFontOfSize:15.0f];
+    cdLable.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     [aView addSubview:cdLable];
     [cdLable mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(aView.mas_top).with.offset(5);
-        make.left.equalTo(aView.mas_left).with.offset(15);
+        make.left.equalTo(aView.mas_left).with.offset(RESIZE_UI(15));
         make.height.mas_offset(15);
     }];
     

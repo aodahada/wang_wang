@@ -17,6 +17,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    _labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+    _labelForInfo.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

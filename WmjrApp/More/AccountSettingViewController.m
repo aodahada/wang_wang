@@ -182,10 +182,10 @@
                 if (isCard_id != nil) {
                     if ([isCard_id isEqualToString:@"0"]) {
                         card_idStr = @"未绑定";
-                        [SingletonManager sharedManager].isCard_id = @"0";
+                        [SingletonManager sharedManager].userModel.card_id = @"0";
                     } else {
                         card_idStr = @"已绑定";
-                        [SingletonManager sharedManager].isCard_id = @"1";
+                        [SingletonManager sharedManager].userModel.card_id = @"1";
                     }
                     [cell addSubview:[self detailLableTitle:card_idStr withRealNameId:isCard_id]];
                 }
@@ -418,7 +418,7 @@
             case 1:
             {
                 //实名认证
-                if ([[SingletonManager sharedManager].isRealName isEqualToString:@"0"] && [_isRealNameStr isEqualToString:@"0"]) {
+                if ([[SingletonManager sharedManager].userModel.is_real_name isEqualToString:@"0"] && [_isRealNameStr isEqualToString:@"0"]) {
                     RealNameCertificationViewController *realNameCerVC = [[RealNameCertificationViewController alloc] init];
                     [self.navigationController pushViewController:realNameCerVC animated:YES];
                 }
@@ -479,7 +479,7 @@
             case 2:
             {
                 
-                if ([[SingletonManager sharedManager].isCard_id isEqualToString:@"0"]) {
+                if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
                     /*  我的银行卡 */
                     UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
                     AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
@@ -487,7 +487,7 @@
                     [self.navigationController pushViewController:addBankVC animated:YES];
                 } else {
                     MyselfBankViewController *myselfBankVC = [[MyselfBankViewController alloc] init];
-                    myselfBankVC.card_id = [SingletonManager sharedManager].isCard_id;
+                    myselfBankVC.card_id = [SingletonManager sharedManager].userModel.card_id;
                     [self.navigationController pushViewController:myselfBankVC animated:YES];
                 }
             }
@@ -521,12 +521,13 @@
             if (index == 1) {
                 /* 将当前的uid置为空 */
                 [SingletonManager sharedManager].uid = @"";
-                [SingletonManager sharedManager].isRealName = @"0";
-                [SingletonManager sharedManager].isCard_id = @"0";
-                [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].isRealName forKey:@"isRealName"];
-                [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].isCard_id forKey:@"isCard_id"];
+                [SingletonManager sharedManager].userModel = nil;
                 [[NSUserDefaults standardUserDefaults] setValue:[SingletonManager sharedManager].uid forKey:@"uid"];
+                [[NSUserDefaults standardUserDefaults] setValue:[SingletonManager sharedManager].userModel forKey:@"userModel"];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"mobile"];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"passWord"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"logout" object:nil];
 #warning 待定
                 //可能退出时也要删除手势密码
 //                [KeychainData forgotPsw];

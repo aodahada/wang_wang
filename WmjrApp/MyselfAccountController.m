@@ -99,7 +99,7 @@
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             /* 充值 */
-            if ([[SingletonManager sharedManager].isRealName isEqualToString:@"0"]) {
+            if ([[SingletonManager sharedManager].userModel.is_real_name isEqualToString:@"0"]) {
                 MMPopupItemHandler block = ^(NSInteger index){
                     if (index == 0) {
                         return ;
@@ -119,18 +119,6 @@
                                                                       items:items];
                 [alertView show];
             }
-//            if ([[SingletonManager sharedManager].isCard_id isEqualToString:@"0"]) {
-//                /* 开通快捷支付 */
-//                UIStoryboard *openFast = [UIStoryboard storyboardWithName:@"OpenFastPaymentController" bundle:[NSBundle mainBundle]];
-//                OpenFastPaymentController *openFastPayment = [openFast instantiateViewControllerWithIdentifier:@"openFastPayment"];
-//                openFastPayment.hidesBottomBarWhenPushed = YES;
-////                openFastPayment.transferModel = self.smartModel;
-////                openFastPayment.smartManager = ^(CGFloat price){
-////                    _myAccoutLab.text = [NSString stringWithFormat:@"%.2f",price];
-////                };
-//                [self.navigationController pushViewController:openFastPayment animated:YES];
-//                return;
-//            }
             else {
                 RechargeViewController *rechangeVC = [[RechargeViewController alloc] init];
                 rechangeVC.accountChangeBlock = ^(CGFloat account) {

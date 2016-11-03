@@ -22,7 +22,28 @@
     UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_back"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backAction)];
     self.navigationItem.leftBarButtonItem = backBtn;
     _agWeb.delegate = self;
-    [_agWeb loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_webUrl]]];
+    [_agWeb setScalesPageToFit:YES];
+    if (![[self convertNullString:_htmlContent] isEqualToString:@""]) {
+        [_agWeb loadHTMLString:_htmlContent baseURL:nil];
+    }else {
+        [_agWeb loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_webUrl]]];
+    }
+}
+
+- (NSString*)convertNullString:(NSString*)oldString{
+    if (oldString!=nil && (NSNull *)oldString != [NSNull null]) {
+        if ([oldString length]!=0) {
+            if ([oldString isEqualToString:@"(null)"]) {
+                return @"";
+            }
+            return  oldString;
+        }else{
+            return @"";
+        }
+    }
+    else{
+        return @"";
+    }
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {

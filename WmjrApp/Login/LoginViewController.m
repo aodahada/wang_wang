@@ -15,6 +15,7 @@
 #import "MMPopupWindow.h"
 #import "JPUSHService.h"
 #import "AliGesturePasswordViewController.h"
+#import "UserInfoModel.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 
@@ -126,22 +127,21 @@
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 [SVProgressHUD showSuccessWithStatus:@"登录成功" maskType:(SVProgressHUDMaskTypeNone)];
                 NSDictionary *dataDic = obj[@"data"];
+                [UserInfoModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                    return @{@"user_id" : @"id"};
+                }];
+                UserInfoModel *userModel = [UserInfoModel mj_objectWithKeyValues:dataDic];
                 [SingletonManager sharedManager].uid = dataDic[@"id"];
-//                NSLog(@"我的id:%@",dataDic[@"id"]);
-                [SingletonManager sharedManager].isRealName = dataDic[@"is_real_name"];
-//                [SingletonManager sharedManager].isCard_id = dataDic[@"card_id"];
-                [SingletonManager sharedManager].invitationcode = dataDic[@"invitationcode"];
-                /* 设置uid, 是否认证, 是否绑卡 */
+                [SingletonManager sharedManager].userModel = userModel;
                 [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].uid forKey:@"uid"];
-                [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].isRealName forKey:@"isRealName"];
-                [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].invitationcode forKey:@"invitationcode"];
                 [[NSUserDefaults standardUserDefaults] setObject:_phoneNum.text forKey:@"mobile"];
                 [[NSUserDefaults standardUserDefaults] setObject:_passWord.text forKey:@"passWord"];
-//                [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].isCard_id forKey:@"isCard_id"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
+                [_phoneNum resignFirstResponder];
+                [_passWord resignFirstResponder];
                 
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"loginSuccess" object:nil];
                 [JPUSHService setAlias:[SingletonManager sharedManager].uid callbackSelector:nil object:self];
-//                [self dismissViewControllerAnimated:YES completion:nil];
                 
                 BOOL isSave = [[SingletonManager sharedManager]isSave];
                 if (isSave) {
