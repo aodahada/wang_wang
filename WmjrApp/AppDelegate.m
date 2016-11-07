@@ -23,6 +23,8 @@
 #import "JPUSHService.h"
 #import "MyselfManageFinanceController.h"
 #import "XHLaunchAd.h"
+//jspatch
+#import <JSPatchPlatform/JSPatch.h>
 
 //静态广告
 #define ImgUrlString1 @"http://d.hiphotos.baidu.com/image/pic/item/14ce36d3d539b60071473204e150352ac75cb7f3.jpg"
@@ -42,6 +44,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [NSThread sleepForTimeInterval:2.0];
+    //jspatch配置
+//    [JSPatch startWithAppKey:@"153660e85d541b6c"];
+//    [JSPatch sync];
+    //本地测试jspatch
+    [JSPatch testScriptInBundle];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.

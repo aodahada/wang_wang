@@ -22,6 +22,9 @@ PODS:
     - AFNetworking/NSURLSession
   - DZNEmptyDataSet (1.8.1)
   - IQKeyboardManager (3.3.4)
+  - JSPatchPlatform (1.6.2):
+    - JSPatchPlatform/Core (= 1.6.2)
+  - JSPatchPlatform/Core (1.6.2)
   - Masonry (0.6.3)
   - MBProgressHUD (1.0.0)
   - MJExtension (3.0.7)
@@ -39,6 +42,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.6.3)
   - DZNEmptyDataSet
   - IQKeyboardManager
+  - JSPatchPlatform
   - Masonry
   - MBProgressHUD
   - MJExtension
@@ -53,6 +57,7 @@ SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   IQKeyboardManager: ac803e61e5b50efae6b3aeedd95a02c7c7d3b2b3
+  JSPatchPlatform: 105e331f1b899a397d2bc0300a9ace9f9d7b8f08
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJExtension: 290cc966f0f849b12b6391a38e296e0004ae8e5e
@@ -63,6 +68,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   XHLaunchAd: 36a28ceda12b4caaa0040cc60b286cd0429bb95d
 
-PODFILE CHECKSUM: ba9a9382956e7b20fb5cc256564e10bdc9e1dde5
+PODFILE CHECKSUM: 561fa8f99165a79bceba82579a188c95c390b49b
 
 COCOAPODS: 1.0.1
