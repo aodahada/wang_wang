@@ -32,7 +32,7 @@
     
     self.billLable = [[UILabel alloc] init];
     self.billLable.textAlignment = NSTextAlignmentLeft;
-    self.billLable.textColor = TITLE_COLOR;
+    self.billLable.textColor = RGBA(102, 102, 102, 1.0);;
 //    self.billLable.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
     [self.billLable setFont:[UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(17)]];
     [self.contentView addSubview:self.billLable];

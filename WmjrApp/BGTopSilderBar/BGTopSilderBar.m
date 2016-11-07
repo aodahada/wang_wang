@@ -100,7 +100,7 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
     fromCell.BGTitleFont = [UIFont fontWithName:@"Arial" size:RESIZE_UI(17)];
     [toCell setTitleColor:SelectedColor];
     [toCell setFontScale:YES];
-    toCell.BGTitleFont = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(19)];
+    toCell.BGTitleFont = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(17)];
     _currentBarIndex = toIndex;
     
     if ([SingletonManager sharedManager].currentBGTopSliderNum == 1) {
@@ -163,7 +163,7 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
     if (indexPath.row == _currentBarIndex) {
         [cell setTitleColor:SelectedColor];
         //cell.BGTitleFont = BGFont(RESIZE_UI(17));
-        cell.BGTitleFont = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(19)];
+        cell.BGTitleFont = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(17)];
     }else{
         [cell setTitleColor:NormalColor];
         cell.BGTitleFont = BGFont(RESIZE_UI(17));
