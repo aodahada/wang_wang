@@ -100,7 +100,7 @@
     }];
     
     _imageViewForHead = [[UIImageView alloc]init];
-    [_imageViewForHead sd_setImageWithURL:[NSURL URLWithString:[SingletonManager sharedManager].userModel.photourl]];
+    [_imageViewForHead sd_setImageWithURL:[NSURL URLWithString:[SingletonManager sharedManager].userModel.photourl] placeholderImage:[UIImage imageNamed:@"image_head"]];
     _imageViewForHead.layer.masksToBounds = YES;
     _imageViewForHead.layer.cornerRadius = RESIZE_UI(52)/2;
     [headView addSubview:_imageViewForHead];

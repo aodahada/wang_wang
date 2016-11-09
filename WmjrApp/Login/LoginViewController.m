@@ -37,15 +37,15 @@
     [super viewDidLoad];
     [[MMPopupWindow sharedWindow] cacheWindow];
     /* 视图的背景色 */
-    self.view.backgroundColor = GERENCOLOR;
-    [_loginBtn setBackgroundColor:RGBA(255, 122, 76, 1.0)];
-    [_loginBtn setTitleColor:VIEWBACKCOLOR forState:UIControlStateNormal];
-    [_loginBtn setTitleColor:[UIColor colorWithRed:1.00f green:0.82f blue:0.79f alpha:1.00f] forState:UIControlStateNormal];
+//    self.view.backgroundColor = GERENCOLOR;
+    self.view.backgroundColor = [UIColor whiteColor];
+    [_loginBtn setBackgroundColor:RGBA(0, 104, 178, 1.0)];
+    [_loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _loginBtn.titleLabel.alpha = .6;
     _loginBtn.enabled = NO;
     
-    _phoneNum.textColor = [UIColor whiteColor];
-    _passWord.textColor = [UIColor whiteColor];
+    _phoneNum.textColor = [UIColor blackColor];
+    _passWord.textColor = [UIColor blackColor];
     
     [_phoneNum addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     [_passWord addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];

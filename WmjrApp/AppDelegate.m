@@ -45,10 +45,10 @@
     
     [NSThread sleepForTimeInterval:2.0];
     //jspatch配置
-//    [JSPatch startWithAppKey:@"153660e85d541b6c"];
-//    [JSPatch sync];
+    [JSPatch startWithAppKey:@"153660e85d541b6c"];
+    [JSPatch sync];
     //本地测试jspatch
-    [JSPatch testScriptInBundle];
+//    [JSPatch testScriptInBundle];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.

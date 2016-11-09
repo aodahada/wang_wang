@@ -60,7 +60,7 @@
     [self.contentView addSubview:self.earnOfPercent];
     [self.earnOfPercent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(48));
-        make.left.equalTo(self.contentView.mas_left).with.offset(RESIZE_UI(12));
+        make.left.equalTo(self.contentView.mas_left).with.offset(RESIZE_UI(15));
     }];
     
     self.earnOfYearLable = [[UILabel alloc] init];
@@ -71,7 +71,7 @@
     [self.contentView addSubview:self.earnOfYearLable];
     [self.earnOfYearLable mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.earnOfPercent.mas_bottom).with.offset(RESIZE_UI(10));
-        make.left.equalTo(self.earnOfPercent.mas_left);
+        make.left.equalTo(self.earnOfPercent.mas_left).with.offset(5);
         make.bottom.equalTo(self.mas_bottom).with.offset(RESIZE_UI(-14));
         make.height.mas_offset(RESIZE_UI(15));
     }];
@@ -94,11 +94,11 @@
     _progressView.arcUnfinishColor = RGBA(0, 108, 175, 1.0);
     _progressView.centerColor = [UIColor whiteColor];
     _progressView.arcBackColor = RGBA(246, 246, 246, 1.0);
-    _progressView.width = RESIZE_UI(6);
+    _progressView.width = RESIZE_UI(7);
     _progressView.percent = 0.9;
     [self.contentView addSubview:_progressView];
     [_progressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.width.mas_offset(RESIZE_UI(46));
+        make.height.width.mas_offset(RESIZE_UI(49));
 //        make.centerY.equalTo(self.earnOfPercent.mas_centerY).with.offset(RESIZE_UI(-4));
         make.bottom.equalTo(self.earnOfPercent.mas_bottom);
 //        make.left.equalTo(self.earnOfPercent.mas_right).with.offset(20);
@@ -148,7 +148,7 @@
 
     _progressView.percent = [model.buyrate floatValue];
     NSString *earnOfPercentStr = [NSString stringWithFormat:@"%.2lf％", [model.returnrate floatValue] * 100];
-    self.earnOfPercent.attributedText =  [self changeStringWithString:earnOfPercentStr withFrontColor:RGBA(255, 86, 30, 1.0) WithBehindColor:RGBA(255, 86, 30, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(33)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(22)]];
+    self.earnOfPercent.attributedText =  [self changeStringWithString:earnOfPercentStr withFrontColor:RGBA(255, 86, 30, 1.0) WithBehindColor:RGBA(255, 86, 30, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(50)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(24)]];
 
 }
 
@@ -160,25 +160,6 @@
     [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange([string length] - 3, 3)];
     return str;
 }
-
-//- (void)drawRect:(CGRect)rect {
-//    CGContextRef context = UIGraphicsGetCurrentContext();
-////    UIColor *aColor = BASECOLOR;
-//    UIColor *aColor = RGBA(0, 108, 175, 1.0);
-//    CGContextSetFillColorWithColor(context, aColor.CGColor);
-//    CGContextMoveToPoint(context, RESIZE_UI(313), RESIZE_UI(102));
-//    CGFloat degree = 0.00;
-//    if (self.buyNum > 0 && self.buyNum <= 25) {
-//        degree = 90 * (self.buyNum / 25 - 1);
-//    } else if (self.buyNum == 0) {
-//        degree = -90;
-//    } else {
-//        degree = 360 * (self.buyNum / 100) - 90;
-//    }
-//    CGContextAddArc(context, RESIZE_UI(313), RESIZE_UI(102), RESIZE_UI(23), -90 * M_PI / 180, degree * M_PI / 180, 0);
-//    CGContextClosePath(context);
-//    CGContextDrawPath(context, kCGPathFill);
-//}
 
 - (void)awakeFromNib {
     // Initialization code

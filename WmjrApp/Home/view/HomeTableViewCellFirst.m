@@ -43,17 +43,65 @@
             make.width.mas_offset(RESIZE_UI(100));
         }];
         
+//        UIButton *buttonForMess = [[UIButton alloc]init];
+//        [buttonForMess setTitle:@"消息中心" forState:UIControlStateNormal];
+//        buttonForMess.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+//        [buttonForMess setTitleColor:RGBA(255, 255, 255, 1.0) forState:UIControlStateNormal];
+//        [buttonForMess addTarget:self action:@selector(jumpToMessageCenterMethod) forControlEvents:UIControlEventTouchUpInside];
+//        [self addSubview:buttonForMess];
+//        [buttonForMess mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(self.mas_top).with.offset(38);
+//            make.right.equalTo(self.mas_right).with.offset(-12);
+//            make.height.mas_offset(14);
+//        }];
+        
+        //新浪平台
+        UIButton *buttonSinaCenter = [[UIButton alloc]init];
+        [buttonSinaCenter setTitle:@"新浪平台" forState:UIControlStateNormal];
+        buttonSinaCenter.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+        [buttonSinaCenter setTitleColor:RGBA(255, 255, 255, 1.0) forState:UIControlStateNormal];
+        [buttonSinaCenter addTarget:self action:@selector(jumpToSinaMethod) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:buttonSinaCenter];
+        [buttonSinaCenter mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.mas_top).with.offset(38);
+            make.right.equalTo(self.mas_right).with.offset(-53);
+            make.height.mas_offset(14);
+        }];
+        
+        //竖线
+        UILabel *labelForLine = [[UILabel alloc]init];
+        labelForLine.backgroundColor = [UIColor whiteColor];
+        [self addSubview:labelForLine];
+        [labelForLine mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(buttonSinaCenter.mas_top);
+            make.bottom.equalTo(buttonSinaCenter.mas_bottom);
+            make.width.mas_offset(1);
+            make.left.equalTo(buttonSinaCenter.mas_right).with.offset(12);
+        }];
+        
+        //消息中心
+        UIImageView *imageForMess = [[UIImageView alloc]init];
+        imageForMess.image = [UIImage imageNamed:@"notific"];
+        [self addSubview:imageForMess];
+        [imageForMess mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.mas_right).with.offset(-12);
+            make.centerY.equalTo(buttonSinaCenter.mas_centerY);
+            make.height.mas_offset(19);
+            make.width.mas_offset(15);
+        }];
+        
         UIButton *buttonForMess = [[UIButton alloc]init];
-        [buttonForMess setTitle:@"消息中心" forState:UIControlStateNormal];
-        buttonForMess.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
-        [buttonForMess setTitleColor:RGBA(255, 255, 255, 1.0) forState:UIControlStateNormal];
+        buttonForMess.backgroundColor = [UIColor clearColor];
         [buttonForMess addTarget:self action:@selector(jumpToMessageCenterMethod) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:buttonForMess];
         [buttonForMess mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.mas_top).with.offset(38);
-            make.right.equalTo(self.mas_right).with.offset(-12);
-            make.height.mas_offset(14);
+            make.left.equalTo(labelForLine.mas_right);
+            make.right.equalTo(self.mas_right);
+            make.top.equalTo(labelForLine.mas_top);
+            make.bottom.equalTo(labelForLine.mas_bottom);
         }];
+        
+        
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
         BOOL isNull = [self isNullString:uid];
         if (isNull) {

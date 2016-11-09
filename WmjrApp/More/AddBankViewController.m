@@ -40,6 +40,11 @@
 
 @implementation AddBankViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
+
 - (void)setUpNavigationBar {
     self.title = @"添加银行卡";
     _yanzhengBtn.backgroundColor = BASECOLOR;
@@ -59,6 +64,11 @@
     
     [_bankNumField addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     [_phoneNumField addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)limitedNumberOfWords {

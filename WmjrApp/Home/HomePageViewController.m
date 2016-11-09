@@ -30,7 +30,10 @@
 
 @property (nonatomic, strong) UIImageView *imageViewForLeft;
 
-@property (nonatomic, strong) UIButton *buttonForMess;
+@property (nonatomic, strong) UIButton *buttonSinaCenter;//新兰中心2
+@property (nonatomic, strong) UIButton *buttonForMess;//消息中心
+@property (nonatomic, strong) UIImageView *imageForMess;
+@property (nonatomic, strong) UILabel *labelForLine;//竖线
 
 @property (nonatomic, strong) NSMutableArray *arrayForTopImage;//轮播图数组
 
@@ -55,8 +58,6 @@
         [SingletonManager sharedManager].uid = uid;
         [self getDataWithLogin];
     }
-    /* 获取数据 */
-    [self getDataWithNetManager];
     //如果有手势密码让他验证手势密码
     //    BOOL isSave = [KeychainData isSave]; //是否有保存
     BOOL isSave = [[SingletonManager sharedManager] isSave]; //是否有保存
@@ -71,6 +72,9 @@
     //退出登录时响应执行还有在主页重新登录的时候响应
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutMethod) name:@"logout" object:nil];
     
+    [self setUpTableViewMethod];
+    [self setReplaceNavMethod];
+    
 }
 
 - (void)logoutMethod{
@@ -79,7 +83,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
-    //[super viewWillAppear:animated];
+    [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
     self.navigationController.navigationBar.hidden = YES;
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
@@ -87,6 +91,8 @@
     if (!isNull) {
         [self getPersonalMessage];
     }
+    /* 获取数据 */
+    [self getDataWithNetManager];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -184,10 +190,26 @@
                 return @{@"news_id" : @"id"};
             }];
             _arrayForNewsList = [NewsModel mj_objectArrayWithKeyValuesArray:obj[@"data"]];
-            
-            [self setUpTableViewMethod];
-            //设置自定义navgationview
-            [self setReplaceNavMethod];
+            [_homeTableView reloadData];
+//            if (_homeTableView) {
+//                [_homeTableView removeFromSuperview];
+//                _homeTableView = nil;
+//                [self setUpTableViewMethod];
+//            } else {
+//                [self setUpTableViewMethod];
+//            }
+//            //设置自定义navgationview
+//            if (self.naviView) {
+//                [_buttonForMess removeFromSuperview];
+//                [_imageForMess removeFromSuperview];
+//                [_labelForLine removeFromSuperview];
+//                [_buttonSinaCenter removeFromSuperview];
+//                [_imageViewForLeft removeFromSuperview];
+//                [self.naviView removeFromSuperview];
+//                [self setReplaceNavMethod];
+//            } else {
+//                [self setReplaceNavMethod];
+//            }
             //获取客服电话
             [self getCompanyTelphoneMethod];
             
@@ -299,6 +321,7 @@
     
     _imageViewForLeft = [[UIImageView alloc]init];
     _imageViewForLeft.image = [UIImage imageNamed:@"navi_bar"];
+    _imageViewForLeft.alpha = 0;
     [self.naviView addSubview:_imageViewForLeft];
     [_imageViewForLeft mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.naviView.mas_top).with.offset(35);
@@ -307,23 +330,68 @@
         make.width.mas_offset(RESIZE_UI(100));
     }];
     
-    _buttonForMess = [[UIButton alloc]init];
-    [_buttonForMess setTitle:@"消息中心" forState:UIControlStateNormal];
-    _buttonForMess.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
-    [_buttonForMess setTitleColor:RGBA(255, 255, 255, 1.0) forState:UIControlStateNormal];
-    [_buttonForMess addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.naviView addSubview:_buttonForMess];
-    [_buttonForMess mas_makeConstraints:^(MASConstraintMaker *make) {
+    //新浪平台
+    _buttonSinaCenter = [[UIButton alloc]init];
+    [_buttonSinaCenter setTitle:@"新浪平台" forState:UIControlStateNormal];
+    _buttonSinaCenter.alpha = 0.05;
+    _buttonSinaCenter.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    [_buttonSinaCenter setTitleColor:RGBA(255, 255, 255, 1.0) forState:UIControlStateNormal];
+    [_buttonSinaCenter addTarget:self action:@selector(sinaMethod) forControlEvents:UIControlEventTouchUpInside];
+    [self.naviView addSubview:_buttonSinaCenter];
+    [_buttonSinaCenter mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.naviView.mas_top).with.offset(38);
-        make.right.equalTo(self.naviView.mas_right).with.offset(-12);
+        make.right.equalTo(self.naviView.mas_right).with.offset(-53);
         make.height.mas_offset(14);
     }];
     
+    //竖线
+    _labelForLine = [[UILabel alloc]init];
+    _labelForLine.backgroundColor = [UIColor whiteColor];
+    _labelForLine.alpha = 0;
+    [self.naviView addSubview:_labelForLine];
+    [_labelForLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_buttonSinaCenter.mas_top);
+        make.bottom.equalTo(_buttonSinaCenter.mas_bottom);
+        make.width.mas_offset(1);
+        make.left.equalTo(_buttonSinaCenter.mas_right).with.offset(12);
+    }];
+    
+    //消息中心
+    _imageForMess = [[UIImageView alloc]init];
+    _imageForMess.image = [UIImage imageNamed:@"notific"];
+    _imageForMess.alpha = 0;
+    [self.naviView addSubview:_imageForMess];
+    [_imageForMess mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.naviView.mas_right).with.offset(-12);
+        make.centerY.equalTo(_buttonSinaCenter.mas_centerY);
+        make.height.mas_offset(19);
+        make.width.mas_offset(15);
+    }];
+    
+    _buttonForMess = [[UIButton alloc]init];
+    _buttonForMess.alpha = 0.05;
+    _buttonForMess.backgroundColor = [UIColor clearColor];
+    [_buttonForMess addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.naviView addSubview:_buttonForMess];
+    [_buttonForMess mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_labelForLine.mas_right);
+        make.right.equalTo(self.naviView.mas_right);
+        make.top.equalTo(_labelForLine.mas_top);
+        make.bottom.equalTo(_labelForLine.mas_bottom);
+    }];
+    
+    
+}
+
+#pragma mark - 新浪平台方法
+- (void)sinaMethod {
+    [self jumpToAdWebView:@"新浪资金托管平台" WebUrl:@"https://pay.sina.com.cn/zjtg"];
 }
 
 - (void)setUpTableViewMethod {
     
     _homeTableView = [[UITableView alloc]init];
+//    _homeTableView.backgroundColor = [UIColor redColor];
     _homeTableView.delegate = self;
     _homeTableView.dataSource = self;
     _homeTableView.bounces = NO;
@@ -338,7 +406,7 @@
         make.top.equalTo(self.view.mas_top).with.offset(-20);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_bottom).with.offset(-48);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(0);
     }];
     
 }
@@ -352,7 +420,7 @@
     } else if (section == 2) {
         return _arrayForRecommendPro.count;
     } else {
-        return 2;
+        return _arrayForNewsList.count;
     }
     
 }
@@ -521,8 +589,13 @@
     if (indexPath.section == 2) {
         ProductModel *productModel = _arrayForRecommendPro[indexPath.row];
         ProductIntroViewController *proIntroVC = [[ProductIntroViewController alloc] init];
-        proIntroVC.getPro_id = productModel.proIntro_id;
-        [self.navigationController pushViewController:proIntroVC animated:YES];
+        if ([[self convertNullString:productModel.proIntro_id] isEqualToString:@""]) {
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"缺少参数" message:@"请重新进入该页再试一次" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+            [alertView show];
+        } else {
+            proIntroVC.getPro_id = productModel.proIntro_id;
+            [self.navigationController pushViewController:proIntroVC animated:YES];
+        }
     }
     if (indexPath.section == 3) {
         
@@ -549,18 +622,21 @@
     //self.naviView.backgroundColor = [RGBA(0, 104, 178, 1.0) colorWithAlphaComponent:alpha];
     self.naviView.backgroundColor = RGBA(0, 104, 178, alpha);
     _imageViewForLeft.alpha = alpha;
+    _imageForMess.alpha = alpha;
+    _labelForLine.alpha = alpha;
     if (alpha<0.05) {
         _buttonForMess.alpha = 0.05;
+        _buttonSinaCenter.alpha = 0.05;
     }else {
         _buttonForMess.alpha = alpha;
+        _buttonSinaCenter.alpha = alpha;
     }
-    
-    CGFloat sectionHeaderHeight = -20;
-    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
-        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
-        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-    }
+//    CGFloat sectionHeaderHeight=0;
+//    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+//        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+//    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+//        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+//    }
 
 }
 
@@ -577,8 +653,17 @@
 
 #pragma mark - 跳转到消息页面
 - (void)messageBtnAction {
-    MessageWViewController *messageVC = [[MessageWViewController alloc] initWithNibName:@"MessageWViewController" bundle:nil];
-    [self.navigationController pushViewController:messageVC animated:YES];
+    
+    if ([[self convertNullString:[SingletonManager sharedManager].uid] isEqualToString:@""]) {
+        LoginViewController *loginVC = [[LoginViewController alloc] init];
+        loginVC.loginIden = @"login";
+        loginVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
+        [self presentViewController:loginNa animated:YES completion:nil];
+    } else{
+        MessageWViewController *messageVC = [[MessageWViewController alloc] initWithNibName:@"MessageWViewController" bundle:nil];
+        [self.navigationController pushViewController:messageVC animated:YES];
+    }
 }
 
 #pragma mark - 判断字符串是否为空

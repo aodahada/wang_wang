@@ -32,6 +32,11 @@
 
 @implementation MyselfBankViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
+
 - (void)setUpNavigationBar {
     self.view.backgroundColor = VIEWBACKCOLOR;
     
@@ -53,7 +58,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//   [_button removeFromSuperview];
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewDidLoad {
