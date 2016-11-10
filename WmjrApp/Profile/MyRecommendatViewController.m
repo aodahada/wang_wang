@@ -11,11 +11,11 @@
 #import "MyRecommandTableViewCell.h"
 #import "FRuleViewController.h"
 #import "PopMenu.h"
-#import "Shared1View.h"
+#import "SharedView.h"
 
 @interface MyRecommendatViewController ()<UITableViewDelegate,UITableViewDataSource>{
     PopMenu *_popMenu;
-    Shared1View *_sharedView;
+    SharedView *_sharedView;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *viewForHead;
@@ -149,16 +149,15 @@
     _popMenu = [[PopMenu alloc] init];
     _popMenu.dimBackground = YES;
     _popMenu.coverNavigationBar = YES;
-    _sharedView = [[Shared1View alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 75, RESIZE_UI(100))];
-    _sharedView.layer.cornerRadius = 8;
+    _sharedView = [[SharedView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-RESIZE_UI(168), SCREEN_WIDTH, RESIZE_UI(168))];
     [_popMenu addSubview:_sharedView];
     [_popMenu showInRect:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    _sharedView.center = _popMenu.center;
+//    _sharedView.center = _popMenu.center;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPopAction)];
     [_popMenu addGestureRecognizer:tap];
     
-    [_sharedView callShared1BtnEventBlock:^(UIButton *sender) {
+    [_sharedView callSharedBtnEventBlock:^(UIButton *sender) {
         [_popMenu dismissMenu];
         SharedManager *sharedManager = [[SharedManager alloc] init];
         if (_invitationcode) {

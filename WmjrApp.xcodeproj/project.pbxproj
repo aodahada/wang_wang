@@ -415,7 +415,6 @@
 		C51B43631C785620001679B5 /* PopMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B43611C785620001679B5 /* PopMenu.m */; };
 		C51B43661C785629001679B5 /* NetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B43651C785629001679B5 /* NetManager.m */; };
 		C51B436E1C785641001679B5 /* SharedView.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B43691C785641001679B5 /* SharedView.m */; };
-		C51B436F1C785641001679B5 /* Shared1View.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B436B1C785641001679B5 /* Shared1View.m */; };
 		C51B43701C785641001679B5 /* SharedManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B436D1C785641001679B5 /* SharedManager.m */; };
 		C51B43751C78564E001679B5 /* UIButton+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B43721C78564E001679B5 /* UIButton+Extension.m */; };
 		C51B43761C78564E001679B5 /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B43741C78564E001679B5 /* BaseNavigationController.m */; };
@@ -1005,8 +1004,6 @@
 		C51B43651C785629001679B5 /* NetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetManager.m; sourceTree = "<group>"; };
 		C51B43681C785641001679B5 /* SharedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedView.h; sourceTree = "<group>"; };
 		C51B43691C785641001679B5 /* SharedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedView.m; sourceTree = "<group>"; };
-		C51B436A1C785641001679B5 /* Shared1View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared1View.h; sourceTree = "<group>"; };
-		C51B436B1C785641001679B5 /* Shared1View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shared1View.m; sourceTree = "<group>"; };
 		C51B436C1C785641001679B5 /* SharedManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedManager.h; sourceTree = "<group>"; };
 		C51B436D1C785641001679B5 /* SharedManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedManager.m; sourceTree = "<group>"; };
 		C51B43711C78564E001679B5 /* UIButton+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Extension.h"; sourceTree = "<group>"; };
@@ -1793,8 +1790,6 @@
 			children = (
 				C51B43681C785641001679B5 /* SharedView.h */,
 				C51B43691C785641001679B5 /* SharedView.m */,
-				C51B436A1C785641001679B5 /* Shared1View.h */,
-				C51B436B1C785641001679B5 /* Shared1View.m */,
 				C51B436C1C785641001679B5 /* SharedManager.h */,
 				C51B436D1C785641001679B5 /* SharedManager.m */,
 			);
@@ -2905,7 +2900,6 @@
 				C51B42801C785236001679B5 /* MessageWViewController.m in Sources */,
 				8B3401FA1D7E529100320072 /* AliGesturePasswordViewController.m in Sources */,
 				C51B43B71C78572F001679B5 /* OpenFastPaymentController.m in Sources */,
-				C51B436F1C785641001679B5 /* Shared1View.m in Sources */,
 				C5D3CE3A1C9808DF00C8B919 /* ShowBigImageView.m in Sources */,
 				C51B42B31C78532E001679B5 /* FinancialModel.m in Sources */,
 			);

@@ -16,10 +16,10 @@
             <rect key="frame" x="0.0" y="0.0" width="379" height="30"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FI6-gk-Z7i" id="vFa-zU-i3Z">
-                <rect key="frame" x="0.0" y="0.0" width="379" height="29.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="379" height="29"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="22o-Tq-iS2">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time_icon" translatesAutoresizingMaskIntoConstraints="NO" id="22o-Tq-iS2">
                         <rect key="frame" x="23" y="7" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="XPi-Bk-Z2P"/>
@@ -32,8 +32,8 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="safe_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Vs1-BQ-HGW">
-                        <rect key="frame" x="300" y="7" width="15" height="15"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="safe_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Vs1-BQ-HGW">
+                        <rect key="frame" x="299" y="7" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="4Rk-ul-Nf1"/>
                             <constraint firstAttribute="width" constant="15" id="vnO-cP-0cr"/>
@@ -48,7 +48,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="card_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="rIK-Xw-vsm">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="card_icon" translatesAutoresizingMaskIntoConstraints="NO" id="rIK-Xw-vsm">
                         <rect key="frame" x="160" y="7" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="Wrm-Q1-e6J"/>
@@ -96,8 +96,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="card_icon.png" width="13" height="10"/>
-        <image name="safe_icon.png" width="12" height="14"/>
-        <image name="time_icon.png" width="11" height="12"/>
+        <image name="card_icon" width="12" height="9"/>
+        <image name="safe_icon" width="11" height="13"/>
+        <image name="time_icon" width="12" height="12"/>
     </resources>
 </document>
