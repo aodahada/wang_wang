@@ -46,7 +46,7 @@
         cell.textLabel.text = @"名词解释";
     }
     cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
-    cell.textLabel.textColor = AUXILY_COLOR;
+    cell.textLabel.textColor = [UIColor blackColor];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     

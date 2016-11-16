@@ -93,10 +93,10 @@
     [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:buttonForMessCenter];
     [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(35));
+        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(33));
         make.right.equalTo(headView.mas_right).with.offset(RESIZE_UI(-15));
-        make.height.mas_offset(RESIZE_UI(20));
-        make.width.mas_offset(RESIZE_UI(18));
+        make.height.mas_offset(RESIZE_UI(19));
+        make.width.mas_offset(RESIZE_UI(15));
     }];
     
     _imageViewForHead = [[UIImageView alloc]init];
@@ -313,7 +313,7 @@
     self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginSuccessMethod) name:@"loginSuccess" object:nil];
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, VIEW_WIDTH, VIEW_HEIGHT - 49 + 20)];
+    _tableView = [[UITableView alloc] init];
     _tableView.backgroundColor = RGBA(237, 240, 242, 1.0);
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -322,6 +322,12 @@
     _tableView.tableFooterView = [[UIView alloc]init];
     [self.view addSubview:_tableView];
     _tableView.tableHeaderView = [self setUpProfileHeadView];
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).with.offset(-20);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.bottom.equalTo(self.view.mas_bottom);
+    }];
 }
 
 - (void)loginSuccessMethod {

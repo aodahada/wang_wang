@@ -21,6 +21,7 @@
 #import "PersonInvestModel.h"
 #import "MessageWViewController.h"
 #import "UserInfoModel.h"
+#import "HomeGuideView.h"
 
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -43,6 +44,8 @@
 
 @property (nonatomic, strong) PersonInvestModel *personInvestModel;//个人投资信息
 
+@property (nonatomic, assign) BOOL isSave;//是否保存手势了
+
 @end
 
 @implementation HomePageViewController
@@ -60,17 +63,21 @@
     }
     //如果有手势密码让他验证手势密码
     //    BOOL isSave = [KeychainData isSave]; //是否有保存
-    BOOL isSave = [[SingletonManager sharedManager] isSave]; //是否有保存
-    if (isSave) {
+    _isSave = [[SingletonManager sharedManager] isSave]; //是否有保存
+    if (_isSave) {
         
         AliGesturePasswordViewController *setpass = [[AliGesturePasswordViewController alloc] init];
         setpass.string = @"验证密码";
+        setpass.isHome = @"yes";
         [self presentViewController:setpass animated:YES completion:nil];
         
     }
     
+    
     //退出登录时响应执行还有在主页重新登录的时候响应
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutMethod) name:@"logout" object:nil];
+    //手势验证成功时显示
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(homeGuideLayout) name:@"addHomeGudie" object:nil];
     
     [self setUpTableViewMethod];
     [self setReplaceNavMethod];
@@ -210,6 +217,9 @@
 //            } else {
 //                [self setReplaceNavMethod];
 //            }
+            if (!_isSave) {
+                [self homeGuideLayout];
+            }
             //获取客服电话
             [self getCompanyTelphoneMethod];
             
@@ -332,7 +342,7 @@
     
     //新浪平台
     _buttonSinaCenter = [[UIButton alloc]init];
-    [_buttonSinaCenter setTitle:@"新浪平台" forState:UIControlStateNormal];
+    [_buttonSinaCenter setTitle:@"安全保障" forState:UIControlStateNormal];
     _buttonSinaCenter.alpha = 0.05;
     _buttonSinaCenter.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     [_buttonSinaCenter setTitleColor:RGBA(255, 255, 255, 1.0) forState:UIControlStateNormal];
@@ -386,6 +396,7 @@
 #pragma mark - 新浪平台方法
 - (void)sinaMethod {
     [self jumpToAdWebView:@"新浪资金托管平台" WebUrl:@"https://pay.sina.com.cn/zjtg"];
+    
 }
 
 - (void)setUpTableViewMethod {
@@ -409,6 +420,46 @@
         make.bottom.equalTo(self.view.mas_bottom).with.offset(0);
     }];
     
+}
+
+#pragma mark - 首页引导
+- (void)homeGuideLayout {
+    NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]) {
+        [[NSUserDefaults standardUserDefaults]setObject:app_version forKey:@"appVersion"];
+        CGRect frame = [UIScreen mainScreen].bounds;
+        HomeGuideView *homeGuideView = [[HomeGuideView alloc]initWithFrame:frame andNewsListCount:self.arrayForNewsList.count];
+        @weakify(self)
+        homeGuideView.forthLearnMethod = ^(){
+            @strongify(self)
+            NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:3];
+            [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        };
+        homeGuideView.destroySelfMethod = ^(){
+            @strongify(self)
+            NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        };
+        UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+        [window addSubview:homeGuideView];
+    }
+    
+//测试用的
+//    CGRect frame = [UIScreen mainScreen].bounds;
+//    HomeGuideView *homeGuideView = [[HomeGuideView alloc]initWithFrame:frame andNewsListCount:self.arrayForNewsList.count];
+//    @weakify(self)
+//    homeGuideView.forthLearnMethod = ^(){
+//        @strongify(self)
+//        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:3];
+//        [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//    };
+//    homeGuideView.destroySelfMethod = ^(){
+//        @strongify(self)
+//        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//        [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//    };
+//    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+//    [window addSubview:homeGuideView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -520,6 +571,7 @@
     if (indexPath.section==0) {
         
         HomeTableViewCellFirst *cell = [[HomeTableViewCellFirst alloc]initWithDic:_personInvestModel];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.learnWangma = ^(){
             [self jumpToAdWebView:@"新浪资金托管平台" WebUrl:@"https://pay.sina.com.cn/zjtg"];
         };
@@ -537,6 +589,7 @@
     } else if(indexPath.section == 1) {
         
         HomeTableViewCellSecond *cell = [[HomeTableViewCellSecond alloc]initWithImageArray:self.arrayForTopImage];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.cycleImage = ^(ImgHomeModel *imgModel) {
             NSString *productId = imgModel.product_id;
             NSString *url = imgModel.url;
@@ -565,6 +618,7 @@
         
     } else if (indexPath.section == 2) {
         HomeTableViewCellThird *cell = [[HomeTableViewCellThird alloc]init];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell configCellWithModel:_arrayForRecommendPro[indexPath.row]];
         return cell;
     } else {
@@ -602,7 +656,7 @@
         NewsModel *newsModel = _arrayForNewsList[indexPath.row];
         AgViewController *agVC =[[AgViewController alloc] init];
         agVC.title = newsModel.title;
-        agVC.htmlContent = newsModel.content;
+        agVC.webUrl = newsModel.url;
         BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
         [self presentViewController:baseNa animated:YES completion:^{
         }];

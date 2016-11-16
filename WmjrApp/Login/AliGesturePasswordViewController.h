@@ -14,4 +14,6 @@
 
 @property (nonatomic, copy)NSString *type;
 
+@property (nonatomic, copy)NSString *isHome;
+
 @end

@@ -289,7 +289,7 @@
     }];
     
     _financingLable = [[UILabel alloc] init];
-    _financingLable.text = @"融资金额";
+    _financingLable.text = @"融资余额";
     _financingLable.textAlignment = NSTextAlignmentCenter;
     _financingLable.textColor = AUXILY_COLOR;
     _financingLable.font = [UIFont boldSystemFontOfSize:RESIZE_UI(14)];
@@ -300,7 +300,7 @@
         make.height.mas_offset(RESIZE_UI(15));
     }];
     
-    /* 融资金额数 */
+    /* 融资余额数 */
     _financingNum = [[UILabel alloc] init];
     _financingNum.textAlignment = NSTextAlignmentCenter;
     _financingNum.textColor = TITLE_COLOR;

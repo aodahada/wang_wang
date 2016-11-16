@@ -61,7 +61,8 @@
     [manager postDataWithUrlActionStr:@"Public/suggest" withParamDictionary:@{@"content":_feedText.text, @"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             _feedText.text = @"";
-            [SVProgressHUD showSuccessWithStatus:@"发送成功" maskType:(SVProgressHUDMaskTypeNone)];
+            [self.navigationController popViewControllerAnimated:YES];
+            [SVProgressHUD showSuccessWithStatus:@"发送成功"];
         }
     }];
 }

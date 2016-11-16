@@ -71,8 +71,14 @@
     [manager postDataWithUrlActionStr:@"My/invitation" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             NSString *invitationWill = [obj[@"data"] objectForKey:@"invitation_future"];
+            if ([self isNullString:invitationWill]) {
+                invitationWill = @"0.00";
+            }
             _willHaveReward.text = [NSString stringWithFormat:@"￥%@",invitationWill];
             NSString *invitationHave = [obj[@"data"] objectForKey:@"invitation_has"];
+            if ([self isNullString:invitationHave]) {
+                invitationHave = @"0.00";
+            }
             _haveHaveReward.text = [NSString stringWithFormat:@"￥%@", invitationHave];
             _labelForGuessSum.text = [NSString stringWithFormat:@"%.2f", [invitationWill floatValue] + [invitationHave floatValue]];
             [self getHaveInvitatedList];
@@ -131,7 +137,7 @@
     _viewForMidTwo.backgroundColor = RGBA(0, 102, 166, 1.0);
     _labelForMidOne.textColor = RGBA(171, 199, 214, 1.0);
     _labelForMidTwo.textColor = RGBA(171, 199, 214, 1.0);
-    _invitationcode = [[NSUserDefaults standardUserDefaults] objectForKey:@"invitationcode"];
+    _invitationcode = [SingletonManager sharedManager].userModel.invitationcode;
     _myRecommandNumber.text = _invitationcode;
     _tableViewForList.delegate = self;
     _tableViewForList.dataSource = self;
@@ -145,7 +151,7 @@
 
 //响应点击分享的方法
 - (void)clickSharedBtnAction {
-    NSLog(@"-------点击分享----");
+//    NSLog(@"-------点击分享----");
     _popMenu = [[PopMenu alloc] init];
     _popMenu.dimBackground = YES;
     _popMenu.coverNavigationBar = YES;
@@ -206,6 +212,19 @@
     cell.myRecommandModel = _arrayForModel[row];
     return cell;
     
+}
+
+- (BOOL) isNullString:(NSString *)string {
+    if (string == nil || string == NULL) {
+        return YES;
+    }
+    if ([string isKindOfClass:[NSNull class]]) {
+        return YES;
+    }
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        return YES;
+    }
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -86,7 +86,7 @@
         CGFloat radius = viewSize.width / 2;
         CGContextBeginPath(contextRef);
         CGContextMoveToPoint(contextRef, center.x, center.y);
-        CGContextAddArc(contextRef, center.x, center.y, radius,0,endAngle, 0);
+        CGContextAddArc(contextRef, center.x, center.y, radius,-M_PI_2,endAngle-M_PI_2, 0);
         CGContextSetFillColorWithColor(contextRef, color);
         CGContextFillPath(contextRef);
     }

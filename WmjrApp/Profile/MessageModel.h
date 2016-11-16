@@ -10,7 +10,12 @@
 
 @interface MessageModel : NSObject
 
-@property (nonatomic, copy) NSString *type;  /* 消息类型 */
-@property (nonatomic, copy) NSString *content;  /* 消息内容 */
+@property (nonatomic, copy) NSString *message_id;
+@property (nonatomic, copy) NSString *message_intro;
+@property (nonatomic, copy) NSString *message_title;
+//@property (nonatomic, copy) NSString *type_color;
+@property (nonatomic, copy) NSString *type_color;
+@property (nonatomic ,copy) NSString *type_name;
+@property (nonatomic, copy) NSString *url;
 
 @end

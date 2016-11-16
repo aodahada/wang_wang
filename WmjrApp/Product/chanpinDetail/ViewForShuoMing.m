@@ -124,6 +124,16 @@
     UIView *aView = [[UIView alloc] init];
     aView.backgroundColor = [UIColor whiteColor];
     
+    UILabel *labelLine = [[UILabel alloc]init];
+    labelLine.backgroundColor = RGBA(231, 231, 231, 1.0);
+    [aView addSubview:labelLine];
+    [labelLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(aView.mas_top);
+        make.height.mas_offset(1);
+        make.left.equalTo(aView.mas_left).with.offset(15);
+        make.right.equalTo(aView.mas_right);
+    }];
+    
     UILabel *cdLable = [[UILabel alloc] init];
     cdLable.text = @"存单原件照:";
     cdLable.textAlignment = NSTextAlignmentLeft;
@@ -131,7 +141,7 @@
     cdLable.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     [aView addSubview:cdLable];
     [cdLable mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(aView.mas_top).with.offset(5);
+        make.top.equalTo(aView.mas_top).with.offset(10);
         make.left.equalTo(aView.mas_left).with.offset(RESIZE_UI(15));
         make.height.mas_offset(15);
     }];
@@ -148,8 +158,8 @@
         [cdImg mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(cdLable.mas_bottom).with.offset(10);
             make.centerX.equalTo(aView.mas_centerX);
-            make.height.mas_offset(130);
-            make.width.mas_offset(200);
+            make.height.mas_offset(RESIZE_UI(133));
+            make.width.mas_offset(RESIZE_UI(351));
         }];
     }
     

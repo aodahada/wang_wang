@@ -16,7 +16,7 @@
 #define SelectedColor color(0,103,172,1.0)
 //下划线的颜色
 //#define UnderlineColor color(243.0,39.0,66.0,1.0)
-#define UnderlineColor [UIColor whiteColor]
+#define UnderlineColor color(0,103,172,1.0)
 //设置一页标题item有几个,默认6个
 //#define itemNum 5
 

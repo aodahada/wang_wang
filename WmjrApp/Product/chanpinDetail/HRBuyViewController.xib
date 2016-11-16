@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,14 +29,17 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U0u-sI-L14">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_wsx" translatesAutoresizingMaskIntoConstraints="NO" id="9Ij-Je-cE1">
+                            <rect key="frame" x="12" y="12" width="35" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="04Q-eI-6g3"/>
                                 <constraint firstAttribute="width" constant="35" id="JgE-Lm-3Nq"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="稳收息20160809期" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3qq-ug-Xuo">
+                            <rect key="frame" x="57" y="14.5" width="166.5" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="qEC-zF-Yaf"/>
                             </constraints>
@@ -42,51 +48,59 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_round" translatesAutoresizingMaskIntoConstraints="NO" id="HpM-d6-KZe">
+                            <rect key="frame" x="18" y="62" width="6" height="6"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="6" id="2Hh-wh-LMe"/>
                                 <constraint firstAttribute="width" constant="6" id="mzr-vA-86O"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="预期年化率8.00%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGc-go-6Gx">
+                            <rect key="frame" x="29" y="56.5" width="111.5" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_round" translatesAutoresizingMaskIntoConstraints="NO" id="0VX-Og-Fvr">
+                            <rect key="frame" x="18" y="91" width="6" height="6"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="6" id="BeB-2b-Ydz"/>
                                 <constraint firstAttribute="width" constant="6" id="GGr-Sw-cKW"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="结算日期:2016/12/08" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rc4-lM-g6d">
+                            <rect key="frame" x="230" y="85.5" width="135" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="持有期限115天" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CP5-G4-vUl">
+                            <rect key="frame" x="230" y="56.5" width="93" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_round" translatesAutoresizingMaskIntoConstraints="NO" id="tRD-Qz-BrL">
+                            <rect key="frame" x="219" y="62" width="6" height="6"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="6" id="bab-tK-xOT"/>
                                 <constraint firstAttribute="height" constant="6" id="ols-zQ-KKv"/>
                             </constraints>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_round" translatesAutoresizingMaskIntoConstraints="NO" id="RA7-Y7-Ipy">
+                            <rect key="frame" x="219" y="91" width="6" height="6"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="6" id="Er4-iO-Lph"/>
                                 <constraint firstAttribute="height" constant="6" id="WKD-wV-gxm"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="计息方式T+1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3t-Ob-8pp">
+                            <rect key="frame" x="29" y="85.5" width="80.5" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.96078431372549022" green="0.3411764705882353" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.12549019607843137" green="0.41960784313725491" blue="0.69411764705882351" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="rc4-lM-g6d" firstAttribute="centerY" secondItem="RA7-Y7-Ipy" secondAttribute="centerY" id="0T7-MH-KmZ"/>
                         <constraint firstItem="rc4-lM-g6d" firstAttribute="centerY" secondItem="M3t-Ob-8pp" secondAttribute="centerY" id="1MV-l8-fjd"/>
@@ -112,8 +126,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BdR-YH-VEA">
+                    <rect key="frame" x="0.0" y="130" width="375" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="买入金额" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WqH-GA-cL9">
+                            <rect key="frame" x="10" y="14.5" width="61.5" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="Yhs-Zf-kKL"/>
                             </constraints>
@@ -122,6 +138,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="建议购买200以上" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z46-UI-rNj">
+                            <rect key="frame" x="94.5" y="14.5" width="260.5" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="5Ko-uj-20L"/>
                             </constraints>
@@ -140,12 +157,14 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前剩余金额20000元" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ue-6t-eYj">
+                    <rect key="frame" x="10" y="186" width="123.5" height="14.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BHC-ke-SbX">
-                    <color key="backgroundColor" red="0.95294117647058818" green="0.15686274509803921" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="25" y="224.5" width="325" height="44"/>
+                    <color key="backgroundColor" red="0.96470588235294119" green="0.32941176470588235" blue="0.098039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="PRa-49-D6S"/>
                     </constraints>

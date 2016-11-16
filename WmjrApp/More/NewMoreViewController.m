@@ -24,14 +24,23 @@
 
 @implementation NewMoreViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"更多";
+    self.title = @"个人管理";
     self.view.backgroundColor = RGBA(237, 240, 242, 1.0);
     // Do any additional setup after loading the view.
     UITableView *tabViewForMore = [[UITableView alloc]init];
     tabViewForMore.delegate = self;
     tabViewForMore.dataSource = self;
+    tabViewForMore.bounces = NO;
+    tabViewForMore.showsVerticalScrollIndicator = NO;
     tabViewForMore.backgroundColor = RGBA(237, 240, 242, 1.0);
     tabViewForMore.tableFooterView = [[UIView alloc]init];
     [self.view addSubview:tabViewForMore];
@@ -138,6 +147,12 @@
                 
                 break;
             case 1:{
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.textLabel.text = @"意见反馈";
+            }
+                break;
+
+            case 2:{
                 cell.textLabel.text = @"联系客服";
                 UILabel *labelForPhone = [[UILabel alloc]init];
                 labelForPhone.text = [SingletonManager sharedManager].companyTel;
@@ -151,18 +166,12 @@
             }
                 
                 break;
-            case 2:{
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.textLabel.text = @"意见反馈";
-            }
-                break;
-                
             default:
                 break;
         }
     } else if (indexPath.section == 2) {
         UILabel *labelForLogOut = [[UILabel alloc]init];
-        labelForLogOut.text = @"退出";
+        labelForLogOut.text = @"退出登录";
         labelForLogOut.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
         labelForLogOut.textColor = RGBA(153, 153, 153, 1.0);
         [cell addSubview:labelForLogOut];
@@ -260,15 +269,15 @@
             }
                 break;
             case 1:{
-                //联系客服
-                NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",[SingletonManager sharedManager].companyTel];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-            }
-                break;
-            case 2:{
                 //意见反馈
                 FeedbackViewController *feedbackVC = [[FeedbackViewController alloc] init];
                 [self.navigationController pushViewController:feedbackVC animated:YES];
+            }
+                break;
+            case 2:{
+                //联系客服
+                NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",[SingletonManager sharedManager].companyTel];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
             }
                 break;
                 

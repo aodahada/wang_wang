@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"消息";
+    self.title = @"消息中心";
     self.view.backgroundColor = [UIColor whiteColor];
     self.tabBarController.tabBar.hidden = YES;
     _messArray = [NSMutableArray array];
@@ -58,7 +58,7 @@
 - (void)getDataWithNetManager:(NSInteger)currentPage {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"消息获取中"];
-    [manager postDataWithUrlActionStr:@"User/msg" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"page":@(currentPage), @"size":@""} withBlock:^(id obj) {
+    [manager postDataWithUrlActionStr:@"User/message" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"page":@(currentPage), @"size":@""} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];
             NSArray *array = [MessageModel mj_keyValuesArrayWithObjectArray:obj[@"data"]];
@@ -79,6 +79,8 @@
             }
             [_messTbale.mj_header endRefreshing];
             [_messTbale.mj_footer endRefreshing];
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"请求失败"];
         }
     }];
 }
@@ -92,21 +94,44 @@
     MessageModel *model = _messArray[indexPath.row];
     MessageViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"messCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    if ([model.type isEqualToString:@"1"]) {
-        cell.cerLab.text = @"充值";
-    } else if ([model.type isEqualToString:@"2"]) {
-        cell.cerLab.text = @"提现";
-    } else if ([model.type isEqualToString:@"3"]) {
-        cell.cerLab.text = @"购入";
-    } else if ([model.type isEqualToString:@"4"]) {
-        cell.cerLab.text = @"赎回";
-    } else {
-        cell.cerLab.text = @"其他消息";
-    }
-    cell.introLab.text = model.content;
+    NSString *typeColor = [NSString stringWithFormat:@"#%@",model.type_color];
+    UIColor *realColor = [self hexStringToColor:typeColor];
+    cell.cerType.textColor = realColor;
+    cell.cerType.text = model.type_name;
+    cell.cerLab.text = model.message_title;
+    cell.introLab.text = model.message_intro;
     
     return cell;
+}
+
+- (UIColor *)hexStringToColor: (NSString *) stringToConvert
+{
+    NSString *cString = [[stringToConvert stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+    // String should be 6 or 8 charactersif ([cString length] < 6) return [UIColor blackColor];
+    // strip 0X if it appearsif ([cString hasPrefix:@"0X"]) cString = [cString substringFromIndex:2];
+    if ([cString hasPrefix:@"#"]) cString = [cString substringFromIndex:1];
+    if ([cString length] != 6) return [UIColor blackColor];
+    
+    // Separate into r, g, b substrings
+    NSRange range;
+    range.location = 0;
+    range.length = 2;
+    NSString *rString = [cString substringWithRange:range];
+    range.location = 2;
+    NSString *gString = [cString substringWithRange:range];
+    range.location = 4;
+    NSString *bString = [cString substringWithRange:range];
+    // Scan values
+    unsigned int r, g, b;
+    
+    [[NSScanner scannerWithString:rString] scanHexInt:&r];
+    [[NSScanner scannerWithString:gString] scanHexInt:&g];
+    [[NSScanner scannerWithString:bString] scanHexInt:&b];
+    
+    return [UIColor colorWithRed:((float) r / 255.0f)
+                           green:((float) g / 255.0f)
+                            blue:((float) b / 255.0f)
+                           alpha:1.0f];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

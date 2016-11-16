@@ -106,6 +106,10 @@
 //            
 //        }
         
+        
+        
+        
+        
     }
     
     return YES;
@@ -315,6 +319,8 @@ fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
     [JPUSHService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", userInfo);
+//    NSString *str = [NSString stringWithFormat:@"%@",userInfo];
+//    [[[UIAlertView alloc]initWithTitle:@"提示" message:str delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil] show];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -326,6 +332,9 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         //在进入前台的时候才执行
         NSLog(@"本地通知");
         NSLog(@"%@",notification.userInfo);
+        
+        
+        
         //获取到主页控制器
 //        UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
 //        [nav popToRootViewControllerAnimated:NO];

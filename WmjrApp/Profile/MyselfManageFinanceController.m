@@ -29,8 +29,6 @@
 @property (nonatomic, strong) NSIndexPath *lastIndexPath;
 @property (nonatomic, strong) NSMutableArray *financeArray;
 
-@property (nonatomic, copy) NSString *totalEarn; /* 总收益 */
-
 @end
 
 @implementation MyselfManageFinanceController
@@ -96,45 +94,104 @@
 
 //头视图
 - (UIView *)setUpProfileHeadView {
-    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, RESIZE_UI(280))];
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, RESIZE_UI(204+49))];
     headView.backgroundColor = RGBA(0, 108, 175, 1.0);
-    UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(RESIZE_UI(45), RESIZE_UI(10), RESIZE_UI(280), RESIZE_UI(20))];
+    UILabel *lable = [[UILabel alloc] init];
     lable.text = @"今日预计收益(元)";
     lable.textAlignment = NSTextAlignmentCenter;
     lable.textColor = [UIColor whiteColor];
-    lable.font = [UIFont systemFontOfSize:RESIZE_UI(15.0f)];
+    lable.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     [headView addSubview:lable];
-    _newEarn = [[UILabel alloc] initWithFrame:CGRectMake(RESIZE_UI(45), RESIZE_UI(50), RESIZE_UI(280), RESIZE_UI(80))];
+    [lable mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(headView.mas_top).with.offset(17);
+        make.centerX.equalTo(headView.mas_centerX);
+        make.height.mas_offset(20);
+    }];
+    _newEarn = [[UILabel alloc] init];
     _newEarn.textAlignment = NSTextAlignmentCenter;
     _newEarn.textColor = [UIColor whiteColor];
-    _newEarn.font = [UIFont systemFontOfSize:RESIZE_UI(80.0f)];
+    _newEarn.font = [UIFont systemFontOfSize:RESIZE_UI(64)];
     [headView addSubview:_newEarn];
-    _accountEarn = [[UILabel alloc] initWithFrame:CGRectMake(RESIZE_UI(45), RESIZE_UI(140), RESIZE_UI(280), RESIZE_UI(20))];
-    _accountEarn.textAlignment = NSTextAlignmentCenter;
-    _accountEarn.textColor = [UIColor whiteColor];
-    _accountEarn.font = [UIFont systemFontOfSize:RESIZE_UI(15.0f)];
-    [headView addSubview:_accountEarn];
+    [_newEarn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lable.mas_bottom).with.offset(5);
+        make.centerX.equalTo(headView.mas_centerX);
+        make.height.mas_offset(RESIZE_UI(90));
+    }];
     
-    UIView *whiteLine = [[UIView alloc] initWithFrame:RESIZE_FRAME(CGRectMake(15, 180, 345, 1))];
-    whiteLine.backgroundColor = [UIColor whiteColor];
-    whiteLine.alpha = .4;
-    [headView addSubview:whiteLine];
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = RESIZE_FRAME(CGRectMake(15, 200, 100, 20));
-    [btn setBackgroundImage:[UIImage imageNamed:@"licaijine_tag.png"] forState:UIControlStateNormal];
-    btn.enabled = NO;
-    [headView addSubview:btn];
+    UIView *viewForLeft = [[UIView alloc]init];
+    viewForLeft.backgroundColor = RGBA(0, 81, 125, 1.0);
+    [headView addSubview:viewForLeft];
+    [viewForLeft mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(140));
+        make.left.equalTo(headView.mas_left);
+        make.width.mas_offset(SCREEN_WIDTH/2-0.5);
+        make.height.mas_offset(RESIZE_UI(64));
+    }];
     
-    _conductNum = [[UILabel alloc] initWithFrame:RESIZE_FRAME(CGRectMake(230, 200, 120, 20))];
-    _conductNum.textAlignment = NSTextAlignmentRight;
+    UILabel *labelForFinalAmount = [[UILabel alloc]init];
+    labelForFinalAmount.text = @"理财金额(元)";
+    labelForFinalAmount.textColor = COLOR_WITH_HEX(0xABC7D6);
+    labelForFinalAmount.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    [viewForLeft addSubview:labelForFinalAmount];
+    [labelForFinalAmount mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(viewForLeft.mas_top).with.offset(RESIZE_UI(15));
+        make.centerX.equalTo(viewForLeft.mas_centerX);
+        make.height.mas_offset(RESIZE_UI(14));
+    }];
+    
+    //理财金额
+    _conductNum = [[UILabel alloc]init];
+    _conductNum.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     _conductNum.textColor = [UIColor whiteColor];
-    _conductNum.font = [UIFont systemFontOfSize:RESIZE_UI(15.0f)];
-    [headView addSubview:_conductNum];
+    [viewForLeft addSubview:_conductNum];
+    [_conductNum mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(viewForLeft.mas_top).with.offset(RESIZE_UI(38));
+        make.centerX.equalTo(viewForLeft.mas_centerX);
+        make.height.mas_offset(RESIZE_UI(14));
+    }];
     
-    _aView = [[UIView alloc] initWithFrame:CGRectMake(0, RESIZE_UI(240), SCREEN_WIDTH, RESIZE_UI(50))];
+    UIView *viewForRight = [[UIView alloc]init];
+    viewForRight.backgroundColor = RGBA(0, 81, 125, 1.0);
+    [headView addSubview:viewForRight];
+    [viewForRight mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(140));
+        make.right.equalTo(headView.mas_right);
+        make.width.mas_offset(SCREEN_WIDTH/2-0.5);
+        make.height.mas_offset(RESIZE_UI(64));
+    }];
+    
+    UILabel *labelForRaiseAmount = [[UILabel alloc]init];
+    labelForRaiseAmount.text = @"累计收益(元)";
+    labelForRaiseAmount.textColor = COLOR_WITH_HEX(0xABC7D6);
+    labelForRaiseAmount.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    [viewForRight addSubview:labelForRaiseAmount];
+    [labelForRaiseAmount mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(viewForRight.mas_top).with.offset(RESIZE_UI(15));
+        make.centerX.equalTo(viewForRight.mas_centerX);
+        make.height.mas_offset(RESIZE_UI(14));
+    }];
+    
+    //累计收益
+    _accountEarn = [[UILabel alloc]init];
+    _accountEarn.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    _accountEarn.textColor = [UIColor whiteColor];
+    [viewForRight addSubview:_accountEarn];
+    [_accountEarn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(viewForRight.mas_top).with.offset(RESIZE_UI(38));
+        make.centerX.equalTo(viewForRight.mas_centerX);
+        make.height.mas_offset(RESIZE_UI(14));
+    }];
+    
+    _aView = [[UIView alloc] init];
     _aView.backgroundColor = [UIColor whiteColor];
     [headView addSubview:_aView];
+    [_aView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(viewForRight.mas_bottom);
+        make.bottom.equalTo(headView.mas_bottom);
+        make.left.equalTo(headView.mas_left);
+        make.right.equalTo(headView.mas_right);
+    }];
     NSArray *titArray = @[@"持有中", @"已赎回"];
     for (NSInteger i = 0; i < 2; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -146,11 +203,11 @@
         } else {
             [button setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
         }
-        button.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(20.0f)];
+        button.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
         [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
         [_aView addSubview:button];
     }
-    _redLine = [[UIView alloc] initWithFrame:CGRectMake(0, RESIZE_UI(288), SCREEN_WIDTH / 2, RESIZE_UI(2))];
+    _redLine = [[UIView alloc] initWithFrame:CGRectMake(0, RESIZE_UI(204+47), SCREEN_WIDTH / 2, RESIZE_UI(2))];
     _redLine.backgroundColor = RGBA(0, 108, 175, 1.0);
     [headView addSubview:_redLine];
     
@@ -163,7 +220,7 @@
     if ([btn.titleLabel.text isEqualToString:@"持有中"]) {
         stateStr = @"4";
         [UIView animateWithDuration:.3 animations:^{
-            _redLine.frame = CGRectMake(0, RESIZE_UI(288), SCREEN_WIDTH / 2, RESIZE_UI(2));
+            _redLine.frame = CGRectMake(0, RESIZE_UI(204+47), SCREEN_WIDTH / 2, RESIZE_UI(2));
             UIButton *button = (UIButton *)[_aView viewWithTag:102];
             [button setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
         } completion:nil];
@@ -171,7 +228,7 @@
     if ([btn.titleLabel.text isEqualToString:@"已赎回"]) {
         stateStr = @"3";
         [UIView animateWithDuration:.3 animations:^{
-            _redLine.frame = CGRectMake(SCREEN_WIDTH / 2, RESIZE_UI(288), SCREEN_WIDTH / 2, RESIZE_UI(2));
+            _redLine.frame = CGRectMake(SCREEN_WIDTH / 2, RESIZE_UI(204+47), SCREEN_WIDTH / 2, RESIZE_UI(2));
             UIButton *button = (UIButton *)[_aView viewWithTag:101];
             [button setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
         } completion:nil];
@@ -204,6 +261,7 @@
     _tableView.tag = 101;
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.bounces = NO;
     [self.view addSubview:_tableView];
     _tableView.tableHeaderView = [self setUpProfileHeadView];
     [_tableView registerClass:[MyselfManageFinanceCell class] forCellReuseIdentifier:@"cell1"];
@@ -235,10 +293,9 @@
     NetManager *manager = [[NetManager alloc] init];
     [manager postDataWithUrlActionStr:@"User/income" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
-            _newEarn.text = [NSString stringWithFormat:@"%.2f", [[obj[@"data"] objectForKey:@"today_income"] floatValue]];
-            _totalEarn = [NSString stringWithFormat:@"%.2f", [[obj[@"data"] objectForKey:@"total_income"] floatValue]];
-            _accountEarn.text = [NSString stringWithFormat:@"累计收益  %.2f元", [[obj[@"data"] objectForKey:@"total_income"] floatValue]];
-            _conductNum.text = [NSString stringWithFormat:@" %.2f元", [[obj[@"data"] objectForKey:@"total_invest"] floatValue]];
+            _newEarn.text = [NSString stringWithFormat:@"%@", [obj[@"data"] objectForKey:@"today_income"]];
+            _accountEarn.text = [NSString stringWithFormat:@"%@", [obj[@"data"] objectForKey:@"total_income"]];
+            _conductNum.text = [NSString stringWithFormat:@"%@", [obj[@"data"] objectForKey:@"total_invest"]];
         }
     }];
 }

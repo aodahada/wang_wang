@@ -57,7 +57,7 @@
         
         //新浪平台
         UIButton *buttonSinaCenter = [[UIButton alloc]init];
-        [buttonSinaCenter setTitle:@"新浪平台" forState:UIControlStateNormal];
+        [buttonSinaCenter setTitle:@"安全保障" forState:UIControlStateNormal];
         buttonSinaCenter.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
         [buttonSinaCenter setTitleColor:RGBA(255, 255, 255, 1.0) forState:UIControlStateNormal];
         [buttonSinaCenter addTarget:self action:@selector(jumpToSinaMethod) forControlEvents:UIControlEventTouchUpInside];

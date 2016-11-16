@@ -71,13 +71,13 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Cellindentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.font = [UIFont systemFontOfSize:15];
         cell.textLabel.textColor = RGBA(20, 20, 23, 1.0);
     }
     switch (indexPath.row) {
         case 0:{
             cell.textLabel.text = @"修改头像";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             _imageViewForPic = [[UIImageView alloc]init];
             [_imageViewForPic sd_setImageWithURL:[NSURL URLWithString:[SingletonManager sharedManager].userModel.photourl]];
             _imageViewForPic.layer.masksToBounds = YES;
@@ -92,6 +92,7 @@
             break;
         case 1:{
             cell.textLabel.text = @"昵称";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             _labelForName = [[UILabel alloc]init];
             _labelForName.text = [SingletonManager sharedManager].userModel.name;
             _labelForName.font = [UIFont systemFontOfSize:14];

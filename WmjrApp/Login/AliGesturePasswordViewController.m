@@ -42,6 +42,9 @@
         NSLog(@"设置密码成功-----你的密码为 = 【%@】\n\n", pswString);
         [self dismissViewControllerAnimated:YES completion:^{
             [[NSNotificationCenter defaultCenter]postNotificationName:@"backToRoot" object:nil];
+            if ([_isHome isEqualToString:@"yes"]) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"addHomeGudie" object:nil];
+            }
         }];
     };
     

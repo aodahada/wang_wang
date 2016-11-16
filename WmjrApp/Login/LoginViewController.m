@@ -45,7 +45,9 @@
     _loginBtn.enabled = NO;
     
     _phoneNum.textColor = [UIColor blackColor];
+    _phoneNum.tintColor = [UIColor blackColor];
     _passWord.textColor = [UIColor blackColor];
+    _passWord.tintColor = [UIColor blackColor];
     
     [_phoneNum addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     [_passWord addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];

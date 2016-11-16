@@ -22,15 +22,24 @@
 - (void)setUpNavigationBar {
     self.title = @"交易详情";
     /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.92f green:0.58f blue:0.00f alpha:1.00f];
-    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
-    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barTintColor = RGBA(0, 108, 175, 1.0);
+    //    /*  设置字体颜色 */
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:VIEWBACKCOLOR};
+    //    /* 渲染颜色 */
+    self.navigationController.navigationBar.tintColor = RGBA(0, 108, 175, 1.0);
     
     /*  去掉边线 */
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"piggy"] forBarMetrics:UIBarMetricsDefault];
+    
+    UIImage *image = [[UIImage imageNamed:@"arrow_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
+    
+    self.navigationItem.leftBarButtonItem = backButton;
+}
+
+- (void)backBtnAction {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad {
@@ -57,30 +66,35 @@
         case 0:
         {
             cell.textLabel.text = @"投资金额  (元)";
-            cell.detailTextLabel.text = self.totalNum;;
+            cell.detailTextLabel.text = self.totalNum;
+            cell.detailTextLabel.textColor = AUXILY_COLOR;
         }
             break;
         case 1:
         {
             cell.textLabel.text = @"代收本息  (元)";
             cell.detailTextLabel.text = self.earnNum;
+            cell.detailTextLabel.textColor = AUXILY_COLOR;
         }
             break;
         case 2:
         {
             cell.textLabel.text = @"预期年化收益  (%)";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f", [self.earnP floatValue] * 100];
+            cell.detailTextLabel.textColor = AUXILY_COLOR;
         }
             break;
         case 3:
         {
             cell.textLabel.text = @"购买日期";
+            cell.detailTextLabel.textColor = COLOR_WITH_HEX(0xFF6405);
             cell.detailTextLabel.text = self.createtime;
         }
             break;
         case 4:
         {
             cell.textLabel.text = @"结息日期";
+            cell.detailTextLabel.textColor = COLOR_WITH_HEX(0xFF6405);
             cell.detailTextLabel.text = self.duedate;
         }
             break;
@@ -88,6 +102,7 @@
         {
             cell.textLabel.text = @"最后还款日期";
             cell.detailTextLabel.text = self.expirydate;
+            [cell.detailTextLabel setTextColor:RGBA(255, 100, 5, 1.0)];
         }
             break;
             
@@ -95,7 +110,6 @@
             break;
     }
     cell.textLabel.textColor = TITLE_COLOR;
-    cell.detailTextLabel.textColor = AUXILY_COLOR;
     cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:15.0f];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

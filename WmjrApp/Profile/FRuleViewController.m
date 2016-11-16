@@ -10,8 +10,6 @@
 
 @interface FRuleViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *FRContent;
-
 @end
 
 @implementation FRuleViewController
@@ -20,8 +18,15 @@
     [super viewDidLoad];
     self.title = @"奖励规则";
     self.tabBarController.tabBar.hidden = YES;
-    _FRContent.text = [NSString stringWithFormat:@"%@ \n %@", @"（1） 旺马财富的好友奖励采用一级奖励制度，您推荐的好友投资成功后，您都会获得一定比例的奖励，具体计算公式为：我的奖励=好友投资收益*6% ;", @"（2）您的好友投资成功后（产品募集结束还款）， 在“ 即将获得的收益” 将自动显示；"];
-    _FRContent.textColor = TITLE_COLOR;
+    UIImageView *imageViewForMess = [[UIImageView alloc]init];
+    imageViewForMess.image = [UIImage imageNamed:@"image_guize"];
+    [self.view addSubview:imageViewForMess];
+    [imageViewForMess mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.top.equalTo(self.view.mas_top).with.offset(10);
+        make.height.mas_offset(RESIZE_UI(302));
+        make.width.mas_offset(RESIZE_UI(375));
+    }];
     
 }
 
