@@ -265,7 +265,7 @@
     }];
     
     _earnOfYearLable = [[UILabel alloc] init];
-    _earnOfYearLable.text = @"预期年化益(%)";
+    _earnOfYearLable.text = @"预期年化收益(%)";
     _earnOfYearLable.textAlignment = NSTextAlignmentCenter;
     _earnOfYearLable.textColor = VIEWBACKCOLOR;
     _earnOfYearLable.font = [UIFont systemFontOfSize:RESIZE_UI(12)];

@@ -26,8 +26,6 @@
 @property (strong, nonatomic) IBOutlet UITextField *phoneNum;  /* 手机号 */
 @property (strong, nonatomic) IBOutlet UITextField *password;  /*  登录密码 */
 @property (strong, nonatomic) IBOutlet UITextField *nPassword;  /* 登录密码 */
-@property (weak, nonatomic) IBOutlet UITextField *trendPassword;  /*  交易密码 */
-@property (weak, nonatomic) IBOutlet UITextField *nTrendPassword;  /* 交易密码 */
 
 @property (strong, nonatomic) IBOutlet UITextField *verificatword;  //验证码
 @property (strong, nonatomic) IBOutlet UITextField *invitedNum;  //邀请码
@@ -76,8 +74,6 @@
     [_nPassword addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     [_password addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     [_verificatword addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
-    [_trendPassword addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
-    [_nTrendPassword addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     
 }
 
@@ -93,12 +89,6 @@
     }
     if (_password.text.length > 18) {
         _password.text = [_password.text substringToIndex:18];
-    }
-    if (_trendPassword.text.length > 6) {
-        _trendPassword.text = [_trendPassword.text substringToIndex:6];
-    }
-    if (_nTrendPassword.text.length > 6) {
-        _nTrendPassword.text = [_nTrendPassword.text substringToIndex:6];
     }
 }
 
@@ -211,7 +201,7 @@
 #pragma mark - 数据处理 －
 - (void)getDataWithNetManager {
     NetManager *manager = [[NetManager alloc] init];
-    NSDictionary *paramDic = @{@"name":_userName.text, @"pwd":_nPassword.text, @"invitationcode":_invitedNum.text, @"mobile":_phoneNum.text, @"pwd_trade":_trendPassword.text};
+    NSDictionary *paramDic = @{@"name":_userName.text, @"pwd":_nPassword.text, @"invitationcode":_invitedNum.text, @"mobile":_phoneNum.text};
     [manager postDataWithUrlActionStr:@"User/register" withParamDictionary:paramDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             NSDictionary *dataDic = obj[@"data"];
@@ -270,12 +260,6 @@
         } else if (_nPassword.text.length == 0) {
              [[SingletonManager sharedManager] alert1PromptInfo:@"请再次输入登录密码"];
             return NO;
-        } else if (_trendPassword.text.length == 0) {
-            [[SingletonManager sharedManager] alert1PromptInfo:@"交易密码不能为空"];
-            return NO;
-        } else if (_nTrendPassword.text.length == 0) {
-            [[SingletonManager sharedManager] alert1PromptInfo:@"请再次输入交易密码"];
-            return NO;
         } else if (_verificatword.text.length == 0) {
             [[SingletonManager sharedManager] alert1PromptInfo:@"验证码不能为空"];
             return NO;
@@ -297,15 +281,8 @@
         } else if (![[SingletonManager sharedManager] checkPassword:_password.text]) {
             [[SingletonManager sharedManager] alert1PromptInfo:@"登录密码必须包含数字和字母"];
             return NO;
-        }
-        else if (_nTrendPassword.text.length != 6 || _trendPassword.text.length != 6) {
-            [[SingletonManager sharedManager] alert1PromptInfo:@"交易密码格式不正确"];
-            return NO;
         } else if ([_nPassword.text isEqualToString:_password.text] == NO) {
             [[SingletonManager sharedManager] alert1PromptInfo:@"两次登录密码不一致"];
-            return NO;
-        } else if ([_nTrendPassword.text isEqualToString:_trendPassword.text] == NO) {
-            [[SingletonManager sharedManager] alert1PromptInfo:@"两次交易密码不一致"];
             return NO;
         } else if (![_codeStr isEqualToString:_verificatword.text]) {
             [[SingletonManager sharedManager] alert1PromptInfo:@"验证码错误"];

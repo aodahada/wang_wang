@@ -105,7 +105,7 @@
         }
             break;
         case 2:{
-            cell.textLabel.text = @"账号";
+            cell.textLabel.text = @"账户";
             NSMutableString *phoneNum = [[SingletonManager sharedManager].userModel.mobile mutableCopy];
             [phoneNum replaceCharactersInRange:NSMakeRange(3, 5) withString:@"*****"];
             _labelForPhone = [[UILabel alloc]init];

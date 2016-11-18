@@ -18,11 +18,13 @@ typedef enum {
 
 typedef void (^PasswordBlock) (NSString *pswString);
 typedef void (^buttonHaMethod)();
+typedef void (^buttonHeMethod)();
 
 @interface AliPayViews : UIView
 @property(nonatomic , assign)GestureModel gestureModel;
 @property(nonatomic , strong)PasswordBlock block;
 @property (nonatomic, copy) buttonHaMethod buHaBlock;
+@property (nonatomic, strong) buttonHeMethod buHeBlock;
 - (instancetype)initWithFrame:(CGRect)frame andType:(NSString *)type;
 
 

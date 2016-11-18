@@ -58,6 +58,11 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+}
+
 - (void)backAction {
     [self dismissViewControllerAnimated:YES completion:^{
     }];

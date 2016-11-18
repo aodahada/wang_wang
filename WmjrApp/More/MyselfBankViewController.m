@@ -65,6 +65,7 @@
     [super viewDidLoad];
     [self setUpNavigationBar];
 //    self.title = @"我的银行卡";
+    self.view.backgroundColor = RGBA(237, 238, 242, 1.0);
     _bankInfoArray = [NSMutableArray array];
     
     /* 获取数据 */

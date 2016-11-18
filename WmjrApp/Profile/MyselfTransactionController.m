@@ -25,7 +25,7 @@
 @implementation MyselfTransactionController
 
 - (void)configNagationBar {
-    self.title = @"资金流水";
+    self.title = @"交易记录";
     
     _dateArray = [[SingletonManager sharedManager] getStartDateAndEndDate];
 }

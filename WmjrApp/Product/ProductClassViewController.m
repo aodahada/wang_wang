@@ -174,7 +174,7 @@
 /* 点击立即购买 */
 - (void)buttonClickProductModel:(ProductModel *)productModel {
     
-    if ([[SingletonManager sharedManager].uid isEqualToString:@""]) {
+    if ([[self convertNullString:[SingletonManager sharedManager].uid] isEqualToString:@""]) {
         /* 未登录需登录 */
         [[NSNotificationCenter defaultCenter] postNotificationName:PRESENTLOGINVCNOTIFICATION object:nil];
     } else if ([[SingletonManager sharedManager].userModel.is_real_name isEqualToString:@"0"]) {
@@ -199,6 +199,23 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:PUSHTOFUNDBUYVCNOTIFICATION object:productModel];
     }
     
+}
+
+#pragma mark - 判断字符串是否为空
+- (NSString*)convertNullString:(NSString*)oldString{
+    if (oldString!=nil && (NSNull *)oldString != [NSNull null]) {
+        if ([oldString length]!=0) {
+            if ([oldString isEqualToString:@"(null)"]) {
+                return @"";
+            }
+            return  oldString;
+        }else{
+            return @"";
+        }
+    }
+    else{
+        return @"";
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

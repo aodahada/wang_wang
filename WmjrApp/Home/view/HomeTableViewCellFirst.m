@@ -106,8 +106,12 @@
         BOOL isNull = [self isNullString:uid];
         if (isNull) {
             //没登录的
+            buttonSinaCenter.hidden = YES;
+            labelForLine.hidden = YES;
             [self dontLoginView];
         } else {
+            buttonSinaCenter.hidden = NO;
+            labelForLine.hidden = NO;
             //登录后的
             [self alreadyLoginView];
         }
@@ -136,12 +140,12 @@
     [viewForButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(120));
         make.centerX.equalTo(self.mas_centerX);
-        make.width.mas_offset(RESIZE_UI(218));
+        make.width.mas_offset(RESIZE_UI(208));
         make.height.mas_offset(RESIZE_UI(36));
     }];
     
     UILabel *labelForSina = [[UILabel alloc]init];
-    labelForSina.text = @"了解新浪资金托管平台";
+    labelForSina.text = @"了解旺马财富安全保障";
     labelForSina.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     labelForSina.textColor = [UIColor whiteColor];
     [viewForButton addSubview:labelForSina];
@@ -212,7 +216,7 @@
 - (void)alreadyLoginView {
     
     UILabel *labelForTitle = [[UILabel alloc]init];
-    labelForTitle.text = @"今日预计收益(元)";
+    labelForTitle.text = @"累计收益(元)";
     labelForTitle.textColor = RGBA(254, 243, 243, 1.0);
     labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     [self addSubview:labelForTitle];
@@ -223,7 +227,7 @@
     }];
     
     UILabel *labelForYesterDayMoney = [[UILabel alloc]init];
-    labelForYesterDayMoney.text = _personalModel.today_income;
+    labelForYesterDayMoney.text = _personalModel.total_income;
     labelForYesterDayMoney.font = [UIFont systemFontOfSize:RESIZE_UI(48)];
     labelForYesterDayMoney.textColor = RGBA(255, 255, 255, 1.0);
     [self addSubview:labelForYesterDayMoney];
@@ -264,7 +268,7 @@
     }];
     
     UILabel *labelForRaiseMoneyTitle = [[UILabel alloc]init];
-    labelForRaiseMoneyTitle.text = @"累计收益";
+    labelForRaiseMoneyTitle.text = @"账户余额";
     labelForRaiseMoneyTitle.textColor = RGBA(255, 255, 255, 1.0);
     labelForRaiseMoneyTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [self addSubview:labelForRaiseMoneyTitle];
@@ -274,7 +278,7 @@
     }];
     
     UILabel *labelForRaiseMoney = [[UILabel alloc]init];
-    labelForRaiseMoney.text = _personalModel.total_income;
+    labelForRaiseMoney.text = _personalModel.account_rest;
     labelForRaiseMoney.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     labelForRaiseMoney.textColor = RGBA(254, 243, 243, 1.0);
     [self addSubview:labelForRaiseMoney];

@@ -26,6 +26,8 @@
     self.view.backgroundColor = VIEWBACKCOLOR;
     [_sendBtn setBackgroundColor:BASECOLOR];
     _feedText.delegate = self;
+    _feedText.layer.borderWidth = 1;
+    _feedText.layer.borderColor = RGBA(97, 154, 189, 1.0).CGColor;
 }
 
 - (void)viewDidLoad {

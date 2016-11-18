@@ -10,8 +10,14 @@
 
 @interface PersonInvestModel : NSObject
 
+/**今日预期收益*/
 @property (nonatomic, copy) NSString *today_income;
+/**累计投资*/
 @property (nonatomic, copy) NSString *total_invest;
+/** 累计收益*/
 @property (nonatomic, copy) NSString *total_income;
+
+/**账户余额*/
+@property (nonatomic, copy) NSString *account_rest;
 
 @end

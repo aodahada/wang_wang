@@ -209,4 +209,25 @@
     return NO;
 }
 
+- (NSString *)getQianWeiFenGeFuString:(NSString *)stringValue {
+    
+    NSArray *hahaArray = [stringValue componentsSeparatedByString:@"."];
+    NSString *stringResult;
+    if (hahaArray.count == 2) {
+        NSInteger balanceFlo = [hahaArray[0] integerValue];
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc]init];
+        [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+        [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        NSString *balance = [numberFormatter stringFromNumber:[NSNumber numberWithInteger:balanceFlo]];
+        stringResult = [NSString stringWithFormat:@"%@.%@",balance,hahaArray[1]];
+    } else {
+        NSInteger balanceFlo = [hahaArray[0] integerValue];
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc]init];
+        [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+        [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        stringResult = [numberFormatter stringFromNumber:[NSNumber numberWithInteger:balanceFlo]];
+    }
+    return stringResult;
+}
+
 @end

@@ -53,6 +53,13 @@
         [self buttonHaMethod];
     };
     
+    alipay.buHeBlock = ^(){
+        @strongify(self)
+        [[SingletonManager sharedManager] removeHandGestureInfoDefault];
+        [SVProgressHUD showSuccessWithStatus:@"取消成功"];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    };
+    
     [self.view addSubview:alipay];
     
     

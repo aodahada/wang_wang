@@ -262,27 +262,53 @@
         //NSLog(@"item.frame = [%@]", NSStringFromCGPoint(item.center));
     }
     
-    UIButton *buttonForHa = [[UIButton alloc]init];
-    if ([_type isEqualToString:@"注册"]) {
-        [buttonForHa setTitle:@"跳过设置手势" forState:UIControlStateNormal];
-//        buttonForHa.hidden = NO;
-    } else if ([_type isEqualToString:@"更多"]) {
-//        buttonForHa.hidden = YES;
+    if ([_type isEqualToString:@"更多"]) {
+        UIButton *buttonForHa = [[UIButton alloc]init];
         [buttonForHa setTitle:@"返回上一界面" forState:UIControlStateNormal];
+        buttonForHa.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [buttonForHa setTitleColor:RGBA(153, 153, 153, 1.0) forState:UIControlStateNormal];
+        [buttonForHa addTarget:self action:@selector(buttonHaMethod) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:buttonForHa];
+        [buttonForHa mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.mas_top).with.offset(buttonHeightY+10);
+            make.left.equalTo(self.mas_left).with.offset(40);
+            make.height.mas_offset(40);
+            make.width.mas_offset(110);
+        }];
+        
+        UIButton *buttonForHe = [[UIButton alloc]init];
+        [buttonForHe setTitle:@"关闭手势验证" forState:UIControlStateNormal];
+        buttonForHe.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [buttonForHe setTitleColor:RGBA(153, 153, 153, 1.0) forState:UIControlStateNormal];
+        [buttonForHe addTarget:self action:@selector(buttonHeMethod) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:buttonForHe];
+        [buttonForHe mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.mas_top).with.offset(buttonHeightY+10);
+            make.right.equalTo(self.mas_right).with.offset(-40);
+            make.height.mas_offset(40);
+            make.width.mas_offset(110);
+        }];
+        
     } else {
-        [buttonForHa setTitle:@"忘记手势密码?" forState:UIControlStateNormal];
-//        buttonForHa.hidden = NO;
+        UIButton *buttonForHa = [[UIButton alloc]init];
+        if ([_type isEqualToString:@"注册"]) {
+            [buttonForHa setTitle:@"跳过设置手势" forState:UIControlStateNormal];
+            //        buttonForHa.hidden = NO;
+        } else {
+            [buttonForHa setTitle:@"忘记手势密码?" forState:UIControlStateNormal];
+            //        buttonForHa.hidden = NO;
+        }
+        buttonForHa.titleLabel.font = [UIFont systemFontOfSize:15];
+        [buttonForHa setTitleColor:RGBA(153, 153, 153, 1.0) forState:UIControlStateNormal];
+        [buttonForHa addTarget:self action:@selector(buttonHaMethod) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:buttonForHa];
+        [buttonForHa mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.mas_top).with.offset(buttonHeightY+10);
+            make.centerX.equalTo(self.mas_centerX);
+            make.height.mas_offset(40);
+            make.width.mas_offset(110);
+        }];
     }
-    buttonForHa.titleLabel.font = [UIFont systemFontOfSize:15];
-    [buttonForHa setTitleColor:RGBA(153, 153, 153, 1.0) forState:UIControlStateNormal];
-    [buttonForHa addTarget:self action:@selector(buttonHaMethod) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:buttonForHa];
-    [buttonForHa mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).with.offset(buttonHeightY+10);
-        make.centerX.equalTo(self.mas_centerX);
-        make.height.mas_offset(40);
-        make.width.mas_offset(110);
-    }];
     
 }
 
@@ -293,6 +319,12 @@
     }
     
     
+}
+
+- (void)buttonHeMethod {
+    if (self.buHeBlock) {
+        self.buHeBlock();
+    }
 }
 
 /**

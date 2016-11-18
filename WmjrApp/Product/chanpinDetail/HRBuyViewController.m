@@ -76,7 +76,8 @@
     
     _textFieldForBuy.placeholder = [NSString stringWithFormat:@"建议购买金额%@元以上",_productModel.lowpurchase];
     
-    _labelForSurplus.text = [NSString stringWithFormat:@"产品可购余额%@元",_productModel.balance];
+    NSString *newBalance = [[SingletonManager sharedManager] getQianWeiFenGeFuString:_productModel.balance];
+    _labelForSurplus.text = [NSString stringWithFormat:@"产品可购余额%@元",newBalance];
     
 }
 

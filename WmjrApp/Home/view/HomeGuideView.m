@@ -35,14 +35,14 @@
         // 这里添加第二个路径 （这个是圆）
         //    [path appendPath:[UIBezierPath bezierPathWithArcCenter:CGPointMake(frame.size.width - 30, 42) radius:30 startAngle:0 endAngle:2*M_PI clockwise:NO]];
         // 这里添加第二个路径 （这个是矩形）
-        [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(SCREEN_WIDTH-40-RESIZE_UI(92), 27, RESIZE_UI(92), RESIZE_UI(33)) cornerRadius:5] bezierPathByReversingPath]];
+        [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(SCREEN_WIDTH/2-RESIZE_UI(208)/2-RESIZE_UI(10), RESIZE_UI(110), RESIZE_UI(228), RESIZE_UI(56)) cornerRadius:5] bezierPathByReversingPath]];
         self.shapeLayer = [CAShapeLayer layer];
         self.shapeLayer.path = _path.CGPath;
         //shapeLayer.strokeColor = [UIColor blueColor].CGColor;
         [self.layer setMask:self.shapeLayer];
         
         
-        _imageViewForLearn = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-39-RESIZE_UI(85),27+RESIZE_UI(33),RESIZE_UI(85), RESIZE_UI(184))];
+        _imageViewForLearn = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2,RESIZE_UI(110)+RESIZE_UI(56),RESIZE_UI(85), RESIZE_UI(184))];
         _imageViewForLearn.image = [UIImage imageNamed:@"image_ptjj"];
         [self addSubview:_imageViewForLearn];
     
@@ -60,7 +60,7 @@
             make.width.mas_offset(RESIZE_UI(110));
             make.height.mas_offset(RESIZE_UI(35));
             make.centerX.equalTo(self.mas_centerX);
-            make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(325));
+            make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(368));
         }];
         
     }
@@ -86,13 +86,13 @@
     self.count++;
     switch (self.count) {
         case 2:{
-            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(SCREEN_WIDTH-6-RESIZE_UI(33), 26, RESIZE_UI(33), RESIZE_UI(33)) cornerRadius:5] bezierPathByReversingPath]];
+            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(SCREEN_WIDTH-3-33, 26, 33, 33) cornerRadius:5] bezierPathByReversingPath]];
             self.shapeLayer = [CAShapeLayer layer];
             self.shapeLayer.path = _path.CGPath;
             //shapeLayer.strokeColor = [UIColor blueColor].CGColor;
             [self.layer setMask:self.shapeLayer];
             
-            _imageViewForLearn.frame = CGRectMake(SCREEN_WIDTH-6-RESIZE_UI(33)-RESIZE_UI(99), 26+RESIZE_UI(33), RESIZE_UI(101), RESIZE_UI(85));
+            _imageViewForLearn.frame = CGRectMake(SCREEN_WIDTH-3-33-RESIZE_UI(99), 26+33, RESIZE_UI(101), RESIZE_UI(85));
             _imageViewForLearn.image = [UIImage imageNamed:@"image_xx"];
             
             [_buttonForLearn mas_updateConstraints:^(MASConstraintMaker *make) {

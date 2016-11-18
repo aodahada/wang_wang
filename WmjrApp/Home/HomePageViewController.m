@@ -22,6 +22,7 @@
 #import "MessageWViewController.h"
 #import "UserInfoModel.h"
 #import "HomeGuideView.h"
+#import "SafeEnsureViewController.h"
 
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -78,6 +79,8 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutMethod) name:@"logout" object:nil];
     //手势验证成功时显示
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(homeGuideLayout) name:@"addHomeGudie" object:nil];
+    //登录成功广播
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginSuccessMethod) name:@"loginSuccess" object:nil];
     
     [self setUpTableViewMethod];
     [self setReplaceNavMethod];
@@ -86,6 +89,13 @@
 
 - (void)logoutMethod{
     [_homeTableView reloadData];
+    _buttonSinaCenter.hidden = YES;
+    _labelForLine.hidden = YES;
+}
+
+- (void)loginSuccessMethod {
+    _buttonSinaCenter.hidden = NO;
+    _labelForLine.hidden = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -115,8 +125,7 @@
     [manager postDataWithUrlActionStr:@"User/income" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             _personInvestModel = [PersonInvestModel mj_objectWithKeyValues:obj[@"data"]];
-            [_homeTableView reloadData];
-            [SVProgressHUD dismiss];
+            [self getAccountRest];
         } else {
             NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
             MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
@@ -127,6 +136,22 @@
         }
     }];
     
+}
+
+#pragma mark - 获取账户余额
+- (void)getAccountRest {
+    //获取当前余额
+    NetManager *manager = [[NetManager alloc] init];
+    [manager postDataWithUrlActionStr:@"User/queryBalance" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            NSString *balanceValue = [obj[@"data"] objectForKey:@"available_balance"];
+            _personInvestModel.account_rest = balanceValue;
+            [_homeTableView reloadData];
+            [SVProgressHUD dismiss];
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"请求失败"];
+        }
+    }];
 }
 
 #pragma mark - 数据处理
@@ -395,7 +420,9 @@
 
 #pragma mark - 新浪平台方法
 - (void)sinaMethod {
-    [self jumpToAdWebView:@"新浪资金托管平台" WebUrl:@"https://pay.sina.com.cn/zjtg"];
+//    [self jumpToAdWebView:@"新浪资金托管平台" WebUrl:@"https://pay.sina.com.cn/zjtg"];
+    SafeEnsureViewController *safeVC = [[SafeEnsureViewController alloc]init];
+    [self.navigationController pushViewController:safeVC animated:YES];
     
 }
 
@@ -428,12 +455,18 @@
     if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]) {
         [[NSUserDefaults standardUserDefaults]setObject:app_version forKey:@"appVersion"];
         CGRect frame = [UIScreen mainScreen].bounds;
-        HomeGuideView *homeGuideView = [[HomeGuideView alloc]initWithFrame:frame andNewsListCount:self.arrayForNewsList.count];
+        NSInteger count;
+        if (self.arrayForNewsList.count<=3) {
+            count = self.arrayForNewsList.count;
+        } else {
+            count = 3;
+        }
+        HomeGuideView *homeGuideView = [[HomeGuideView alloc]initWithFrame:frame andNewsListCount:count];
         @weakify(self)
         homeGuideView.forthLearnMethod = ^(){
             @strongify(self)
-            NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:3];
-            [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:count-1 inSection:3];
+            [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
         };
         homeGuideView.destroySelfMethod = ^(){
             @strongify(self)
@@ -446,12 +479,18 @@
     
 //测试用的
 //    CGRect frame = [UIScreen mainScreen].bounds;
-//    HomeGuideView *homeGuideView = [[HomeGuideView alloc]initWithFrame:frame andNewsListCount:self.arrayForNewsList.count];
+//    NSInteger count;
+//    if (self.arrayForNewsList.count<=3) {
+//        count = self.arrayForNewsList.count;
+//    } else {
+//        count = 3;
+//    }
+//    HomeGuideView *homeGuideView = [[HomeGuideView alloc]initWithFrame:frame andNewsListCount:count];
 //    @weakify(self)
 //    homeGuideView.forthLearnMethod = ^(){
 //        @strongify(self)
-//        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:3];
-//        [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:count-1 inSection:3];
+//        [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
 //    };
 //    homeGuideView.destroySelfMethod = ^(){
 //        @strongify(self)
@@ -573,7 +612,7 @@
         HomeTableViewCellFirst *cell = [[HomeTableViewCellFirst alloc]initWithDic:_personInvestModel];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.learnWangma = ^(){
-            [self jumpToAdWebView:@"新浪资金托管平台" WebUrl:@"https://pay.sina.com.cn/zjtg"];
+            [self sinaMethod];
         };
         
         cell.contactWangma = ^(){

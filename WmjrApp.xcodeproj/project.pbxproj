@@ -266,6 +266,7 @@
 		8B16114A1D81373400C9B954 /* ViewForProductCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1611491D81373400C9B954 /* ViewForProductCategory.m */; };
 		8B1611501D81384E00C9B954 /* HomeProductCatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B16114F1D81384E00C9B954 /* HomeProductCatModel.m */; };
 		8B1611531D8142FF00C9B954 /* ViewForScrollClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1611521D8142FF00C9B954 /* ViewForScrollClass.m */; };
+		8B266FB71DDC5296000DCE69 /* SafeEnsureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B266FB61DDC5296000DCE69 /* SafeEnsureViewController.m */; };
 		8B3342FF1D7F9E91004DB390 /* ProductCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3342FE1D7F9E91004DB390 /* ProductCategoryModel.m */; };
 		8B3343021D7FC33D004DB390 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3343011D7FC33D004DB390 /* ProgressView.m */; };
 		8B3343071D80169A004DB390 /* ViewForShuoMing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3343061D80169A004DB390 /* ViewForShuoMing.m */; };
@@ -739,6 +740,8 @@
 		8B1611511D8142FF00C9B954 /* ViewForScrollClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewForScrollClass.h; sourceTree = "<group>"; };
 		8B1611521D8142FF00C9B954 /* ViewForScrollClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewForScrollClass.m; sourceTree = "<group>"; };
 		8B16EA4D1D9A4857002FAA42 /* WmjrApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WmjrApp.entitlements; sourceTree = "<group>"; };
+		8B266FB51DDC5296000DCE69 /* SafeEnsureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SafeEnsureViewController.h; sourceTree = "<group>"; };
+		8B266FB61DDC5296000DCE69 /* SafeEnsureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SafeEnsureViewController.m; sourceTree = "<group>"; };
 		8B3342FD1D7F9E91004DB390 /* ProductCategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductCategoryModel.h; sourceTree = "<group>"; };
 		8B3342FE1D7F9E91004DB390 /* ProductCategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductCategoryModel.m; sourceTree = "<group>"; };
 		8B3343001D7FC33C004DB390 /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
@@ -1270,6 +1273,8 @@
 			children = (
 				8B44C4411DC6D5DB00DE0EA5 /* HomePageViewController.h */,
 				8B44C4421DC6D5DB00DE0EA5 /* HomePageViewController.m */,
+				8B266FB51DDC5296000DCE69 /* SafeEnsureViewController.h */,
+				8B266FB61DDC5296000DCE69 /* SafeEnsureViewController.m */,
 				C51B422E1C784FA3001679B5 /* view */,
 				C51B422C1C784FA3001679B5 /* model */,
 				C51B422D1C784FA3001679B5 /* todayEarn */,
@@ -2836,6 +2841,7 @@
 				8B44467D1D98F60F00EDCDBC /* MyRecommendatViewController.m in Sources */,
 				8B3343071D80169A004DB390 /* ViewForShuoMing.m in Sources */,
 				8B44C4461DC6D9FF00DE0EA5 /* HomeTableViewCellFirst.m in Sources */,
+				8B266FB71DDC5296000DCE69 /* SafeEnsureViewController.m in Sources */,
 				C51B41B21C784B02001679B5 /* main.m in Sources */,
 				C51B425C1C7850BF001679B5 /* SepcialModel.m in Sources */,
 				BDE0EF7F1D61BD8800729C15 /* WebViewForPayViewController.m in Sources */,
@@ -2998,8 +3004,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK",
@@ -3017,9 +3023,9 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApppp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9693c116-2912-4755-88bc-b5b6cc157736";
+				PROVISIONING_PROFILE = "711f3ce3-0fbc-4bd0-8548-7fece3922cc1";
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Debug;
@@ -3030,8 +3036,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK",
@@ -3049,9 +3055,9 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApppp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9693c116-2912-4755-88bc-b5b6cc157736";
+				PROVISIONING_PROFILE = "711f3ce3-0fbc-4bd0-8548-7fece3922cc1";
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Release;
