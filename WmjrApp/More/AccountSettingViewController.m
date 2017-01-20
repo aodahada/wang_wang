@@ -301,7 +301,7 @@
     //上传头像
     NetManager *manager = [[NetManager alloc] init];
     NSDictionary *paramDic1 = @{@"member_id":[SingletonManager sharedManager].uid};
-    AFHTTPRequestOperationManager *httpManager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *httpManager = [AFHTTPSessionManager manager];
     httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html",  nil];//设置相应内容类型
     httpManager.requestSerializer = [AFHTTPRequestSerializer serializer];
     httpManager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -311,14 +311,15 @@
     NSDictionary *paramDic = @{@"timestamp":dateNew, @"action":@"User/upPhoto", @"data":paramDic1};//参数序列
     NSString *base64Str = [manager paramCodeStr:paramDic];
     
-    [SVProgressHUD showWithStatus:@"正在上传头像" maskType:(SVProgressHUDMaskTypeNone)];
-    [httpManager POST:WMJRAPI parameters:@{@"msg":base64Str, @"file":@"ss"} constructingBodyWithBlock:^(id formData) {
+    [SVProgressHUD showWithStatus:@"正在上传头像"];
+    [httpManager POST:WMJRAPI parameters:@{@"msg":base64Str, @"file":@"ss"} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         [formData appendPartWithFileData:editedData
-                                                       name:@"file[]"
-                                                  fileName:@"yifan3.png"
-                                                mimeType:@"image/png"];
+                                    name:@"file[]"
+                                fileName:@"yifan3.png"
+                                mimeType:@"image/png"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
         
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         id obj = [manager paramUnCodeStr:responseStr];
         if (obj) {
@@ -332,9 +333,37 @@
                 }
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSString *msgStr = @"上传失败";
+        MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+        alertConfig.defaultTextOK = @"确定";
+        [SVProgressHUD dismiss];
+        MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+        [alertView show];
     }];
+//    [httpManager POST:WMJRAPI parameters:@{@"msg":base64Str, @"file":@"ss"} constructingBodyWithBlock:^(id formData) {
+//        [formData appendPartWithFileData:editedData
+//                                                       name:@"file[]"
+//                                                  fileName:@"yifan3.png"
+//                                                mimeType:@"image/png"];
+//        
+//    } success:^(NSURLSessionTask *operation, id responseObject) {
+//        NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//        id obj = [manager paramUnCodeStr:responseStr];
+//        if (obj) {
+//            UserInfoModel *model1 = [[UserInfoModel alloc] init];
+//            [model1 setValuesForKeysWithDictionary:obj[@"data"]];
+//            UITableViewCell *cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//            for (UIView *aView in cell.contentView.subviews) {
+//                if ([aView isKindOfClass:[UIButton class]]) {
+//                    UIButton *btn = (UIButton *)aView;
+//                    [btn sd_setBackgroundImageWithURL:[NSURL URLWithString:model1.photourl] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zhtx_icon.png"]];
+//                }
+//            }
+//        }
+//    } failure:^(NSURLSessionTask *operation, NSError *error) {
+//        NSLog(@"%@", error);
+//    }];
     NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
     [_tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
 
@@ -528,7 +557,6 @@
                 [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"passWord"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"logout" object:nil];
-#warning 待定
                 //可能退出时也要删除手势密码
 //                [KeychainData forgotPsw];
                 [[SingletonManager sharedManager] removeHandGestureInfoDefault];

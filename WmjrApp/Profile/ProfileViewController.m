@@ -25,6 +25,7 @@
 #import "NewMoreViewController.h"
 #import "AgViewController.h"
 #import "BaseNavigationController.h"
+#import "MyselfTransactionController.h"
 
 
 @interface ProfileViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -278,6 +279,27 @@
                                                              detail:@"你还未认证,请实名认证"
                                                               items:items];
         [alertView show];
+    } else if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
+        MMPopupItemHandler block = ^(NSInteger index){
+            if (index == 0) {
+                return ;
+            }
+            if (index == 1) {
+                /*  绑定银行卡 */
+                UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
+                AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
+                addBankVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:addBankVC animated:YES];
+                return;
+            }
+        };
+        NSArray *items =
+        @[MMItemMake(@"取消", MMItemTypeNormal, block),
+          MMItemMake(@"好的", MMItemTypeNormal, block)];
+        MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
+                                                             detail:@"您还没有绑定银行卡，请去绑定银行卡"
+                                                              items:items];
+        [alertView show];
     } else {
         RechargeViewController *rechangeVC = [[RechargeViewController alloc] init];
         [self.navigationController pushViewController:rechangeVC animated:YES];
@@ -287,8 +309,30 @@
 #pragma mark - 跳转到提现界面
 - (void)jumpToWithDrawMethod {
     /* 提现 */
+    if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
+        MMPopupItemHandler block = ^(NSInteger index){
+            if (index == 0) {
+                return ;
+            }
+            if (index == 1) {
+                /*  绑定银行卡 */
+                UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
+                AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
+                addBankVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:addBankVC animated:YES];
+                return;
+            }
+        };
+        NSArray *items =
+        @[MMItemMake(@"取消", MMItemTypeNormal, block),
+          MMItemMake(@"好的", MMItemTypeNormal, block)];
+        MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
+                                                             detail:@"您还没有绑定银行卡，请去绑定银行卡"
+                                                              items:items];
+        [alertView show];
+    }
     /* 当前余额为零不可提现 */
-    if ([_balanceValue floatValue] == 0) {
+    else if ([_balanceValue floatValue] == 0) {
         MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
         alertConfig.defaultTextOK = @"确定";
         MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:@"没有可用的余额"];
@@ -398,7 +442,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    if (section == 0) {
+        return 5;
+    } else {
+        return 3;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -462,7 +510,10 @@
                 cell.imageView.image = [UIImage imageNamed:@"icon_jifen"];
                 cell.textLabel.text = @"我的积分";
                 break;
-                
+            case 4:
+                cell.imageView.image = [UIImage imageNamed:@"icon_jiaoyi"];
+                cell.textLabel.text = @"交易记录";
+                break;
             default:
                 break;
         }
@@ -477,10 +528,6 @@
                 cell.textLabel.text = @"安全中心";
                 break;
             case 2:
-                cell.imageView.image = [UIImage imageNamed:@"icon_jiaoyi"];
-                cell.textLabel.text = @"交易记录";
-                break;
-            case 3:
                 cell.imageView.image = [UIImage imageNamed:@"icon_shouquan"];
                 cell.textLabel.text = @"我的授权";
                 break;
@@ -534,6 +581,12 @@
                 [[[UIAlertView alloc]initWithTitle:@"该功能正在开发中" message:nil delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil]show];
                 break;
             }
+            case 4: {
+                /** 交易记录*/
+                MyselfTransactionController *mySelfTrans = [[MyselfTransactionController alloc]init];
+                [self.navigationController pushViewController:mySelfTrans animated:YES];
+                break;
+            }
                 
             default:
                 break;
@@ -551,11 +604,6 @@
             }
                 break;
             case 2:{
-                //交易记录
-                [self jumpToXinLangMethod:@"ORDER" andTitle:@"交易记录"];
-            }
-                break;
-            case 3:{
                 //我的授权
                 [self jumpToXinLangMethod:@"WITHHOLD" andTitle:@"我的授权"];
             }

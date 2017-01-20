@@ -13,6 +13,7 @@
 #import "LoginViewController.h"
 #import "MMPopupItem.h"
 #import "MMPopupWindow.h"
+#import "AddBankViewController.h"
 
 @interface ProductClassViewController ()<UITableViewDataSource, UITableViewDelegate, ClickBtnResponseDelegate>
 {
@@ -195,7 +196,28 @@
                                                              detail:@"你还未认证,请实名认证"
                                                               items:items];
         [alertView show];
-    } else{
+    } else if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
+        MMPopupItemHandler block = ^(NSInteger index){
+            if (index == 0) {
+                return ;
+            }
+            if (index == 1) {
+                /*  绑定银行卡 */
+                UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
+                AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
+                addBankVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:addBankVC animated:YES];
+                return;
+            }
+        };
+        NSArray *items =
+        @[MMItemMake(@"取消", MMItemTypeNormal, block),
+          MMItemMake(@"好的", MMItemTypeNormal, block)];
+        MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
+                                                             detail:@"您还没有绑定银行卡，请去绑定银行卡"
+                                                              items:items];
+        [alertView show];
+    } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:PUSHTOFUNDBUYVCNOTIFICATION object:productModel];
     }
     

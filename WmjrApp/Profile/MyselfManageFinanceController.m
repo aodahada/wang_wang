@@ -295,7 +295,8 @@
         if ([obj[@"result"] isEqualToString:@"1"]) {
             _newEarn.text = [NSString stringWithFormat:@"%@", [obj[@"data"] objectForKey:@"today_income"]];
             _accountEarn.text = [NSString stringWithFormat:@"%@", [obj[@"data"] objectForKey:@"total_income"]];
-            _conductNum.text = [NSString stringWithFormat:@"%@", [obj[@"data"] objectForKey:@"total_invest"]];
+            NSString *total_investStr = [NSString stringWithFormat:@"%@", [obj[@"data"] objectForKey:@"total_invest"]];
+            _conductNum.text = [[SingletonManager sharedManager] getQianWeiFenGeFuString:total_investStr];
         }
     }];
 }

@@ -34,5 +34,6 @@
 @property (nonatomic, copy) NSString *type_name;//
 @property (nonatomic, copy) NSString *classify;//产品类型
 @property (nonatomic, copy) NSString *detail_url;//产品说明webview链接
+@property (nonatomic, assign) BOOL isSelect;//用于新年产品，有没有被选中
 
 @end

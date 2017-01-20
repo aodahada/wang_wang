@@ -9,8 +9,9 @@
 #import "PersonalMessageViewController.h"
 #import "PopMenu.h"
 #import "AvatorChangeView.h"
+#import "ModifyPhoneView.h"
 
-@interface PersonalMessageViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface PersonalMessageViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ModifyPhoneViewDelegate>
 
 @property (nonatomic,strong) UITableView *tableViewForPersonal;
 
@@ -20,6 +21,8 @@
 @property (nonatomic, strong) PopMenu *popMenu;
 @property (nonatomic, strong) AvatorChangeView *avatorChangeView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGes;
+
+@property (nonatomic, strong) ModifyPhoneView *modifyPhoneView;
 
 @end
 
@@ -106,6 +109,7 @@
             break;
         case 2:{
             cell.textLabel.text = @"账户";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             NSMutableString *phoneNum = [[SingletonManager sharedManager].userModel.mobile mutableCopy];
             [phoneNum replaceCharactersInRange:NSMakeRange(3, 5) withString:@"*****"];
             _labelForPhone = [[UILabel alloc]init];
@@ -205,7 +209,15 @@
         }
             break;
         case 2:{
-            
+            _modifyPhoneView = [[ModifyPhoneView alloc]init];
+            _modifyPhoneView.modifyPhoneDelegate = self;
+            [self.view addSubview:_modifyPhoneView];
+            [_modifyPhoneView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.equalTo(self.view.mas_centerX);
+                make.centerY.equalTo(self.view.mas_centerY);
+                make.height.mas_offset(SCREEN_HEIGHT);
+                make.width.mas_offset(SCREEN_WIDTH);
+            }];
         }
             break;
             
@@ -229,7 +241,7 @@
     //上传头像
     NetManager *manager = [[NetManager alloc] init];
     NSDictionary *paramDic1 = @{@"member_id":[SingletonManager sharedManager].uid};
-    AFHTTPRequestOperationManager *httpManager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *httpManager = [AFHTTPSessionManager manager];
     httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html",  nil];//设置相应内容类型
     httpManager.requestSerializer = [AFHTTPRequestSerializer serializer];
     httpManager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -240,13 +252,14 @@
     NSString *base64Str = [manager paramCodeStr:paramDic];
     
     [SVProgressHUD showWithStatus:@"正在上传头像"];
-    [httpManager POST:WMJRAPI parameters:@{@"msg":base64Str, @"file":@"ss"} constructingBodyWithBlock:^(id formData) {
+    [httpManager POST:WMJRAPI parameters:@{@"msg":base64Str, @"file":@"ss"} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         [formData appendPartWithFileData:editedData
                                     name:@"file[]"
                                 fileName:@"yifan3.png"
                                 mimeType:@"image/png"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
         
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         id obj = [manager paramUnCodeStr:responseStr];
         if (obj) {
@@ -257,9 +270,9 @@
             [SingletonManager sharedManager].userModel  =userModel;
             [_imageViewForPic sd_setImageWithURL:[NSURL URLWithString:userModel.photourl]];
             [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-
+            
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSString *msgStr = @"上传失败";
         MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
         alertConfig.defaultTextOK = @"确定";
@@ -269,7 +282,17 @@
     }];
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    [SVProgressHUD showSuccessWithStatus:@"上传成功" maskType:(SVProgressHUDMaskTypeNone)];
+//    [SVProgressHUD showSuccessWithStatus:@"上传成功" maskType:(SVProgressHUDMaskTypeNone)];
+}
+
+#pragma mark - ModifyPhoneViewDelegate
+- (void)changeUserPhoneSuccessMethod:(NSString *)userNewPhone {
+    [SVProgressHUD showSuccessWithStatus:@"修改成功"];
+    [_modifyPhoneView removeFromSuperview];
+    [SingletonManager sharedManager].userModel.mobile = userNewPhone;
+    NSMutableString *phoneNum = [userNewPhone mutableCopy];
+    [phoneNum replaceCharactersInRange:NSMakeRange(3, 5) withString:@"*****"];
+    _labelForPhone.text = phoneNum;
 }
 
 - (void)didReceiveMemoryWarning {

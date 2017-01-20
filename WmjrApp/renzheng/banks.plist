@@ -74,6 +74,21 @@
 			<string>广东发展银行</string>
 			<string>(单笔50000(首次10000)/日100W)</string>
 		</array>
+        <key>COMM</key>
+        <array>
+            <string>交通银行</string>
+            <string>(单笔50000(首次10000)/日100W)</string>
+        </array>
+        <key>SPDB</key>
+        <array>
+            <string>浦发银行</string>
+            <string>(单笔50000(首次10000)/日100W)</string>
+        </array>
+        <key>BCCB</key>
+        <array>
+            <string>北京银行</string>
+            <string>(单笔50000(首次10000)/日100W)</string>
+        </array>
 	</dict>
 </dict>
 </plist>

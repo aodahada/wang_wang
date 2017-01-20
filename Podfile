@@ -1,6 +1,6 @@
 platform:ios, '7.1'
 target "WmjrApp" do
-pod 'AFNetworking', '~> 2.6.3'
+pod 'AFNetworking', '~> 3.1.0'
 pod 'SDWebImage'
 pod 'MJExtension'
 pod 'MJRefresh'

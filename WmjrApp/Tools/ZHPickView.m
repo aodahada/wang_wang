@@ -192,7 +192,7 @@
 
 // 每列宽度
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
-    return 180;
+    return SCREEN_WIDTH/2;
 }
 
 // 返回选中的行

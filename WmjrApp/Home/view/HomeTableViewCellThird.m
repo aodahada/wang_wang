@@ -44,7 +44,7 @@
     }];
     
     self.imageViewForNewer = [[UIImageView alloc]init];
-    self.imageViewForNewer.image = [UIImage imageNamed:@"icon_hotxrg"];
+//    self.imageViewForNewer.image = [UIImage imageNamed:@"icon_hotxrg"];
     [self addSubview:self.imageViewForNewer];
     [self.imageViewForNewer mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(14));
@@ -170,6 +170,11 @@
 
 - (void)configCellWithModel:(ProductModel *)model {
     _productModelHa = model;
+    if ([model.is_newer isEqualToString:@"1"]) {
+        self.imageViewForNewer.image = [UIImage imageNamed:@"icon_xrg"];
+    } else {
+        self.imageViewForNewer.image = [UIImage imageNamed:@"icon_hotxrg"];
+    }
     _labelForManageMoneyDay.text = model.day;
     self.buyNum =  [model.buyrate floatValue] * 100;
     self.billLable.text = model.name;

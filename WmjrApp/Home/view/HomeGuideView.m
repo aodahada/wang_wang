@@ -101,13 +101,13 @@
         }
             break;
         case 3:{
-            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, RESIZE_UI(202+109)+12, RESIZE_UI(72), RESIZE_UI(32)) cornerRadius:5] bezierPathByReversingPath]];
+            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, RESIZE_UI(202+109+150)+32+12, RESIZE_UI(72), RESIZE_UI(32)) cornerRadius:5] bezierPathByReversingPath]];
             self.shapeLayer = [CAShapeLayer layer];
             self.shapeLayer.path = _path.CGPath;
             //shapeLayer.strokeColor = [UIColor blueColor].CGColor;
             [self.layer setMask:self.shapeLayer];
             
-            _imageViewForLearn.frame = CGRectMake(RESIZE_UI(19),RESIZE_UI(202+109)+12-RESIZE_UI(101), RESIZE_UI(121), RESIZE_UI(101));
+            _imageViewForLearn.frame = CGRectMake(RESIZE_UI(19),RESIZE_UI(202+109+150)+32+12-RESIZE_UI(101), RESIZE_UI(121), RESIZE_UI(101));
             _imageViewForLearn.image = [UIImage imageNamed:@"image_wmyx"];
             
             [_buttonForLearn mas_updateConstraints:^(MASConstraintMaker *make) {

@@ -23,6 +23,8 @@
 #import "UserInfoModel.h"
 #import "HomeGuideView.h"
 #import "SafeEnsureViewController.h"
+#import "HomeTableViewCellThirdFirst.h"
+#import "NewProductBuyViewController.h"
 
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -84,6 +86,17 @@
     
     [self setUpTableViewMethod];
     [self setReplaceNavMethod];
+    
+    //检查是否开启推送
+    if (IOS8) { //iOS8以上包含iOS8
+        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types  == UIRemoteNotificationTypeNone) {
+            [[[UIAlertView alloc]initWithTitle:@"您没有开启推送通知" message:@"请去设置-通知中修改" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil] show];
+        }
+    }else{ // ios7 一下
+        if ([[UIApplication sharedApplication] enabledRemoteNotificationTypes]  == UIRemoteNotificationTypeNone) {
+            [[[UIAlertView alloc]initWithTitle:@"您没有开启推送通知" message:@"请去设置-通知中修改" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil] show];
+        }
+    }
     
 }
 
@@ -420,7 +433,7 @@
 
 #pragma mark - 新浪平台方法
 - (void)sinaMethod {
-//    [self jumpToAdWebView:@"新浪资金托管平台" WebUrl:@"https://pay.sina.com.cn/zjtg"];
+//    [self jumpToAdWebView:@"新浪资金托管平台" WebUrl:@"https://pay.sina.com.cn/zjtg/#thirdPage"];
     SafeEnsureViewController *safeVC = [[SafeEnsureViewController alloc]init];
     [self.navigationController pushViewController:safeVC animated:YES];
     
@@ -452,7 +465,8 @@
 #pragma mark - 首页引导
 - (void)homeGuideLayout {
     NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]) {
+    NSString *userId = [self convertNullString:[SingletonManager sharedManager].uid];
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]) {
         [[NSUserDefaults standardUserDefaults]setObject:app_version forKey:@"appVersion"];
         CGRect frame = [UIScreen mainScreen].bounds;
         NSInteger count;
@@ -465,7 +479,7 @@
         @weakify(self)
         homeGuideView.forthLearnMethod = ^(){
             @strongify(self)
-            NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:count-1 inSection:3];
+            NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:count-1 inSection:4];
             [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
         };
         homeGuideView.destroySelfMethod = ^(){
@@ -477,28 +491,6 @@
         [window addSubview:homeGuideView];
     }
     
-//测试用的
-//    CGRect frame = [UIScreen mainScreen].bounds;
-//    NSInteger count;
-//    if (self.arrayForNewsList.count<=3) {
-//        count = self.arrayForNewsList.count;
-//    } else {
-//        count = 3;
-//    }
-//    HomeGuideView *homeGuideView = [[HomeGuideView alloc]initWithFrame:frame andNewsListCount:count];
-//    @weakify(self)
-//    homeGuideView.forthLearnMethod = ^(){
-//        @strongify(self)
-//        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:count-1 inSection:3];
-//        [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
-//    };
-//    homeGuideView.destroySelfMethod = ^(){
-//        @strongify(self)
-//        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-//        [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//    };
-//    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-//    [window addSubview:homeGuideView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -507,7 +499,9 @@
         return 1;
     } else if (section == 1) {
         return 1;
-    } else if (section == 2) {
+    } else if (section == 2){
+        return 1;
+    } else if (section == 3) {
         return _arrayForRecommendPro.count;
     } else {
         return _arrayForNewsList.count;
@@ -532,7 +526,7 @@
     UIView *viewForHeader = [[UIView alloc]init];
     viewForHeader.backgroundColor = RGBA(239, 239, 239, 1.0);
     
-    if (section == 2) {
+    if (section != 0 && section != 1) {
         UILabel *labelForLine = [[UILabel alloc]init];
         labelForLine.backgroundColor = RGBA(255, 82, 37, 1.0);
         [viewForHeader addSubview:labelForLine];
@@ -544,7 +538,7 @@
         }];
         
         UILabel *labelForTitle = [[UILabel alloc]init];
-        labelForTitle.text = @"旺马优选";
+        labelForTitle.text = @"";
         labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         labelForTitle.textColor = RGBA(153, 153, 153, 1.0);
         [viewForHeader addSubview:labelForTitle];
@@ -552,36 +546,27 @@
             make.centerY.equalTo(viewForHeader.mas_centerY);
             make.left.equalTo(viewForHeader.mas_left).with.offset(13);
         }];
-        
-    } else if (section == 3) {
-        UILabel *labelForLine = [[UILabel alloc]init];
-        labelForLine.backgroundColor = RGBA(255, 82, 37, 1.0);
-        [viewForHeader addSubview:labelForLine];
-        [labelForLine mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(viewForHeader.mas_centerY);
-            make.left.equalTo(viewForHeader.mas_left);
-            make.height.mas_offset(17);
-            make.width.mas_offset(5);
-        }];
-        
-        UILabel *labelForTitle = [[UILabel alloc]init];
-        labelForTitle.text = @"行业头条";
-        labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
-        labelForTitle.textColor = RGBA(153, 153, 153, 1.0);
-        [viewForHeader addSubview:labelForTitle];
-        [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(viewForHeader.mas_centerY);
-            make.left.equalTo(viewForHeader.mas_left).with.offset(13);
-        }];
+        switch (section) {
+            case 2:
+                labelForTitle.text = @"旺马新春";
+                break;
+            case 3:
+                labelForTitle.text = @"旺马优选";
+                break;
+            case 4:
+                labelForTitle.text = @"行业头条";
+                break;
+            default:
+                break;
+        }
     }
-    
     return viewForHeader;
     
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 4;
+    return 5;
     
 }
 
@@ -593,7 +578,9 @@
     } else if (indexPath.section == 1) {
         CGFloat height = RESIZE_UI(109);
         return height;
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == 2){
+        return RESIZE_UI(150);
+    } else if (indexPath.section == 3) {
         if (indexPath.row == _arrayForRecommendPro.count-1) {
             return RESIZE_UI(120);
         } else {
@@ -637,6 +624,10 @@
             if ([url isEqualToString:@""] && [productId isEqualToString:@""]) {
                 return;
             }
+            if ([url isEqualToString:@"https://pay.sina.com.cn/zjtg/#thirdPage"]) {
+                [self sinaMethod];
+                return;
+            }
             if (![url isEqualToString:@""]) {
                 AgViewController *agVC =[[AgViewController alloc] init];
                 agVC.title = imgModel.title;
@@ -655,7 +646,11 @@
         };
         return cell;
         
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == 2){
+        HomeTableViewCellThirdFirst *cell = [[HomeTableViewCellThirdFirst alloc]init];
+        
+        return cell;
+    } else if (indexPath.section == 3) {
         HomeTableViewCellThird *cell = [[HomeTableViewCellThird alloc]init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell configCellWithModel:_arrayForRecommendPro[indexPath.row]];
@@ -680,6 +675,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 2) {
+        NewProductBuyViewController *newproductbuyVC = [[NewProductBuyViewController alloc]init];
+        newproductbuyVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:newproductbuyVC animated:YES];
+    }
+    if (indexPath.section == 3) {
         ProductModel *productModel = _arrayForRecommendPro[indexPath.row];
         ProductIntroViewController *proIntroVC = [[ProductIntroViewController alloc] init];
         if ([[self convertNullString:productModel.proIntro_id] isEqualToString:@""]) {
@@ -690,7 +690,7 @@
             [self.navigationController pushViewController:proIntroVC animated:YES];
         }
     }
-    if (indexPath.section == 3) {
+    if (indexPath.section == 4) {
         
         NewsModel *newsModel = _arrayForNewsList[indexPath.row];
         AgViewController *agVC =[[AgViewController alloc] init];
@@ -712,7 +712,6 @@
     {
         alpha = 0;
     }
-    //self.naviView.backgroundColor = [RGBA(0, 104, 178, 1.0) colorWithAlphaComponent:alpha];
     self.naviView.backgroundColor = RGBA(0, 104, 178, alpha);
     _imageViewForLeft.alpha = alpha;
     _imageForMess.alpha = alpha;

@@ -10,14 +10,18 @@
 #import "NSData+Zlib.h"
 #import "Base64Secret.h"
 #import "NSString+StringCode.h"
+#import "AFAppDotNetAPIClient.h"
 
 @implementation NetManager
 
 - (void)postDataWithUrlActionStr:(NSString *)actionStr withParamDictionary:(NSDictionary *)paramsDic withBlock:(void (^)(id))block {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        AFHTTPSessionManager *manager = [AFAppDotNetAPIClient sharedClient];
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//        SSL安全策略
+        manager.securityPolicy = [self customSecurityPolicy];
         
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         /*1.获取json字符串
@@ -29,47 +33,106 @@
         NSDictionary *paramDic = @{@"timestamp":dateNew, @"action":actionStr, @"data":paramsDic};//参数序列
         NSString *base64Str = [self paramCodeStr:paramDic];
         //base64Str是经过处理的字符串
-
-        [manager POST:WMJRAPI parameters:@{@"msg":base64Str} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        [manager POST:WMJRAPI parameters:@{@"msg":base64Str} progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
             id obj = [self paramUnCodeStr:responseStr];
             
             if (obj) {
                 block(obj);
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    if ([obj[@"result"] isEqualToString:@"0"]) {
-//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"缺少必传参数" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                        [alert show];
-//                        block(nil);
-//                    } else if ([obj[@"result"] isEqualToString:@"1"]) {
-//                        block(obj);
-//                    } else if ([obj[@"result"] isEqualToString:@"1000"]) {
-//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"通用的已知业务错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                        [alert show];
-//                        block(obj);
-//                    } else if ([obj[@"result"] isEqualToString:@"1***"]) {
-//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已知的业务错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                        [alert show];
-//                        block(nil);
-//                    } else if ([obj[@"result"] isEqualToString:@"2"]) {
-//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"未知的后台程序错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                        [alert show];
-//                        block(nil);
-//                    } else if ([obj[@"result"] isEqualToString:@"2000"]) {
-//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"通用的未知的后台程序错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                        [alert show];
-//                        block(nil);
-//                    } else {
-//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"未知的后台程序错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                        [alert show];
-//                        block(nil);
-//                    }
-//                });
+                //                dispatch_async(dispatch_get_main_queue(), ^{
+                //                    if ([obj[@"result"] isEqualToString:@"0"]) {
+                //                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"缺少必传参数" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                //                        [alert show];
+                //                        block(nil);
+                //                    } else if ([obj[@"result"] isEqualToString:@"1"]) {
+                //                        block(obj);
+                //                    } else if ([obj[@"result"] isEqualToString:@"1000"]) {
+                //                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"通用的已知业务错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                //                        [alert show];
+                //                        block(obj);
+                //                    } else if ([obj[@"result"] isEqualToString:@"1***"]) {
+                //                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已知的业务错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                //                        [alert show];
+                //                        block(nil);
+                //                    } else if ([obj[@"result"] isEqualToString:@"2"]) {
+                //                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"未知的后台程序错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                //                        [alert show];
+                //                        block(nil);
+                //                    } else if ([obj[@"result"] isEqualToString:@"2000"]) {
+                //                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"通用的未知的后台程序错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                //                        [alert show];
+                //                        block(nil);
+                //                    } else {
+                //                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"未知的后台程序错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                //                        [alert show];
+                //                        block(nil);
+                //                    }
+                //                });
             }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [SVProgressHUD showErrorWithStatus:@"请检查网络"];
         }];
+        
+//        [manager POST:WMJRAPI parameters:@{@"msg":base64Str} success:^(NSURLSessionTask *operation, id responseObject) {
+//            NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//            id obj = [self paramUnCodeStr:responseStr];
+//            
+//            if (obj) {
+//                block(obj);
+////                dispatch_async(dispatch_get_main_queue(), ^{
+////                    if ([obj[@"result"] isEqualToString:@"0"]) {
+////                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"缺少必传参数" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+////                        [alert show];
+////                        block(nil);
+////                    } else if ([obj[@"result"] isEqualToString:@"1"]) {
+////                        block(obj);
+////                    } else if ([obj[@"result"] isEqualToString:@"1000"]) {
+////                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"通用的已知业务错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+////                        [alert show];
+////                        block(obj);
+////                    } else if ([obj[@"result"] isEqualToString:@"1***"]) {
+////                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已知的业务错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+////                        [alert show];
+////                        block(nil);
+////                    } else if ([obj[@"result"] isEqualToString:@"2"]) {
+////                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"未知的后台程序错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+////                        [alert show];
+////                        block(nil);
+////                    } else if ([obj[@"result"] isEqualToString:@"2000"]) {
+////                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"通用的未知的后台程序错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+////                        [alert show];
+////                        block(nil);
+////                    } else {
+////                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"未知的后台程序错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+////                        [alert show];
+////                        block(nil);
+////                    }
+////                });
+//            }
+//        } failure:^(NSURLSessionTask *operation, NSError *error) {
+//            [SVProgressHUD showErrorWithStatus:@"请检查网络"];
+//        }];
     });
+}
+
+/**
+ *  SSL安全策略
+ *
+ *  @return AFSecurityPolicy
+ */
+- (AFSecurityPolicy*)customSecurityPolicy {
+    
+    AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
+    NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];
+    NSData *certData = [NSData dataWithContentsOfFile:cerPath];
+    [securityPolicy setAllowInvalidCertificates:YES];
+    [securityPolicy setValidatesDomainName:NO];
+    [securityPolicy setPinnedCertificates:@[certData]];
+    
+    return securityPolicy;
 }
 
 - (NSString *)paramCodeStr:(NSDictionary *)paramDic {

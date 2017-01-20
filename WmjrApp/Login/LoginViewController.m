@@ -49,6 +49,9 @@
     _passWord.textColor = [UIColor blackColor];
     _passWord.tintColor = [UIColor blackColor];
     
+    [_forgetPasswodBtn setTitleColor:RGBA(91, 159, 209, 1.0) forState:UIControlStateNormal];
+    [_quickRegisterBtn setTitleColor:RGBA(91, 159, 209, 1.0) forState:UIControlStateNormal];
+    
     [_phoneNum addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     [_passWord addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     

@@ -25,6 +25,7 @@
 
 #import "ViewForShuoMing.h"
 #import "ViewForJianJie.h"
+#import "AddBankViewController.h"
 
 @interface ProductIntroViewController ()  //ISSShareViewDelegate
 {
@@ -254,7 +255,7 @@
     _earnOfPercent = [[UILabel alloc] init];
     _earnOfPercent.textAlignment = NSTextAlignmentCenter;
     _earnOfPercent.textColor = VIEWBACKCOLOR;
-        _earnOfPercent.text = [NSString stringWithFormat:@"%.1lf", [_productModel.returnrate floatValue] * 100];
+    _earnOfPercent.text = [NSString stringWithFormat:@"%.2f", [_productModel.returnrate floatValue] * 100];
     _earnOfPercent.font = [UIFont systemFontOfSize:RESIZE_UI(64)];
     [viewForTop addSubview:_earnOfPercent];
     [_earnOfPercent mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -599,6 +600,30 @@
                 MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
                 alertConfig.defaultTextOK = @"确认";
                 MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"你还未同意购买合同" detail:nil];
+                [alertView show];
+                return;
+            }
+            //是否绑定银行卡
+            if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
+                MMPopupItemHandler block = ^(NSInteger index){
+                    if (index == 0) {
+                        return ;
+                    }
+                    if (index == 1) {
+                        /*  绑定银行卡 */
+                        UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
+                        AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
+                        addBankVC.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:addBankVC animated:YES];
+                        return;
+                    }
+                };
+                NSArray *items =
+                @[MMItemMake(@"取消", MMItemTypeNormal, block),
+                  MMItemMake(@"好的", MMItemTypeNormal, block)];
+                MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
+                                                                     detail:@"您还没有绑定银行卡，请去绑定银行卡"
+                                                                      items:items];
                 [alertView show];
                 return;
             }

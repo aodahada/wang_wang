@@ -84,48 +84,45 @@
 /*  获取验证码 */
 - (IBAction)yanzhengBtnAction:(id)sender {
     if ([self checkResult]) {
-        _yanzhengBtn.enabled = NO;
-        __block int timeout = 60; //倒计时时间
-        __weak typeof(self) weakSelf = self;
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
-        dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
-        dispatch_source_set_event_handler(_timer, ^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                if(timeout<=0){ //倒计时结束，关闭
-                    dispatch_source_cancel(_timer);
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        //设置界面的按钮显示 根据自己需求设置
-                        [strongSelf.yanzhengBtn setTitle:@"获取验证码" forState:(UIControlStateNormal)];
-                        [strongSelf.yanzhengBtn setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
-                        strongSelf.yanzhengBtn.enabled = YES;
-                    });
-                }else{
-                    int seconds = timeout % 60;
-                    if (timeout == 60) {
-                        seconds = 60;
-                    }
-                    NSString *strTime = [NSString stringWithFormat:@"%.2d秒后重发", seconds];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        //设置界面的按钮显示 根据自己需求设置
-                        [strongSelf.yanzhengBtn setTitle:strTime forState:(UIControlStateNormal)];
-                        [strongSelf.yanzhengBtn setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
-                    });
-                    timeout--;
-                }
-
-            }
-        });
-        dispatch_resume(_timer);
-        
         NetManager *manager = [[NetManager alloc] init];
         [SVProgressHUD showWithStatus:@"请稍后"];
         [manager postDataWithUrlActionStr:@"Card/bind" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"bank_code":_bank_codeStr, @"bank_account_no":_bankNumField.text, @"card_attribute":@"C", @"province":_provinceStr, @"city":_cityStr, @"mobile":_phoneNumField.text} withBlock:^(id obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
-//                [_yanzhengBtn setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
-//                _count = 60;
-//                _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countDownTimeAction) userInfo:nil repeats:YES];
+                
+                _yanzhengBtn.enabled = NO;
+                __block int timeout = 60; //倒计时时间
+                __weak typeof(self) weakSelf = self;
+                dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+                dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+                dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+                dispatch_source_set_event_handler(_timer, ^{
+                    __strong typeof(weakSelf) strongSelf = weakSelf;
+                    if (strongSelf) {
+                        if(timeout<=0){ //倒计时结束，关闭
+                            dispatch_source_cancel(_timer);
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                //设置界面的按钮显示 根据自己需求设置
+                                [strongSelf.yanzhengBtn setTitle:@"获取验证码" forState:(UIControlStateNormal)];
+                                [strongSelf.yanzhengBtn setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
+                                strongSelf.yanzhengBtn.enabled = YES;
+                            });
+                        }else{
+                            int seconds = timeout % 60;
+                            if (timeout == 60) {
+                                seconds = 60;
+                            }
+                            NSString *strTime = [NSString stringWithFormat:@"%.2d秒后重发", seconds];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                //设置界面的按钮显示 根据自己需求设置
+                                [strongSelf.yanzhengBtn setTitle:strTime forState:(UIControlStateNormal)];
+                                [strongSelf.yanzhengBtn setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
+                            });
+                            timeout--;
+                        }
+                        
+                    }
+                });
+                dispatch_resume(_timer);
                 
                 _ticket = [obj[@"data"] objectForKey:@"ticket"];
                 [SVProgressHUD dismiss];
@@ -199,7 +196,6 @@
                 [SVProgressHUD showSuccessWithStatus:@"银行卡绑定成功" maskType:(SVProgressHUDMaskTypeNone)];
                 NSString *card_id = [obj[@"data"] objectForKey:@"card_id"];
                 [SingletonManager sharedManager].userModel.card_id = card_id;
-                [[NSUserDefaults standardUserDefaults] synchronize];
                 
                 MyselfBankViewController *myselfBankVC = [[MyselfBankViewController alloc] init];
                 myselfBankVC.card_id = card_id;  /* 钱包系统卡ID */
@@ -242,7 +238,7 @@
 - (IBAction)bankNameTap:(UITapGestureRecognizer *)sender {
     [_bankNumField resignFirstResponder];
     ZHPickView *pickView = [[ZHPickView alloc] init];
-    [pickView setBankViewWithItem:@[@"ABC-农业银行", @"BOC-中国银行", @"BOS-上海银行", @"HXB-华夏银行", @"CCB-建设银行", @"ICBC-工商银行", @"CEB-光大银行", @"CIB-兴业银行", @"PSBC-中国邮储银行", @"CITIC-中信银行", @"CMB-招商银行", @"CMBC-民生银行", @"SZPAB-平安银行", @"GDB-广东发展银行"] title:@"银行名称"];
+    [pickView setBankViewWithItem:@[@"ABC-农业银行", @"BOC-中国银行", @"BOS-上海银行", @"HXB-华夏银行", @"CCB-建设银行", @"ICBC-工商银行", @"CEB-光大银行", @"CIB-兴业银行", @"PSBC-中国邮储银行", @"CITIC-中信银行", @"CMB-招商银行", @"CMBC-民生银行", @"SZPAB-平安银行", @"GDB-广东发展银行",@"COMM-交通银行",@"SPDB-浦发银行",@"BCCB-北京银行",] title:@"银行名称"];
     [pickView showPickView:self];
     pickView.block = ^(NSString *selectedStr)
     {

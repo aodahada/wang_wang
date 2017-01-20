@@ -30,7 +30,6 @@
     [_webView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-
     [_webView loadHTMLString:_htmlString baseURL:nil];
     [_webView sizeToFit];
     
