@@ -107,8 +107,8 @@
     cell.textLabel.font= [UIFont systemFontOfSize:RESIZE_UI(15)];
     cell.detailTextLabel.font= [UIFont systemFontOfSize:RESIZE_UI(15)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.textColor = AUXILY_COLOR;
-    cell.detailTextLabel.textColor = TITLE_COLOR;
+    cell.textLabel.textColor = TITLE_COLOR;
+    cell.detailTextLabel.textColor = AUXILY_COLOR;
 //    if (indexPath.row == 3) {
 //        cell.detailTextLabel.textColor = ORANGE_COLOR;
 //    }

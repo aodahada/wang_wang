@@ -248,7 +248,7 @@
     }];
     
     UILabel *labelForSumMoney = [[UILabel alloc]init];
-    labelForSumMoney.text = _personalModel.total_invest;
+    labelForSumMoney.text = _personalModel.current_invest;
     labelForSumMoney.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     labelForSumMoney.textColor = RGBA(254, 243, 243, 1.0);
     [self addSubview:labelForSumMoney];
@@ -258,7 +258,7 @@
     }];
     
     UILabel *labelForSumMoneyTitle = [[UILabel alloc]init];
-    labelForSumMoneyTitle.text = @"累计投资";
+    labelForSumMoneyTitle.text = @"当前投资";
     labelForSumMoneyTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     labelForSumMoneyTitle.textColor = RGBA(255, 255, 255, 1.0);
     [self addSubview:labelForSumMoneyTitle];

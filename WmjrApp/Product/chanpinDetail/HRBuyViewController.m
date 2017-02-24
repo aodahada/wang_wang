@@ -14,6 +14,7 @@
 #import "InvestConfirmView.h"
 #import "MMPopupItem.h"
 #import "RechargeViewController.h"
+#import "LongProductSegment.h"
 
 @interface HRBuyViewController ()
 
@@ -39,6 +40,35 @@
     
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
+    
+    [self setUpNormalNavigationBar];
+    
+}
+
+- (void)setUpNormalNavigationBar {
+    
+    /*  设置颜色 */
+    self.navigationController.navigationBar.barTintColor = VIEWBACKCOLOR;
+    //    /*  设置字体颜色 */
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:TITLE_COLOR};
+    //    /* 渲染颜色 */
+    self.navigationController.navigationBar.tintColor = TITLE_COLOR;
+    
+    /*  去掉边线 */
+    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"piggy"] forBarMetrics:UIBarMetricsDefault];
+    
+    UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
+    
+    self.navigationItem.leftBarButtonItem = backButton;
+    
+}
+
+
+- (void)backBtnAction {
+    
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 
@@ -190,8 +220,9 @@
 #pragma mark - 支付接口调用
 - (void)useInterfaceForPay {
     NetManager *manager = [[NetManager alloc] init];
+    LongProductSegment *longSegPro = _productModel.segment[0];
     [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"Trade/new_collect" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"product_id":_productModel.proIntro_id,@"product_name":_productModel.name,@"money":_textFieldForBuy.text} withBlock:^(id obj) {
+    [manager postDataWithUrlActionStr:@"Finance/order" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"product_id":_productModel.proIntro_id,@"segment_id":longSegPro.segment_id,@"money":_textFieldForBuy.text,@"returnrate":longSegPro.returnrate} withBlock:^(id obj) {
         if (obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 NSDictionary *dataDic = obj[@"data"];

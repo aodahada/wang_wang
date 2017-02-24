@@ -229,7 +229,7 @@
     [withDrawImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(viewBottomForWithdraw.mas_left);
         make.centerY.equalTo(viewBottomForWithdraw.mas_centerY);
-        make.width.height.mas_offset(RESIZE_UI(27));
+        make.width.height.mas_offset(RESIZE_UI(24));
     }];
     
     UIButton *withDrawButton = [[UIButton alloc]init];
@@ -384,21 +384,6 @@
     
     self.tabBarController.tabBar.hidden = NO;
     
-    /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor]};
-    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-    /*  去掉边线 */
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navibar_color"] forBarMetrics:UIBarMetricsDefault];
-    
-    UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
-    
     if ([[SingletonManager sharedManager].uid isEqualToString:@""]) {
         LoginViewController *loginVC = [[LoginViewController alloc] init];
         loginVC.loginIden = @"login";
@@ -407,7 +392,8 @@
         [self presentViewController:loginNa animated:YES completion:nil];
         return;
     }
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     //获取当前余额
     NetManager *manager = [[NetManager alloc] init];
     [manager postDataWithUrlActionStr:@"User/queryBalance" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"} withBlock:^(id obj) {
@@ -427,13 +413,10 @@
     
 }
 
-- (void)backBtnAction {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 #pragma mark - UITableView dataSource delegate -

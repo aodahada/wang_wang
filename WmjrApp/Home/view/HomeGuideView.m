@@ -101,14 +101,14 @@
         }
             break;
         case 3:{
-            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, RESIZE_UI(202+109+150)+32+12, RESIZE_UI(72), RESIZE_UI(32)) cornerRadius:5] bezierPathByReversingPath]];
+            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, RESIZE_UI(202+109+10), RESIZE_UI(82), RESIZE_UI(32)) cornerRadius:5] bezierPathByReversingPath]];
             self.shapeLayer = [CAShapeLayer layer];
             self.shapeLayer.path = _path.CGPath;
             //shapeLayer.strokeColor = [UIColor blueColor].CGColor;
             [self.layer setMask:self.shapeLayer];
             
-            _imageViewForLearn.frame = CGRectMake(RESIZE_UI(19),RESIZE_UI(202+109+150)+32+12-RESIZE_UI(101), RESIZE_UI(121), RESIZE_UI(101));
-            _imageViewForLearn.image = [UIImage imageNamed:@"image_wmyx"];
+            _imageViewForLearn.frame = CGRectMake(RESIZE_UI(60),RESIZE_UI(202+109+10)-RESIZE_UI(111), RESIZE_UI(229), RESIZE_UI(111));
+            _imageViewForLearn.image = [UIImage imageNamed:@"image_wmxrg"];
             
             [_buttonForLearn mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(346));
@@ -116,25 +116,40 @@
         }
             break;
         case 4:{
-            if (self.forthLearnMethod) {
-                self.forthLearnMethod();
-            }
-            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, SCREEN_HEIGHT-RESIZE_UI(90)*self.newsListCount-32-49, RESIZE_UI(72), RESIZE_UI(32)) cornerRadius:5] bezierPathByReversingPath]];
+            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, RESIZE_UI(202+109+40+109+10), RESIZE_UI(72), RESIZE_UI(32)) cornerRadius:5] bezierPathByReversingPath]];
             self.shapeLayer = [CAShapeLayer layer];
             self.shapeLayer.path = _path.CGPath;
             //shapeLayer.strokeColor = [UIColor blueColor].CGColor;
             [self.layer setMask:self.shapeLayer];
             
-            _imageViewForLearn.frame = CGRectMake(RESIZE_UI(15), SCREEN_HEIGHT-RESIZE_UI(90)*self.newsListCount-32-49-RESIZE_UI(98), RESIZE_UI(111), RESIZE_UI(98));
-            _imageViewForLearn.image = [UIImage imageNamed:@"image_hytt"];
+            _imageViewForLearn.frame = CGRectMake(RESIZE_UI(19),RESIZE_UI(202+109+40+109+10)-RESIZE_UI(101), RESIZE_UI(121), RESIZE_UI(101));
+            _imageViewForLearn.image = [UIImage imageNamed:@"image_wmyx"];
             
             [_buttonForLearn mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self.mas_centerX);
-                make.centerY.equalTo(self.mas_centerY);
+                make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(306));
             }];
         }
             break;
         case 5:{
+            if (self.forthLearnMethod) {
+                self.forthLearnMethod();
+            }
+            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, SCREEN_HEIGHT-RESIZE_UI(90)*self.newsListCount-RESIZE_UI(32)-49, RESIZE_UI(72), RESIZE_UI(32)) cornerRadius:5] bezierPathByReversingPath]];
+            self.shapeLayer = [CAShapeLayer layer];
+            self.shapeLayer.path = _path.CGPath;
+            //shapeLayer.strokeColor = [UIColor blueColor].CGColor;
+            [self.layer setMask:self.shapeLayer];
+            
+            _imageViewForLearn.frame = CGRectMake(RESIZE_UI(15), SCREEN_HEIGHT-RESIZE_UI(90)*self.newsListCount-RESIZE_UI(32)-49-RESIZE_UI(98), RESIZE_UI(111), RESIZE_UI(98));
+            _imageViewForLearn.image = [UIImage imageNamed:@"image_hytt"];
+            
+//            [_buttonForLearn mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.centerX.equalTo(self.mas_centerX);
+//                make.centerY.equalTo(self.mas_centerY);
+//            }];
+        }
+            break;
+        case 6:{
             [self removeFromSuperview];
             if (self.destroySelfMethod) {
                 self.destroySelfMethod();

@@ -13,5 +13,10 @@
 @property (nonatomic, copy) NSString *picurl;
 @property (nonatomic, copy) NSString *product_id;
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy) NSString *isshow;
+@property (nonatomic, copy) NSString *location;
+@property (nonatomic, copy) NSString *sort;
+@property (nonatomic, copy) NSString *url;
 
 @end

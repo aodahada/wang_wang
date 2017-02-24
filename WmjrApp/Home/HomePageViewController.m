@@ -24,7 +24,7 @@
 #import "HomeGuideView.h"
 #import "SafeEnsureViewController.h"
 #import "HomeTableViewCellThirdFirst.h"
-#import "NewProductBuyViewController.h"
+#import "LongProductDetailViewController.h"
 
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -41,13 +41,15 @@
 
 @property (nonatomic, strong) NSMutableArray *arrayForTopImage;//轮播图数组
 
-@property (nonatomic, strong) NSMutableArray *arrayForRecommendPro;//推荐产品列表
+@property (nonatomic, strong) NSMutableArray *arrayForRecommendPro;//短期产品列表
 
 @property (nonatomic, strong) NSMutableArray *arrayForNewsList;//新闻列表
 
 @property (nonatomic, strong) PersonInvestModel *personInvestModel;//个人投资信息
 
 @property (nonatomic, assign) BOOL isSave;//是否保存手势了
+
+@property (nonatomic, strong) ProductModel *longProduct;//新人购产品
 
 @end
 
@@ -115,7 +117,7 @@
     
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
-    self.navigationController.navigationBar.hidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     BOOL isNull = [self isNullString:uid];
     if (!isNull) {
@@ -127,7 +129,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.hidden = NO;
+//    self.navigationController.navigationBar.hidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 #pragma mark - 获取个人信息
@@ -171,10 +174,9 @@
 - (void)getDataWithNetManager {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"Home/index" withParamDictionary:@{@"member_id":@"ss"} withBlock:^(id obj) {
+    [manager postDataWithUrlActionStr:@"Ad/index" withParamDictionary:@{@"location":@"top"} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
-            NSDictionary *dicSum = obj[@"data"];
-            NSArray *arrayTopAd = dicSum[@"topad"];
+            NSArray *arrayTopAd = obj[@"data"];
             self.arrayForTopImage = [[NSMutableArray alloc]init];
             for (int i=0; i<arrayTopAd.count; i++) {
                 NSDictionary *dicForImage = arrayTopAd[i];
@@ -182,7 +184,7 @@
                 [self.arrayForTopImage addObject:imageModel];
             }
             //获取推荐产品列表
-            [self getRecommendProductList];
+            [self getLongProductList];
             
         } else {
             [SVProgressHUD dismiss];
@@ -196,16 +198,55 @@
     }];
 }
 
-#pragma mark - 获取推荐产品列表
-- (void)getRecommendProductList {
+#pragma mark - 获取一个新人购产品
+- (void)getLongProductList {
     
     NetManager *manager = [[NetManager alloc] init];
-    NSDictionary *paramDic = @{@"is_recommend":@"1", @"page":@"", @"size":@""};
-    [manager postDataWithUrlActionStr:@"Product/new_index" withParamDictionary:paramDic withBlock:^(id obj) {
+    NSDictionary *paramDic = @{@"is_recommend":@"1",@"is_newer":@"1"};
+    [manager postDataWithUrlActionStr:@"Finance/index" withParamDictionary:paramDic withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            _arrayForRecommendPro = [NSMutableArray array];
+//            NSDictionary *dic = obj;
+            [ProductModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                return @{@"proIntro_id" : @"id"};
+            }];
+            [ProductModel mj_setupObjectClassInArray:^NSDictionary *{
+                return @{
+                         @"segment":@"LongProductSegment"
+                         };
+            }];
+            NSArray *longProArr = obj[@"data"];
+            _longProduct = [ProductModel mj_objectWithKeyValues:longProArr[0]];
+            
+            [self getShortProductList];
+            
+        } else {
+            [SVProgressHUD dismiss];
+            NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+            alertConfig.defaultTextOK = @"确定";
+            [SVProgressHUD dismiss];
+            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+            [alertView show];
+        }
+    }];
+    
+}
+
+#pragma mark - 获取优选推荐产品
+- (void)getShortProductList {
+    NetManager *manager = [[NetManager alloc] init];
+    NSDictionary *paramDic = @{@"is_recommend":@"1",@"is_newer":@"0"};
+    [manager postDataWithUrlActionStr:@"Finance/index" withParamDictionary:paramDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             _arrayForRecommendPro = [NSMutableArray array];
             [ProductModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
                 return @{@"proIntro_id" : @"id"};
+            }];
+            [ProductModel mj_setupObjectClassInArray:^NSDictionary *{
+                return @{
+                         @"segment":@"LongProductSegment"
+                         };
             }];
             _arrayForRecommendPro = [ProductModel mj_objectArrayWithKeyValuesArray:obj[@"data"]];
             
@@ -221,8 +262,8 @@
             [alertView show];
         }
     }];
-    
 }
+
 
 #pragma mark - 获取新闻列表
 - (void)getNewsListMethod {
@@ -236,25 +277,6 @@
             }];
             _arrayForNewsList = [NewsModel mj_objectArrayWithKeyValuesArray:obj[@"data"]];
             [_homeTableView reloadData];
-//            if (_homeTableView) {
-//                [_homeTableView removeFromSuperview];
-//                _homeTableView = nil;
-//                [self setUpTableViewMethod];
-//            } else {
-//                [self setUpTableViewMethod];
-//            }
-//            //设置自定义navgationview
-//            if (self.naviView) {
-//                [_buttonForMess removeFromSuperview];
-//                [_imageForMess removeFromSuperview];
-//                [_labelForLine removeFromSuperview];
-//                [_buttonSinaCenter removeFromSuperview];
-//                [_imageViewForLeft removeFromSuperview];
-//                [self.naviView removeFromSuperview];
-//                [self setReplaceNavMethod];
-//            } else {
-//                [self setReplaceNavMethod];
-//            }
             if (!_isSave) {
                 [self homeGuideLayout];
             }
@@ -514,9 +536,9 @@
     if (section == 0) {
         return 0;
     } else if (section == 1) {
-        return 12;
+        return 0;
     } else {
-        return 32;
+        return RESIZE_UI(40);
     }
     
 }
@@ -527,12 +549,23 @@
     viewForHeader.backgroundColor = RGBA(239, 239, 239, 1.0);
     
     if (section != 0 && section != 1) {
+        
+        UIView *whiteView = [[UIView alloc]init];
+        whiteView.backgroundColor = [UIColor whiteColor];
+        [viewForHeader addSubview:whiteView];
+        [whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(viewForHeader.mas_bottom).with.offset(-1);
+            make.left.equalTo(viewForHeader.mas_left);
+            make.right.equalTo(viewForHeader.mas_right);
+            make.height.mas_offset(RESIZE_UI(28));
+        }];
+        
         UILabel *labelForLine = [[UILabel alloc]init];
         labelForLine.backgroundColor = RGBA(255, 82, 37, 1.0);
-        [viewForHeader addSubview:labelForLine];
+        [whiteView addSubview:labelForLine];
         [labelForLine mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(viewForHeader.mas_centerY);
-            make.left.equalTo(viewForHeader.mas_left);
+            make.centerY.equalTo(whiteView.mas_centerY);
+            make.left.equalTo(whiteView.mas_left);
             make.height.mas_offset(17);
             make.width.mas_offset(5);
         }];
@@ -541,14 +574,14 @@
         labelForTitle.text = @"";
         labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         labelForTitle.textColor = RGBA(153, 153, 153, 1.0);
-        [viewForHeader addSubview:labelForTitle];
+        [whiteView addSubview:labelForTitle];
         [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(viewForHeader.mas_centerY);
-            make.left.equalTo(viewForHeader.mas_left).with.offset(13);
+            make.centerY.equalTo(whiteView.mas_centerY);
+            make.left.equalTo(whiteView.mas_left).with.offset(13);
         }];
         switch (section) {
             case 2:
-                labelForTitle.text = @"旺马新春";
+                labelForTitle.text = @"旺马新人购";
                 break;
             case 3:
                 labelForTitle.text = @"旺马优选";
@@ -579,13 +612,9 @@
         CGFloat height = RESIZE_UI(109);
         return height;
     } else if (indexPath.section == 2){
-        return RESIZE_UI(150);
+        return RESIZE_UI(109);
     } else if (indexPath.section == 3) {
-        if (indexPath.row == _arrayForRecommendPro.count-1) {
-            return RESIZE_UI(120);
-        } else {
-            return RESIZE_UI(134);
-        }
+        return RESIZE_UI(109);
     } else {
         return RESIZE_UI(90);
     }
@@ -638,23 +667,44 @@
                 return;
             }
             if (![productId isEqualToString:@""]) {
-                ProductIntroViewController *proIntroVC = [[ProductIntroViewController alloc] init];
-                proIntroVC.getPro_id = productId;
-                [self.navigationController pushViewController:proIntroVC animated:YES];
-                return;
+                if ([imgModel.product.is_long isEqualToString:@"1"]) {
+                    LongProductDetailViewController *newproductbuyVC = [[LongProductDetailViewController alloc]init];
+                    newproductbuyVC.productModel = imgModel.product;
+                    newproductbuyVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:newproductbuyVC animated:YES];
+                } else {
+                    ProductIntroViewController *proIntroVC = [[ProductIntroViewController alloc] init];
+                    proIntroVC.getPro_id = productId;
+                    [self.navigationController pushViewController:proIntroVC animated:YES];
+                    return;
+                }
             }
         };
         return cell;
         
     } else if (indexPath.section == 2){
-        HomeTableViewCellThirdFirst *cell = [[HomeTableViewCellThirdFirst alloc]init];
-        
-        return cell;
+        if ([_longProduct.is_long isEqualToString:@"1"]) {
+            HomeTableViewCellThirdFirst *cell = [[HomeTableViewCellThirdFirst alloc]initWithProductModel:_longProduct];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        } else {
+            HomeTableViewCellThird *cell = [[HomeTableViewCellThird alloc]init];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell configCellWithModel:_longProduct];
+            return cell;
+        }
     } else if (indexPath.section == 3) {
-        HomeTableViewCellThird *cell = [[HomeTableViewCellThird alloc]init];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell configCellWithModel:_arrayForRecommendPro[indexPath.row]];
-        return cell;
+        ProductModel *productModel = _arrayForRecommendPro[indexPath.row];
+        if ([productModel.is_long isEqualToString:@"1"]) {
+            HomeTableViewCellThirdFirst *cell = [[HomeTableViewCellThirdFirst alloc]initWithProductModel:productModel];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        } else {
+            HomeTableViewCellThird *cell = [[HomeTableViewCellThird alloc]init];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell configCellWithModel:productModel];
+            return cell;
+        }
     } else {
         HomeTableViewCellForth *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeTableViewCellForth"];
         if (cell == nil) {
@@ -675,20 +725,39 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 2) {
-        NewProductBuyViewController *newproductbuyVC = [[NewProductBuyViewController alloc]init];
-        newproductbuyVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:newproductbuyVC animated:YES];
+        
+        if ([_longProduct.is_long isEqualToString:@"1"]) {
+            LongProductDetailViewController *newproductbuyVC = [[LongProductDetailViewController alloc]init];
+            newproductbuyVC.productModel = _longProduct;
+            newproductbuyVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:newproductbuyVC animated:YES];
+        } else {
+            ProductIntroViewController *proIntroVC = [[ProductIntroViewController alloc] init];
+            proIntroVC.getPro_id = _longProduct.proIntro_id;
+            [self.navigationController pushViewController:proIntroVC animated:YES];
+        }
+        
     }
     if (indexPath.section == 3) {
         ProductModel *productModel = _arrayForRecommendPro[indexPath.row];
-        ProductIntroViewController *proIntroVC = [[ProductIntroViewController alloc] init];
-        if ([[self convertNullString:productModel.proIntro_id] isEqualToString:@""]) {
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"缺少参数" message:@"请重新进入该页再试一次" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
-            [alertView show];
+        if ([productModel.is_long isEqualToString:@"1"]) {
+            //长期详情
+            LongProductDetailViewController *newproductbuyVC = [[LongProductDetailViewController alloc]init];
+            newproductbuyVC.productModel = productModel;
+            newproductbuyVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:newproductbuyVC animated:YES];
         } else {
-            proIntroVC.getPro_id = productModel.proIntro_id;
-            [self.navigationController pushViewController:proIntroVC animated:YES];
+            //短期详情
+            ProductIntroViewController *proIntroVC = [[ProductIntroViewController alloc] init];
+            if ([[self convertNullString:productModel.proIntro_id] isEqualToString:@""]) {
+                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"缺少参数" message:@"请重新进入该页再试一次" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+                [alertView show];
+            } else {
+                proIntroVC.getPro_id = productModel.proIntro_id;
+                [self.navigationController pushViewController:proIntroVC animated:YES];
+            }
         }
+
     }
     if (indexPath.section == 4) {
         

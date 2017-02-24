@@ -7,6 +7,7 @@
 //
 
 #import "ProductModel.h"
+#import "LongProductSegment.h"
 
 @implementation ProductModel
 
@@ -14,6 +15,10 @@
     if ([key isEqualToString:@"id"]) {
         self.proIntro_id = value;
     }
+}
+
++ (NSDictionary *)objectClassInArray{
+    return @{@"segment" : [LongProductSegment class]};
 }
 
 @end

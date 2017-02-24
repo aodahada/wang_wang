@@ -36,6 +36,7 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
 -(instancetype)init{
     self = [super init];
     if (self) {
+        self.backgroundColor = RGBA(0, 105, 173, 1.0);
 //        itemNum = 5;
 //        NSArray *array = @[@"头条",@"军事哈",@"政务",@"热点",@"历史",@"漫画",@"搞笑",@"科技",@"本地",@"娱乐",@"小嘎秀"];
 //        _items = [[NSMutableArray alloc]initWithArray:array];
@@ -69,7 +70,8 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
     layout.minimumLineSpacing = 0;//设置列间隔
     //初始化collectionView
     UICollectionView* collectView = [[UICollectionView alloc]initWithFrame:rect collectionViewLayout:layout];
-    collectView.backgroundColor = [UIColor whiteColor];
+//    collectView.backgroundColor = [UIColor whiteColor];
+    collectView.backgroundColor = RGBA(0, 105, 173, 1.0);
     //设置代理
     collectView.delegate = self;
     collectView.dataSource = self;
@@ -81,7 +83,7 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
     [self addSubview:collectView];
     _collectView = collectView;
     [_collectView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top);
+        make.top.equalTo(self.mas_top).with.offset(20);
         make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
 //        make.height.mas_offset(50);
@@ -95,12 +97,12 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
     [self scrollToWithIndexPath:[NSIndexPath indexPathForRow:toIndex inSection:0]];
     BGTopSilderBarCell* fromCell = (BGTopSilderBarCell*)[_collectView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:fromIndex inSection:0]];
     BGTopSilderBarCell* toCell = (BGTopSilderBarCell*)[_collectView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:toIndex inSection:0]];
-    [fromCell setTitleColor:color(93.0,93.0,93.0,1.0)];
+    [fromCell setTitleColor:[UIColor whiteColor]];
     [fromCell setFontScale:NO];
     fromCell.BGTitleFont = [UIFont fontWithName:@"Arial" size:RESIZE_UI(17)];
     [toCell setTitleColor:SelectedColor];
     [toCell setFontScale:YES];
-    toCell.BGTitleFont = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(17)];
+    toCell.BGTitleFont = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(19)];
     _currentBarIndex = toIndex;
     
     if ([SingletonManager sharedManager].currentBGTopSliderNum == 1) {
@@ -109,9 +111,6 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
         }];
         [SingletonManager sharedManager].currentBGTopSliderNum = 2;
     }
-    
-//    NSLog(@"我来自哪:%ld",(long)fromIndex);
-//    NSLog(@"我去哪:%ld",(long)toIndex);
     
 }
 
@@ -163,7 +162,7 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
     if (indexPath.row == _currentBarIndex) {
         [cell setTitleColor:SelectedColor];
         //cell.BGTitleFont = BGFont(RESIZE_UI(17));
-        cell.BGTitleFont = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(17)];
+        cell.BGTitleFont = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(19)];
     }else{
         [cell setTitleColor:NormalColor];
         cell.BGTitleFont = BGFont(RESIZE_UI(17));

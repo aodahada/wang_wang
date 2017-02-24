@@ -107,7 +107,9 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.tabBarController.tabBar.hidden = NO;
-    
+}
+
+- (void)dealloc {
     /*  设置颜色 */
     self.navigationController.navigationBar.barTintColor = VIEWBACKCOLOR;
     /*  设置字体颜色 */
@@ -118,13 +120,6 @@
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navibar_color"] forBarMetrics:UIBarMetricsDefault];
     
-//    [self.navigationItem.leftBarButtonItem setImage:[UIImage imageNamed:@"arrow_back"]];
-    
-    UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
-
 }
 
 - (void)viewDidLoad {
@@ -157,10 +152,16 @@
 - (void)getDataWithNetManager {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-    NSDictionary *paramDic = @{@"product_id":self.getPro_id};
-    [manager postDataWithUrlActionStr:@"Product/new_detail" withParamDictionary:paramDic withBlock:^(id obj) {
+//    NSDictionary *paramDic = @{@"product_id":self.getPro_id};
+    NSDictionary *paramDic = @{@"is_recommend":@"1", @"page":@"1", @"size":@"1",@"is_long":@"0",@"product_id":self.getPro_id};
+    [manager postDataWithUrlActionStr:@"Finance/index" withParamDictionary:paramDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
-            _productModel = [ProductModel mj_objectWithKeyValues:obj[@"data"]];
+            [ProductModel mj_setupObjectClassInArray:^NSDictionary *{
+                return @{
+                         @"segment":@"LongProductSegment"
+                         };
+            }];
+            _productModel = [ProductModel mj_objectWithKeyValues:obj[@"data"][0]];
             _productModel.type_id = _type_id;
             _productModel.proIntro_id = self.getPro_id;
             /* 立即购买 */
@@ -169,13 +170,12 @@
             //主界面布局
             [self setUpLayOut];
             
-            if ([_productModel.is_down isEqualToString:@"0"]) {
+            if ([_productModel.isdown isEqualToString:@"0"]) {
                 _buyBtn.enabled = YES;
                 [_buyBtn setBackgroundColor:BASECOLOR];
                 [_buyBtn setTitle:@"立 即 购 买" forState:UIControlStateNormal];
                 [_buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            }
-            if ([_productModel.is_down isEqualToString:@"1"]) {
+            } else {
                 _buyBtn.enabled = NO;
                 [_buyBtn setBackgroundColor:RGBA(234, 234, 234, 1.0)];
                 [_buyBtn setTitle:@"已售罄" forState:UIControlStateNormal];

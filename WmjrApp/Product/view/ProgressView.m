@@ -8,6 +8,16 @@
 
 #import "ProgressView.h"
 
+@interface ProgressView ()<CAAnimationDelegate>
+
+@property (nonatomic, strong) CAShapeLayer *arcLayer;
+
+@property (nonatomic, strong) NSTimer *progressTimer;
+
+@property (nonatomic, assign) float currentPercent;
+
+@end
+
 @implementation ProgressView
 
 /*
@@ -23,6 +33,7 @@
         self.backgroundColor = [UIColor clearColor];
         _percent = 0;
         _width = 0;
+        _currentPercent = 0;
     }
     
     return self;
@@ -57,40 +68,119 @@
 }
 
 - (void)drawArc{
-    if (_percent == 0 || _percent > 1) {
+//    if (_percent == 0 || _percent > 1) {
+//        return;
+//    }
+//    
+//    if (_percent == 1) {
+//        CGColorRef color = (_arcFinishColor == nil) ? [UIColor greenColor].CGColor : _arcFinishColor.CGColor;
+//        
+//        CGContextRef contextRef = UIGraphicsGetCurrentContext();
+//        CGSize viewSize = self.bounds.size;
+//        CGPoint center = CGPointMake(viewSize.width / 2, viewSize.height / 2);
+//        // Draw the slices.
+//        CGFloat radius = viewSize.width / 2;
+//        CGContextBeginPath(contextRef);
+//        CGContextMoveToPoint(contextRef, center.x, center.y);
+//        CGContextAddArc(contextRef, center.x, center.y, radius,0,2*M_PI, 0);
+//        CGContextSetFillColorWithColor(contextRef, color);
+//        CGContextFillPath(contextRef);
+//    }else{
+//        
+//        float endAngle = 2*M_PI*_percent;
+//        
+//        CGColorRef color = (_arcUnfinishColor == nil) ? [UIColor blueColor].CGColor : _arcUnfinishColor.CGColor;
+//        CGContextRef contextRef = UIGraphicsGetCurrentContext();
+//        CGSize viewSize = self.bounds.size;
+//        CGPoint center = CGPointMake(viewSize.width / 2, viewSize.height / 2);
+//        // Draw the slices.
+//        CGFloat radius = viewSize.width / 2;
+//        CGContextBeginPath(contextRef);
+//        CGContextMoveToPoint(contextRef, center.x, center.y);
+//        CGContextAddArc(contextRef, center.x, center.y, radius,-M_PI_2,-M_PI_2, 0);
+//        [UIView animateWithDuration:2.0 animations:^{
+//            CGContextAddArc(contextRef, center.x, center.y, radius,-M_PI_2,endAngle-M_PI_2, 0);
+//        }];
+//        CGContextSetFillColorWithColor(contextRef, color);
+//        CGContextFillPath(contextRef);
+//    }
+    
+    CGSize viewSize = self.bounds.size;
+    CGPoint center = CGPointMake(viewSize.width / 2, viewSize.height / 2);
+    CGFloat radius = viewSize.width / 2;
+    float endAngle = 2*M_PI*_percent;
+    UIBezierPath *path=[UIBezierPath bezierPath];
+    [path addArcWithCenter:CGPointMake(center.x,center.y) radius:radius startAngle:0 endAngle:endAngle clockwise:YES];
+    _arcLayer=[CAShapeLayer layer];
+    _arcLayer.path=path.CGPath;//46,169,230
+    _arcLayer.fillColor = [UIColor clearColor].CGColor;
+//    _arcLayer.strokeColor=_arcUnfinishColor.CGColor;
+    _arcLayer.lineWidth=RESIZE_UI(5);
+    if (_percent == 1) {
+        _arcLayer.strokeColor=RGBA(237, 237, 237, 1.0).CGColor;
+    } else {
+        _arcLayer.strokeColor=_arcUnfinishColor.CGColor;
+    }
+    _arcLayer.backgroundColor = [UIColor blueColor].CGColor;
+    [self.layer addSublayer:_arcLayer];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self drawLineAnimation:_arcLayer];
+        });
+    if (_percent > 1) {
+        NSLog(@"传入数值范围为 0-1");
+        _percent = 1;
+    }else if (_percent < 0){
+        NSLog(@"传入数值范围为 0-1");
+        _percent = 0;
         return;
     }
-    
-    if (_percent == 1) {
-        CGColorRef color = (_arcFinishColor == nil) ? [UIColor greenColor].CGColor : _arcFinishColor.CGColor;
-        
-        CGContextRef contextRef = UIGraphicsGetCurrentContext();
-        CGSize viewSize = self.bounds.size;
-        CGPoint center = CGPointMake(viewSize.width / 2, viewSize.height / 2);
-        // Draw the slices.
-        CGFloat radius = viewSize.width / 2;
-        CGContextBeginPath(contextRef);
-        CGContextMoveToPoint(contextRef, center.x, center.y);
-        CGContextAddArc(contextRef, center.x, center.y, radius,0,2*M_PI, 0);
-        CGContextSetFillColorWithColor(contextRef, color);
-        CGContextFillPath(contextRef);
-    }else{
-        
-        float endAngle = 2*M_PI*_percent;
-        
-        CGColorRef color = (_arcUnfinishColor == nil) ? [UIColor blueColor].CGColor : _arcUnfinishColor.CGColor;
-        CGContextRef contextRef = UIGraphicsGetCurrentContext();
-        CGSize viewSize = self.bounds.size;
-        CGPoint center = CGPointMake(viewSize.width / 2, viewSize.height / 2);
-        // Draw the slices.
-        CGFloat radius = viewSize.width / 2;
-        CGContextBeginPath(contextRef);
-        CGContextMoveToPoint(contextRef, center.x, center.y);
-        CGContextAddArc(contextRef, center.x, center.y, radius,-M_PI_2,endAngle-M_PI_2, 0);
-        CGContextSetFillColorWithColor(contextRef, color);
-        CGContextFillPath(contextRef);
+    if (_percent > 0) {
+        NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(newThread) object:nil];
+        [thread start];
     }
     
+}
+
+-(void)newThread
+{
+    _progressTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(timeLabel) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] run];
+}
+//NSTimer不会精准调用
+-(void)timeLabel
+{
+    _currentPercent += 0.01;
+//    label.text = [NSString stringWithFormat:@"%.0f%%",_currentPercent*100];
+    if (_currentPercent >= _percent) {
+        [_progressTimer invalidate];
+        _progressTimer = nil;
+    }
+  }
+//定义动画过程
+-(void)drawLineAnimation:(CALayer*)layer
+{
+    CABasicAnimation *bas=[CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    bas.duration=_percent;//动画时间
+    bas.delegate=self;
+    bas.fromValue=[NSNumber numberWithInteger:0];
+    bas.toValue=[NSNumber numberWithInteger:1];
+    [layer addAnimation:bas forKey:@"key"];
+}
+
+- (void)drawRoundView:(CGPoint)centerPoint withStartAngle:(CGFloat)startAngle withEndAngle:(CGFloat)endAngle withRadius:(CGFloat)radius {
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path addArcWithCenter:centerPoint radius:radius startAngle:startAngle endAngle:endAngle  clockwise:YES];
+    _arcLayer = [CAShapeLayer layer];
+    _arcLayer.path = path.CGPath;
+    //arcLayer.strokeColor可设置画笔颜色
+    _arcLayer.lineWidth = 4;
+    _arcLayer.frame = self.bounds;
+    _arcLayer.fillColor = _arcUnfinishColor.CGColor;
+    [self.layer addSublayer:_arcLayer];
+    
+    //动画显示圆则调用
+    [self drawLineAnimation:_arcLayer];
 }
 
 -(void)addCenterBack{
@@ -116,12 +206,12 @@
     UIColor *arcColor = [UIColor blueColor];
     if (_percent == 1) {
         percent = @"100%";
-        fontSize = RESIZE_UI(12);
+        fontSize = RESIZE_UI(11);
         arcColor = (_arcFinishColor == nil) ? [UIColor greenColor] : RGBA(67, 68, 67, 1.0);
         
     }else if(_percent < 1 && _percent >= 0){
         
-        fontSize = 12;
+        fontSize = RESIZE_UI(12);
         arcColor = (_arcUnfinishColor == nil) ? [UIColor blueColor] : RGBA(67, 68, 67, 1.0);
         percent = [NSString stringWithFormat:@"%.2f",_percent*100];
         percent = [percent substringToIndex:[percent length]-3];

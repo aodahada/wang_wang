@@ -17,6 +17,11 @@
 /** 累计收益*/
 @property (nonatomic, copy) NSString *total_income;
 
+/**
+ 当前投资
+ */
+@property (nonatomic, copy) NSString *current_invest;
+
 /**账户余额*/
 @property (nonatomic, copy) NSString *account_rest;
 

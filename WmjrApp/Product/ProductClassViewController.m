@@ -7,24 +7,23 @@
 //
 
 #import "ProductClassViewController.h"
-#import "ProductViewCell.h"
-#import "ProductLowViewCell.h"
 #import "ProductModel.h"
-#import "LoginViewController.h"
-#import "MMPopupItem.h"
-#import "MMPopupWindow.h"
-#import "AddBankViewController.h"
+#import "HomeTableViewCellThird.h"
+#import "ProductCategoryTopCell.h"
+#import "FixShortAdCell.h"
+#import "ProductCategoryTopCell.h"
+#import "ProductCategoryModel.h"
+#import "ShortListViewController.h"
+#import "ProductIntroViewController.h"
+#import "AgViewController.h"
+#import "AdModel.h"
+#import "BaseNavigationController.h"
 
-@interface ProductClassViewController ()<UITableViewDataSource, UITableViewDelegate, ClickBtnResponseDelegate>
-{
-    UITableView *_tableView;
-    NSMutableArray *_dataSource;
-}
+@interface ProductClassViewController ()<UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, copy) NSString *isRealNameAuth;  /* 是否实名认证 */
-
-/** 刷新判断*/
-@property (assign, nonatomic) BOOL isRefresh;
+@property (nonatomic, strong) UITableView *categoryTableView;
+@property (nonatomic, strong) NSMutableArray *categoryArray;
+@property (nonatomic, strong) AdModel *adModel;//广告图
 
 @end
 
@@ -32,218 +31,166 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//     初始化
-    _isRefresh = NO;
-    //    _isRealNameAuth = @"1";
     
-    _dataSource = [NSMutableArray array];
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - RESIZE_UI(44) - 20 - 49) style:UITableViewStyleGrouped];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [self.view addSubview:_tableView];
-    [_tableView registerClass:[ProductViewCell class] forCellReuseIdentifier:@"productCell"];
+    self.view.backgroundColor = RGBA(239, 239, 239, 1.0);
     
-    /* 刷新 */
-//    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
-//    _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    
-    //下拉刷新
-    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self refreshData];
-    }];
-    
-    // 设置自动切换透明度(在导航栏下面自动隐藏)
-    _tableView.mj_header.automaticallyChangeAlpha = YES;
-    
-    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self loadMoreData];
-    }];
-    
-    /*  请求数据 */
-    [self getDataWithNetManager];
+    [self getAdMethod];
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+#pragma mark - 获取广告图
+- (void)getAdMethod {
     
-    //    NetManager *manager = [[NetManager alloc] init];
-    //    [manager postDataWithUrlActionStr:@"User/que" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
-    //        NSLog(@"%@", obj);
-    //    }];
-    
-}
-
-#pragma mark - 数据处理 －
-- (void)getDataWithNetManager {
-    [SVProgressHUD showWithStatus:@"加载中..." maskType:(SVProgressHUDMaskTypeBlack)];
-    NSString *pageStr = [NSString stringWithFormat:@"%ld", (long)_pageNum];
+    [SVProgressHUD showWithStatus:@"加载中"];
     NetManager *manager = [[NetManager alloc] init];
-//    NSLog(@"目前是哪个id：%@",_type_id);
-//    NSLog(@"目前页数:%@",pageStr);
-    NSDictionary *paramDic = @{@"type_id":_type_id, @"page":pageStr, @"size":@""};
-    [manager postDataWithUrlActionStr:@"Product/new_index" withParamDictionary:paramDic withBlock:^(id obj) {
+    [manager postDataWithUrlActionStr:@"Ad/index" withParamDictionary:@{@"location":@"short"} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
+            
+            NSArray *adArray = obj[@"data"];
+            _adModel = [AdModel mj_objectWithKeyValues:adArray[0]];
+            [self getProductTypeMethod];
+            
+        } else {
             [SVProgressHUD dismiss];
-            NSMutableArray *array = [NSMutableArray array];
-            [ProductModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
-                return @{@"proIntro_id" : @"id"};
+            NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+            alertConfig.defaultTextOK = @"确定";
+            [SVProgressHUD dismiss];
+            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+            [alertView show];
+        }
+    }];
+    
+}
+
+#pragma mark - 获取产品类型
+- (void)getProductTypeMethod {
+    NetManager *manager = [[NetManager alloc] init];
+    [manager postDataWithUrlActionStr:@"Finance/type" withParamDictionary:@{@"12":@"23"} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            [ProductCategoryModel mj_setupObjectClassInArray:^NSDictionary *{
+                return @{@"product":@"ProductModel"};
             }];
-            array = [ProductModel mj_objectArrayWithKeyValuesArray:obj[@"data"]];
-            for (int i=0; i<array.count; i++) {
-                ProductModel *productModel = array[i];
-                productModel.type_id = _type_id;
-            }
-            // 判断刷新和加载更多
-            if(_isRefresh) {
-                _dataSource = array;
-                _isRefresh = NO;
-            } else {
-                [_dataSource  addObjectsFromArray:array];
-            }
-            [_tableView reloadData];
-            [_tableView.mj_header endRefreshing];
-            [_tableView.mj_footer endRefreshing];
+            _categoryArray = [[NSMutableArray alloc]init];
+            _categoryArray = [ProductCategoryModel mj_objectArrayWithKeyValuesArray:obj[@"data"]];
+            
+            _categoryTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - RESIZE_UI(44) - 20 - 49-2) style:UITableViewStylePlain];
+            _categoryTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            _categoryTableView.backgroundColor = RGBA(239, 239, 239, 1.0);
+            _categoryTableView.delegate = self;
+            _categoryTableView.dataSource = self;
+            [self.view addSubview:_categoryTableView];
+            [SVProgressHUD dismiss];
+            
+        } else {
+            [SVProgressHUD dismiss];
+            NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+            alertConfig.defaultTextOK = @"确定";
+            [SVProgressHUD dismiss];
+            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+            [alertView show];
         }
     }];
 }
 
-// 刷新数据
-- (void)refreshData
-{
-    _isRefresh = YES;
-    _pageNum = 1;
-    [self getDataWithNetManager];
-}
-
-// 加载更多数据
-- (void)loadMoreData
-{
-    _pageNum++;
-    [self getDataWithNetManager];
-}
-
-
-#pragma mark - UITableView dataSource delegate -
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSLog(@"1 === %ld", _dataSource.count);
-    return _dataSource.count;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ProductModel *model = [_dataSource objectAtIndex:indexPath.section];
-    if (indexPath.row == 0) {
-        ProductViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"productCell" forIndexPath:indexPath];
-        cell.delegate = self;
-        cell.indexpath = indexPath;
-        [cell configCellWithModel:model];
-        
-        return cell;
-    } else {
-        static NSString *identifier = @"lowCell";
-        ProductLowViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (cell == nil) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductLowViewCell" owner:nil options:nil] lastObject];
-        }
-        cell.model = model;
-        
-        return cell;
-    }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return RESIZE_UI(12);
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return RESIZE_UI(.1);
+    return _categoryArray.count+1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        return RESIZE_UI(134);
-    } else {
-        return RESIZE_UI(33);
-    }
-}
-
-/* 点击立即购买 */
-- (void)buttonClickProductModel:(ProductModel *)productModel {
-    
-    if ([[self convertNullString:[SingletonManager sharedManager].uid] isEqualToString:@""]) {
-        /* 未登录需登录 */
-        [[NSNotificationCenter defaultCenter] postNotificationName:PRESENTLOGINVCNOTIFICATION object:nil];
-    } else if ([[SingletonManager sharedManager].userModel.is_real_name isEqualToString:@"0"]) {
-        [[MMPopupWindow sharedWindow] cacheWindow];
-        MMPopupItemHandler block = ^(NSInteger index){
-            if (index == 0) {
-                return ;
-            }
-            if (index == 1) {
-                /*  实名认证 */
-                [[NSNotificationCenter defaultCenter]postNotificationName:PUSHREALNAMEAUTHVCNOTIFICATION object:nil];
-            }
-        };
-        NSArray *items =
-        @[MMItemMake(@"取消", MMItemTypeNormal, block),
-          MMItemMake(@"确定", MMItemTypeNormal, block)];
-        MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
-                                                             detail:@"你还未认证,请实名认证"
-                                                              items:items];
-        [alertView show];
-    } else if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
-        MMPopupItemHandler block = ^(NSInteger index){
-            if (index == 0) {
-                return ;
-            }
-            if (index == 1) {
-                /*  绑定银行卡 */
-                UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
-                AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
-                addBankVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:addBankVC animated:YES];
-                return;
-            }
-        };
-        NSArray *items =
-        @[MMItemMake(@"取消", MMItemTypeNormal, block),
-          MMItemMake(@"好的", MMItemTypeNormal, block)];
-        MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
-                                                             detail:@"您还没有绑定银行卡，请去绑定银行卡"
-                                                              items:items];
-        [alertView show];
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:PUSHTOFUNDBUYVCNOTIFICATION object:productModel];
-    }
-    
-}
-
-#pragma mark - 判断字符串是否为空
-- (NSString*)convertNullString:(NSString*)oldString{
-    if (oldString!=nil && (NSNull *)oldString != [NSNull null]) {
-        if ([oldString length]!=0) {
-            if ([oldString isEqualToString:@"(null)"]) {
-                return @"";
-            }
-            return  oldString;
-        }else{
-            return @"";
+    if (indexPath.section == 0) {
+        return RESIZE_UI(102);
+    } else{
+        if (indexPath.row == 0) {
+            return RESIZE_UI(42);
+        } else {
+            return RESIZE_UI(109);
         }
     }
-    else{
-        return @"";
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    } else {
+        ProductCategoryModel *pcModel =  _categoryArray[section-1];
+        NSArray *productArray = pcModel.product;
+        return productArray.count+1;
     }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc]init];
+    headerView.backgroundColor = RGBA(239, 239, 239, 1.0);
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 11;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0) {
+        FixShortAdCell *cell = [[FixShortAdCell alloc]initWithAdModel:_adModel];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    } else {
+        ProductCategoryModel *productCategory = _categoryArray[indexPath.section-1];
+        if (indexPath.row == 0) {
+            ProductCategoryTopCell *cell = [[ProductCategoryTopCell alloc]initWithProductCategoryModel:productCategory];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        } else {
+            HomeTableViewCellThird *cell = [[HomeTableViewCellThird alloc]init];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            NSArray *productList = productCategory.product;
+            [cell configCellWithModel:productList[indexPath.row-1]];
+            return cell;
+        }
+    }
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ProductModel *model = _dataSource[indexPath.section];
-    /* 进入产品详情 */
-    [[NSNotificationCenter defaultCenter] postNotificationName:PUSHPRODUCTINTROVCNOTIFICATION object:model];
+    
+    if (indexPath.section == 0) {
+//        NSLog(@"点击广告图");
+        AgViewController *agVC =[[AgViewController alloc] init];
+        agVC.title = _adModel.title;
+        agVC.webUrl = _adModel.url;
+        BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+        [self presentViewController:baseNa animated:YES completion:^{
+        }];
+    } else {
+        ProductCategoryModel *productCategory = _categoryArray[indexPath.section-1];
+        if (indexPath.row == 0) {
+            ShortListViewController *shortList = [[ShortListViewController alloc]init];
+            shortList.hidesBottomBarWhenPushed = YES;
+            shortList.type_id = productCategory.id;
+            shortList.title = productCategory.name;
+            [self.navigationController pushViewController:shortList animated:YES];
+        } else {
+            NSArray *productArray = productCategory.product;
+            ProductModel *productModel = productArray[indexPath.row-1];
+            ProductIntroViewController *productInfoVC = [[ProductIntroViewController alloc]init];
+            productInfoVC.getPro_id = productModel.proIntro_id;
+            productInfoVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:productInfoVC animated:YES];
+        }
+    }
+    
+}
+
+#pragma mark - 去黏性
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat sectionHeaderHeight = 11;
+    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+    }
 }
 
 @end

@@ -9,6 +9,8 @@
 #import "MessageWViewController.h"
 #import "MessageViewCell.h"
 #import "MessageModel.h"
+#import "AgViewController.h"
+#import "BaseNavigationController.h"
 
 @interface MessageWViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -64,6 +66,7 @@
 //    [SVProgressHUD showWithStatus:@"消息获取中"];
     [manager postDataWithUrlActionStr:@"User/message" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"page":@(currentPage), @"size":@""} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
+            NSDictionary *dic = obj[@"data"];
             NSArray *array = [MessageModel mj_keyValuesArrayWithObjectArray:obj[@"data"]];
             if(currentPage == 1) {
                 _messArray = [[NSMutableArray alloc]init];
@@ -112,14 +115,26 @@
     MessageModel *model = _messArray[indexPath.row];
     MessageViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"messCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSString *typeColor = [NSString stringWithFormat:@"#%@",model.type_color];
-    UIColor *realColor = [self hexStringToColor:typeColor];
-    cell.cerType.textColor = realColor;
+//    NSString *typeColor = [NSString stringWithFormat:@"#%@",model.type_color];
+//    UIColor *realColor = [self hexStringToColor:typeColor];
+//    cell.cerType.textColor = realColor;
     cell.cerType.text = model.type_name;
     cell.cerLab.text = model.message_title;
     cell.introLab.text = model.message_intro;
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    MessageModel *model = _messArray[indexPath.row];
+    AgViewController *agVC =[[AgViewController alloc] init];
+    agVC.title = model.message_title;
+    agVC.webUrl = model.url;
+    BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+    [self presentViewController:baseNa animated:YES completion:^{
+    }];
+    
 }
 
 - (UIColor *)hexStringToColor: (NSString *) stringToConvert

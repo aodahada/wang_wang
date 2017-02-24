@@ -13,5 +13,6 @@
 @property (nonatomic, copy) NSString *icon;//图片
 @property (nonatomic, copy) NSString *id;
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, strong) NSArray *product;
 
 @end

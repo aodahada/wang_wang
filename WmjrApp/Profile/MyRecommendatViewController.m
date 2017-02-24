@@ -95,6 +95,22 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+}
+
+- (void)dealloc {
+    /*  设置颜色 */
+    self.navigationController.navigationBar.barTintColor = VIEWBACKCOLOR;
+    /*  设置字体颜色 */
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:TITLE_COLOR};
+    /* 渲染颜色 */
+    self.navigationController.navigationBar.tintColor = TITLE_COLOR;
+    /*  去掉边线 */
+    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navibar_color"] forBarMetrics:UIBarMetricsDefault];
+}
+
 - (void)getHaveInvitatedList {
     
     NetManager *manager = [[NetManager alloc] init];

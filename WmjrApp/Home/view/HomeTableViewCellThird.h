@@ -17,8 +17,8 @@
 
 @interface HomeTableViewCellThird : UITableViewCell
 
-@property (nonatomic, strong) UILabel *billLable;//票据
-@property (nonatomic, strong) UIImageView *imageViewForNewer;//新人购图标
+//@property (nonatomic, strong) UILabel *billLable;//票据
+//@property (nonatomic, strong) UIImageView *imageViewForNewer;//新人购图标
 @property (nonatomic, strong) UILabel *earnOfYearLable;//收益描述
 @property (nonatomic, strong) UILabel *earnOfPercent;//收益百分比
 

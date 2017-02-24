@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class ProductModel;
 @interface HomeTableViewCellThirdFirst : UITableViewCell
+
+- (instancetype)initWithProductModel:(ProductModel *)productModel;
 
 @end

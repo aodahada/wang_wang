@@ -20,6 +20,7 @@
 //#import "MMPopupWindow.h"
 #import "HRBuyViewController.h"
 #import "HomeProductCatModel.h"
+#import "ProductLongClassViewController.h"
 
 @interface ProductListViewController ()
 
@@ -61,7 +62,8 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    self.navigationController.navigationBar.hidden = NO;
+//    self.navigationController.navigationBar.hidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -77,37 +79,31 @@
         }
     }
     self.tabBarController.tabBar.hidden = NO;
-    self.navigationController.navigationBar.hidden = YES;
-    /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor]};
-    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-    /*  去掉边线 */
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navibar_color"] forBarMetrics:UIBarMetricsDefault];
-    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 #pragma mark - 获取分类
 - (void)getProductTypeClass {
     
-    NetManager *manager = [[NetManager alloc] init];
-    [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"Product/type" withParamDictionary:@{@"mobile":@"as"} withBlock:^(id obj) {
-        if (obj) {
-            if ([obj[@"result"] isEqualToString:@"1"]) {
-                NSArray *dataDic = obj[@"data"];
-                _arrayForTypeName = [[NSMutableArray alloc]init];
-                for (int i=0; i<dataDic.count; i++) {
-                    NSDictionary *dic = dataDic[i];
-                    ProductCategoryModel *productCategoryModel = [ProductCategoryModel mj_objectWithKeyValues:dic];
-                    [_arrayForTypeName addObject:productCategoryModel];
-                }
-                
+//    NetManager *manager = [[NetManager alloc] init];
+//    [SVProgressHUD showWithStatus:@"加载中"];
+//    [manager postDataWithUrlActionStr:@"Product/type" withParamDictionary:@{@"mobile":@"as"} withBlock:^(id obj) {
+//        if (obj) {
+//            if ([obj[@"result"] isEqualToString:@"1"]) {
+//                NSArray *dataDic = obj[@"data"];
+//                _arrayForTypeName = [[NSMutableArray alloc]init];
+//                for (int i=0; i<dataDic.count; i++) {
+//                    NSDictionary *dic = dataDic[i];
+//                    ProductCategoryModel *productCategoryModel = [ProductCategoryModel mj_objectWithKeyValues:dic];
+//                    [_arrayForTypeName addObject:productCategoryModel];
+//                }
+                ProductCategoryModel *productCategoryModel1 = [[ProductCategoryModel alloc]init];
+                productCategoryModel1.name = @"定期投";
+                ProductCategoryModel *productCategoryModel2 = [[ProductCategoryModel alloc]init];
+                productCategoryModel2.name = @"旺马长存";
+                _arrayForTypeName = [[NSMutableArray alloc]initWithArray:@[productCategoryModel1,productCategoryModel2]];
                 _silderBar.arrayForCategory = _arrayForTypeName;
-                
+    
                 [self addChildViewController];
                 
                 [SingletonManager sharedManager].isProductListViewWillAppear = 2;
@@ -121,20 +117,20 @@
                 }
 
                 
-                [SVProgressHUD dismiss];
-                
-                return ;
-            }
-            if ([obj[@"result"] isEqualToString:@"1000"]) {
-                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
-                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
-                alertConfig.defaultTextOK = @"确定";
-                [SVProgressHUD dismiss];
-                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
-                [alertView show];
-            }
-        }
-    }];
+//                [SVProgressHUD dismiss];
+//                
+//                return ;
+//            }
+//            if ([obj[@"result"] isEqualToString:@"1000"]) {
+//                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+//                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+//                alertConfig.defaultTextOK = @"确定";
+//                [SVProgressHUD dismiss];
+//                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+//                [alertView show];
+//            }
+//        }
+//    }];
     
 }
 
@@ -147,10 +143,10 @@
     _silderBar.contentCollectionView = _scrollView;//_scrollView必须要在前面初始化,不然这里值为nil
     [self.view addSubview:_silderBar];
     [_silderBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).with.offset(20);
+        make.top.equalTo(self.view.mas_top);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.height.mas_offset(RESIZE_UI(44));
+        make.height.mas_offset(RESIZE_UI(64));
     }];
 }
 
@@ -159,19 +155,21 @@
  */
 -(void)initScrollView{
     _scrollView = [[UIScrollView alloc] init];
+    _scrollView.backgroundColor = RGBA(239, 239, 239, 1.0);
     _scrollView.bounces = NO;
     _scrollView.pagingEnabled = YES;
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_scrollView];
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).with.offset(RESIZE_UI(45));
+        make.top.equalTo(self.view.mas_top).with.offset(RESIZE_UI(44));
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.bottom.equalTo(self.view.mas_bottom);
     }];
     NSInteger count = [SingletonManager sharedManager].productListCount;
-    _scrollView.contentSize = CGSizeMake(count*screenW,_scrollView.frame.size.height);//contentSize的宽度等于顶部滑动栏的item个数乘与屏幕宽度screenW
+    //contentSize的宽度等于顶部滑动栏的item个数乘与屏幕宽度screenW
+    _scrollView.contentSize = CGSizeMake(2*screenW,_scrollView.frame.size.height);
 }
 
 
@@ -180,15 +178,16 @@
  */
 -(void)addChildViewController{
 //    NSInteger count = _arrayForTypeName.count;
-    for(int i=0;i<_arrayForTypeName.count;i++){
-        ProductClassViewController* twoCon = [[ProductClassViewController alloc] init];
-        ProductCategoryModel *productCategoryModel = _arrayForTypeName[i];
-        twoCon.type_id = productCategoryModel.id;
-        twoCon.pageNum = 1;
-        [self addChildViewController:twoCon];
-        twoCon.view.frame = CGRectMake(i*screenW,0,screenW,_scrollView.frame.size.height);
-        [_scrollView addSubview:twoCon.view];
-    }
+    ProductClassViewController *shortCon = [[ProductClassViewController alloc] init];
+    shortCon.pageNum = 1;
+    [self addChildViewController:shortCon];
+    shortCon.view.frame = CGRectMake(0*screenW,0,screenW,_scrollView.frame.size.height);
+    [_scrollView addSubview:shortCon.view];
+    
+    ProductLongClassViewController *longCon = [[ProductLongClassViewController alloc]init];
+    [self addChildViewController:longCon];
+    longCon.view.frame = CGRectMake(screenW,0,screenW,_scrollView.frame.size.height);
+    [_scrollView addSubview:longCon.view];
 }
 
 

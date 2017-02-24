@@ -70,8 +70,8 @@
     _dimBackground = dimBackground;
     if (dimBackground)
     {
-        self.cover.backgroundColor = [UIColor blackColor];
-        self.cover.alpha = 0.1;
+        self.cover.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+//        self.cover.alpha = 0.1;
     }
     else
     {
