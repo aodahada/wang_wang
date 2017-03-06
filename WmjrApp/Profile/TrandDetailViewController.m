@@ -38,10 +38,6 @@
     self.navigationItem.leftBarButtonItem = backButton;
 }
 
-- (void)backBtnAction {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     

@@ -43,7 +43,7 @@
     self.title = @"充值";
     _bankImg.layer.cornerRadius = CGRectGetWidth(_bankImg.frame) / 2;
     _bankImg.layer.masksToBounds = YES;
-    _submitBtn.backgroundColor = BASECOLOR;
+    _submitBtn.backgroundColor = RGBA(255, 86, 45, 1.0);
     _bankInfoArray = [NSMutableArray array];
     _bankTail = nil;
 }

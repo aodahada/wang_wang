@@ -40,20 +40,11 @@
 - (void)setUpNavigationBar {
     self.view.backgroundColor = VIEWBACKCOLOR;
     
-    UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _button = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(buttonAction)];
-    self.navigationItem.leftBarButtonItem = _button;
-
-    
     [[MMPopupWindow sharedWindow] cacheWindow];
     self.title = @"我的银行卡";
     _comfirmBtn.backgroundColor = BASECOLOR;
     [_comfirmBtn setTitleColor:VIEWBACKCOLOR forState:UIControlStateNormal];
     
-}
-
-- (void)buttonAction {
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

@@ -134,25 +134,28 @@
     
     _productModelHa = model;
     _progressView.percent = [model.buyrate floatValue];
-    LongProductSegment *longProduct = _productModelHa.segment[0];
-//    NSLog(@"我的利率:%@",longProduct.returnrate);
-    CGFloat longRateFloat = [longProduct.returnrate floatValue] * 100;
-    NSNumber *longRateNumber = [NSNumber numberWithFloat:longRateFloat];
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    formatter.roundingMode = NSNumberFormatterRoundFloor;
-    formatter.maximumFractionDigits = 1;
-    NSString *earnOfPercentStr = [NSString stringWithFormat:@"%@％",[formatter stringFromNumber:longRateNumber]];
-    self.earnOfPercent.text = earnOfPercentStr;
-    _labelForManageMoneyDay.text = longProduct.duration;
-    if (![model.isdown isEqualToString:@"0"]) {
-        self.earnOfPercent.textColor = RGBA(237, 237, 237, 1.0);
-        _labelForManageMoneyDay.textColor = RGBA(237, 237, 237, 1.0);
-        _endImageView.hidden = NO;
-    } else {
-        self.earnOfPercent.textColor = RGBA(255, 88, 26, 1.0);
-        _labelForManageMoneyDay.textColor = RGBA(3, 3, 3, 1.0);
-        _endImageView.hidden = YES;
+    if (_productModelHa.segment.count != 0) {
+        LongProductSegment *longProduct = _productModelHa.segment[0];
+        //    NSLog(@"我的利率:%@",longProduct.returnrate);
+        CGFloat longRateFloat = [longProduct.returnrate floatValue] * 100;
+        NSNumber *longRateNumber = [NSNumber numberWithFloat:longRateFloat];
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+        formatter.roundingMode = NSNumberFormatterRoundFloor;
+        formatter.minimumFractionDigits = 1;
+        NSString *earnOfPercentStr = [NSString stringWithFormat:@"%@％",[formatter stringFromNumber:longRateNumber]];
+        self.earnOfPercent.text = earnOfPercentStr;
+        _labelForManageMoneyDay.text = longProduct.duration;
+        if (![model.isdown isEqualToString:@"0"]) {
+            self.earnOfPercent.textColor = RGBA(237, 237, 237, 1.0);
+            _labelForManageMoneyDay.textColor = RGBA(237, 237, 237, 1.0);
+            _endImageView.hidden = NO;
+        } else {
+            self.earnOfPercent.textColor = RGBA(255, 88, 26, 1.0);
+            _labelForManageMoneyDay.textColor = RGBA(3, 3, 3, 1.0);
+            _endImageView.hidden = YES;
+        }
     }
+    
     
 }
 

@@ -41,35 +41,6 @@
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
     
-    [self setUpNormalNavigationBar];
-    
-}
-
-- (void)setUpNormalNavigationBar {
-    
-    /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = VIEWBACKCOLOR;
-    //    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:TITLE_COLOR};
-    //    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = TITLE_COLOR;
-    
-    /*  去掉边线 */
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"piggy"] forBarMetrics:UIBarMetricsDefault];
-    
-    UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
-    
-}
-
-
-- (void)backBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
 }
 
 - (void)viewDidLoad {

@@ -30,6 +30,9 @@
 // 设置加载进度条
 @property(nonatomic,strong) UIProgressView *  ProgressView;
 
+@property (nonatomic, strong)UILabel *lineLeft;
+@property (nonatomic, strong)UILabel *lineRight;
+
 @end
 
 @implementation SafeEnsureViewController
@@ -44,7 +47,7 @@
     
     _buttonForWangma = [[UIButton alloc]init];
     [_buttonForWangma setTitle:@"旺马平台" forState:UIControlStateNormal];
-    [_buttonForWangma setTitleColor:selecColor forState:UIControlStateNormal];
+    [_buttonForWangma setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_buttonForWangma.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(17)]];
     [_buttonForWangma addTarget:self action:@selector(buttonActionMethod:) forControlEvents:UIControlEventTouchUpInside];
     [viewForNav addSubview:_buttonForWangma];
@@ -55,10 +58,20 @@
         make.left.equalTo(viewForNav.mas_left);
     }];
     
+    _lineLeft = [[UILabel alloc]init];
+    _lineLeft.backgroundColor = [UIColor whiteColor];
+    [viewForNav addSubview:_lineLeft];
+    [_lineLeft mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(viewForNav.mas_bottom);
+        make.left.equalTo(_buttonForWangma.mas_left).with.offset(RESIZE_UI(10));
+        make.right.equalTo(_buttonForWangma.mas_right).with.offset(-RESIZE_UI(10));
+        make.height.mas_offset(RESIZE_UI(3));
+    }];
+    
     _buttonForSina = [[UIButton alloc]init];
     _buttonForSina = [[UIButton alloc]init];
     [_buttonForSina setTitle:@"新浪平台" forState:UIControlStateNormal];
-    [_buttonForSina setTitleColor:unSelectColor forState:UIControlStateNormal];
+    [_buttonForSina setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_buttonForSina addTarget:self action:@selector(buttonActionMethod:) forControlEvents:UIControlEventTouchUpInside];
     [_buttonForSina.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(17)]];
     [viewForNav addSubview:_buttonForSina];
@@ -69,6 +82,17 @@
         make.right.equalTo(viewForNav.mas_right);
     }];
     
+    _lineRight = [[UILabel alloc]init];
+    _lineRight.hidden = YES;
+    _lineRight.backgroundColor = [UIColor whiteColor];
+    [viewForNav addSubview:_lineRight];
+    [_lineRight mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(viewForNav.mas_bottom);
+        make.left.equalTo(_buttonForSina.mas_left).with.offset(RESIZE_UI(10));
+        make.right.equalTo(_buttonForSina.mas_right).with.offset(-RESIZE_UI(10));
+        make.height.mas_offset(RESIZE_UI(3));
+    }];
+    
     self.navigationItem.titleView = viewForNav;
     
     [self wangmaLayoutMethod];
@@ -77,15 +101,8 @@
 
 - (void)buttonActionMethod:(UIButton *)btn {
     if (btn == _buttonForWangma) {
-        [_buttonForWangma setTitleColor:selecColor forState:UIControlStateNormal];
-        [_buttonForSina setTitleColor:unSelectColor forState:UIControlStateNormal];
-//        _imageView1.image = [UIImage imageNamed:@"image_wangma1"];
-//        _imageView2.image = [UIImage imageNamed:@"image_wangma2"];
-//        _imageView3.image = [UIImage imageNamed:@"image_wangma3"];
-//        [_imageView3 mas_updateConstraints:^(MASConstraintMaker *make) {
-//            make.height.mas_offset(RESIZE_UI(614));
-//        }];
-//        [_mainScrollView setContentOffset:CGPointMake(0,0) animated:YES];
+        _lineLeft.hidden = NO;
+        _lineRight.hidden = YES;
         [self.ProgressView removeFromSuperview];
         self.ProgressView = nil;
         [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
@@ -93,19 +110,8 @@
         self.webView = nil;
         [self wangmaLayoutMethod];
     } else {
-        [_buttonForWangma setTitleColor:unSelectColor forState:UIControlStateNormal];
-        [_buttonForSina setTitleColor:selecColor forState:UIControlStateNormal];
-//        _imageView1.image = [UIImage imageNamed:@"image_sina1"];
-//        _imageView2.image = [UIImage imageNamed:@"image_sina2"];
-//        _imageView3.image = [UIImage imageNamed:@"image_sina3"];
-//        [_imageView3 mas_updateConstraints:^(MASConstraintMaker *make) {
-//            make.height.mas_offset(RESIZE_UI(447));
-//        }];
-//        if (_isBottom) {
-//            [_mainScrollView setContentOffset:CGPointMake(0,RESIZE_UI(614-447)-_yDistance) animated:YES];
-//        } else{
-//            [_mainScrollView setContentOffset:CGPointMake(0,0) animated:YES];
-//        }
+        _lineLeft.hidden = YES;
+        _lineRight.hidden = NO;
         [_mainScrollView removeFromSuperview];
         _mainScrollView = nil;
         [_mainView removeFromSuperview];

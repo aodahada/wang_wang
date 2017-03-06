@@ -58,36 +58,6 @@
     [self getShortProductListMethod];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self setUpNavigationBar];
-}
-
-/* 设置导航条 */
-- (void)setUpNavigationBar {
-    
-    /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = RGBA(0, 108, 175, 1.0);
-    //    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:VIEWBACKCOLOR};
-    //    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = RGBA(0, 108, 175, 1.0);
-    
-    /*  去掉边线 */
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"piggy"] forBarMetrics:UIBarMetricsDefault];
-    
-    UIImage *image = [[UIImage imageNamed:@"arrow_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
-    
-}
-
-- (void)backBtnAction {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 #pragma mark - 获取短期产品列表
 - (void)getShortProductListMethod {
     

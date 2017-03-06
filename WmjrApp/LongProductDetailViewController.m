@@ -48,7 +48,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"购买金额";
+    self.title = _productModel.name;
     self.view.backgroundColor = RGBA(239, 239, 239, 1.0);
     
     //监听键盘弹出
@@ -79,27 +79,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[IQKeyboardManager sharedManager] setEnable:YES];
-    [self setUpNormalNavigationBar];
-    
-}
-
-- (void)setUpNormalNavigationBar {
-    
-    /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = VIEWBACKCOLOR;
-    //    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:TITLE_COLOR};
-    //    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = TITLE_COLOR;
-    
-    /*  去掉边线 */
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"piggy"] forBarMetrics:UIBarMetricsDefault];
-    
-    UIImage *image = [[UIImage imageNamed:@"arrow_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
     
 }
 
@@ -111,35 +90,23 @@
     //获取键盘结束时的y值
     CGFloat keyboardEndY = keyboardFrame.origin.y;
 //    NSLog(@"我的键盘高度:%.f",keyboardEndY);
-    [_bottomview mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view.mas_bottom).with.offset(-(SCREEN_HEIGHT-keyboardEndY));
+    
+    [UIView animateWithDuration:1.0 animations:^{
+        _bottomview.frame = CGRectMake(0, keyboardEndY-RESIZE_UI(57)-64, SCREEN_WIDTH, RESIZE_UI(57));
     }];
+//    [_bottomview mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(self.view.mas_bottom).with.offset(-(SCREEN_HEIGHT-keyboardEndY));
+//    }];
     
 }
 
 /* 设置导航条 */
 - (void)setUpNavigationBar {
     
-    /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = RGBA(0, 108, 175, 1.0);
-    //    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:VIEWBACKCOLOR};
-    //    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = RGBA(0, 108, 175, 1.0);
-    
-    /*  去掉边线 */
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"piggy"] forBarMetrics:UIBarMetricsDefault];
-    
     /* 分享 */
     UIImage *imageHelp = [[UIImage imageNamed:@"icon_share"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *sharedBtn = [[UIBarButtonItem alloc] initWithImage:imageHelp style:UIBarButtonItemStylePlain target:self action:@selector(sharedBtnAction)];
     self.navigationItem.rightBarButtonItem = sharedBtn;
-    
-    UIImage *image = [[UIImage imageNamed:@"arrow_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
     
 }
 
@@ -174,10 +141,6 @@
 /* 取消覆盖 */
 - (void)tapPopViewAction {
     [_popMenu dismissMenu];
-}
-
-- (void)backBtnAction {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setUpLayout{
@@ -377,15 +340,15 @@
     }];
     
     //底部结算付款部分
-    _bottomview = [[UIView alloc]init];
+    _bottomview = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-64-RESIZE_UI(57), SCREEN_WIDTH, RESIZE_UI(57))];
     _bottomview.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_bottomview];
-    [_bottomview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_offset(RESIZE_UI(57));
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_bottom);
-    }];
+//    [_bottomview mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.height.mas_offset(RESIZE_UI(57));
+//        make.left.equalTo(self.view.mas_left);
+//        make.right.equalTo(self.view.mas_right);
+//        make.bottom.equalTo(self.view.mas_bottom);
+//    }];
     
     UILabel *buyTitleLabel = [[UILabel alloc]init];
     buyTitleLabel.text = @"购买金额";
@@ -432,7 +395,6 @@
 }
 
 - (void)selectRateMethod:(UIButton *)sender {
-//    NSLog(@"点击了%ld",sender.tag);
     LongProductSegment *segmentPro = self.segmentArray[sender.tag];
     if ([segmentPro.returnrate isEqualToString:@"0"]) {
         return;
@@ -451,6 +413,7 @@
             rateButton.segmentProduct = self.segmentArray[i];
         }
         _labelForEndDay.text = [NSString stringWithFormat:@"到期天数:%@",_currentProductSegment.duration];
+        _restBuyMoneyText.placeholder = [NSString stringWithFormat:@"可购买剩余金额:%@",_currentProductSegment.can_buy];
         //重新计算年化收益
         [self configYearRateMethod];
     }

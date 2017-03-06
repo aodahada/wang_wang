@@ -146,7 +146,7 @@
         make.top.equalTo(self.view.mas_top);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.height.mas_offset(RESIZE_UI(64));
+        make.height.mas_offset(RESIZE_UI(44)+20);
     }];
 }
 

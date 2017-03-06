@@ -47,7 +47,9 @@
         if ([obj[@"result"] isEqualToString:@"1"]) {
             
             NSArray *adArray = obj[@"data"];
-            _adModel = [AdModel mj_objectWithKeyValues:adArray[0]];
+            if (adArray.count>0) {
+                _adModel = [AdModel mj_objectWithKeyValues:adArray[0]];
+            }
             [self getProductTypeMethod];
             
         } else {

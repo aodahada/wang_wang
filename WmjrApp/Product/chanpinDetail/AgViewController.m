@@ -19,8 +19,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_back"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backAction)];
-    self.navigationItem.leftBarButtonItem = backBtn;
+    UIImage *image = [[UIImage imageNamed:@"arrow_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+    self.navigationItem.leftBarButtonItem = backButton;
+    
     _agWeb.delegate = self;
     [_agWeb setScalesPageToFit:YES];
     if (![[self convertNullString:_htmlContent] isEqualToString:@""]) {

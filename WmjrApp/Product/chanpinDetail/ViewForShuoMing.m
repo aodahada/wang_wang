@@ -8,6 +8,7 @@
 
 #import "ViewForShuoMing.h"
 #import "ProductModel.h"
+#import "LongProductSegment.h"
 
 @interface ViewForShuoMing ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -97,7 +98,8 @@
         case 5:
         {
             cell.textLabel.text = @"结算日期";
-            cell.detailTextLabel.text = _productModel.duedate;
+            LongProductSegment *segment = _productModel.segment[0];
+            cell.detailTextLabel.text = segment.segment_time;
         }
             break;
         default:

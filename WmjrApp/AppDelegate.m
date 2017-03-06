@@ -54,6 +54,9 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    //设置状态栏字体颜色
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    
     JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
     entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound;
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
@@ -105,6 +108,14 @@
     }
     
     return YES;
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle
+
+{
+    
+    return UIStatusBarStyleLightContent;  //默认的值是黑色的
+    
 }
 
 /**

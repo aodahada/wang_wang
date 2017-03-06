@@ -83,7 +83,7 @@
         NSNumber *longRateNumber = [NSNumber numberWithFloat:returnFloat];
         NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
         formatter.roundingMode = NSNumberFormatterRoundFloor;
-        formatter.maximumFractionDigits = 1;
+        formatter.minimumFractionDigits = 1;
         NSString *yearRate = [NSString stringWithFormat:@"%@%%",[formatter stringFromNumber:longRateNumber]];
         _rateLabel.attributedText =  [self changeStringWithString:yearRate withFrontColor:RGBA(0, 108, 180, 1.0) WithBehindColor:RGBA(0, 108, 180, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(44)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(22)]];
         [_rateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -110,12 +110,12 @@
         if (segmentPro.isSelect) {
             [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self.mas_centerX);
-                make.bottom.equalTo(self.mas_bottom).with.offset(RESIZE_UI(-19));
+                make.bottom.equalTo(self.mas_bottom).with.offset(RESIZE_UI(-25));
             }];
         } else {
             [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self.mas_centerX);
-                make.bottom.equalTo(self.mas_bottom).with.offset(RESIZE_UI(-10));
+                make.bottom.equalTo(self.mas_bottom).with.offset(RESIZE_UI(-17));
             }];
         }
         
@@ -170,20 +170,27 @@
         }];
     }
     
-    CGFloat returnFloat = [segmentProduct.returnrate floatValue];
-    NSString *yearRate = [NSString stringWithFormat:@"%.1f%%",returnFloat*100];
+//    CGFloat returnFloat = [segmentProduct.returnrate floatValue];
+//    NSString *yearRate = [NSString stringWithFormat:@"%.1f%%",returnFloat*100];
+//    _rateLabel.attributedText =  [self changeStringWithString:yearRate withFrontColor:RGBA(0, 108, 180, 1.0) WithBehindColor:RGBA(0, 108, 180, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(44)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(22)]];
+    CGFloat returnFloat = [segmentProduct.returnrate floatValue]*100;
+    NSNumber *longRateNumber = [NSNumber numberWithFloat:returnFloat];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.roundingMode = NSNumberFormatterRoundFloor;
+    formatter.minimumFractionDigits = 1;
+    NSString *yearRate = [NSString stringWithFormat:@"%@%%",[formatter stringFromNumber:longRateNumber]];
     _rateLabel.attributedText =  [self changeStringWithString:yearRate withFrontColor:RGBA(0, 108, 180, 1.0) WithBehindColor:RGBA(0, 108, 180, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(44)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(22)]];
     _dateLabel.text = [NSString stringWithFormat:@"%@天",segmentProduct.duration];
     
     if (segmentProduct.isSelect) {
         [_dateLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.mas_centerX);
-            make.bottom.equalTo(self.mas_bottom).with.offset(RESIZE_UI(-19));
+            make.bottom.equalTo(self.mas_bottom).with.offset(RESIZE_UI(-25));
         }];
     } else {
         [_dateLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.mas_centerX);
-            make.bottom.equalTo(self.mas_bottom).with.offset(RESIZE_UI(-10));
+            make.bottom.equalTo(self.mas_bottom).with.offset(RESIZE_UI(-17));
         }];
     }
     

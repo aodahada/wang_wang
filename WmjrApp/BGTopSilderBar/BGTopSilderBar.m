@@ -50,7 +50,7 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
  */
 -(void)initUnderline{
     CGSize titleSize = [global sizeWithText:[_items firstObject] font:BGFont(17) maxSize:CGSizeMake(screenW/itemNum, MAXFLOAT)];
-    UIView* uline = [[UIView alloc] initWithFrame:CGRectMake((screenW/itemNum - titleSize.width)*0.5-RESIZE_UI(8),RESIZE_UI(38),titleSize.width+RESIZE_UI(16),RESIZE_UI(2))];
+    UIView* uline = [[UIView alloc] initWithFrame:CGRectMake((screenW/itemNum - titleSize.width)*0.5-RESIZE_UI(8),RESIZE_UI(41),titleSize.width+RESIZE_UI(16),RESIZE_UI(3))];
     uline.backgroundColor = UnderlineColor;
     _underline  = uline;
     [_collectView addSubview:uline];

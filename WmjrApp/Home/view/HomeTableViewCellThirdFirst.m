@@ -43,7 +43,7 @@
         NSNumber *longRateNumberLast = [NSNumber numberWithFloat:longRateFloatLast];
         NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
         formatter.roundingMode = NSNumberFormatterRoundFloor;
-        formatter.maximumFractionDigits = 1;
+        formatter.minimumFractionDigits = 1;
         labelForRate.text = [NSString stringWithFormat:@"%@-%@%%",[formatter stringFromNumber:longRateNumberFirst],[formatter stringFromNumber:longRateNumberLast]];
         labelForRate.textAlignment = NSTextAlignmentCenter;
         if ([productModel.isdown isEqualToString:@"0"]) {

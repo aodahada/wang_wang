@@ -45,25 +45,8 @@
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
     
-    self.view.backgroundColor = RGBA(239, 239, 239, 1.0);
-    /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = RGBA(0, 108, 175, 1.0);
-    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
-    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = RGBA(0, 108, 175, 1.0);
-    
-    /*  去掉边线 */
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"piggy"] forBarMetrics:UIBarMetricsDefault];
-    
-    UIImage *image = [[UIImage imageNamed:@"arrow_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
-    
     UIImage *shareImage = [[UIImage imageNamed:@"icon_share"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:shareImage style:UIBarButtonItemStylePlain target:self action:@selector(clickSharedBtnAction)];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
     self.navigationItem.rightBarButtonItem = rightButton;
     
     NetManager *manager = [[NetManager alloc] init];
@@ -97,18 +80,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-}
-
-- (void)dealloc {
-    /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = VIEWBACKCOLOR;
-    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:TITLE_COLOR};
-    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = TITLE_COLOR;
-    /*  去掉边线 */
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navibar_color"] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)getHaveInvitatedList {

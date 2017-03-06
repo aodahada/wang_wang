@@ -206,7 +206,6 @@
     [manager postDataWithUrlActionStr:@"Finance/index" withParamDictionary:paramDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             _arrayForRecommendPro = [NSMutableArray array];
-//            NSDictionary *dic = obj;
             [ProductModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
                 return @{@"proIntro_id" : @"id"};
             }];
@@ -216,7 +215,9 @@
                          };
             }];
             NSArray *longProArr = obj[@"data"];
-            _longProduct = [ProductModel mj_objectWithKeyValues:longProArr[0]];
+            if (longProArr.count>0) {
+                _longProduct = [ProductModel mj_objectWithKeyValues:longProArr[0]];
+            }
             
             [self getShortProductList];
             
@@ -239,6 +240,7 @@
     NSDictionary *paramDic = @{@"is_recommend":@"1",@"is_newer":@"0"};
     [manager postDataWithUrlActionStr:@"Finance/index" withParamDictionary:paramDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
+//            NSDictionary *dic = obj;
             _arrayForRecommendPro = [NSMutableArray array];
             [ProductModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
                 return @{@"proIntro_id" : @"id"};
@@ -536,7 +538,7 @@
     if (section == 0) {
         return 0;
     } else if (section == 1) {
-        return 0;
+        return RESIZE_UI(12);
     } else {
         return RESIZE_UI(40);
     }
@@ -694,16 +696,20 @@
             return cell;
         }
     } else if (indexPath.section == 3) {
-        ProductModel *productModel = _arrayForRecommendPro[indexPath.row];
-        if ([productModel.is_long isEqualToString:@"1"]) {
-            HomeTableViewCellThirdFirst *cell = [[HomeTableViewCellThirdFirst alloc]initWithProductModel:productModel];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            return cell;
+        if (_arrayForRecommendPro.count != 0) {
+            ProductModel *productModel = _arrayForRecommendPro[indexPath.row];
+            if ([productModel.is_long isEqualToString:@"1"]) {
+                HomeTableViewCellThirdFirst *cell = [[HomeTableViewCellThirdFirst alloc]initWithProductModel:productModel];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
+            } else {
+                HomeTableViewCellThird *cell = [[HomeTableViewCellThird alloc]init];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                [cell configCellWithModel:productModel];
+                return cell;
+            }
         } else {
-            HomeTableViewCellThird *cell = [[HomeTableViewCellThird alloc]init];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [cell configCellWithModel:productModel];
-            return cell;
+            return nil;
         }
     } else {
         HomeTableViewCellForth *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeTableViewCellForth"];

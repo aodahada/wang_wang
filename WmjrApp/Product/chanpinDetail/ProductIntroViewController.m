@@ -26,6 +26,7 @@
 #import "ViewForShuoMing.h"
 #import "ViewForJianJie.h"
 #import "AddBankViewController.h"
+#import "LongProductSegment.h"
 
 @interface ProductIntroViewController ()  //ISSShareViewDelegate
 {
@@ -70,31 +71,11 @@
 /* 设置导航条 */
 - (void)setUpNavigationBar {
     
-    /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = RGBA(0, 108, 175, 1.0);
-//    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:VIEWBACKCOLOR};
-//    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = RGBA(0, 108, 175, 1.0);
-    
-    /*  去掉边线 */
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"piggy"] forBarMetrics:UIBarMetricsDefault];
-    
     /* 分享 */
     UIImage *imageHelp = [[UIImage imageNamed:@"icon_share"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *sharedBtn = [[UIBarButtonItem alloc] initWithImage:imageHelp style:UIBarButtonItemStylePlain target:self action:@selector(sharedBtnAction)];
     self.navigationItem.rightBarButtonItem = sharedBtn;
     
-    UIImage *image = [[UIImage imageNamed:@"arrow_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
-    
-}
-
-- (void)backBtnAction {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -107,19 +88,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.tabBarController.tabBar.hidden = NO;
-}
-
-- (void)dealloc {
-    /*  设置颜色 */
-    self.navigationController.navigationBar.barTintColor = VIEWBACKCOLOR;
-    /*  设置字体颜色 */
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:TITLE_COLOR};
-    /* 渲染颜色 */
-    self.navigationController.navigationBar.tintColor = TITLE_COLOR;
-    /*  去掉边线 */
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navibar_color"] forBarMetrics:UIBarMetricsDefault];
-    
 }
 
 - (void)viewDidLoad {
@@ -172,7 +140,7 @@
             
             if ([_productModel.isdown isEqualToString:@"0"]) {
                 _buyBtn.enabled = YES;
-                [_buyBtn setBackgroundColor:BASECOLOR];
+                [_buyBtn setBackgroundColor:RGBA(255, 86, 45, 1.0)];
                 [_buyBtn setTitle:@"立 即 购 买" forState:UIControlStateNormal];
                 [_buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             } else {
@@ -251,11 +219,13 @@
         make.left.equalTo(viewForTop.mas_left).with.offset(RESIZE_UI(45));
     }];
     
+    LongProductSegment *segment = _productModel.segment[0];
+    
     /* 收益  */
     _earnOfPercent = [[UILabel alloc] init];
     _earnOfPercent.textAlignment = NSTextAlignmentCenter;
     _earnOfPercent.textColor = VIEWBACKCOLOR;
-    _earnOfPercent.text = [NSString stringWithFormat:@"%.2f", [_productModel.returnrate floatValue] * 100];
+    _earnOfPercent.text = [NSString stringWithFormat:@"%.2f", [segment.returnrate floatValue] * 100];
     _earnOfPercent.font = [UIFont systemFontOfSize:RESIZE_UI(64)];
     [viewForTop addSubview:_earnOfPercent];
     [_earnOfPercent mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -305,7 +275,7 @@
     _financingNum = [[UILabel alloc] init];
     _financingNum.textAlignment = NSTextAlignmentCenter;
     _financingNum.textColor = TITLE_COLOR;
-    _financingNum.text = [NSString stringWithFormat:@"%.2f万", [_productModel.balance floatValue] / 10000];;
+    _financingNum.text = [NSString stringWithFormat:@"%.2f万", [_productModel.purchasable floatValue] / 10000];;
     _financingNum.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [viewForSum addSubview:_financingNum];
     [_financingNum mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -340,7 +310,7 @@
     _financingOfdays = [[UILabel alloc] init];
     _financingOfdays.textAlignment = NSTextAlignmentCenter;
     _financingOfdays.textColor = TITLE_COLOR;
-    _financingOfdays.text = [NSString stringWithFormat:@"%@天", _productModel.day];
+    _financingOfdays.text = [NSString stringWithFormat:@"%@天", segment.duration];
     _financingOfdays.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [viewForLimit addSubview:_financingOfdays];
     [_financingOfdays mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -545,12 +515,13 @@
     _buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_buyBtn setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
     [_buyBtn addTarget:self action:@selector(buyBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    _buyBtn.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
     [self.view addSubview:_buyBtn];
     [_buyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.mas_bottom);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.height.mas_offset(40);
+        make.height.mas_offset(RESIZE_UI(40));
     }];
 }
 
