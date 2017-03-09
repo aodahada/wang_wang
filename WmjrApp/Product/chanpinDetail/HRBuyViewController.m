@@ -66,18 +66,20 @@
     //    [hereNumFormatter setNumberStyle:NSNumberFormatterPercentStyle];
     //    hereNumFormatter.maximumFractionDigits = 2;
     //    NSString *str = [hereNumFormatter stringFromNumber:[NSNumber numberWithDouble:0.3358]];// 0.3358转33.58%
+    LongProductSegment *longProductSegment = _productModel.segment[0];
+    
     
     _labelForYearRate.text = [NSString stringWithFormat:@"预期年化率%.2f%%",returnRate*100];
     
-    _labelForGetLimit.text = [NSString stringWithFormat:@"持有期限%@天",_productModel.day];
+    _labelForGetLimit.text = [NSString stringWithFormat:@"持有期限%@天",longProductSegment.duration];
     
     //    _labelForRaiseSum.text = [NSString stringWithFormat:@"融资总额￥%@",@"100000000.00"];
-    
-    _labelForSetDate.text = [NSString stringWithFormat:@"结算日期%@",_productModel.expirydate];
+    NSString *endTime = [longProductSegment.segment_time substringToIndex:10];
+    _labelForSetDate.text = [NSString stringWithFormat:@"结算日期%@",endTime];
     
     _textFieldForBuy.placeholder = [NSString stringWithFormat:@"建议购买金额%@元以上",_productModel.lowpurchase];
     
-    NSString *newBalance = [[SingletonManager sharedManager] getQianWeiFenGeFuString:_productModel.balance];
+    NSString *newBalance = [[SingletonManager sharedManager] getQianWeiFenGeFuString:longProductSegment.can_buy];
     _labelForSurplus.text = [NSString stringWithFormat:@"产品可购余额%@元",newBalance];
     
 }

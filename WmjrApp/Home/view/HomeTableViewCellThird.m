@@ -144,7 +144,9 @@
         formatter.minimumFractionDigits = 1;
         NSString *earnOfPercentStr = [NSString stringWithFormat:@"%@％",[formatter stringFromNumber:longRateNumber]];
         self.earnOfPercent.text = earnOfPercentStr;
-        _labelForManageMoneyDay.text = longProduct.duration;
+        
+        NSString *endTimeUnit = [NSString stringWithFormat:@"%@天",longProduct.duration];
+        _labelForManageMoneyDay.attributedText =  [self changeStringWithString:endTimeUnit withFrontColor:RGBA(255, 86, 30, 1.0) WithBehindColor:RGBA(255, 86, 30, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(21)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(13)]];
         if (![model.isdown isEqualToString:@"0"]) {
             self.earnOfPercent.textColor = RGBA(237, 237, 237, 1.0);
             _labelForManageMoneyDay.textColor = RGBA(237, 237, 237, 1.0);
@@ -157,6 +159,15 @@
     }
     
     
+}
+
+- (NSAttributedString *)changeStringWithString:(NSString *)string withFrontColor:(UIColor *)frontColor WithBehindColor:(UIColor *)behindColor withFrontFont:(UIFont *)frontFont WithBehindFont:(UIFont *)behindFont {
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
+    [str addAttribute:NSForegroundColorAttributeName value:frontColor range:NSMakeRange(0, [string length])];
+    [str addAttribute:NSForegroundColorAttributeName value:behindColor range:NSMakeRange([string length] - 1, 1)];
+    [str addAttribute:NSFontAttributeName value:frontFont range:NSMakeRange(0, [string length])];
+    [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange([string length] - 1,1)];
+    return str;
 }
 
 - (void)awakeFromNib {

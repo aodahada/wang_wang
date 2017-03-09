@@ -105,7 +105,7 @@
         }];
         
         UILabel *durationLabel = [[UILabel alloc]init];
-        durationLabel.text = [NSString stringWithFormat:@"理财期限%@-%@个月",segFirst.duration,segLast.duration];
+        durationLabel.text = [NSString stringWithFormat:@"理财期限%@-%@天",segFirst.duration,segLast.duration];
         if ([productModel.isdown isEqualToString:@"0"]) {
             durationLabel.textColor = RGBA(0, 104, 178, 1.0);
         } else {
