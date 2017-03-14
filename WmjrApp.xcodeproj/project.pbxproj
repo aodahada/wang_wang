@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8025C340AF3BC04829866A39 /* libPods-WmjrApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D8A6E41F0CB7D2794DFD556 /* libPods-WmjrApp.a */; };
-		8B0166F31DD00D75000FA3DE /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 8B0166F21DD00D75000FA3DE /* main.js */; };
 		8B0167FE1DD00ED6000FA3DE /* 7day_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B0166F41DD00ED6000FA3DE /* 7day_btn.png */; };
 		8B0167FF1DD00ED6000FA3DE /* 7day_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B0166F51DD00ED6000FA3DE /* 7day_btn@2x.png */; };
 		8B0168001DD00ED6000FA3DE /* 7day_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B0166F61DD00ED6000FA3DE /* 7day_btn@3x.png */; };
@@ -494,7 +493,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8B0166F21DD00D75000FA3DE /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = js/main.js; sourceTree = "<group>"; };
 		8B0166F41DD00ED6000FA3DE /* 7day_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 7day_btn.png; path = images/7day_btn.png; sourceTree = "<group>"; };
 		8B0166F51DD00ED6000FA3DE /* 7day_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "7day_btn@2x.png"; path = "images/7day_btn@2x.png"; sourceTree = "<group>"; };
 		8B0166F61DD00ED6000FA3DE /* 7day_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "7day_btn@3x.png"; path = "images/7day_btn@3x.png"; sourceTree = "<group>"; };
@@ -1172,14 +1170,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8B0166F11DD00CDB000FA3DE /* js */ = {
-			isa = PBXGroup;
-			children = (
-				8B0166F21DD00D75000FA3DE /* main.js */,
-			);
-			name = js;
-			sourceTree = "<group>";
-		};
 		8B3401FB1D7E52D400320072 /* AliSdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -1281,7 +1271,6 @@
 			isa = PBXGroup;
 			children = (
 				8B878B181E2B1551007646C5 /* NewProduct */,
-				8B0166F11DD00CDB000FA3DE /* js */,
 				8B16EA4D1D9A4857002FAA42 /* WmjrApp.entitlements */,
 				8B3402131D7EAC0500320072 /* BGTopSilderBar */,
 				8B3401FB1D7E52D400320072 /* AliSdk */,
@@ -2558,7 +2547,6 @@
 				8B0168A91DD00ED7000FA3DE /* ljtqj_btn@3x.png in Resources */,
 				8B0168941DD00ED7000FA3DE /* icon_tuijianhdpi1@3x.png in Resources */,
 				8B01685E1DD00ED7000FA3DE /* GNXS.png in Resources */,
-				8B0166F31DD00D75000FA3DE /* main.js in Resources */,
 				BD76D34C1D5D623900192BCD /* Localizable.strings in Resources */,
 				8B0168741DD00ED7000FA3DE /* help_icon@2x.png in Resources */,
 				8B0168AE1DD00ED7000FA3DE /* NBCB.png in Resources */,

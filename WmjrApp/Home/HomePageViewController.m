@@ -475,6 +475,9 @@
     [_homeTableView registerClass:[HomeTableViewCellFirst class] forCellReuseIdentifier:@"HomeTableViewCellFirst"];
     [_homeTableView registerClass:[HomeTableViewCellSecond class] forCellReuseIdentifier:@"HomeTableViewCellSecond"];
     [_homeTableView registerClass:[HomeTableViewCellThird class] forCellReuseIdentifier:@"HomeTableViewCellThird"];
+    [_homeTableView registerClass:[HomeTableViewCellThirdFirst class] forCellReuseIdentifier:@"HomeTableViewCellThirdFirst"];
+    [_homeTableView registerNib:[UINib nibWithNibName:@"HomeTableViewCellForth" bundle:nil] forCellReuseIdentifier:@"forthcell"];
+
     
     [self.view addSubview:_homeTableView];
     [_homeTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -626,7 +629,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section==0) {
-        
         HomeTableViewCellFirst *cell = [[HomeTableViewCellFirst alloc]initWithDic:_personInvestModel];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.learnWangma = ^(){
@@ -709,10 +711,17 @@
                 return cell;
             }
         } else {
-            return nil;
+            static NSString *Cellindentifier = @"Cellindentifier";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Cellindentifier];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Cellindentifier];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            return cell;
         }
-    } else {
-        HomeTableViewCellForth *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeTableViewCellForth"];
+    }
+    else {
+        HomeTableViewCellForth *cell = [tableView dequeueReusableCellWithIdentifier:@"forthcell"];
         if (cell == nil) {
             NSBundle *bundle = [NSBundle mainBundle];
             NSArray *NibArray = [bundle loadNibNamed:@"HomeTableViewCellForth" owner:self options:nil];

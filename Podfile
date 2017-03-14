@@ -12,6 +12,5 @@ pod 'Masonry'
 pod 'DZNEmptyDataSet'
 pod 'XHLaunchAd'
 pod 'MBProgressHUD'
-pod 'JSPatchPlatform'
 end
 

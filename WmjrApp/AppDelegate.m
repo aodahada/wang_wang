@@ -29,8 +29,6 @@
 
 #import "MyselfManageFinanceController.h"
 #import "XHLaunchAd.h"
-//jspatch
-#import <JSPatchPlatform/JSPatch.h>
 
 //静态广告
 #define ImgUrlString1 @"http://d.hiphotos.baidu.com/image/pic/item/14ce36d3d539b60071473204e150352ac75cb7f3.jpg"
