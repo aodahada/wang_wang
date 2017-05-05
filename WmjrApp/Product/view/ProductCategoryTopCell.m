@@ -50,6 +50,22 @@
             make.right.equalTo(jianTouImageView.mas_left).with.offset(RESIZE_UI(-7));
         }];
         
+        UILabel  *labelForTag = [[UILabel alloc]init];
+        labelForTag.text = @"新人购";
+        labelForTag.font = [UIFont systemFontOfSize:RESIZE_UI(13)];
+        labelForTag.textColor = [UIColor whiteColor];
+        labelForTag.textAlignment = NSTextAlignmentCenter;
+        labelForTag.backgroundColor = RGBA(48, 100, 172, 1.0);
+        labelForTag.layer.masksToBounds = YES;
+        labelForTag.layer.cornerRadius = 12.0f;
+        [self addSubview:labelForTag];
+        [labelForTag mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.mas_centerY);
+            make.right.equalTo(labelForWatch.mas_left).with.offset(RESIZE_UI(-10));
+            make.height.mas_offset(RESIZE_UI(25));
+            make.width.mas_offset(RESIZE_UI(60));
+        }];
+        
         UILabel *lineLabel = [[UILabel alloc]init];
         lineLabel.backgroundColor = RGBA(239, 239, 239, 1.0);
         [self addSubview:lineLabel];
