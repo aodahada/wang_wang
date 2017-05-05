@@ -136,14 +136,15 @@
     _progressView.percent = [model.buyrate floatValue];
     if (_productModelHa.segment.count != 0) {
         LongProductSegment *longProduct = _productModelHa.segment[0];
-        //    NSLog(@"我的利率:%@",longProduct.returnrate);
-        CGFloat longRateFloat = [longProduct.returnrate floatValue] * 100;
-        NSNumber *longRateNumber = [NSNumber numberWithFloat:longRateFloat];
+//            NSLog(@"我的利率:%@",longProduct.returnrate);
+        double longRateFloat = [longProduct.returnrate doubleValue] * 100;
+        NSNumber *longRateNumber = [NSNumber numberWithDouble:longRateFloat];
         NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
         formatter.roundingMode = NSNumberFormatterRoundFloor;
         formatter.minimumFractionDigits = 1;
         NSString *earnOfPercentStr = [NSString stringWithFormat:@"%@％",[formatter stringFromNumber:longRateNumber]];
         self.earnOfPercent.text = earnOfPercentStr;
+//        self.earnOfPercent.text = [NSString stringWithFormat:@"%.1f%%",longRateFloat];
         
         NSString *endTimeUnit = [NSString stringWithFormat:@"%@天",longProduct.duration];
         _labelForManageMoneyDay.attributedText =  [self changeStringWithString:endTimeUnit withFrontColor:RGBA(255, 86, 30, 1.0) WithBehindColor:RGBA(255, 86, 30, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(21)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(13)]];

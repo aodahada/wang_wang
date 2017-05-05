@@ -37,10 +37,10 @@
         LongProductSegment *segLast = segmentArray[count-1];
         
         UILabel *labelForRate = [[UILabel alloc]init];
-        CGFloat longRateFloatFirst = [segFirst.returnrate floatValue] * 100;
-        CGFloat longRateFloatLast = [segLast.returnrate floatValue] * 100;
-        NSNumber *longRateNumberFirst = [NSNumber numberWithFloat:longRateFloatFirst];
-        NSNumber *longRateNumberLast = [NSNumber numberWithFloat:longRateFloatLast];
+        double longRateFloatFirst = [segFirst.returnrate doubleValue] * 100;
+        double longRateFloatLast = [segLast.returnrate doubleValue] * 100;
+        NSNumber *longRateNumberFirst = [NSNumber numberWithDouble:longRateFloatFirst];
+        NSNumber *longRateNumberLast = [NSNumber numberWithDouble:longRateFloatLast];
         NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
         formatter.roundingMode = NSNumberFormatterRoundFloor;
         formatter.minimumFractionDigits = 1;

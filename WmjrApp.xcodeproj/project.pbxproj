@@ -473,6 +473,7 @@
 		C5D3CE3A1C9808DF00C8B919 /* ShowBigImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D3CE391C9808DF00C8B919 /* ShowBigImageView.m */; };
 		C5DAE4921CDAEB8000184048 /* AgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DAE4901CDAEB8000184048 /* AgViewController.m */; };
 		C5DAE4931CDAEB8000184048 /* AgViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5DAE4911CDAEB8000184048 /* AgViewController.xib */; };
+		C5FA0E1D1EBC17EA004CA08C /* DatePickSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0E1C1EBC17EA004CA08C /* DatePickSelectView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1114,6 +1115,8 @@
 		C5DAE48F1CDAEB8000184048 /* AgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgViewController.h; sourceTree = "<group>"; };
 		C5DAE4901CDAEB8000184048 /* AgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgViewController.m; sourceTree = "<group>"; };
 		C5DAE4911CDAEB8000184048 /* AgViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AgViewController.xib; sourceTree = "<group>"; };
+		C5FA0E1B1EBC17EA004CA08C /* DatePickSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickSelectView.h; sourceTree = "<group>"; };
+		C5FA0E1C1EBC17EA004CA08C /* DatePickSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickSelectView.m; sourceTree = "<group>"; };
 		F93A46C18C984DE071EBDA12 /* Pods-WmjrApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WmjrApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-WmjrApp/Pods-WmjrApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1358,6 +1361,8 @@
 		C51B42231C784F18001679B5 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				C5FA0E1B1EBC17EA004CA08C /* DatePickSelectView.h */,
+				C5FA0E1C1EBC17EA004CA08C /* DatePickSelectView.m */,
 				C51B42791C7851F0001679B5 /* ProfileViewController.h */,
 				C51B427A1C7851F0001679B5 /* ProfileViewController.m */,
 				8B8018771DC8D6D600F7D65B /* PersonalMessageViewController.h */,
@@ -2795,7 +2800,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		3DF29F1F6C35CF4718629FB9 /* [CP] Copy Pods Resources */ = {
@@ -2937,6 +2942,7 @@
 				C51B423A1C784FD9001679B5 /* ImgHomeModel.m in Sources */,
 				BDE0EF7A1D61947900729C15 /* HRBuyViewController.m in Sources */,
 				C51B428A1C785247001679B5 /* MessageModel.m in Sources */,
+				C5FA0E1D1EBC17EA004CA08C /* DatePickSelectView.m in Sources */,
 				C51B43341C785593001679B5 /* FeedbackViewController.m in Sources */,
 				8B1D232F1E5D8EE00035FD5E /* ShortListViewController.m in Sources */,
 				C51B438D1C78566B001679B5 /* UIView+SDExtension.m in Sources */,

@@ -79,8 +79,8 @@
         
         _rateLabel = [[UILabel alloc]init];
         [_imageBackView addSubview:_rateLabel];
-        CGFloat returnFloat = [segmentPro.returnrate floatValue]*100;
-        NSNumber *longRateNumber = [NSNumber numberWithFloat:returnFloat];
+        double returnFloat = [segmentPro.returnrate doubleValue]*100;
+        NSNumber *longRateNumber = [NSNumber numberWithDouble:returnFloat];
         NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
         formatter.roundingMode = NSNumberFormatterRoundFloor;
         formatter.minimumFractionDigits = 1;
@@ -173,8 +173,8 @@
 //    CGFloat returnFloat = [segmentProduct.returnrate floatValue];
 //    NSString *yearRate = [NSString stringWithFormat:@"%.1f%%",returnFloat*100];
 //    _rateLabel.attributedText =  [self changeStringWithString:yearRate withFrontColor:RGBA(0, 108, 180, 1.0) WithBehindColor:RGBA(0, 108, 180, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(44)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(22)]];
-    CGFloat returnFloat = [segmentProduct.returnrate floatValue]*100;
-    NSNumber *longRateNumber = [NSNumber numberWithFloat:returnFloat];
+    double returnFloat = [segmentProduct.returnrate doubleValue]*100;
+    NSNumber *longRateNumber = [NSNumber numberWithDouble:returnFloat];
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     formatter.roundingMode = NSNumberFormatterRoundFloor;
     formatter.minimumFractionDigits = 1;

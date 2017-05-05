@@ -225,7 +225,7 @@
     _earnOfPercent = [[UILabel alloc] init];
     _earnOfPercent.textAlignment = NSTextAlignmentCenter;
     _earnOfPercent.textColor = VIEWBACKCOLOR;
-    _earnOfPercent.text = [NSString stringWithFormat:@"%.2f", [segment.returnrate floatValue] * 100];
+    _earnOfPercent.text = [NSString stringWithFormat:@"%.2f", [segment.returnrate doubleValue] * 100];
     _earnOfPercent.font = [UIFont systemFontOfSize:RESIZE_UI(64)];
     [viewForTop addSubview:_earnOfPercent];
     [_earnOfPercent mas_makeConstraints:^(MASConstraintMaker *make) {
