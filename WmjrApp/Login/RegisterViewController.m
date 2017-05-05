@@ -75,6 +75,16 @@
     [_password addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     [_verificatword addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     
+    [self getCopyBoardMethod];
+    
+}
+
+#pragma mark - 获取剪贴板内容
+- (void)getCopyBoardMethod {
+    UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
+    NSString *content = [pasteboard string];
+    _invitedNum.text = content;
+//    NSLog(@"我拷贝的内容:%@",content);
 }
 
 - (void)limitedNumberOfWords {
