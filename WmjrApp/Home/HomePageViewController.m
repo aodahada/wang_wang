@@ -577,8 +577,8 @@
         
         UILabel *labelForTitle = [[UILabel alloc]init];
         labelForTitle.text = @"";
-        labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
-        labelForTitle.textColor = RGBA(153, 153, 153, 1.0);
+        labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+        labelForTitle.textColor = [UIColor blackColor];
         [whiteView addSubview:labelForTitle];
         [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(whiteView.mas_centerY);
