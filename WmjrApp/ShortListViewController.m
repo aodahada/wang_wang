@@ -165,6 +165,7 @@
     ProductModel *productModel = _shortProductArray[indexPath.section];
     ProductIntroViewController *productInfoVC = [[ProductIntroViewController alloc]init];
     productInfoVC.getPro_id = productModel.proIntro_id;
+    productInfoVC.title = productModel.name;
     [self.navigationController pushViewController:productInfoVC animated:YES];
 }
 

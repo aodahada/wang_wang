@@ -577,7 +577,7 @@
         
         UILabel *labelForTitle = [[UILabel alloc]init];
         labelForTitle.text = @"";
-        labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+        labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
         labelForTitle.textColor = [UIColor blackColor];
         [whiteView addSubview:labelForTitle];
         [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -592,7 +592,7 @@
                 labelForTitle.text = @"旺马优选";
                 break;
             case 4:
-                labelForTitle.text = @"行业头条";
+                labelForTitle.text = @"旺马头条";
                 break;
             default:
                 break;
@@ -679,6 +679,7 @@
                 } else {
                     ProductIntroViewController *proIntroVC = [[ProductIntroViewController alloc] init];
                     proIntroVC.getPro_id = productId;
+                    proIntroVC.title = imgModel.title;
                     [self.navigationController pushViewController:proIntroVC animated:YES];
                     return;
                 }
@@ -749,6 +750,7 @@
         } else {
             ProductIntroViewController *proIntroVC = [[ProductIntroViewController alloc] init];
             proIntroVC.getPro_id = _longProduct.proIntro_id;
+            proIntroVC.title = _longProduct.name;
             [self.navigationController pushViewController:proIntroVC animated:YES];
         }
         
@@ -769,6 +771,7 @@
                 [alertView show];
             } else {
                 proIntroVC.getPro_id = productModel.proIntro_id;
+                proIntroVC.title = productModel.name;
                 [self.navigationController pushViewController:proIntroVC animated:YES];
             }
         }

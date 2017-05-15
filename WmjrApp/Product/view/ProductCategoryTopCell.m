@@ -31,7 +31,13 @@
         }];
         
         UILabel  *labelForTag = [[UILabel alloc]init];
-        labelForTag.text = @"新人购";
+        NSString *labeltitle = productCategoryModel.label;
+        if ([self isNullString:labeltitle]) {
+            labelForTag.hidden = YES;
+        } else {
+            labelForTag.hidden = NO;
+        }
+        labelForTag.text = labeltitle;
         labelForTag.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
         labelForTag.textColor = RGBA(48, 100, 172, 1.0);
         labelForTag.textAlignment = NSTextAlignmentCenter;
@@ -77,6 +83,20 @@
     }
     return self;
 }
+
+- (BOOL) isNullString:(NSString *)string {
+    if (string == nil || string == NULL) {
+        return YES;
+    }
+    if ([string isKindOfClass:[NSNull class]]) {
+        return YES;
+    }
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        return YES;
+    }
+    return NO;
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

@@ -197,6 +197,7 @@
     ProductModel *model = notifi.object;
     productIntroVC.getPro_id = model.proIntro_id;
     productIntroVC.type_id = model.type_id;
+    productIntroVC.title = model.name;
     [self.navigationController pushViewController:productIntroVC animated:YES];
 }
 

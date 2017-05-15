@@ -94,7 +94,7 @@
     [super viewDidLoad];
     
     _isCheck = YES;
-    self.title = @"产品介绍";
+//    self.title = @"产品介绍";
     self.view.backgroundColor = RGBA(240, 240, 240, 1.0);
     //数据请求
     [self getDataWithNetManager];
@@ -197,27 +197,27 @@
         make.height.mas_equalTo(RESIZE_UI(180));
     }];
     
-    _imageViewForTitle = [[UIImageView alloc]init];
-    _imageViewForTitle.image = [UIImage imageNamed:@"icon_touzi"];
-    [viewForTop addSubview:_imageViewForTitle];
-    [_imageViewForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(viewForTop.mas_top).with.offset(RESIZE_UI(12));
-        make.left.equalTo(viewForTop.mas_left).with.offset(RESIZE_UI(12));
-        make.height.mas_offset(RESIZE_UI(27));
-        make.width.mas_offset(RESIZE_UI(23));
-    }];
-    
-    /* 票据 */
-    _billLable = [[UILabel alloc] init];
-    _billLable.textAlignment = NSTextAlignmentLeft;
-    _billLable.textColor = VIEWBACKCOLOR;
-    _billLable.font = [UIFont systemFontOfSize:17];
-    _billLable.text = _productModel.name;
-    [viewForTop addSubview:_billLable];
-    [_billLable mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_imageViewForTitle.mas_centerY);
-        make.left.equalTo(viewForTop.mas_left).with.offset(RESIZE_UI(45));
-    }];
+//    _imageViewForTitle = [[UIImageView alloc]init];
+//    _imageViewForTitle.image = [UIImage imageNamed:@"icon_touzi"];
+//    [viewForTop addSubview:_imageViewForTitle];
+//    [_imageViewForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(viewForTop.mas_top).with.offset(RESIZE_UI(12));
+//        make.left.equalTo(viewForTop.mas_left).with.offset(RESIZE_UI(12));
+//        make.height.mas_offset(RESIZE_UI(27));
+//        make.width.mas_offset(RESIZE_UI(23));
+//    }];
+//    
+//    /* 票据 */
+//    _billLable = [[UILabel alloc] init];
+//    _billLable.textAlignment = NSTextAlignmentLeft;
+//    _billLable.textColor = VIEWBACKCOLOR;
+//    _billLable.font = [UIFont systemFontOfSize:17];
+//    _billLable.text = _productModel.name;
+//    [viewForTop addSubview:_billLable];
+//    [_billLable mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(_imageViewForTitle.mas_centerY);
+//        make.left.equalTo(viewForTop.mas_left).with.offset(RESIZE_UI(45));
+//    }];
     
     LongProductSegment *segment = _productModel.segment[0];
     
@@ -229,7 +229,7 @@
     _earnOfPercent.font = [UIFont systemFontOfSize:RESIZE_UI(64)];
     [viewForTop addSubview:_earnOfPercent];
     [_earnOfPercent mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_billLable.mas_bottom).with.offset(RESIZE_UI(30));
+        make.top.equalTo(self.view.mas_top).with.offset(RESIZE_UI(35+30));
         make.left.equalTo(viewForTop.mas_left);
         make.right.equalTo(viewForTop.mas_right);
         make.height.mas_offset(RESIZE_UI(64));

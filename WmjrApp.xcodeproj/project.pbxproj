@@ -473,6 +473,8 @@
 		C5D3CE3A1C9808DF00C8B919 /* ShowBigImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D3CE391C9808DF00C8B919 /* ShowBigImageView.m */; };
 		C5DAE4921CDAEB8000184048 /* AgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DAE4901CDAEB8000184048 /* AgViewController.m */; };
 		C5DAE4931CDAEB8000184048 /* AgViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5DAE4911CDAEB8000184048 /* AgViewController.xib */; };
+		C5F15EDD1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F15EDB1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.m */; };
+		C5F15EDE1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5F15EDC1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.xib */; };
 		C5FA0E1D1EBC17EA004CA08C /* DatePickSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0E1C1EBC17EA004CA08C /* DatePickSelectView.m */; };
 /* End PBXBuildFile section */
 
@@ -1115,6 +1117,9 @@
 		C5DAE48F1CDAEB8000184048 /* AgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgViewController.h; sourceTree = "<group>"; };
 		C5DAE4901CDAEB8000184048 /* AgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgViewController.m; sourceTree = "<group>"; };
 		C5DAE4911CDAEB8000184048 /* AgViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AgViewController.xib; sourceTree = "<group>"; };
+		C5F15EDA1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalCategoryCollectionViewCell.h; sourceTree = "<group>"; };
+		C5F15EDB1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalCategoryCollectionViewCell.m; sourceTree = "<group>"; };
+		C5F15EDC1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalCategoryCollectionViewCell.xib; sourceTree = "<group>"; };
 		C5FA0E1B1EBC17EA004CA08C /* DatePickSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickSelectView.h; sourceTree = "<group>"; };
 		C5FA0E1C1EBC17EA004CA08C /* DatePickSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickSelectView.m; sourceTree = "<group>"; };
 		F93A46C18C984DE071EBDA12 /* Pods-WmjrApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WmjrApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-WmjrApp/Pods-WmjrApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -1371,6 +1376,9 @@
 				8B592F451DF96553001AD4B4 /* ModifyPhoneView.m */,
 				8B6E2B921DC98D77004E5C74 /* PasswordManageViewController.h */,
 				8B6E2B931DC98D77004E5C74 /* PasswordManageViewController.m */,
+				C5F15EDA1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.h */,
+				C5F15EDB1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.m */,
+				C5F15EDC1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.xib */,
 				C51B42A41C785306001679B5 /* zijinliushui */,
 				C51B42A11C7852DC001679B5 /* mytuijian */,
 				C51B42A01C7852C8001679B5 /* mylicai */,
@@ -2509,6 +2517,7 @@
 				8B0168021DD00ED6000FA3DE /* ABC@2x.png in Resources */,
 				8B0168E51DD00ED7000FA3DE /* textframe@3x.png in Resources */,
 				8B0168A21DD00ED7000FA3DE /* jcgx_icon@2x.png in Resources */,
+				C5F15EDE1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.xib in Resources */,
 				8B0168A61DD00ED7000FA3DE /* jjwm_btn@3x.png in Resources */,
 				8B0168E71DD00ED7000FA3DE /* UPOP.png in Resources */,
 				BDD824F81D62E84400A31C21 /* RestPassWordViewController.xib in Resources */,
@@ -2867,6 +2876,7 @@
 				C51B42931C78528A001679B5 /* DrawalViewController.m in Sources */,
 				8B1D232C1E5D5AC90035FD5E /* ProductLongTopCell.m in Sources */,
 				C51B435B1C785600001679B5 /* Base64Secret.m in Sources */,
+				C5F15EDD1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.m in Sources */,
 				8B592F461DF96553001AD4B4 /* ModifyPhoneView.m in Sources */,
 				C51B42951C78528A001679B5 /* ResultShowView.m in Sources */,
 				8B34021B1D7EAC1000320072 /* BGTopSilderBar.m in Sources */,

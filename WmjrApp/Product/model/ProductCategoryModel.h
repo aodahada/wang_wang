@@ -14,5 +14,6 @@
 @property (nonatomic, copy) NSString *id;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) NSArray *product;
+@property (nonatomic, strong)NSString *label;
 
 @end

@@ -178,6 +178,7 @@
             ProductModel *productModel = productArray[indexPath.row-1];
             ProductIntroViewController *productInfoVC = [[ProductIntroViewController alloc]init];
             productInfoVC.getPro_id = productModel.proIntro_id;
+            productInfoVC.title = productModel.name;
             productInfoVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:productInfoVC animated:YES];
         }
