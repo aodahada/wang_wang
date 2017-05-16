@@ -538,12 +538,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    if (section == 0) {
+    if (section == 0||section == 1) {
         return 0;
-    } else if (section == 1) {
-        return RESIZE_UI(12);
     } else {
-        return RESIZE_UI(40);
+        return RESIZE_UI(54);
     }
     
 }
@@ -562,7 +560,7 @@
             make.bottom.equalTo(viewForHeader.mas_bottom).with.offset(-1);
             make.left.equalTo(viewForHeader.mas_left);
             make.right.equalTo(viewForHeader.mas_right);
-            make.height.mas_offset(RESIZE_UI(28));
+            make.height.mas_offset(RESIZE_UI(42));
         }];
         
         UILabel *labelForLine = [[UILabel alloc]init];
@@ -577,7 +575,7 @@
         
         UILabel *labelForTitle = [[UILabel alloc]init];
         labelForTitle.text = @"";
-        labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
         labelForTitle.textColor = [UIColor blackColor];
         [whiteView addSubview:labelForTitle];
         [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -621,7 +619,7 @@
     } else if (indexPath.section == 3) {
         return RESIZE_UI(109);
     } else {
-        return RESIZE_UI(90);
+        return RESIZE_UI(117);
     }
     
 }

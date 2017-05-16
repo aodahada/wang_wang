@@ -388,7 +388,7 @@
     }];
     
     UIView *mainView = [[UIView alloc]init];
-    mainScrollView.backgroundColor = RGBA(220, 223, 225, 1.0);
+    mainScrollView.backgroundColor = RGBA(231, 234, 236, 1.0);
     [mainScrollView addSubview:mainView];
     [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(mainScrollView);
@@ -412,7 +412,7 @@
     [self.classCollectionView registerNib:[UINib nibWithNibName:@"PersonalCategoryCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"PersonalCategoryCollectionViewCell"];
     self.classCollectionView.delegate = self;
     self.classCollectionView.dataSource = self;
-    self.classCollectionView.backgroundColor = RGBA(220, 223, 225, 1.0);
+    self.classCollectionView.backgroundColor = RGBA(231, 234, 236, 1.0);
     self.classCollectionView.showsVerticalScrollIndicator = NO;
     self.classCollectionView.showsHorizontalScrollIndicator = NO;
     [mainView addSubview:self.classCollectionView];

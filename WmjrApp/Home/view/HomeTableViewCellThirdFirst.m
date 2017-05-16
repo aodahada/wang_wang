@@ -51,7 +51,7 @@
         } else {
             labelForRate.textColor = RGBA(237, 237, 237, 1.0);
         }
-        labelForRate.font = [UIFont systemFontOfSize:RESIZE_UI(22)];
+        labelForRate.font = [UIFont systemFontOfSize:RESIZE_UI(26)];
         [leftView addSubview:labelForRate];
         [labelForRate mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(leftView.mas_top).with.offset(RESIZE_UI(31));

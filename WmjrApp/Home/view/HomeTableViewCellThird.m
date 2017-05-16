@@ -36,7 +36,7 @@
     self.earnOfPercent.textAlignment = NSTextAlignmentCenter;
 //        self.earnOfPercent.text = @"5.50%";
     self.earnOfPercent.textColor = RGBA(255, 88, 26, 1.0);
-    self.earnOfPercent.font = [UIFont systemFontOfSize:RESIZE_UI(22)];
+    self.earnOfPercent.font = [UIFont systemFontOfSize:RESIZE_UI(26)];
     [self.contentView addSubview:self.earnOfPercent];
     [self.earnOfPercent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(31));

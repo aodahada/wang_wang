@@ -521,7 +521,7 @@
         make.bottom.equalTo(self.view.mas_bottom);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.height.mas_offset(RESIZE_UI(40));
+        make.height.mas_offset(RESIZE_UI(49));
     }];
 }
 

@@ -17,8 +17,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    _labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+    _labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(18)];
     _labelForInfo.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    [_imageViewNews mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.width.mas_offset(RESIZE_UI(94));
+    }];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

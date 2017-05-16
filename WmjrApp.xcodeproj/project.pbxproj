@@ -3123,7 +3123,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9693c116-2912-4755-88bc-b5b6cc157736";
+				PROVISIONING_PROFILE = "ea0beb5e-1a54-48c4-b4e7-36624c52277d";
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Debug;
@@ -3155,7 +3155,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9693c116-2912-4755-88bc-b5b6cc157736";
+				PROVISIONING_PROFILE = "ea0beb5e-1a54-48c4-b4e7-36624c52277d";
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Release;
