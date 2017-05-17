@@ -46,6 +46,7 @@
     self.earnOfYearLable = [[UILabel alloc] init];
     self.earnOfYearLable.text = @"预期年化收益";
     self.earnOfYearLable.textAlignment = NSTextAlignmentLeft;
+//    self.earnOfYearLable.backgroundColor = [UIColor redColor];
     self.earnOfYearLable.textColor = RGBA(153, 153, 153, 1.0) ;
     self.earnOfYearLable.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [self.contentView addSubview:self.earnOfYearLable];
@@ -68,12 +69,13 @@
     
     UILabel *labelForManageDayTitle = [[UILabel alloc]init];
     labelForManageDayTitle.text = @"到期日";
+//    labelForManageDayTitle.backgroundColor = [UIColor redColor];
     labelForManageDayTitle.textColor = RGBA(153, 153, 153, 1.0);
     labelForManageDayTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [self addSubview:labelForManageDayTitle];
     [labelForManageDayTitle mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_labelForManageMoneyDay.mas_centerX);
-        make.centerY.equalTo(self.earnOfYearLable.mas_centerY);
+        make.bottom.equalTo(self.earnOfYearLable.mas_bottom);
     }];
     
     _progressView = [[ProgressView alloc]init];
@@ -92,12 +94,13 @@
     
     self.progressLable = [[UILabel alloc] initWithFrame:RESIZE_FRAME(CGRectMake(270, 60, 80, 12))];
     self.progressLable.text = @"购买进度";
+//    self.progressLable.backgroundColor = [UIColor redColor];
     self.progressLable.textAlignment = NSTextAlignmentCenter;
     self.progressLable.textColor = RGBA(153, 153, 153, 1.0);
     self.progressLable.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [self.contentView addSubview:self.progressLable];
     [self.progressLable mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.earnOfYearLable.mas_centerY);
+        make.bottom.equalTo(self.earnOfYearLable.mas_bottom);
         make.centerX.equalTo(_progressView.mas_centerX);
     }];
     

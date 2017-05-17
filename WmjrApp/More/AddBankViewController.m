@@ -9,6 +9,7 @@
 #import "AddBankViewController.h"
 #import "MyselfBankViewController.h"
 #import "ZHPickView.h"
+#import "BankDetailViewController.h"
 
 @interface AddBankViewController ()<UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 {
@@ -47,7 +48,7 @@
 
 - (void)setUpNavigationBar {
     self.title = @"添加银行卡";
-    _yanzhengBtn.backgroundColor = BASECOLOR;
+    _yanzhengBtn.backgroundColor = RGBA(246, 87, 27, 1.0);
     _yanzhengBtn.layer.cornerRadius = 10;
     _yanzhengBtn.layer.masksToBounds = YES;
 }
@@ -79,6 +80,16 @@
     if (_bankNumField.text.length > 19) {
         _bankNumField.text = [_bankNumField.text substringToIndex:19];
     }
+}
+
+/**
+ 查看银行额度详情
+
+ @param sender sender description
+ */
+- (IBAction)watchBankDetail:(id)sender {
+    BankDetailViewController *bankDetailVC = [[BankDetailViewController alloc]init];
+    [self.navigationController pushViewController:bankDetailVC animated:YES];
 }
 
 /*  获取验证码 */

@@ -64,10 +64,10 @@
         labelForRateTitle.textColor = RGBA(153, 153, 153, 1.0);
         labelForRateTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         [leftView addSubview:labelForRateTitle];
-        [labelForRateTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(labelForRate.mas_bottom).with.offset(RESIZE_UI(16));
-            make.centerX.equalTo(labelForRate.mas_centerX);
-        }];
+//        [labelForRateTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(labelForRate.mas_bottom).with.offset(RESIZE_UI(16));
+//            make.centerX.equalTo(labelForRate.mas_centerX);
+//        }];
         
         UIView *rightView = [[UIView alloc]init];
         rightView.backgroundColor = [UIColor whiteColor];
@@ -153,6 +153,12 @@
             make.height.mas_offset(1);
             make.left.equalTo(self.mas_left);
             make.right.equalTo(self.mas_right);
+        }];
+        
+        [labelForRateTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(labelForRate.mas_bottom).with.offset(RESIZE_UI(16));
+            make.centerY.equalTo(tipLabel.mas_centerY);
+            make.centerX.equalTo(labelForRate.mas_centerX);
         }];
         
     }

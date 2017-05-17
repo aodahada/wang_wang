@@ -469,6 +469,9 @@
 		C51B440A1C785A0A001679B5 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C51B44091C785A0A001679B5 /* JavaScriptCore.framework */; };
 		C51B440C1C785A17001679B5 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C51B440B1C785A17001679B5 /* ImageIO.framework */; };
 		C51B440E1C785A23001679B5 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C51B440D1C785A23001679B5 /* libsqlite3.tbd */; };
+		C5A992291ECBF7AF00C2F5AE /* BankDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A992281ECBF7AF00C2F5AE /* BankDetailViewController.m */; };
+		C5A9922C1ECC370100C2F5AE /* ListBankTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A9922B1ECC370100C2F5AE /* ListBankTableViewCell.m */; };
+		C5A9922F1ECC37B000C2F5AE /* BankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A9922E1ECC37B000C2F5AE /* BankModel.m */; };
 		C5BF8EB51C7B120F007DBE6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5BF8EB41C7B120F007DBE6F /* LaunchScreen.storyboard */; };
 		C5D3CE3A1C9808DF00C8B919 /* ShowBigImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D3CE391C9808DF00C8B919 /* ShowBigImageView.m */; };
 		C5DAE4921CDAEB8000184048 /* AgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DAE4901CDAEB8000184048 /* AgViewController.m */; };
@@ -1111,6 +1114,12 @@
 		C51B440B1C785A17001679B5 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		C51B440D1C785A23001679B5 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		C51B441B1C785A9B001679B5 /* wangmajinrong.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wangmajinrong.pch; sourceTree = "<group>"; };
+		C5A992271ECBF7AF00C2F5AE /* BankDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankDetailViewController.h; sourceTree = "<group>"; };
+		C5A992281ECBF7AF00C2F5AE /* BankDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankDetailViewController.m; sourceTree = "<group>"; };
+		C5A9922A1ECC370100C2F5AE /* ListBankTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListBankTableViewCell.h; sourceTree = "<group>"; };
+		C5A9922B1ECC370100C2F5AE /* ListBankTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListBankTableViewCell.m; sourceTree = "<group>"; };
+		C5A9922D1ECC37B000C2F5AE /* BankModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankModel.h; sourceTree = "<group>"; };
+		C5A9922E1ECC37B000C2F5AE /* BankModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankModel.m; sourceTree = "<group>"; };
 		C5BF8EB41C7B120F007DBE6F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C5D3CE381C9808DF00C8B919 /* ShowBigImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowBigImageView.h; sourceTree = "<group>"; };
 		C5D3CE391C9808DF00C8B919 /* ShowBigImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowBigImageView.m; sourceTree = "<group>"; };
@@ -1785,6 +1794,12 @@
 				C51B42FA1C7854B3001679B5 /* AddBankViewController.h */,
 				C51B42FB1C7854B3001679B5 /* AddBankViewController.m */,
 				C51B42FC1C7854B3001679B5 /* AddBankViewController.storyboard */,
+				C5A992271ECBF7AF00C2F5AE /* BankDetailViewController.h */,
+				C5A992281ECBF7AF00C2F5AE /* BankDetailViewController.m */,
+				C5A9922A1ECC370100C2F5AE /* ListBankTableViewCell.h */,
+				C5A9922B1ECC370100C2F5AE /* ListBankTableViewCell.m */,
+				C5A9922D1ECC37B000C2F5AE /* BankModel.h */,
+				C5A9922E1ECC37B000C2F5AE /* BankModel.m */,
 			);
 			name = addbank;
 			sourceTree = "<group>";
@@ -2851,6 +2866,7 @@
 				C51B42BA1C78533E001679B5 /* FRuleViewController.m in Sources */,
 				8B1611501D81384E00C9B954 /* HomeProductCatModel.m in Sources */,
 				8B4446861D990EC500EDCDBC /* MyReCommandModel.m in Sources */,
+				C5A9922C1ECC370100C2F5AE /* ListBankTableViewCell.m in Sources */,
 				8B84C4A91D7D434100232A70 /* ModifyGesPassView.m in Sources */,
 				8B5B46941DDAAB4C0054E3C2 /* HomeGuideView.m in Sources */,
 				C51B43631C785620001679B5 /* PopMenu.m in Sources */,
@@ -2891,6 +2907,7 @@
 				8B9D0C771E5AF86E00BD296E /* LongProductSegment.m in Sources */,
 				C51B432D1C785554001679B5 /* AboutUsViewController.m in Sources */,
 				C51B435A1C785600001679B5 /* NSData+Zlib.m in Sources */,
+				C5A992291ECBF7AF00C2F5AE /* BankDetailViewController.m in Sources */,
 				8B44C4521DC6DA4100DE0EA5 /* HomeTableViewCellForth.m in Sources */,
 				C51B43621C785620001679B5 /* UIView+Extension.m in Sources */,
 				8B3402211D7EAE2000320072 /* ProductClassViewController.m in Sources */,
@@ -2922,6 +2939,7 @@
 				8BBF1F231DAF0F79009682D9 /* InvestConfirmView.m in Sources */,
 				C51B41B51C784B02001679B5 /* AppDelegate.m in Sources */,
 				8B6E2B941DC98D77004E5C74 /* PasswordManageViewController.m in Sources */,
+				C5A9922F1ECC37B000C2F5AE /* BankModel.m in Sources */,
 				C51B438B1C78566B001679B5 /* SDCollectionViewCell.m in Sources */,
 				C51B43891C78566B001679B5 /* TADotView.m in Sources */,
 				C51B43301C78555A001679B5 /* JoinUsViewController.m in Sources */,

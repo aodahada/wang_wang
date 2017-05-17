@@ -101,13 +101,13 @@
         }
             break;
         case 3:{
-            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, RESIZE_UI(202+109+14), RESIZE_UI(102), RESIZE_UI(32)) cornerRadius:5] bezierPathByReversingPath]];
+            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, RESIZE_UI(202+12+109+14), RESIZE_UI(102), RESIZE_UI(32)) cornerRadius:5] bezierPathByReversingPath]];
             self.shapeLayer = [CAShapeLayer layer];
             self.shapeLayer.path = _path.CGPath;
             //shapeLayer.strokeColor = [UIColor blueColor].CGColor;
             [self.layer setMask:self.shapeLayer];
             
-            _imageViewForLearn.frame = CGRectMake(RESIZE_UI(60),RESIZE_UI(202+109+14)-RESIZE_UI(111), RESIZE_UI(229), RESIZE_UI(111));
+            _imageViewForLearn.frame = CGRectMake(RESIZE_UI(60),RESIZE_UI(202+12+109+14)-RESIZE_UI(111), RESIZE_UI(229), RESIZE_UI(111));
             _imageViewForLearn.image = [UIImage imageNamed:@"image_wmxrg"];
             
             [_buttonForLearn mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -116,13 +116,13 @@
         }
             break;
         case 4:{
-            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, RESIZE_UI(202+109+54+109+14), RESIZE_UI(82), RESIZE_UI(32)) cornerRadius:5] bezierPathByReversingPath]];
+            [_path appendPath:[[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, RESIZE_UI(202+12+109+54+109+14), RESIZE_UI(82), RESIZE_UI(32)) cornerRadius:5] bezierPathByReversingPath]];
             self.shapeLayer = [CAShapeLayer layer];
             self.shapeLayer.path = _path.CGPath;
             //shapeLayer.strokeColor = [UIColor blueColor].CGColor;
             [self.layer setMask:self.shapeLayer];
             
-            _imageViewForLearn.frame = CGRectMake(RESIZE_UI(19),RESIZE_UI(202+109+54+109+14)-RESIZE_UI(101), RESIZE_UI(121), RESIZE_UI(101));
+            _imageViewForLearn.frame = CGRectMake(RESIZE_UI(19),RESIZE_UI(202+12+109+54+109+14)-RESIZE_UI(101), RESIZE_UI(121), RESIZE_UI(101));
             _imageViewForLearn.image = [UIImage imageNamed:@"image_wmyx"];
             
             [_buttonForLearn mas_updateConstraints:^(MASConstraintMaker *make) {

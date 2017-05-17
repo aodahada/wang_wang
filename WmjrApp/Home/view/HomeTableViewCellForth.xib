@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="117"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="116.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="117"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5R-Kf-V5E">
@@ -64,9 +64,14 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="imageHeight" destination="8b2-gl-d8m" id="EA8-cD-was"/>
+                <outlet property="imageRightConstraint" destination="4oG-uR-PKE" id="ZIf-Eb-tIR"/>
                 <outlet property="imageViewNews" destination="LRU-6V-fJx" id="3QQ-SS-ccU"/>
+                <outlet property="imageWidth" destination="OKq-vK-b2U" id="cN8-af-s3O"/>
                 <outlet property="labelForInfo" destination="0zV-3t-cHj" id="Obc-DV-ERx"/>
                 <outlet property="labelForTitle" destination="v5R-Kf-V5E" id="GYb-ZC-p9t"/>
+                <outlet property="labelLeftConstraint" destination="aOR-OJ-RS8" id="G2W-3v-ciM"/>
+                <outlet property="labelRightConstraint" destination="9uv-pf-426" id="mJq-20-m4g"/>
             </connections>
             <point key="canvasLocation" x="34" y="139.5"/>
         </tableViewCell>

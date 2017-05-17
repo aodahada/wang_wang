@@ -538,8 +538,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    if (section == 0||section == 1) {
+    if (section == 0) {
         return 0;
+    } else if(section == 1) {
+        return RESIZE_UI(12);
     } else {
         return RESIZE_UI(54);
     }
@@ -726,7 +728,7 @@
             NSArray *NibArray = [bundle loadNibNamed:@"HomeTableViewCellForth" owner:self options:nil];
             cell = (HomeTableViewCellForth *)[NibArray objectAtIndex:0];
             [cell setBackgroundColor:[UIColor whiteColor]];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         NewsModel *newsModel = _arrayForNewsList[indexPath.row];
         [cell.imageViewNews sd_setImageWithURL:[NSURL URLWithString:newsModel.pic_url]];
