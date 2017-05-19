@@ -62,7 +62,7 @@
     CGFloat radius = viewSize.width / 2;
     CGContextBeginPath(contextRef);
     CGContextMoveToPoint(contextRef, center.x, center.y);
-    CGContextAddArc(contextRef, center.x, center.y, radius,0,2*M_PI, 0);
+    CGContextAddArc(contextRef, center.x, center.y, radius,0-M_PI_2,2*M_PI-M_PI_2, 0);
     CGContextSetFillColorWithColor(contextRef, color);
     CGContextFillPath(contextRef);
 }
@@ -110,7 +110,7 @@
     CGFloat radius = viewSize.width / 2;
     float endAngle = 2*M_PI*_percent;
     UIBezierPath *path=[UIBezierPath bezierPath];
-    [path addArcWithCenter:CGPointMake(center.x,center.y) radius:radius startAngle:0 endAngle:endAngle clockwise:YES];
+    [path addArcWithCenter:CGPointMake(center.x,center.y) radius:radius startAngle:-M_PI_2 endAngle:endAngle-M_PI_2 clockwise:YES];
     _arcLayer=[CAShapeLayer layer];
     _arcLayer.path=path.CGPath;//46,169,230
     _arcLayer.fillColor = [UIColor clearColor].CGColor;

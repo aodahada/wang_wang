@@ -104,6 +104,17 @@
             make.centerX.equalTo(rightView.mas_centerX);
         }];
         
+        UILabel *tipLabel = [[UILabel alloc]init];
+        tipLabel.text = productModel.risk;
+        tipLabel.textColor = RGBA(158, 158, 158, 1.0);
+        tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+        tipLabel.textAlignment = NSTextAlignmentCenter;
+        [rightView addSubview:tipLabel];
+        [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(sumInvestLabel.mas_bottom).with.offset(RESIZE_UI(8));
+            make.centerX.equalTo(rightView.mas_centerX);
+        }];
+        
         UILabel *durationLabel = [[UILabel alloc]init];
         durationLabel.text = [NSString stringWithFormat:@"理财期限%@-%@天",segFirst.duration,segLast.duration];
         if ([productModel.isdown isEqualToString:@"0"]) {
@@ -115,18 +126,7 @@
         durationLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         [rightView addSubview:durationLabel];
         [durationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(sumInvestLabel.mas_bottom).with.offset(RESIZE_UI(8));
-            make.centerX.equalTo(rightView.mas_centerX);
-        }];
-        
-        UILabel *tipLabel = [[UILabel alloc]init];
-        tipLabel.text = productModel.risk;
-        tipLabel.textColor = RGBA(158, 158, 158, 1.0);
-        tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
-        tipLabel.textAlignment = NSTextAlignmentCenter;
-        [rightView addSubview:tipLabel];
-        [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(durationLabel.mas_bottom).with.offset(RESIZE_UI(7));
+            make.top.equalTo(tipLabel.mas_bottom).with.offset(RESIZE_UI(7));
             make.centerX.equalTo(rightView.mas_centerX);
         }];
         
@@ -157,7 +157,7 @@
         
         [labelForRateTitle mas_makeConstraints:^(MASConstraintMaker *make) {
 //            make.top.equalTo(labelForRate.mas_bottom).with.offset(RESIZE_UI(16));
-            make.centerY.equalTo(tipLabel.mas_centerY);
+            make.centerY.equalTo(durationLabel.mas_centerY);
             make.centerX.equalTo(labelForRate.mas_centerX);
         }];
         

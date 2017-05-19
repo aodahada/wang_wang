@@ -76,9 +76,9 @@
 - (void)setModel:(FinancialModel *)model {
     _fundWealth.text = model.name;
     _holdNum.text = [NSString stringWithFormat:@"持有%@元", model.money];
-    _ydayEarn.text = [NSString stringWithFormat:@"日收＋%.2f元", [model.day_income floatValue]];
-    _weekOfYield.text = [NSString stringWithFormat:@"年化率%.2f%@", [model.returnrate floatValue] *100, @"%"];
-    _earnOfWan.text = [NSString stringWithFormat:@"万元收益%.2f元", [model.returnrate floatValue] * 10000 / 365];
+    _ydayEarn.text = [NSString stringWithFormat:@"日收＋%.2f元", [model.day_income doubleValue]];
+    _weekOfYield.text = [NSString stringWithFormat:@"年化率%.2f%@", [model.returnrate doubleValue] *100, @"%"];
+    _earnOfWan.text = [NSString stringWithFormat:@"万元收益%.2f元", [model.returnrate doubleValue] * 10000 / 365];
 }
 
 - (void)awakeFromNib {

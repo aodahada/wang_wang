@@ -27,6 +27,7 @@
 #import "BaseNavigationController.h"
 #import "MyselfTransactionController.h"
 #import "PersonalCategoryCollectionViewCell.h"
+#import "StoreClassCollectionReusableView.h"
 
 
 @interface ProfileViewController ()<UICollectionViewDelegate, UICollectionViewDataSource>
@@ -93,15 +94,29 @@
     }];
     
     /*  消息  */
+//    UIButton *buttonForMessCenter = [[UIButton alloc]init];
+//    [buttonForMessCenter setBackgroundImage:[UIImage imageNamed:@"notific"] forState:UIControlStateNormal];
+//    [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
+//    [headView addSubview:buttonForMessCenter];
+//    [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(33));
+//        make.right.equalTo(headView.mas_right).with.offset(RESIZE_UI(-15));
+//        make.height.mas_offset(RESIZE_UI(19));
+//        make.width.mas_offset(RESIZE_UI(15));
+//    }];
+    
     UIButton *buttonForMessCenter = [[UIButton alloc]init];
-    [buttonForMessCenter setBackgroundImage:[UIImage imageNamed:@"notific"] forState:UIControlStateNormal];
+    [buttonForMessCenter setTitle:@"消息中心" forState:UIControlStateNormal];
+//    [buttonForMessCenter setBackgroundColor:[UIColor redColor]];
+    [buttonForMessCenter setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    buttonForMessCenter.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:buttonForMessCenter];
     [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(33));
-        make.right.equalTo(headView.mas_right).with.offset(RESIZE_UI(-15));
-        make.height.mas_offset(RESIZE_UI(19));
-        make.width.mas_offset(RESIZE_UI(15));
+        make.centerY.equalTo(lableForMore.mas_centerY);
+        make.right.equalTo(headView.mas_right).with.offset(RESIZE_UI(-12));
+        make.width.mas_offset(RESIZE_UI(80));
+        make.height.mas_offset(RESIZE_UI(18));
     }];
     
     _imageViewForHead = [[UIImageView alloc]init];
@@ -144,7 +159,7 @@
         make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(187));
         make.left.equalTo(headView.mas_left);
         make.right.equalTo(headView.mas_right);
-        make.height.mas_offset(RESIZE_UI(49));
+        make.height.mas_offset(RESIZE_UI(76));
     }];
     
     //我要充值
@@ -163,19 +178,19 @@
     [viewForRecharge addSubview:viewBottomForRecharge];
     [viewBottomForRecharge mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(viewForRecharge.mas_centerX);
-        make.height.mas_offset(RESIZE_UI(27));
+        make.height.mas_offset(RESIZE_UI(76));
         make.width.mas_offset(RESIZE_UI(105));
         make.centerY.equalTo(viewForRecharge.mas_centerY);
     }];
     
-//    UIImageView *rechargeImageView = [[UIImageView alloc]init];
-//    rechargeImageView.image = [UIImage imageNamed:@"icon_chzh"];
-//    [viewBottomForRecharge addSubview:rechargeImageView];
-//    [rechargeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(viewBottomForRecharge.mas_left);
-//        make.centerY.equalTo(viewForRecharge.mas_centerY);
-//        make.height.width.mas_offset(RESIZE_UI(27));
-//    }];
+    UIImageView *rechargeImageView = [[UIImageView alloc]init];
+    rechargeImageView.image = [UIImage imageNamed:@"icon_wycz"];
+    [viewBottomForRecharge addSubview:rechargeImageView];
+    [rechargeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(viewBottomForRecharge.mas_top).with.offset(RESIZE_UI(9));
+        make.centerX.equalTo(viewForRecharge.mas_centerX);
+        make.height.width.mas_offset(RESIZE_UI(32));
+    }];
     
     UILabel *rechargeLabel = [[UILabel alloc]init];
     rechargeLabel.text = @"我要充值";
@@ -183,9 +198,8 @@
     rechargeLabel.textColor = RGBA(20, 20, 23, 1.0);
     [viewBottomForRecharge addSubview:rechargeLabel];
     [rechargeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(viewBottomForRecharge.mas_right);
+        make.top.equalTo(rechargeImageView.mas_bottom).with.offset(RESIZE_UI(2));
         make.centerX.equalTo(viewForRecharge.mas_centerX);
-        make.centerY.equalTo(viewForRecharge.mas_centerY);
         make.height.mas_offset(RESIZE_UI(24));
     }];
     
@@ -212,9 +226,18 @@
     [viewForWithdraw addSubview:viewBottomForWithdraw];
     [viewBottomForWithdraw mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(viewForWithdraw.mas_centerX);
-        make.height.mas_offset(RESIZE_UI(27));
+        make.height.mas_offset(RESIZE_UI(76));
         make.width.mas_offset(RESIZE_UI(105));
         make.centerY.equalTo(viewForWithdraw.mas_centerY);
+    }];
+    
+    UIImageView *withDrawImageView = [[UIImageView alloc]init];
+    withDrawImageView.image = [UIImage imageNamed:@"icon_wytx"];
+    [viewBottomForWithdraw addSubview:withDrawImageView];
+    [withDrawImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(viewBottomForWithdraw.mas_top).with.offset(RESIZE_UI(9));
+        make.centerX.equalTo(viewBottomForWithdraw.mas_centerX);
+        make.width.height.mas_offset(RESIZE_UI(32));
     }];
     
     UILabel *withDrawLabel = [[UILabel alloc]init];
@@ -223,20 +246,10 @@
     withDrawLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
     [viewBottomForWithdraw addSubview:withDrawLabel];
     [withDrawLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(viewBottomForWithdraw.mas_centerY);
+        make.top.equalTo(withDrawImageView.mas_bottom).with.offset(RESIZE_UI(2));
         make.centerX.equalTo(viewBottomForWithdraw.mas_centerX);
-//        make.right.equalTo(viewBottomForWithdraw.mas_right);
         make.height.mas_offset(RESIZE_UI(24));
     }];
-    
-//    UIImageView *withDrawImageView = [[UIImageView alloc]init];
-//    withDrawImageView.image = [UIImage imageNamed:@"icon_tixian"];
-//    [viewBottomForWithdraw addSubview:withDrawImageView];
-//    [withDrawImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(viewBottomForWithdraw.mas_left);
-//        make.centerY.equalTo(viewBottomForWithdraw.mas_centerY);
-//        make.width.height.mas_offset(RESIZE_UI(24));
-//    }];
     
     UIButton *withDrawButton = [[UIButton alloc]init];
     [withDrawButton addTarget:self action:@selector(jumpToWithDrawMethod) forControlEvents:UIControlEventTouchUpInside];
@@ -401,7 +414,7 @@
         make.top.equalTo(mainView.mas_top);
         make.left.equalTo(mainView.mas_left);
         make.right.equalTo(mainView.mas_right);
-        make.height.mas_equalTo(RESIZE_UI(187+49));
+        make.height.mas_equalTo(RESIZE_UI(187+76));
     }];
     
     UICollectionViewFlowLayout *flowLayout= [[UICollectionViewFlowLayout alloc]init];
@@ -410,18 +423,20 @@
     self.classCollectionView = collectionView;
     self.classCollectionView.scrollEnabled = NO;
     [self.classCollectionView registerNib:[UINib nibWithNibName:@"PersonalCategoryCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"PersonalCategoryCollectionViewCell"];
+    [self.classCollectionView registerClass:[StoreClassCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"StoreClassCollectionReusableView"];
     self.classCollectionView.delegate = self;
     self.classCollectionView.dataSource = self;
     self.classCollectionView.backgroundColor = RGBA(231, 234, 236, 1.0);
+//    self.classCollectionView.backgroundColor = [UIColor whiteColor];
     self.classCollectionView.showsVerticalScrollIndicator = NO;
     self.classCollectionView.showsHorizontalScrollIndicator = NO;
     [mainView addSubview:self.classCollectionView];
     [self.classCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(headView.mas_bottom).with.offset(RESIZE_UI(13));
+            make.top.equalTo(headView.mas_bottom).with.offset(0);
             make.left.equalTo(mainView.mas_left);
             make.right.equalTo(mainView.mas_right);
 //            make.bottom.equalTo(mainView.mas_bottom);
-            make.height.mas_equalTo(RESIZE_UI(80)*4);
+            make.height.mas_equalTo(RESIZE_UI(80)*4+RESIZE_UI(24));
     }];
     
     [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -657,56 +672,78 @@
 #pragma mark - collectionview - delegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     
-    return 1;
+    return 2;
     
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return 8;
+    if (section == 0) {
+        return 4;
+    } else {
+        return 4;
+    }
     
+}
+
+//Header 方法
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeMake(self.classCollectionView.frame.size.width, RESIZE_UI(12));
+}
+
+//Header布局
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if ([kind isEqual:UICollectionElementKindSectionHeader]) {
+        StoreClassCollectionReusableView *headerView = (StoreClassCollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"StoreClassCollectionReusableView" forIndexPath:indexPath];
+        return headerView;
+    }
+    return nil;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"PersonalCategoryCollectionViewCell";
     PersonalCategoryCollectionViewCell *cell = (PersonalCategoryCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    switch (indexPath.row) {
-        case 0:
-            cell.headImageView.image = [UIImage imageNamed:@"icon_licai"];
-            cell.titleLabel.text = @"我的理财";
-            break;
-        case 1:
-            cell.headImageView.image = [UIImage imageNamed:@"icon_haoyou"];
-            cell.titleLabel.text = @"好友推荐";
-            break;
-        case 2:
-            cell.headImageView.image = [UIImage imageNamed:@"icon_yhk"];
-            cell.titleLabel.text = @"我的银行卡";
-            break;
-        case 3:
-            cell.headImageView.image = [UIImage imageNamed:@"icon_jiaoyi"];
-            cell.titleLabel.text = @"交易记录";
-            break;
-        case 4:
-            cell.headImageView.image = [UIImage imageNamed:@"icon_jifen"];
-            cell.titleLabel.text = @"我的积分";
-            break;
-        case 5:
-            cell.headImageView.image = [UIImage imageNamed:@"icon_zhanghu"];
-            cell.titleLabel.text = @"账户管理";
-            break;
-        case 6:
-            cell.headImageView.image = [UIImage imageNamed:@"icon_anquan"];
-            cell.titleLabel.text = @"安全中心";
-            break;
-        case 7:
-            cell.headImageView.image = [UIImage imageNamed:@"icon_wdsq"];
-            cell.titleLabel.text = @"我的授权";
-            break;
-
-        default:
-            break;
+    if (indexPath.section == 0) {
+        switch (indexPath.row) {
+            case 0:
+                cell.headImageView.image = [UIImage imageNamed:@"icon_licai"];
+                cell.titleLabel.text = @"我的理财";
+                break;
+            case 1:
+                cell.headImageView.image = [UIImage imageNamed:@"icon_haoyou"];
+                cell.titleLabel.text = @"好友推荐";
+                break;
+            case 2:
+                cell.headImageView.image = [UIImage imageNamed:@"icon_yhk"];
+                cell.titleLabel.text = @"我的银行卡";
+                break;
+            case 3:
+                cell.headImageView.image = [UIImage imageNamed:@"icon_jiaoyi"];
+                cell.titleLabel.text = @"交易记录";
+                break;
+                
+            default:
+                break;
+        }
+    } else {
+        switch (indexPath.row) {
+            case 0:
+                cell.headImageView.image = [UIImage imageNamed:@"icon_zhanghu"];
+                cell.titleLabel.text = @"账户管理";
+                break;
+            case 1:
+                cell.headImageView.image = [UIImage imageNamed:@"icon_anquan"];
+                cell.titleLabel.text = @"安全中心";
+                break;
+            case 2:
+                cell.headImageView.image = [UIImage imageNamed:@"icon_wdsq"];
+                cell.titleLabel.text = @"我的授权";
+                break;
+                
+            default:
+                break;
+        }
     }
     return cell;
     
@@ -716,6 +753,11 @@
 //定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     float width = (collectionView.frame.size.width-1)/2;
+    if (indexPath.section == 1) {
+        if (indexPath.row>2) {
+            width = collectionView.frame.size.width/2;
+        }
+    }
     return CGSizeMake(width , RESIZE_UI(80));
 }
 
@@ -736,65 +778,66 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    switch (indexPath.row) {
-        case 0:{
-            /* 我的理财 */
-            MyselfManageFinanceController *myselfMFVC = [[MyselfManageFinanceController alloc] init];
-            [self.navigationController pushViewController:myselfMFVC animated:YES];
-            break;
-        }
-        case 1: {
-            /* 我的推荐 */
-            MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]initWithNibName:@"MyRecommendatViewController" bundle:nil];
-            [self.navigationController pushViewController:myrecommendVC animated:YES];
-            break;
-        }
-        case 2: {
-            /* 我的银行卡 */
-            if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
-                /*  我的银行卡 */
-                UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
-                AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
-                addBankVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:addBankVC animated:YES];
-            } else {
-                MyselfBankViewController *myselfBankVC = [[MyselfBankViewController alloc] init];
-                myselfBankVC.card_id = [SingletonManager sharedManager].userModel.card_id;
-                [self.navigationController pushViewController:myselfBankVC animated:YES];
+    if (indexPath.section == 0) {
+        switch (indexPath.row) {
+            case 0:{
+                /* 我的理财 */
+                MyselfManageFinanceController *myselfMFVC = [[MyselfManageFinanceController alloc] init];
+                [self.navigationController pushViewController:myselfMFVC animated:YES];
+                break;
             }
-            break;
+            case 1: {
+                /* 我的推荐 */
+                MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]initWithNibName:@"MyRecommendatViewController" bundle:nil];
+                [self.navigationController pushViewController:myrecommendVC animated:YES];
+                break;
+            }
+            case 2: {
+                /* 我的银行卡 */
+                if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
+                    /*  我的银行卡 */
+                    UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
+                    AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
+                    addBankVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:addBankVC animated:YES];
+                } else {
+                    MyselfBankViewController *myselfBankVC = [[MyselfBankViewController alloc] init];
+                    myselfBankVC.card_id = [SingletonManager sharedManager].userModel.card_id;
+                    [self.navigationController pushViewController:myselfBankVC animated:YES];
+                }
+                break;
+            }
+            case 3: {
+                /** 交易记录*/
+                MyselfTransactionController *mySelfTrans = [[MyselfTransactionController alloc]init];
+                [self.navigationController pushViewController:mySelfTrans animated:YES];
+                break;
+            }
+            default:
+                break;
         }
-        case 3: {
-            /** 交易记录*/
-            MyselfTransactionController *mySelfTrans = [[MyselfTransactionController alloc]init];
-            [self.navigationController pushViewController:mySelfTrans animated:YES];
-            break;
+    } else {
+        switch (indexPath.row) {
+            case 0:{
+                //账户管理
+                [self jumpToXinLangMethod:@"DEFAULT" andTitle:@"账户管理"];
+            }
+                break;
+            case 1:{
+                //安全中心
+                [self jumpToXinLangMethod:@"SAFETY_CENTER" andTitle:@"安全中心"];
+            }
+                break;
+            case 2:{
+                //我的授权
+                [self jumpToXinLangMethod:@"WITHHOLD" andTitle:@"我的授权"];
+            }
+                break;
+                
+            default:
+                break;
         }
-        case 4: {
-            /* 我的积分 */
-            [[[UIAlertView alloc]initWithTitle:@"该功能正在开发中" message:nil delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil]show];
-            break;
-        }
-        case 5:{
-            //账户管理
-            [self jumpToXinLangMethod:@"DEFAULT" andTitle:@"账户管理"];
-        }
-            break;
-        case 6:{
-            //安全中心
-            [self jumpToXinLangMethod:@"SAFETY_CENTER" andTitle:@"安全中心"];
-        }
-            break;
-        case 7:{
-            //我的授权
-            [self jumpToXinLangMethod:@"WITHHOLD" andTitle:@"我的授权"];
-        }
-            break;
-            
-        default:
-            break;
     }
-    
 }
 
 //返回这个UICollectionView是否可以被选择
