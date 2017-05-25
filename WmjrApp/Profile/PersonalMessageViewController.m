@@ -10,6 +10,7 @@
 #import "PopMenu.h"
 #import "AvatorChangeView.h"
 #import "ModifyPhoneView.h"
+#import "PhoneChangeView.h"
 
 @interface PersonalMessageViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ModifyPhoneViewDelegate>
 
@@ -23,6 +24,7 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapGes;
 
 @property (nonatomic, strong) ModifyPhoneView *modifyPhoneView;
+@property (nonatomic, strong) PhoneChangeView *phoneChangeView;
 
 @end
 
@@ -123,12 +125,79 @@
             }];
         }
             break;
+        case 3:
+        {
+            //修改手机号
+            _popMenu = [[PopMenu alloc] init];
+            _popMenu.dimBackground = YES;
+            _popMenu.coverNavigationBar = YES;
+            _phoneChangeView = [[PhoneChangeView alloc] initWithFrame:RESIZE_FRAME(CGRectMake(35, 200, 305, 170))];
+            _phoneChangeView.layer.cornerRadius = 5;
+            _phoneChangeView.layer.masksToBounds = YES;
+            [_popMenu addSubview:_phoneChangeView];
+            [_popMenu showInRect:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+            
+            [_phoneChangeView callBtnEventBlock:^(UIButton *sender, NSString *text) {
+                NSString *titStr = sender.titleLabel.text;
+                if ([titStr isEqualToString:@"取消"]) {
+                    [_popMenu dismissMenu];
+                    return ;
+                }
+                //修改手机号
+                if ([titStr isEqualToString:@"确定"]) {
+                    [_popMenu dismissMenu];
+                    NetManager *manager = [[NetManager alloc] init];
+                    [SVProgressHUD showWithStatus:@"修改中"];
+                    NSDictionary *paramDic3 = @{@"member_id":[SingletonManager sharedManager].uid, @"new_mobile":text};
+                    [manager postDataWithUrlActionStr:@"User/chanMob" withParamDictionary:paramDic3 withBlock:^(id obj) {
+                        if ([obj[@"result"] isEqualToString:@"1"]) {
+                            UserInfoModel *model3 = [[UserInfoModel alloc] init];
+                            [model3 setValuesForKeysWithDictionary:obj[@"data"]];
+                            UITableViewCell *cell = [_tableViewForPersonal cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+                            for (UIView *aView in cell.subviews) {
+                                if ([aView isKindOfClass:[UILabel class]]) {
+                                    [aView removeFromSuperview];
+                                }
+                            }
+                            NSMutableString *phoneNum = [model3.mobile mutableCopy];
+                            [phoneNum replaceCharactersInRange:NSMakeRange(3, 5) withString:@"*****"];
+                            [cell addSubview:[self detailLableTitle:phoneNum withRealNameId:@"0"]];
+                            [SVProgressHUD dismiss];
+                        } else {
+                            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+                            alertConfig.defaultTextOK = @"确定";
+                            [SVProgressHUD dismiss];
+                            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:[obj[@"data"] objectForKey:@"mes"]];
+                            [alertView show];
+                        }
+                    }];
+                    NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:1];
+                    [_tableViewForPersonal reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+                }
+            }];
+        }
+            break;
             
         default:
             break;
     }
     return cell;
     
+}
+
+/* 设置副标题 */
+- (UILabel *)detailLableTitle:(NSString *)deTitStr withRealNameId:(NSString *)isRealNameStr {
+    UILabel *deatailLab = [[UILabel alloc] initWithFrame:CGRectMake(RESIZE_UI(150), 12, 150, 21)];
+    if ([isRealNameStr isEqualToString:@"0"]) {
+        deatailLab.text = deTitStr;
+        deatailLab.textColor = AUXILY_COLOR;
+    } else {
+        deatailLab.text = deTitStr;
+        deatailLab.textColor = [UIColor blueColor];
+    }
+    deatailLab.font = [UIFont systemFontOfSize:14.0];
+    
+    return deatailLab;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
