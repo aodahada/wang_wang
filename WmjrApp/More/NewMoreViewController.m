@@ -17,6 +17,7 @@
 #import "AliGesturePasswordViewController.h"
 #import "HelpViewController.h"
 #import "FeedbackViewController.h"
+#import "BaseNavigationController.h"
 
 @interface NewMoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -308,7 +309,7 @@
                 LoginViewController *loginVC = [[LoginViewController alloc] init];
                 loginVC.loginIden = @"login";
                 loginVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-                UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
                 [self presentViewController:loginNa animated:YES completion:^{
                 }];
                 [self.navigationController popViewControllerAnimated:YES];

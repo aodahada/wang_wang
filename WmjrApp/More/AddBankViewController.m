@@ -10,6 +10,7 @@
 #import "MyselfBankViewController.h"
 #import "ZHPickView.h"
 #import "BankDetailViewController.h"
+#import "BankModel.h"
 
 @interface AddBankViewController ()<UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 {
@@ -36,6 +37,8 @@
 @property (nonatomic, copy) NSString *provinceStr;  /* 省份 */
 @property (nonatomic, copy) NSString *cityStr;  /* 城市 */
 @property (nonatomic, copy) NSString *ticket;  /* 绑卡时返回字段 */
+
+@property (nonatomic, strong)NSMutableArray *bankArray;
 
 @end
 
@@ -248,16 +251,42 @@
 
 - (IBAction)bankNameTap:(UITapGestureRecognizer *)sender {
     [_bankNumField resignFirstResponder];
-    ZHPickView *pickView = [[ZHPickView alloc] init];
-    [pickView setBankViewWithItem:@[@"ABC-农业银行", @"BOC-中国银行", @"BOS-上海银行", @"HXB-华夏银行", @"CCB-建设银行", @"ICBC-工商银行", @"CEB-光大银行", @"CIB-兴业银行", @"PSBC-中国邮储银行", @"CITIC-中信银行", @"CMB-招商银行", @"CMBC-民生银行", @"SZPAB-平安银行", @"GDB-广东发展银行",@"COMM-交通银行",@"SPDB-浦发银行",@"BCCB-北京银行",] title:@"银行名称"];
-    [pickView showPickView:self];
-    pickView.block = ^(NSString *selectedStr)
-    {
-        NSArray *bankArray = [selectedStr componentsSeparatedByString:@"-"];
-        _bank_codeStr = [bankArray firstObject];
-        _bankNameField.textColor = [UIColor blackColor];
-        _bankNameField.text = [bankArray lastObject];
-    };
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"加载中"];
+    _bankArray = [[NSMutableArray alloc]init];
+    NSMutableArray *stringArray = [[NSMutableArray alloc]init];
+    [manager postDataWithUrlActionStr:@"Bank/index" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            NSMutableArray *array = obj[@"data"];
+            for (int i=0; i<array.count; i++) {
+                NSDictionary *dic = array[i];
+                BankModel *bankModel = [BankModel mj_objectWithKeyValues:dic];
+                NSString *bankString = [NSString stringWithFormat:@"%@-%@",bankModel.code,bankModel.name];
+                [stringArray addObject:bankString];
+                [_bankArray addObject:bankModel];
+            }
+            ZHPickView *pickView = [[ZHPickView alloc] init];
+            [pickView setBankViewWithItem:(NSArray *)stringArray title:@"银行名称"];
+            [pickView showPickView:self];
+            pickView.block = ^(NSString *selectedStr)
+            {
+                NSArray *bankArray = [selectedStr componentsSeparatedByString:@"-"];
+                _bank_codeStr = [bankArray firstObject];
+                _bankNameField.textColor = [UIColor blackColor];
+                _bankNameField.text = [bankArray lastObject];
+            };
+            
+            [SVProgressHUD dismiss];
+        } else {
+            NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+            alertConfig.defaultTextOK = @"确定";
+            [SVProgressHUD dismiss];
+            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+            [alertView show];
+        }
+    }];
+
 
 }
 

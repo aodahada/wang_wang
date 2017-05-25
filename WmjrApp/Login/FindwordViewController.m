@@ -35,12 +35,12 @@
 - (void)configNagationBar {
     self.view.backgroundColor = VIEWBACKCOLOR;
     self.title = @"找回密码";
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:VIEWBACKCOLOR};
-    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_back"] style:UIBarButtonItemStyleDone target:self action:@selector(backBtnAction)];
-    self.navigationItem.leftBarButtonItem = backBtn;
-    self.navigationController.navigationBar.barTintColor = GERENCOLOR;
-    self.navigationController.navigationBar.tintColor = VIEWBACKCOLOR;
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:VIEWBACKCOLOR};
+//    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_back"] style:UIBarButtonItemStyleDone target:self action:@selector(backBtnAction)];
+//    self.navigationItem.leftBarButtonItem = backBtn;
+//    self.navigationController.navigationBar.barTintColor = GERENCOLOR;
+//    self.navigationController.navigationBar.tintColor = VIEWBACKCOLOR;
+//    self.navigationController.navigationBar.translucent = NO;
     
     [[MMPopupWindow sharedWindow] cacheWindow];
     
@@ -83,10 +83,6 @@
     if (_confimPassword.text.length > 18) {
         _confimPassword.text = [_confimPassword.text substringToIndex:18];
     }
-}
-
-- (void)backBtnAction {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad {

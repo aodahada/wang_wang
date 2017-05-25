@@ -42,6 +42,12 @@
 
 @property (nonatomic, weak) UICollectionView *classCollectionView;
 
+@property (nonatomic, strong)UIView *blackBottomView;//二维码黑背景
+@property (nonatomic, strong)UIView *whiteBottomView;//二维码白背景
+@property (nonatomic, strong)UIImageView *codeImageView;//二维码图片
+@property (nonatomic, strong)UIImageView *codeHeadImage;//二维码中间头像
+@property (nonatomic, strong)UITapGestureRecognizer *tapGes;//点击手势
+
 @end
 
 @implementation ProfileViewController
@@ -94,29 +100,41 @@
     }];
     
     /*  消息  */
-//    UIButton *buttonForMessCenter = [[UIButton alloc]init];
-//    [buttonForMessCenter setBackgroundImage:[UIImage imageNamed:@"notific"] forState:UIControlStateNormal];
-//    [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
-//    [headView addSubview:buttonForMessCenter];
-//    [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(33));
-//        make.right.equalTo(headView.mas_right).with.offset(RESIZE_UI(-15));
-//        make.height.mas_offset(RESIZE_UI(19));
-//        make.width.mas_offset(RESIZE_UI(15));
-//    }];
-    
     UIButton *buttonForMessCenter = [[UIButton alloc]init];
-    [buttonForMessCenter setTitle:@"消息中心" forState:UIControlStateNormal];
-//    [buttonForMessCenter setBackgroundColor:[UIColor redColor]];
-    [buttonForMessCenter setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    buttonForMessCenter.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+//    [buttonForMessCenter setBackgroundImage:[UIImage imageNamed:@"notific"] forState:UIControlStateNormal];
+    [buttonForMessCenter setImage:[UIImage imageNamed:@"notific"] forState:UIControlStateNormal];
     [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:buttonForMessCenter];
     [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(lableForMore.mas_centerY);
-        make.right.equalTo(headView.mas_right).with.offset(RESIZE_UI(-12));
-        make.width.mas_offset(RESIZE_UI(80));
-        make.height.mas_offset(RESIZE_UI(18));
+        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(33));
+        make.right.equalTo(headView.mas_right).with.offset(RESIZE_UI(-15));
+        make.height.mas_offset(RESIZE_UI(24));
+        make.width.mas_offset(RESIZE_UI(24));
+    }];
+    
+//    UIButton *buttonForMessCenter = [[UIButton alloc]init];
+//    [buttonForMessCenter setTitle:@"消息中心" forState:UIControlStateNormal];
+////    [buttonForMessCenter setBackgroundColor:[UIColor redColor]];
+//    [buttonForMessCenter setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    buttonForMessCenter.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+//    [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
+//    [headView addSubview:buttonForMessCenter];
+//    [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(lableForMore.mas_centerY);
+//        make.right.equalTo(headView.mas_right).with.offset(RESIZE_UI(-12));
+//        make.width.mas_offset(RESIZE_UI(80));
+//        make.height.mas_offset(RESIZE_UI(18));
+//    }];
+    
+    //二维码
+    UIButton *codeButton = [[UIButton alloc]init];
+    [codeButton setBackgroundImage:[UIImage imageNamed:@"icon_erweima"] forState:UIControlStateNormal];
+    [codeButton addTarget:self action:@selector(watchCodeMethod) forControlEvents:UIControlEventTouchUpInside];
+    [headView addSubview:codeButton];
+    [codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(buttonForMessCenter.mas_centerY);
+        make.width.height.mas_offset(RESIZE_UI(24));
+        make.right.equalTo(buttonForMessCenter.mas_left).with.offset(RESIZE_UI(-15));
     }];
     
     _imageViewForHead = [[UIImageView alloc]init];
@@ -260,6 +278,162 @@
     
     return headView;
 }
+
+#pragma mark - 查看二维码
+- (void)watchCodeMethod {
+    
+    //生成黑色背景
+    _blackBottomView = [[UIView alloc]init];
+    _blackBottomView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+    UIWindow *windows =[[UIApplication sharedApplication].delegate window];
+    [windows addSubview:_blackBottomView];
+    [_blackBottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(windows);
+    }];
+    
+    _tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeAll)];
+    [_blackBottomView addGestureRecognizer:_tapGes];
+    
+    //生成白色背景
+    _whiteBottomView = [[UIView alloc]init];
+    _whiteBottomView.backgroundColor = [UIColor whiteColor];
+    _whiteBottomView.layer.masksToBounds = YES;
+    _whiteBottomView.layer.cornerRadius = 10.0f;
+    [_blackBottomView addSubview:_whiteBottomView];
+    [_whiteBottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_blackBottomView.mas_centerX);
+        make.centerY.equalTo(_blackBottomView.mas_centerY);
+        make.height.mas_offset(RESIZE_UI(473));
+        make.width.mas_offset(RESIZE_UI(316));
+    }];
+
+    //生成二维码
+    // 1.创建过滤器
+    CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
+    
+    // 2.恢复默认
+    [filter setDefaults];
+    
+    // 3.给过滤器添加数据(正则表达式/账号和密码)
+    NSString *dataString = [NSString stringWithFormat:@"http://m.wmjr888.com/?invitationcode=%@#login-register",[SingletonManager sharedManager].userModel.invitationcode];
+    NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+    [filter setValue:data forKeyPath:@"inputMessage"];
+    
+    // 4.获取输出的二维码
+    CIImage *outputImage = [filter outputImage];
+    
+    // 5.显示二维码
+    self.codeImageView = [[UIImageView alloc]init];
+    [_whiteBottomView addSubview:self.codeImageView];
+    self.codeImageView.image = [self createNonInterpolatedUIImageFormCIImage:outputImage withSize:200];
+    [self.codeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_whiteBottomView.mas_centerX);
+        make.centerY.equalTo(_whiteBottomView.mas_centerY);
+        make.width.height.mas_offset(RESIZE_UI(242));
+    }];
+    
+    _codeHeadImage = [[UIImageView alloc]init];
+    [_codeHeadImage sd_setImageWithURL:[NSURL URLWithString:[SingletonManager sharedManager].userModel.photourl]];
+    [_whiteBottomView addSubview:_codeHeadImage];
+    [_codeHeadImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_whiteBottomView.mas_centerY);
+        make.centerX.equalTo(_whiteBottomView.mas_centerX);
+        make.height.width.mas_offset(RESIZE_UI(44));
+    }];
+    
+    UIImageView *topHeadImage = [[UIImageView alloc]init];
+    [topHeadImage sd_setImageWithURL:[NSURL URLWithString:[SingletonManager sharedManager].userModel.photourl]];
+    [_whiteBottomView addSubview:topHeadImage];
+    [topHeadImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.codeImageView.mas_top).with.offset(-RESIZE_UI(27));
+        make.left.equalTo(self.codeImageView.mas_left);
+        make.height.width.mas_offset(RESIZE_UI(44));
+    }];
+    
+    UILabel *nameLabel = [[UILabel alloc]init];
+    nameLabel.text = [SingletonManager sharedManager].userModel.name;
+    nameLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+    [_whiteBottomView addSubview:nameLabel];
+    [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topHeadImage.mas_top);
+        make.left.equalTo(topHeadImage.mas_right).with.offset(RESIZE_UI(16));
+    }];
+    
+    UILabel *inviteCodeLabel = [[UILabel alloc]init];
+    inviteCodeLabel.text = [NSString stringWithFormat:@"推荐号 :%@",[SingletonManager sharedManager].userModel.invitationcode];
+    inviteCodeLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    inviteCodeLabel.textColor = RGBA(153, 153, 153, 1.0);
+    [_whiteBottomView addSubview:inviteCodeLabel];
+    [inviteCodeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(nameLabel.mas_left);
+        make.bottom.equalTo(topHeadImage.mas_bottom);
+    }];
+    
+    UILabel *tip1Label = [[UILabel alloc]init];
+    tip1Label.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+    tip1Label.text = @"扫描二维码";
+    [_whiteBottomView addSubview:tip1Label];
+    [tip1Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_whiteBottomView.mas_centerX);
+        make.top.equalTo(_codeImageView.mas_bottom).with.offset(RESIZE_UI(23));
+    }];
+    
+    UILabel *tip2Label = [[UILabel alloc]init];
+    tip2Label.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+    tip2Label.text = @"下载旺马财富APP";
+    [_whiteBottomView addSubview:tip2Label];
+    [tip2Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_whiteBottomView.mas_centerX);
+        make.top.equalTo(tip1Label.mas_bottom).with.offset(2);
+    }];
+    
+}
+
+#pragma mark - 关闭全部
+- (void)closeAll {
+    
+    [_codeHeadImage removeFromSuperview];
+    _codeHeadImage = nil;
+    [_codeImageView removeFromSuperview];
+    _codeImageView = nil;
+    [_whiteBottomView removeFromSuperview];
+    _whiteBottomView = nil;
+    [_blackBottomView removeGestureRecognizer:_tapGes];
+    _tapGes = nil;
+    [_blackBottomView removeFromSuperview];
+    _blackBottomView = nil;
+    
+}
+
+/**
+ *  根据CIImage生成指定大小的UIImage
+ *
+ *  @param image CIImage
+ *  @param size  图片宽度
+ */
+- (UIImage *)createNonInterpolatedUIImageFormCIImage:(CIImage *)image withSize:(CGFloat) size
+{
+    CGRect extent = CGRectIntegral(image.extent);
+    CGFloat scale = MIN(size/CGRectGetWidth(extent), size/CGRectGetHeight(extent));
+    
+    // 1.创建bitmap;
+    size_t width = CGRectGetWidth(extent) * scale;
+    size_t height = CGRectGetHeight(extent) * scale;
+    CGColorSpaceRef cs = CGColorSpaceCreateDeviceGray();
+    CGContextRef bitmapRef = CGBitmapContextCreate(nil, width, height, 8, 0, cs, (CGBitmapInfo)kCGImageAlphaNone);
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CGImageRef bitmapImage = [context createCGImage:image fromRect:extent];
+    CGContextSetInterpolationQuality(bitmapRef, kCGInterpolationNone);
+    CGContextScaleCTM(bitmapRef, scale, scale);
+    CGContextDrawImage(bitmapRef, extent, bitmapImage);
+    
+    // 2.保存bitmap到图片
+    CGImageRef scaledImage = CGBitmapContextCreateImage(bitmapRef);
+    CGContextRelease(bitmapRef);
+    CGImageRelease(bitmapImage);
+    return [UIImage imageWithCGImage:scaledImage];
+}
+
 
 #pragma mark - 调到更多界面
 - (void)jumpToMoreMethod {

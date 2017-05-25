@@ -47,12 +47,12 @@
 - (void)configNagationBar {
     self.view.backgroundColor = VIEWBACKCOLOR;
     self.title = @"手机快速注册";
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:VIEWBACKCOLOR};
-    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_back"] style:UIBarButtonItemStyleDone target:self action:@selector(backBtnAction)];
-    self.navigationItem.leftBarButtonItem = backBtn;
-    self.navigationController.navigationBar.barTintColor = GERENCOLOR;
-    self.navigationController.navigationBar.tintColor = VIEWBACKCOLOR;
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:VIEWBACKCOLOR};
+//    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_back"] style:UIBarButtonItemStyleDone target:self action:@selector(backBtnAction)];
+//    self.navigationItem.leftBarButtonItem = backBtn;
+//    self.navigationController.navigationBar.barTintColor = GERENCOLOR;
+//    self.navigationController.navigationBar.tintColor = VIEWBACKCOLOR;
+//    self.navigationController.navigationBar.translucent = NO;
     [_agreeBtn setTitleColor:BASECOLOR forState:UIControlStateNormal];
     
     if ([UIScreen mainScreen].bounds.size.height > 470 && [UIScreen mainScreen].bounds.size.height < 490) {
@@ -82,8 +82,13 @@
 #pragma mark - 获取剪贴板内容
 - (void)getCopyBoardMethod {
     UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
-    NSString *content = [pasteboard string];
-    _invitedNum.text = content;
+    NSArray *contentArray = [pasteboard strings];
+    for (int i=0; i<contentArray.count; i++) {
+        NSString *stringContent = contentArray[i];
+        if (stringContent.length == 6) {
+            _invitedNum.text = stringContent;
+        }
+    }
 //    NSLog(@"我拷贝的内容:%@",content);
 }
 
@@ -100,10 +105,6 @@
     if (_password.text.length > 18) {
         _password.text = [_password.text substringToIndex:18];
     }
-}
-
-- (void)backBtnAction {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad {

@@ -278,7 +278,7 @@
         uid = [self convertNullString:uid];
         if ([uid isEqualToString:@""]) {
             LoginViewController *loginVC = [[LoginViewController alloc] init];
-            UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
+             BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
             [((UINavigationController *)tabBarController.selectedViewController) presentViewController:loginNa animated:YES completion:nil];
             return NO;
         } else {
@@ -329,7 +329,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 - (void)application:(UIApplication *)application
 didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
-    NSString *haha = [NSString stringWithFormat:@"%@",error];
 //    [[[UIAlertView alloc] initWithTitle:@"推送连接错误" message:haha delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil] show];
 }
 
@@ -383,7 +382,7 @@ fetchCompletionHandler:
 
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
-    [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
+//    [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
 }
 
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max

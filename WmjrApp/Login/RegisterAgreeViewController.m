@@ -21,20 +21,16 @@
     
     self.title = @"用户协议";
     self.tabBarController.tabBar.hidden = YES;
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:VIEWBACKCOLOR};
-    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_back"] style:UIBarButtonItemStyleDone target:self action:@selector(backBtnAction)];
-    self.navigationItem.leftBarButtonItem = backBtn;
-    self.navigationController.navigationBar.barTintColor = GERENCOLOR;
-    self.navigationController.navigationBar.tintColor = VIEWBACKCOLOR;
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:VIEWBACKCOLOR};
+//    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_back"] style:UIBarButtonItemStyleDone target:self action:@selector(backBtnAction)];
+//    self.navigationItem.leftBarButtonItem = backBtn;
+//    self.navigationController.navigationBar.barTintColor = GERENCOLOR;
+//    self.navigationController.navigationBar.tintColor = VIEWBACKCOLOR;
+//    self.navigationController.navigationBar.translucent = NO;
     
     NSURL *url = [[NSURL alloc]initWithString:@"http://wmjr888.com/home/page/protocol"];
     [_agreeWeb loadRequest:[NSURLRequest requestWithURL:url]];
     
-}
-
-- (void)backBtnAction {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
