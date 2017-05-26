@@ -82,12 +82,16 @@
 #pragma mark - 获取剪贴板内容
 - (void)getCopyBoardMethod {
     UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
-    NSArray *contentArray = [pasteboard strings];
-    for (int i=0; i<contentArray.count; i++) {
-        NSString *stringContent = contentArray[i];
-        if (stringContent.length == 6) {
-            _invitedNum.text = stringContent;
-        }
+//    NSArray *contentArray = [pasteboard strings];
+//    for (int i=0; i<contentArray.count; i++) {
+//        NSString *stringContent = contentArray[i];
+//        if (stringContent.length == 6) {
+//            _invitedNum.text = stringContent;
+//        }
+//    }
+    NSString *content = [pasteboard string];
+    if (content.length == 6) {
+        _invitedNum.text = content;
     }
 //    NSLog(@"我拷贝的内容:%@",content);
 }
