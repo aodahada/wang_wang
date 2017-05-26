@@ -97,7 +97,7 @@
             break;
         case 5:
         {
-            cell.textLabel.text = @"结算日期";
+            cell.textLabel.text = @"截止购买日期";
             LongProductSegment *segment = _productModel.segment[0];
             NSArray *timeArray = [segment.segment_time componentsSeparatedByString:@" "];
             cell.detailTextLabel.text = timeArray[0];

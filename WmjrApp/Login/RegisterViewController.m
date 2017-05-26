@@ -83,7 +83,7 @@
 - (void)getCopyBoardMethod {
     UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
 //    NSArray *contentArray = [pasteboard strings];
-//    for (int i=0; i<contentArray.count; i++) {
+//    for (int i=0; i<contentArray.count;  i++) {
 //        NSString *stringContent = contentArray[i];
 //        if (stringContent.length == 6) {
 //            _invitedNum.text = stringContent;
