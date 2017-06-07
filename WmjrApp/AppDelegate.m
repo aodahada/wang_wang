@@ -14,6 +14,7 @@
 #import "ProfileViewController.h"
 #import "UserInfoModel.h"
 #import "LoginViewController.h"
+#import "RegisterViewController.h"
 
 #import <ShareSDKConnector/ShareSDKConnector.h>
 #import <TencentOpenAPI/QQApiInterface.h>
@@ -270,6 +271,23 @@
     
     self.window.rootViewController = self.tabbarC;
     
+    [self getCopyBoardMethod];
+    
+}
+
+#pragma mark - 获取邀请码
+- (void)getCopyBoardMethod {
+    NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString *userId = [self convertNullString:[SingletonManager sharedManager].uid];
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]) {
+        UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
+        NSString *content = [pasteboard string];
+        if (content.length == 6) {
+            RegisterViewController *registerVC = [[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
+            BaseNavigationController *registerNav = [[BaseNavigationController alloc]initWithRootViewController:registerVC];
+            [self.window.rootViewController presentViewController:registerNav animated:YES completion:nil];
+        }
+    }
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {

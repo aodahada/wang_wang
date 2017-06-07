@@ -13,6 +13,7 @@
 #import "RegisterAgreeViewController.h"
 #import "AliGesturePasswordViewController.h"
 //#import "KeychainData.h"
+#import "JPUSHService.h"
 
 @interface RegisterViewController ()<UITextFieldDelegate, UIScrollViewDelegate>
 {
@@ -82,18 +83,10 @@
 #pragma mark - 获取剪贴板内容
 - (void)getCopyBoardMethod {
     UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
-//    NSArray *contentArray = [pasteboard strings];
-//    for (int i=0; i<contentArray.count;  i++) {
-//        NSString *stringContent = contentArray[i];
-//        if (stringContent.length == 6) {
-//            _invitedNum.text = stringContent;
-//        }
-//    }
     NSString *content = [pasteboard string];
     if (content.length == 6) {
         _invitedNum.text = content;
     }
-//    NSLog(@"我拷贝的内容:%@",content);
 }
 
 - (void)limitedNumberOfWords {
@@ -117,12 +110,54 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(backToLogin) name:@"backToRoot" object:nil];
     [self configNagationBar];
     [[MMPopupWindow sharedWindow] cacheWindow];
+    
+    UIImage *image;
+    UIBarButtonItem *backButton;
+    NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString *userId = [self convertNullString:[SingletonManager sharedManager].uid];
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]){
+        image = [[UIImage imageNamed:@"icon_backwhite"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(closeClick)];
+    } else {
+        image = [[UIImage imageNamed:@"arrow_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backClick)];
+    }
+    self.navigationItem.leftBarButtonItem = backButton;
+}
+
+- (void)closeClick {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"addHomeGudie" object:nil];
+    }];
+}
+
+- (void)backClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - 判断字符串是否为空
+- (NSString*)convertNullString:(NSString*)oldString{
+    if (oldString!=nil && (NSNull *)oldString != [NSNull null]) {
+        if ([oldString length]!=0) {
+            if ([oldString isEqualToString:@"(null)"]) {
+                return @"";
+            }
+            return  oldString;
+        }else{
+            return @"";
+        }
+    }
+    else{
+        return @"";
+    }
 }
 
 #pragma mark - 完成手势密码部分
 - (void)backToLogin {
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
     
 }
 
@@ -207,6 +242,8 @@
 //        }];
 //    }
     
+    
+//    [self loginMethod];
     if ([self checkResult]) {
         /*验证验证码是否正确*/
         [self getDataWithNetManager];
@@ -230,7 +267,7 @@
             
             [SVProgressHUD showSuccessWithStatus:@"注册成功" maskType:(SVProgressHUDMaskTypeNone)];
             
-            [self.navigationController popViewControllerAnimated:YES];
+//            [self.navigationController popViewControllerAnimated:YES];
             
 //            BOOL isSave = [[SingletonManager sharedManager]isSave];
 //            if (isSave) {
@@ -244,9 +281,65 @@
 //                    
 //                }];
 //            }
+            //登录接口
+            [self loginMethod];
             
         } else {
             [[SingletonManager sharedManager] alert1PromptInfo:[obj[@"data"] objectForKey:@"mes"]];
+        }
+    }];
+}
+
+#pragma mark - 登录接口
+- (void)loginMethod {
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"登录中"];
+    [manager postDataWithUrlActionStr:@"User/login" withParamDictionary:@{@"mobile":_phoneNum.text, @"pwd":_nPassword.text,} withBlock:^(id obj) {
+        if (obj) {
+            if ([obj[@"result"] isEqualToString:@"1"]) {
+                [SVProgressHUD showSuccessWithStatus:@"登录成功" maskType:(SVProgressHUDMaskTypeNone)];
+                NSDictionary *dataDic = obj[@"data"];
+                [UserInfoModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                    return @{@"user_id" : @"id"};
+                }];
+                UserInfoModel *userModel = [UserInfoModel mj_objectWithKeyValues:dataDic];
+                [SingletonManager sharedManager].uid = dataDic[@"id"];
+                [SingletonManager sharedManager].userModel = userModel;
+                [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].uid forKey:@"uid"];
+                [[NSUserDefaults standardUserDefaults] setObject:_userName.text forKey:@"mobile"];
+                [[NSUserDefaults standardUserDefaults] setObject:_nPassword.text forKey:@"passWord"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [_phoneNum resignFirstResponder];
+                [_nPassword resignFirstResponder];
+                
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"loginSuccess" object:nil];
+                [JPUSHService setAlias:[SingletonManager sharedManager].uid callbackSelector:nil object:self];
+                
+                BOOL isSave = [[SingletonManager sharedManager]isSave];
+                if (isSave) {
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        
+                    }];
+                } else {
+                    [[SingletonManager sharedManager]removeHandGestureInfoDefault];
+                    AliGesturePasswordViewController *aliGesVC = [[AliGesturePasswordViewController alloc]init];
+                    aliGesVC.string = @"重置密码";
+                    aliGesVC.type = @"注册";
+                    [self presentViewController:aliGesVC animated:YES completion:^{
+                        
+                    }];
+                }
+                
+                return ;
+            }
+            if ([obj[@"result"] isEqualToString:@"1000"]) {
+                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+                alertConfig.defaultTextOK = @"确定";
+                [SVProgressHUD dismiss];
+                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+                [alertView show];
+            }
         }
     }];
 }

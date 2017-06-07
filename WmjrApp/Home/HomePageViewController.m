@@ -66,6 +66,7 @@
         [SingletonManager sharedManager].uid = uid;
         [self getDataWithLogin];
     }
+    
     //如果有手势密码让他验证手势密码
     //    BOOL isSave = [KeychainData isSave]; //是否有保存
     _isSave = [[SingletonManager sharedManager] isSave]; //是否有保存
@@ -279,9 +280,19 @@
             }];
             _arrayForNewsList = [NewsModel mj_objectArrayWithKeyValuesArray:obj[@"data"]];
             [_homeTableView reloadData];
-            if (!_isSave) {
+//            if (!_isSave) {
+//                [self homeGuideLayout];
+//            }
+            //引导
+        NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+        NSString *userId = [self convertNullString:[SingletonManager sharedManager].uid];
+        if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]) {
+            UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
+            NSString *content = [pasteboard string];
+            if (content.length != 6) {
                 [self homeGuideLayout];
             }
+        }
             //获取客服电话
             [self getCompanyTelphoneMethod];
             
@@ -493,6 +504,7 @@
 - (void)homeGuideLayout {
     NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     NSString *userId = [self convertNullString:[SingletonManager sharedManager].uid];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"appVersion"];
     if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]) {
         [[NSUserDefaults standardUserDefaults]setObject:app_version forKey:@"appVersion"];
         CGRect frame = [UIScreen mainScreen].bounds;
@@ -514,8 +526,10 @@
             NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
             [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
         };
-        UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-        [window addSubview:homeGuideView];
+//        UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+//        [window addSubview:homeGuideView];
+        [[UIApplication sharedApplication].keyWindow addSubview:homeGuideView];
+        
     }
     
 }
