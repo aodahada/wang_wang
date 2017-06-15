@@ -61,15 +61,15 @@
             make.width.mas_offset(RESIZE_UI(6));
         }];
         
-//        UILabel *labelForWatch = [[UILabel alloc]init];
-//        labelForWatch.text = @"查看所有";
-//        labelForWatch.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
-//        labelForWatch.textColor = RGBA(89, 161, 217, 1.0);
-//        [self addSubview:labelForWatch];
-//        [labelForWatch mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerY.equalTo(self.mas_centerY);
-//            make.right.equalTo(jianTouImageView.mas_left).with.offset(RESIZE_UI(-7));
-//        }];
+        UILabel *labelForWatch = [[UILabel alloc]init];
+        labelForWatch.text = @"查看更多";
+        labelForWatch.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+        labelForWatch.textColor = RGBA(0, 100, 176, 1.0);
+        [self addSubview:labelForWatch];
+        [labelForWatch mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.mas_centerY);
+            make.right.equalTo(jianTouImageView.mas_left).with.offset(RESIZE_UI(-7));
+        }];
         
         UILabel *lineLabel = [[UILabel alloc]init];
         lineLabel.backgroundColor = RGBA(239, 239, 239, 1.0);
