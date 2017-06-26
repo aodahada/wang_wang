@@ -170,6 +170,7 @@
     prompt.text = @"注:(还款如果遇到节假日,则还款日期顺延)";
     prompt.textAlignment = NSTextAlignmentLeft;
     prompt.textColor = AUXILY_COLOR;
+    //
     prompt.font = [UIFont systemFontOfSize:12.0f];
     [aView addSubview:prompt];
     [prompt mas_makeConstraints:^(MASConstraintMaker *make) {
