@@ -3120,8 +3120,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK",
@@ -3139,9 +3140,9 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApppp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ea0beb5e-1a54-48c4-b4e7-36624c52277d";
+				PROVISIONING_PROFILE = "37f00304-7f9d-48be-860f-710a96510753";
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Debug;
@@ -3152,8 +3153,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK",
@@ -3171,9 +3172,9 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApppp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ea0beb5e-1a54-48c4-b4e7-36624c52277d";
+				PROVISIONING_PROFILE = "37f00304-7f9d-48be-860f-710a96510753";
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Release;
