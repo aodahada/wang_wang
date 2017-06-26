@@ -247,6 +247,9 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
+//    NSArray *arr = @[@"", @""];
+//    arr[5];
+
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

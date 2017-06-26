@@ -30,6 +30,8 @@
 
 #import "MyselfManageFinanceController.h"
 #import "XHLaunchAd.h"
+//收集bug信息
+#import <Bugly/Bugly.h>
 
 //静态广告
 #define ImgUrlString1 @"http://d.hiphotos.baidu.com/image/pic/item/14ce36d3d539b60071473204e150352ac75cb7f3.jpg"
@@ -106,8 +108,21 @@
         
     }
     
+    //获取崩溃信息
+//    NSSetUncaughtExceptionHandler(&UncaughtExceptionHandler);
+    //用bugly收集bug信息
+    [Bugly startWithAppId:@"9a7c6cfa5d"];
+    
     return YES;
 }
+
+//// 设置一个C函数，用来接收崩溃信息
+//void UncaughtExceptionHandler(NSException *exception){
+//    // 可以通过exception对象获取一些崩溃信息，我们就是通过这些崩溃信息来进行解析的，例如下面的symbols数组就是我们的崩溃堆栈。
+//    NSArray *symbols = [exception callStackSymbols];
+//    NSString *reason = [exception reason];
+//    NSString *name = [exception name];
+//}
 
 -(UIStatusBarStyle)preferredStatusBarStyle
 

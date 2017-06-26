@@ -14,6 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - Bugly (2.4.8)
   - DZNEmptyDataSet (1.8.1)
   - IQKeyboardManager (3.3.4)
   - Masonry (0.6.3)
@@ -31,6 +32,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
+  - Bugly
   - DZNEmptyDataSet
   - IQKeyboardManager
   - Masonry
@@ -45,6 +47,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  Bugly: da3c02408c14838d498429320545a8e439392978
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   IQKeyboardManager: ac803e61e5b50efae6b3aeedd95a02c7c7d3b2b3
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
@@ -57,6 +60,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   XHLaunchAd: 36a28ceda12b4caaa0040cc60b286cd0429bb95d
 
-PODFILE CHECKSUM: 1c5c8ef8cb044deed94f3d67563872b7b73e89b1
+PODFILE CHECKSUM: 53dc78414f09bc90bc0bd2705338b2bb05ea2850
 
 COCOAPODS: 1.2.1
