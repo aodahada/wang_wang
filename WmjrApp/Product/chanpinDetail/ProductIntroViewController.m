@@ -560,7 +560,8 @@
 
 /* 立即购买 */
 - (void)buyBtnAction {
-    if ([[SingletonManager sharedManager].uid isEqualToString:@""]) {
+    NSString *uid = [self convertNullString:[SingletonManager sharedManager].uid];
+    if ([uid isEqualToString:@""]) {
         LoginViewController *loginVC = [[LoginViewController alloc] init];
         UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
         [self presentViewController:loginNa animated:YES completion:nil];
