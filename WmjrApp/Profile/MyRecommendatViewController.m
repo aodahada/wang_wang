@@ -18,18 +18,18 @@
     SharedView *_sharedView;
 }
 
-@property (weak, nonatomic) IBOutlet UIView *viewForHead;
-@property (weak, nonatomic) IBOutlet UIView *viewForMidOne;
-@property (weak, nonatomic) IBOutlet UIView *viewForMidTwo;
-@property (weak, nonatomic) IBOutlet UILabel *labelForMidOne;
-@property (weak, nonatomic) IBOutlet UILabel *labelForMidTwo;
+@property (strong, nonatomic) UIView *viewForHead;
+@property (strong, nonatomic) UIView *viewForMidOne;
+@property (strong, nonatomic) UIView *viewForMidTwo;
+@property (strong, nonatomic) UILabel *labelForMidOne;
+@property (strong, nonatomic) UILabel *labelForMidTwo;
 
-@property (weak, nonatomic) IBOutlet UILabel *labelForGuessSum;/*预计总收益*/
-@property (weak, nonatomic) IBOutlet UILabel *willHaveReward;/*即将获得的奖励*/
-@property (weak, nonatomic) IBOutlet UILabel *haveHaveReward;/*已经获得的奖励*/
-@property (weak, nonatomic) IBOutlet UILabel *myRecommandNumber;/*我的推荐码*/
-@property (weak, nonatomic) IBOutlet UILabel *haveRecommandedNumebr;/*已经推荐的人数*/
-@property (weak, nonatomic) IBOutlet UITableView *tableViewForList;/*推荐人列表*/
+@property (strong, nonatomic) UILabel *labelForGuessSum;/*预计总收益*/
+@property (strong, nonatomic) UILabel *willHaveReward;/*即将获得的奖励*/
+@property (strong, nonatomic) UILabel *haveHaveReward;/*已经获得的奖励*/
+@property (strong, nonatomic) UILabel *myRecommandNumber;/*我的推荐码*/
+@property (strong, nonatomic) UILabel *haveRecommandedNumebr;/*已经推荐的人数*/
+@property (strong, nonatomic) UITableView *tableViewForList;/*推荐人列表*/
 @property (nonatomic, strong) NSMutableArray *arrayForModel;
 @property (nonatomic, copy) NSString *invitationcode;//我的推荐码
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *yujishouyiHeight;//预计获得总收益距离顶部距离
@@ -49,6 +49,13 @@
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:shareImage style:UIBarButtonItemStylePlain target:self action:@selector(clickSharedBtnAction)];
     self.navigationItem.rightBarButtonItem = rightButton;
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+}
+
+- (void)getNetDataMethod {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
     [manager postDataWithUrlActionStr:@"My/invitation" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
@@ -75,11 +82,7 @@
             [alertView show];
         }
     }];
-    
-}
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
 }
 
 - (void)getHaveInvitatedList {
@@ -91,6 +94,9 @@
             _arrayForModel = [[NSMutableArray alloc]init];
             NSArray *arrayForList = obj[@"data"];
             _haveRecommandedNumebr.text = [NSString stringWithFormat:@"%ld人",(long)arrayForList.count];
+            [_tableViewForList mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_offset(RESIZE_UI(60)*arrayForList.count);
+            }];
             for (int i=0; i<arrayForList.count; i++) {
                 NSDictionary *dicForModel = arrayForList[i];
                 MyReCommandModel *myRecommandModel = [MyReCommandModel mj_objectWithKeyValues:dicForModel];
@@ -115,21 +121,220 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"我的推荐";
-    _heightForHeaderConstraint.constant = RESIZE_UI(240);
-    _yujishouyiHeight.constant = RESIZE_UI(35);
-    _labelJinHeight.constant = RESIZE_UI(30);
+    
     self.view.backgroundColor = RGBA(238, 238, 238, 1.0);
+    
+    UIScrollView *mainScrollView = [[UIScrollView alloc]init];
+    [self.view addSubview:mainScrollView];
+    [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(self.view);
+        make.top.equalTo(self.view.mas_top);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(49);
+    }];
+    
+    UIView *mainView = [[UIView alloc]init];
+    mainView.backgroundColor = RGBA(238, 238, 238, 1.0);
+    [mainScrollView addSubview:mainView];
+    [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(mainScrollView);
+        make.width.mas_equalTo(self.view.mas_width);
+    }];
+    
+    _viewForHead = [[UIView alloc]init];
     _viewForHead.backgroundColor = RGBA(0, 108, 175, 1.0);
-    _viewForMidOne.backgroundColor = RGBA(0, 102, 166, 1.0);
-    _viewForMidTwo.backgroundColor = RGBA(0, 102, 166, 1.0);
-    _labelForMidOne.textColor = RGBA(171, 199, 214, 1.0);
-    _labelForMidTwo.textColor = RGBA(171, 199, 214, 1.0);
+    [mainView addSubview:_viewForHead];
+    [_viewForHead mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mainView.mas_top);
+        make.left.equalTo(mainView.mas_left);
+        make.right.equalTo(mainView.mas_right);
+        make.height.mas_equalTo(RESIZE_UI(190));
+    }];
+    
+    UILabel *guessGetLabel = [[UILabel alloc]init];
+    guessGetLabel.text = @"预计获得总收益(元)";
+    guessGetLabel.textColor = [UIColor whiteColor];
+    guessGetLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+    [_viewForHead addSubview:guessGetLabel];
+    [guessGetLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_viewForHead.mas_top).with.offset(RESIZE_UI(14));
+        make.centerX.equalTo(_viewForHead.mas_centerX);
+    }];
+    
+    _labelForGuessSum = [[UILabel alloc]init];
+    _labelForGuessSum.font = [UIFont systemFontOfSize:RESIZE_UI(64)];
+    _labelForGuessSum.text = @"0";
+    _labelForGuessSum.textColor = [UIColor whiteColor];
+    [_viewForHead addSubview:_labelForGuessSum];
+    [_labelForGuessSum mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(guessGetLabel.mas_bottom).with.offset(RESIZE_UI(14));
+        make.centerX.equalTo(_viewForHead.mas_centerX);
+    }];
+    
+    UIButton *checkRuleButton = [[UIButton alloc]init];
+    [checkRuleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [checkRuleButton setTitle:@"查看推荐好友奖励规则" forState:UIControlStateNormal];
+    checkRuleButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+    [checkRuleButton addTarget:self action:@selector(checkRecommendRule) forControlEvents:UIControlEventTouchUpInside];
+    [_viewForHead addSubview:checkRuleButton];
+    [checkRuleButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_labelForGuessSum.mas_bottom).with.offset(RESIZE_UI(28));
+        make.right.equalTo(_viewForHead.mas_right).with.offset(RESIZE_UI(-12));
+        make.width.mas_offset(RESIZE_UI(123));
+        make.height.mas_offset(RESIZE_UI(12));
+    }];
+    
+    UIView *middleView = [[UIView alloc]init];
+    middleView.backgroundColor = RGBA(0, 80, 134, 1.0);
+    [mainView addSubview:middleView];
+    [middleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_viewForHead.mas_bottom);
+        make.height.mas_offset(RESIZE_UI(64));
+        make.left.equalTo(mainView.mas_left);
+        make.right.equalTo(mainView.mas_right);
+    }];
+    
+    _viewForMidOne = [[UIView alloc]init];
+    _viewForMidOne.backgroundColor = [UIColor clearColor];
+    [middleView addSubview:_viewForMidOne];
+    [_viewForMidOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(middleView.mas_top);
+        make.left.equalTo(middleView.mas_left);
+        make.width.mas_offset(SCREEN_WIDTH/2-0.5);
+        make.bottom.equalTo(middleView.mas_bottom);
+    }];
+    
+    _labelForMidOne = [[UILabel alloc]init];
+    _labelForMidOne.text = @"即将获得的奖励";
+    _labelForMidOne.textColor = RGBA(129, 170, 197, 1.0);
+    _labelForMidOne.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    [_viewForMidOne addSubview:_labelForMidOne];
+    [_labelForMidOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_viewForMidOne.mas_top).with.offset(RESIZE_UI(11));
+        make.centerX.equalTo(_viewForMidOne.mas_centerX);
+    }];
+    
+    _willHaveReward = [[UILabel alloc]init];
+    _willHaveReward.textColor = [UIColor whiteColor];
+    _willHaveReward.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    [_viewForMidOne addSubview:_willHaveReward];
+    [_willHaveReward mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_labelForMidOne.mas_bottom).with.offset(RESIZE_UI(9));
+        make.centerX.equalTo(_viewForMidOne);
+    }];
+    
+    UILabel *labelLine = [[UILabel alloc]init];
+    labelLine.backgroundColor = RGBA(99, 163, 204, 1.0);
+    [middleView addSubview:labelLine];
+    [labelLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(middleView.mas_centerX);
+        make.centerY.equalTo(middleView.mas_centerY);
+        make.height.mas_offset(RESIZE_UI(50));
+        make.width.mas_offset(1);
+    }];
+    
+    _viewForMidTwo = [[UIView alloc]init];
+    _viewForMidTwo.backgroundColor = [UIColor clearColor];
+    [middleView addSubview:_viewForMidTwo];
+    [_viewForMidTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(middleView.mas_top);
+        make.bottom.equalTo(middleView.mas_bottom);
+        make.right.equalTo(middleView.mas_right);
+        make.width.mas_offset(RESIZE_UI(SCREEN_WIDTH/2-0.5));
+    }];
+    
+    _labelForMidTwo = [[UILabel alloc]init];
+    _labelForMidTwo.text = @"已经获得的奖励";
+    _labelForMidTwo.textColor = RGBA(129, 170, 197, 1.0);
+    _labelForMidTwo.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    [_viewForMidTwo addSubview:_labelForMidTwo];
+    [_labelForMidTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_viewForMidTwo.mas_top).with.offset(RESIZE_UI(11));
+        make.centerX.equalTo(_viewForMidTwo.mas_centerX);
+    }];
+    
+    _haveHaveReward = [[UILabel alloc]init];
+    _haveHaveReward.textColor = [UIColor whiteColor];
+    _haveHaveReward.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    [_viewForMidTwo addSubview:_haveHaveReward];
+    [_haveHaveReward mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_labelForMidTwo.mas_bottom).with.offset(RESIZE_UI(9));
+        make.centerX.equalTo(_viewForMidTwo);
+    }];
+    
+    UIView *myCodeView = [[UIView alloc]init];
+    myCodeView.backgroundColor = [UIColor whiteColor];
+    [mainView addSubview:myCodeView];
+    [myCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(middleView.mas_bottom).with.offset(RESIZE_UI(6));
+        make.left.equalTo(mainView.mas_left);
+        make.right.equalTo(mainView.mas_right);
+        make.height.mas_offset(RESIZE_UI(45));
+    }];
+    
+    UILabel *myCodeLabel = [[UILabel alloc]init];
+    myCodeLabel.text = @"我的推荐码:";
+    myCodeLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+    myCodeLabel.textColor = RGBA(102, 102, 102, 1.0);
+    [myCodeView addSubview:myCodeLabel];
+    [myCodeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(myCodeView);
+        make.left.equalTo(myCodeView.mas_left).with.offset(RESIZE_UI(12));
+    }];
+
     _invitationcode = [SingletonManager sharedManager].userModel.invitationcode;
+    _myRecommandNumber = [[UILabel alloc]init];
+    _myRecommandNumber.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     _myRecommandNumber.text = _invitationcode;
+    [myCodeView addSubview:_myRecommandNumber];
+    [_myRecommandNumber mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(myCodeView.mas_centerY);
+        make.right.equalTo(myCodeView.mas_right).with.offset(RESIZE_UI(-12));
+    }];
+    
+    UIView *haveRecommendedView = [[UIView alloc]init];
+    haveRecommendedView.backgroundColor = [UIColor whiteColor];
+    [mainView addSubview:haveRecommendedView];
+    [haveRecommendedView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(myCodeView.mas_bottom).with.offset(RESIZE_UI(6));
+        make.left.equalTo(mainView.mas_left);
+        make.right.equalTo(mainView.mas_right);
+        make.height.mas_offset(RESIZE_UI(45));
+    }];
+    
+    UILabel *recommendLabel = [[UILabel alloc]init];
+    recommendLabel.text = @"已推荐人数:";
+    recommendLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+    recommendLabel.textColor = RGBA(102, 102, 102, 1.0);
+    [haveRecommendedView addSubview:recommendLabel];
+    [recommendLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(haveRecommendedView);
+        make.left.equalTo(haveRecommendedView.mas_left).with.offset(RESIZE_UI(12));
+    }];
+    
+    _haveRecommandedNumebr = [[UILabel alloc]init];
+    [haveRecommendedView addSubview:_haveRecommandedNumebr];
+    [_haveRecommandedNumebr mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(haveRecommendedView.mas_centerY);
+        make.right.equalTo(haveRecommendedView.mas_right).with.offset(RESIZE_UI(-12));
+    }];
+    
+    _tableViewForList = [[UITableView alloc]init];
+    _tableViewForList.tableFooterView = [[UIView alloc]init];
     _tableViewForList.delegate = self;
     _tableViewForList.dataSource = self;
     [_tableViewForList registerNib:[UINib nibWithNibName:@"MyRecommandTableViewCell" bundle:nil] forCellReuseIdentifier:@"MyRecommandTableViewCell"];
     _tableViewForList.separatorStyle = UITableViewCellSelectionStyleNone;
+    [mainView addSubview:_tableViewForList];
+    [_tableViewForList mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(myCodeView.mas_bottom);
+        make.left.equalTo(mainView.mas_left);
+        make.right.equalTo(mainView.mas_right);
+        make.bottom.equalTo(mainView.mas_bottom).with.offset(-1);
+    }];
+    
+    [self getNetDataMethod];
 }
 
 - (void)backBtnAction {
@@ -170,13 +375,13 @@
 }
 
 #pragma mark - 查看推荐好友规则
-- (IBAction)checkRecommendRule:(id)sender {
+- (void)checkRecommendRule {
     FRuleViewController *frule = [[FRuleViewController alloc] init];
     [self.navigationController pushViewController:frule animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return RESIZE_UI(60);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

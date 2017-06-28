@@ -962,7 +962,7 @@
             }
             case 1: {
                 /* 我的推荐 */
-                MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]initWithNibName:@"MyRecommendatViewController" bundle:nil];
+                MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]init];
                 [self.navigationController pushViewController:myrecommendVC animated:YES];
                 break;
             }

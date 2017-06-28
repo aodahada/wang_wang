@@ -285,7 +285,6 @@
 		8B3E61141E5C4FCE00D9A6AC /* ProductLongClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3E61131E5C4FCE00D9A6AC /* ProductLongClassViewController.m */; };
 		8B419DB91E09129A009A4B5B /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8B419DB81E091041009A4B5B /* server.cer */; };
 		8B44467D1D98F60F00EDCDBC /* MyRecommendatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B44467B1D98F60F00EDCDBC /* MyRecommendatViewController.m */; };
-		8B44467E1D98F60F00EDCDBC /* MyRecommendatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B44467C1D98F60F00EDCDBC /* MyRecommendatViewController.xib */; };
 		8B4446821D990EB100EDCDBC /* MyRecommandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4446801D990EB100EDCDBC /* MyRecommandTableViewCell.m */; };
 		8B4446831D990EB100EDCDBC /* MyRecommandTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B4446811D990EB100EDCDBC /* MyRecommandTableViewCell.xib */; };
 		8B4446861D990EC500EDCDBC /* MyReCommandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4446851D990EC500EDCDBC /* MyReCommandModel.m */; };
@@ -804,7 +803,6 @@
 		8B419DB81E091041009A4B5B /* server.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = server.cer; sourceTree = "<group>"; };
 		8B44467A1D98F60F00EDCDBC /* MyRecommendatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRecommendatViewController.h; sourceTree = "<group>"; };
 		8B44467B1D98F60F00EDCDBC /* MyRecommendatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRecommendatViewController.m; sourceTree = "<group>"; };
-		8B44467C1D98F60F00EDCDBC /* MyRecommendatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRecommendatViewController.xib; sourceTree = "<group>"; };
 		8B44467F1D990EB100EDCDBC /* MyRecommandTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRecommandTableViewCell.h; sourceTree = "<group>"; };
 		8B4446801D990EB100EDCDBC /* MyRecommandTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRecommandTableViewCell.m; sourceTree = "<group>"; };
 		8B4446811D990EB100EDCDBC /* MyRecommandTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRecommandTableViewCell.xib; sourceTree = "<group>"; };
@@ -1657,7 +1655,6 @@
 				C51B42B81C78533E001679B5 /* FRuleViewController.xib */,
 				8B44467A1D98F60F00EDCDBC /* MyRecommendatViewController.h */,
 				8B44467B1D98F60F00EDCDBC /* MyRecommendatViewController.m */,
-				8B44467C1D98F60F00EDCDBC /* MyRecommendatViewController.xib */,
 				8B44467F1D990EB100EDCDBC /* MyRecommandTableViewCell.h */,
 				8B4446801D990EB100EDCDBC /* MyRecommandTableViewCell.m */,
 				8B4446811D990EB100EDCDBC /* MyRecommandTableViewCell.xib */,
@@ -2715,7 +2712,6 @@
 				8B0168E81DD00ED7000FA3DE /* UPOP@2x.png in Resources */,
 				8B0168051DD00ED6000FA3DE /* arrow_back@2x.png in Resources */,
 				8B0168371DD00ED7000FA3DE /* CITIC.png in Resources */,
-				8B44467E1D98F60F00EDCDBC /* MyRecommendatViewController.xib in Resources */,
 				8B0168721DD00ED7000FA3DE /* head_img@3x.png in Resources */,
 				8B0168CC1DD00ED7000FA3DE /* red_right@2x.png in Resources */,
 				8B0168961DD00ED7000FA3DE /* icon_yanzhengma@2x.png in Resources */,
