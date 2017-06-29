@@ -207,7 +207,7 @@
     }];
     
     UILabel *labelForSumMoney = [[UILabel alloc]init];
-    labelForSumMoney.text = [NSString stringWithFormat:@"总金额:%@",_productModel.purchasable];
+    labelForSumMoney.text = [NSString stringWithFormat:@"总金额:%@万",_productModel.purchasable];
     labelForSumMoney.textColor = [UIColor whiteColor];
     labelForSumMoney.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     [topview addSubview:labelForSumMoney];
