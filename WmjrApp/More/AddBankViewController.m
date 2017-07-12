@@ -100,7 +100,16 @@
     if ([self checkResult]) {
         NetManager *manager = [[NetManager alloc] init];
         [SVProgressHUD showWithStatus:@"请稍后"];
-        [manager postDataWithUrlActionStr:@"Card/bind" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"bank_code":_bank_codeStr, @"bank_account_no":_bankNumField.text, @"card_attribute":@"C", @"province":_provinceStr, @"city":_cityStr, @"mobile":_phoneNumField.text} withBlock:^(id obj) {
+        NSMutableDictionary *param = [NSMutableDictionary dictionary];
+        param[@"member_id"] = [SingletonManager sharedManager].uid;
+        param[@"bank_code"] = _bank_codeStr;
+        param[@"bank_account_no"] = _bankNumField.text;
+        param[@"card_attribute"] = @"C";
+        param[@"province"] = _provinceStr;
+        param[@"city"] = _cityStr;
+        param[@"mobile"] = _phoneNumField.text;
+        NSDictionary *paramDic = (NSDictionary *)param;
+        [manager postDataWithUrlActionStr:@"Card/bind" withParamDictionary:paramDic withBlock:^(id obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 
                 _yanzhengBtn.enabled = NO;
@@ -129,7 +138,7 @@
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 //设置界面的按钮显示 根据自己需求设置
                                 [strongSelf.yanzhengBtn setTitle:strTime forState:(UIControlStateNormal)];
-                                [strongSelf.yanzhengBtn setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
+                                [strongSelf.yanzhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                             });
                             timeout--;
                         }

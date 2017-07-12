@@ -120,9 +120,15 @@
 - (void)getDataWithNetManager {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-//    NSDictionary *paramDic = @{@"product_id":self.getPro_id};
-    NSDictionary *paramDic = @{@"is_recommend":@"1", @"page":@"1", @"size":@"1",@"is_long":@"0",@"product_id":self.getPro_id};
-    [manager postDataWithUrlActionStr:@"Finance/index" withParamDictionary:paramDic withBlock:^(id obj) {
+//    NSDictionary *paramDic = @{@"is_recommend":@"1", @"page":@"1", @"size":@"1",@"is_long":@"0",@"product_id":self.getPro_id};
+    NSMutableDictionary *paramDic = [NSMutableDictionary dictionary];
+    paramDic[@"is_recommend"] = @"1";
+    paramDic[@"page"] = @"1";
+    paramDic[@"size"] = @"1";
+    paramDic[@"is_long"] = @"0";
+    paramDic[@"product_id"] = self.getPro_id;
+    NSDictionary *newParamDic = (NSDictionary *)paramDic;
+    [manager postDataWithUrlActionStr:@"Finance/index" withParamDictionary:newParamDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [ProductModel mj_setupObjectClassInArray:^NSDictionary *{
                 return @{

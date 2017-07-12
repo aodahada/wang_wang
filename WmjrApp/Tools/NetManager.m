@@ -31,6 +31,10 @@
          */
         NSString *dateNew = [self getCurrentTimestamp];
         NSDictionary *paramDic = @{@"timestamp":dateNew, @"action":actionStr, @"data":paramsDic};//参数序列
+//        NSMutableDictionary *paramDic;
+//        paramDic[@"timestamp"] = dateNew;
+//        paramDic[@"action"] = actionStr;
+//        paramDic[@"data"] = paramDic;
         NSString *base64Str = [self paramCodeStr:paramDic];
         //base64Str是经过处理的字符串
         
