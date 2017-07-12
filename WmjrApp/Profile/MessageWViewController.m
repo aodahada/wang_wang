@@ -112,7 +112,8 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MessageModel *model = _messArray[indexPath.row];
+//    MessageModel *model = _messArray[indexPath.row];
+    MessageModel *model = [_messArray objectAtIndexCheck:indexPath.row];
     MessageViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"messCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 //    NSString *typeColor = [NSString stringWithFormat:@"#%@",model.type_color];
@@ -127,7 +128,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MessageModel *model = _messArray[indexPath.row];
+//    MessageModel *model = _messArray[indexPath.row];
+    MessageModel *model = [_messArray objectAtIndexCheck:indexPath.row];
     AgViewController *agVC =[[AgViewController alloc] init];
     agVC.title = model.message_title;
     agVC.webUrl = model.url;

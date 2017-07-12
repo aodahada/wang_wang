@@ -103,3 +103,5 @@ typedef enum {
 #define GERENCOLOR [UIColor colorWithRed:245.0/255.0 green:89.0/255.0 blue:21.0/255.0 alpha:1.0]
 
 #endif
+
+#import "NSArray+HRUtil.h"

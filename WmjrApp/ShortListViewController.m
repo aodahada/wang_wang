@@ -146,7 +146,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    ProductModel *productModel = _shortProductArray[indexPath.section];
+//    ProductModel *productModel = _shortProductArray[indexPath.section];
+    ProductModel *productModel = [_shortProductArray objectAtIndexCheck:indexPath.section];
     if (indexPath.row == 0) {
         ShortListTopCell *cell = [[ShortListTopCell alloc]initWithProductModel:productModel];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -154,7 +155,8 @@
     } else {
         HomeTableViewCellThird *cell = [[HomeTableViewCellThird alloc]init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell configCellWithModel:_shortProductArray[indexPath.section]];
+//        [cell configCellWithModel:_shortProductArray[indexPath.section]];
+        [cell configCellWithModel:[_shortProductArray objectAtIndexCheck:indexPath.section]];
         return cell;
     }
     
@@ -162,7 +164,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    ProductModel *productModel = _shortProductArray[indexPath.section];
+//    ProductModel *productModel = _shortProductArray[indexPath.section];
+    ProductModel *productModel = [_shortProductArray objectAtIndexCheck:indexPath.section];
     ProductIntroViewController *productInfoVC = [[ProductIntroViewController alloc]init];
     productInfoVC.getPro_id = productModel.proIntro_id;
     productInfoVC.title = productModel.name;

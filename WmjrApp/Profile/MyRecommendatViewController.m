@@ -403,7 +403,8 @@
     } else {
         cell.backgroundColor = [UIColor whiteColor];
     }
-    cell.myRecommandModel = _arrayForModel[row];
+//    cell.myRecommandModel = _arrayForModel[row];
+    cell.myRecommandModel = [_arrayForModel objectAtIndexCheck:row];
     return cell;
     
 }

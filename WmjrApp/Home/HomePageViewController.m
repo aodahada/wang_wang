@@ -714,7 +714,8 @@
         }
     } else if (indexPath.section == 3) {
         if (_arrayForRecommendPro.count != 0) {
-            ProductModel *productModel = _arrayForRecommendPro[indexPath.row];
+//            ProductModel *productModel = _arrayForRecommendPro[indexPath.row];
+            ProductModel *productModel = [_arrayForRecommendPro objectAtIndexCheck:indexPath.row];
             if ([productModel.is_long isEqualToString:@"1"]) {
                 HomeTableViewCellThirdFirst *cell = [[HomeTableViewCellThirdFirst alloc]initWithProductModel:productModel];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -744,7 +745,8 @@
             [cell setBackgroundColor:[UIColor whiteColor]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-        NewsModel *newsModel = _arrayForNewsList[indexPath.row];
+//        NewsModel *newsModel = _arrayForNewsList[indexPath.row];
+        NewsModel *newsModel = [_arrayForNewsList objectAtIndexCheck:indexPath.row];
         [cell.imageViewNews sd_setImageWithURL:[NSURL URLWithString:newsModel.pic_url]];
         cell.labelForTitle.text = newsModel.title;
         cell.labelForInfo.text = newsModel.intro;
@@ -770,7 +772,8 @@
         
     }
     if (indexPath.section == 3) {
-        ProductModel *productModel = _arrayForRecommendPro[indexPath.row];
+//        ProductModel *productModel = _arrayForRecommendPro[indexPath.row];
+        ProductModel *productModel = [_arrayForRecommendPro objectAtIndexCheck:indexPath.row];
         if ([productModel.is_long isEqualToString:@"1"]) {
             //长期详情
             LongProductDetailViewController *newproductbuyVC = [[LongProductDetailViewController alloc]init];
@@ -793,7 +796,8 @@
     }
     if (indexPath.section == 4) {
         
-        NewsModel *newsModel = _arrayForNewsList[indexPath.row];
+//        NewsModel *newsModel = _arrayForNewsList[indexPath.row];
+        NewsModel *newsModel = [_arrayForNewsList objectAtIndexCheck:indexPath.row];
         AgViewController *agVC =[[AgViewController alloc] init];
         agVC.title = newsModel.title;
         agVC.webUrl = newsModel.url;

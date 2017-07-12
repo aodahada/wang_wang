@@ -169,7 +169,8 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {
-        ProductModel *productModel = _longProductArray[indexPath.section-1];
+//        ProductModel *productModel = _longProductArray[indexPath.section-1];
+        ProductModel *productModel = [_longProductArray objectAtIndexCheck:indexPath.section-1];
         if (indexPath.row == 0) {
             ProductLongTopCell *cell = [[ProductLongTopCell alloc]initWithProductModel:productModel];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;

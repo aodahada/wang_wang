@@ -143,7 +143,8 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {
-        ProductCategoryModel *productCategory = _categoryArray[indexPath.section-1];
+//        ProductCategoryModel *productCategory = _categoryArray[indexPath.section-1];
+        ProductCategoryModel *productCategory = [_categoryArray objectAtIndexCheck:indexPath.section-1];
         if (indexPath.row == 0) {
             ProductCategoryTopCell *cell = [[ProductCategoryTopCell alloc]initWithProductCategoryModel:productCategory];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -170,7 +171,8 @@
         [self presentViewController:baseNa animated:YES completion:^{
         }];
     } else {
-        ProductCategoryModel *productCategory = _categoryArray[indexPath.section-1];
+//        ProductCategoryModel *productCategory = _categoryArray[indexPath.section-1];
+        ProductCategoryModel *productCategory = [_categoryArray objectAtIndexCheck:indexPath.section-1];
         if (indexPath.row == 0) {
             ShortListViewController *shortList = [[ShortListViewController alloc]init];
             shortList.hidesBottomBarWhenPushed = YES;
