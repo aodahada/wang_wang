@@ -88,7 +88,7 @@
 - (void)getHaveInvitatedList {
     
     NetManager *manager = [[NetManager alloc] init];
-    [SVProgressHUD showWithStatus:@"加载中"];
+    [SVProgressHUD showWithStatus:@"加载中"];//8996
     [manager postDataWithUrlActionStr:@"User/invite" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             _arrayForModel = [[NSMutableArray alloc]init];
@@ -125,6 +125,7 @@
     self.view.backgroundColor = RGBA(238, 238, 238, 1.0);
     
     UIScrollView *mainScrollView = [[UIScrollView alloc]init];
+    mainScrollView.bounces = NO;
     [self.view addSubview:mainScrollView];
     [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.edges.equalTo(self.view);
@@ -328,7 +329,7 @@
     _tableViewForList.separatorStyle = UITableViewCellSelectionStyleNone;
     [mainView addSubview:_tableViewForList];
     [_tableViewForList mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(myCodeView.mas_bottom);
+        make.top.equalTo(haveRecommendedView.mas_bottom);
         make.left.equalTo(mainView.mas_left);
         make.right.equalTo(mainView.mas_right);
         make.bottom.equalTo(mainView.mas_bottom).with.offset(-1);
