@@ -31,9 +31,7 @@
 
 
 @interface ProfileViewController ()<UICollectionViewDelegate, UICollectionViewDataSource>
-{
-    UITableView *_tableView;
-}
+
 @property (nonatomic, copy) NSString *balanceValue;
 
 @property (nonatomic, strong) UIImageView *imageViewForHead;
@@ -662,6 +660,8 @@
 //    self.navigationController.navigationBarHidden = NO;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
+
+
 
 //#pragma mark - UITableView dataSource delegate -
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

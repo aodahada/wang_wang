@@ -139,7 +139,11 @@
             return ;
         }
         if (index == 1) {
-            [manager postDataWithUrlActionStr:@"Card/unbind" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"card_id":self.card_id} withBlock:^(id obj) {
+            NSMutableDictionary *paramMutableDic = [NSMutableDictionary dictionary];
+            paramMutableDic[@"member_id"] = [SingletonManager sharedManager].uid;
+            paramMutableDic[@"card_id"] = self.card_id;
+            NSDictionary *paramDic = (NSDictionary *)paramMutableDic;
+            [manager postDataWithUrlActionStr:@"Card/unbind" withParamDictionary:paramDic withBlock:^(id obj) {
                 if ([obj[@"result"] isEqualToString:@"1"]) {
                     [SVProgressHUD showSuccessWithStatus:@"解绑成功" maskType:(SVProgressHUDMaskTypeNone)];
                     
