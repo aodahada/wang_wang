@@ -297,13 +297,23 @@
     if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]) {
         UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
         NSString *content = [pasteboard string];
-        if (content.length == 6) {
+        if (content.length == 6&&[self isNum:content]) {
             RegisterViewController *registerVC = [[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
             BaseNavigationController *registerNav = [[BaseNavigationController alloc]initWithRootViewController:registerVC];
             [self.window.rootViewController presentViewController:registerNav animated:YES completion:nil];
         }
     }
 }
+
+//判断是否为数字
+- (BOOL)isNum:(NSString *)checkedNumString {
+    checkedNumString = [checkedNumString stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+    if(checkedNumString.length > 0) {
+        return NO;
+    }
+    return YES;
+}
+
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if ([viewController.tabBarItem.title isEqualToString:@"账户中心"]) {
