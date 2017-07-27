@@ -231,7 +231,12 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+}
+
+- (void)dealloc {
+    
     [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
+    
 }
 
 //开始加载

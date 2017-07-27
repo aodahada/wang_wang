@@ -893,6 +893,15 @@
     return NO;
 }
 
+
+/**
+ 闪退场景二： delegate = nil 。
+ 将XXViewContrller设置为delegate时，当页面发生跳转时，XXViewController的对象会被释放，这是代码走到[_delegate callbackMethod],便出现crash。解决方法有二：1.将@property (nonatomic ,assign) id <BLELibDelegate>delegate; 中 assign关键字改为weak。 2.在XXViewController的delloc方法中添加：xxx.delegate = nil;
+ **/
+- (void)dealloc {
+    self.homeTableView.delegate = nil;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

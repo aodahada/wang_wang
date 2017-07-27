@@ -63,10 +63,10 @@
             /*  改变实名认证状态 */
             [SingletonManager sharedManager].userModel.is_real_name = @"1";
             [[NSUserDefaults standardUserDefaults] synchronize];
-            /* 是否显示警示框 */
-            if (_isShowAlert == YES) {
-                self.block();
-            }
+//            /* 是否显示警示框 */
+//            if (_isShowAlert == YES) {
+//                self.block();
+//            }
             [[SingletonManager sharedManager] showHUDView:self.view title:@"实名认证成功" content:@"" time:1.0 andCodes:^{
                 [self.navigationController popToRootViewControllerAnimated:YES];
             }];

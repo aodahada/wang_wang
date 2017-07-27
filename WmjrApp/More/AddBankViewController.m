@@ -211,6 +211,13 @@
             [alertView show];
             return;
         }
+        if (![_yanzhengNum.text isEqualToString:_ticket]) {
+            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+            alertConfig.defaultTextOK = @"确定";
+            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:@"验证码错误"];
+            [alertView show];
+            return;
+        }
         /* 下一步 */
         NetManager *manager = [[NetManager alloc] init];
         [SVProgressHUD showWithStatus:@"正在绑卡" maskType:(SVProgressHUDMaskTypeNone)];
