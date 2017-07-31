@@ -119,8 +119,8 @@
         [_viewForBack addSubview:_viewForModify];
         [_viewForModify mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self.view);
-            make.height.mas_offset(199);
-            make.width.mas_offset(300);
+            make.height.mas_offset(RESIZE_UI(199));
+            make.width.mas_offset(RESIZE_UI(300));
         }];
         
     }

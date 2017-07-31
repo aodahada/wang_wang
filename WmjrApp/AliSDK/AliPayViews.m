@@ -220,19 +220,19 @@
 - (void)createPoint_nine
 {
     
-    CGFloat height = SCREEN_HEIGHT;
-    NSInteger totalPosition = 0;
-    NSInteger itemwh = 0;
-    if (height<485.0) {
-        totalPosition = 180;
-        itemwh = 10;
-    } else if (485.0<height<580.0) {
-        totalPosition = 200;
-        itemwh = 60;
-    } else {
-        totalPosition = 250;
-        itemwh = 70;
-    }
+//    CGFloat height = SCREEN_HEIGHT;
+//    NSInteger totalPosition = RESIZE_UI(200);
+    NSInteger itemwh = RESIZE_UI(60);
+//    if (height<485.0) {
+//        totalPosition = 180;
+//        itemwh = 10;
+//    } else if (485.0<height<580.0) {
+//        totalPosition = 200;
+//        itemwh = 60;
+//    } else {
+//        totalPosition = 250;
+//        itemwh = 70;
+//    }
     
     //我的按钮的y值
     NSInteger buttonHeightY=0;

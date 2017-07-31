@@ -126,7 +126,7 @@
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 //设置界面的按钮显示 根据自己需求设置
                                 [strongSelf.yanzhengBtn setTitle:@"获取验证码" forState:(UIControlStateNormal)];
-                                [strongSelf.yanzhengBtn setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
+                                [strongSelf.yanzhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                                 strongSelf.yanzhengBtn.enabled = YES;
                             });
                         }else{
@@ -211,17 +211,23 @@
             [alertView show];
             return;
         }
-        if (![_yanzhengNum.text isEqualToString:_ticket]) {
+        if ([[SingletonManager sharedManager]isNullString:_ticket]) {
             MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
             alertConfig.defaultTextOK = @"确定";
-            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:@"验证码错误"];
+            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:@"请先获取验证码"];
             [alertView show];
             return;
         }
         /* 下一步 */
         NetManager *manager = [[NetManager alloc] init];
         [SVProgressHUD showWithStatus:@"正在绑卡" maskType:(SVProgressHUDMaskTypeNone)];
-        [manager postDataWithUrlActionStr:@"Card/advance" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"valid_code":_yanzhengNum.text, @"ticket":_ticket} withBlock:^(id obj) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        dict[@"member_id"] = [SingletonManager sharedManager].uid;
+        dict[@"valid_code"] = _yanzhengNum.text;
+        dict[@"ticket"] = _ticket;
+        NSDictionary *param = (NSDictionary *)dict;
+        
+        [manager postDataWithUrlActionStr:@"Card/advance" withParamDictionary:param withBlock:^(id obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 [SVProgressHUD showSuccessWithStatus:@"银行卡绑定成功" maskType:(SVProgressHUDMaskTypeNone)];
                 NSString *card_id = [obj[@"data"] objectForKey:@"card_id"];

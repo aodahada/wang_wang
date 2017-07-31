@@ -50,6 +50,7 @@
 - (BOOL)isFirstInput:(NSString *)str;
 - (BOOL)isSave;
 - (void)showHUDView:(id)theView title:(NSString *)theTitle content:(NSString *)theContent time:(NSTimeInterval)thTime andCodes:(void (^)())finish;
+- (BOOL) isNullString:(NSString *)string;
 
 /**为金额添加千位分隔符*/
 - (NSString *)getQianWeiFenGeFuString:(NSString *)stringValue;

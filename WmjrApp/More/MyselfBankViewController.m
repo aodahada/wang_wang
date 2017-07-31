@@ -32,6 +32,8 @@
 
 @implementation MyselfBankViewController
 
+
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
@@ -40,11 +42,19 @@
 - (void)setUpNavigationBar {
     self.view.backgroundColor = VIEWBACKCOLOR;
     
+    UIImage *image = [[UIImage imageNamed:@"arrow_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backClick)];
+    self.navigationItem.leftBarButtonItem = backButton;
+    
     [[MMPopupWindow sharedWindow] cacheWindow];
     self.title = @"我的银行卡";
     _comfirmBtn.backgroundColor = BASECOLOR;
     [_comfirmBtn setTitleColor:VIEWBACKCOLOR forState:UIControlStateNormal];
     
+}
+
+- (void)backClick {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
