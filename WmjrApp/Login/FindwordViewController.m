@@ -52,38 +52,38 @@
     _getVerificatBtn.layer.masksToBounds = YES;
     _completeBtn.backgroundColor = GERENCOLOR;
     
-    [_phoneNum addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
-    [_verificatWord addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
-    [_nPassword addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
-    [_confimPassword addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
+//    [_phoneNum addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
+//    [_verificatWord addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
+//    [_nPassword addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
+//    [_confimPassword addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     
 }
 
-- (void)limitedNumberOfWords {
-    if (_phoneNum.text.length >= 11) {
-        _phoneNum.text = [_phoneNum.text substringToIndex:11];
-        NetManager *manager = [[NetManager alloc] init];
-        NSDictionary *paramDic = @{@"mobile":_phoneNum.text, @"pwd":@""};
-        [manager postDataWithUrlActionStr:@"User/forget" withParamDictionary:paramDic withBlock:^(id obj) {
-            if ([obj[@"result"] isEqualToString:@"1"]) {
-            } else {
-                [_phoneNum resignFirstResponder];
-                [[SingletonManager sharedManager] alert1PromptInfo:[obj[@"data"] objectForKey:@"mes"]];
-                return ;
-            }
-        }];
-
-    }
-    if (_verificatWord.text.length > 8) {
-        _verificatWord.text = [_verificatWord.text substringToIndex:8];
-    }
-    if (_nPassword.text.length > 18) {
-        _nPassword.text = [_nPassword.text substringToIndex:18];
-    }
-    if (_confimPassword.text.length > 18) {
-        _confimPassword.text = [_confimPassword.text substringToIndex:18];
-    }
-}
+//- (void)limitedNumberOfWords {
+//    if (_phoneNum.text.length >= 11) {
+//        _phoneNum.text = [_phoneNum.text substringToIndex:11];
+//        NetManager *manager = [[NetManager alloc] init];
+//        NSDictionary *paramDic = @{@"mobile":_phoneNum.text, @"pwd":@""};
+//        [manager postDataWithUrlActionStr:@"User/forget" withParamDictionary:paramDic withBlock:^(id obj) {
+//            if ([obj[@"result"] isEqualToString:@"1"]) {
+//            } else {
+//                [_phoneNum resignFirstResponder];
+//                [[SingletonManager sharedManager] alert1PromptInfo:[obj[@"data"] objectForKey:@"mes"]];
+//                return ;
+//            }
+//        }];
+//
+//    }
+//    if (_verificatWord.text.length > 8) {
+//        _verificatWord.text = [_verificatWord.text substringToIndex:8];
+//    }
+//    if (_nPassword.text.length > 18) {
+//        _nPassword.text = [_nPassword.text substringToIndex:18];
+//    }
+//    if (_confimPassword.text.length > 18) {
+//        _confimPassword.text = [_confimPassword.text substringToIndex:18];
+//    }
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -146,7 +146,7 @@
 #pragma mark - 数据处理 －
 - (void)getDataWithNetManager {
     NetManager *manager = [[NetManager alloc] init];
-    NSDictionary *paramDic = @{@"mobile":_phoneNum.text, @"pwd":_nPassword.text};
+    NSDictionary *paramDic = @{@"mobile":_phoneNum.text, @"pwd":_nPassword.text,@"verify":_verificatWord.text};
     [manager postDataWithUrlActionStr:@"User/forget" withParamDictionary:paramDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD showSuccessWithStatus:@"修改成功" maskType:(SVProgressHUDMaskTypeNone)];

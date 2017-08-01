@@ -289,9 +289,10 @@
         if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]) {
             UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
             NSString *content = [pasteboard string];
-            if (content.length != 6) {
+            if ([content rangeOfString:@"wmcf-"].location ==NSNotFound) {
                 [self homeGuideLayout];
             }
+            
         }
             //获取客服电话
             [self getCompanyTelphoneMethod];

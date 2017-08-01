@@ -84,8 +84,9 @@
 - (void)getCopyBoardMethod {
     UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
     NSString *content = [pasteboard string];
-    if (content.length == 6) {
-        _invitedNum.text = content;
+    if ([content rangeOfString:@"wmcf-"].location !=NSNotFound) {
+        NSArray *contentArray = [content componentsSeparatedByString:@"-"];
+        _invitedNum.text = contentArray[1];
     }
 }
 
@@ -253,7 +254,7 @@
 #pragma mark - 数据处理 －
 - (void)getDataWithNetManager {
     NetManager *manager = [[NetManager alloc] init];
-    NSDictionary *paramDic = @{@"name":_userName.text, @"pwd":_nPassword.text, @"invitationcode":_invitedNum.text, @"mobile":_phoneNum.text,@"verify":_verificatword.text};
+    NSDictionary *paramDic = @{@"name":_userName.text,@"pwd":_nPassword.text,@"invitationcode":_invitedNum.text,@"mobile":_phoneNum.text,@"verify":_verificatword.text};
     [manager postDataWithUrlActionStr:@"User/register" withParamDictionary:paramDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             NSDictionary *dataDic = obj[@"data"];

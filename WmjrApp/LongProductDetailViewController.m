@@ -131,7 +131,8 @@
     
     [_sharedView callSharedBtnEventBlock:^(UIButton *sender) {
         [_popMenu dismissMenu];
-        NSString *urlStr = [NSString stringWithFormat:@"http://wmjr888.com/home/download/product/id/%@", _productModel.proIntro_id];
+//        NSString *urlStr = [NSString stringWithFormat:@"http://wmjr888.com/home/download/product/id/%@", _productModel.proIntro_id];
+        NSString *urlStr = [NSString stringWithFormat:@"http://m.wangmacaifu.com/#/long-detail/%@", _productModel.proIntro_id];
         SharedManager *sharedManager = [[SharedManager alloc] init];
         [sharedManager shareContent:sender withTitle:@"旺马财富" andContent:@"这是一个值得信赖的的投资理财平台" andUrl:urlStr];
     }];

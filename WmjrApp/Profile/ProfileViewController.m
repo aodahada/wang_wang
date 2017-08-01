@@ -313,7 +313,9 @@
     [filter setDefaults];
     
     // 3.给过滤器添加数据(正则表达式/账号和密码)
-    NSString *dataString = [NSString stringWithFormat:@"http://m.wmjr888.com/?invitationcode=%@#login-register",[SingletonManager sharedManager].userModel.invitationcode];
+    //http://m.wangmacaifu.com/#/register/wmcf-xxxxxx
+//    NSString *dataString = [NSString stringWithFormat:@"http://m.wmjr888.com/?invitationcode=%@#login-register",[SingletonManager sharedManager].userModel.invitationcode];
+        NSString *dataString = [NSString stringWithFormat:@"http://m.wangmacaifu.com/#/register/wmcf-%@",[SingletonManager sharedManager].userModel.invitationcode];
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     [filter setValue:data forKeyPath:@"inputMessage"];
     
