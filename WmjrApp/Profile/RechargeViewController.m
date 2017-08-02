@@ -50,6 +50,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"RechargeViewController"];
     self.tabBarController.tabBar.hidden = YES;
     
     /* 余额数 */
@@ -106,6 +107,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"RechargeViewController"];
 }
 
 - (void)didReceiveMemoryWarning {

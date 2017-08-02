@@ -58,6 +58,16 @@
     [self getShortProductListMethod];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"ShortListViewController"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"ShortListViewController"];
+}
+
 #pragma mark - 获取短期产品列表
 - (void)getShortProductListMethod {
     

@@ -37,6 +37,16 @@
     [_selfCardField addTarget:self action:@selector(selfCardFieldAction) forControlEvents:(UIControlEventEditingChanged)];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"RealNameCertificationViewController"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"RealNameCertificationViewController"];
+}
+
 - (void)selfCardFieldAction {
     if (_selfCardField.text.length > 18) {
         _selfCardField.text = [_selfCardField.text substringToIndex:18];

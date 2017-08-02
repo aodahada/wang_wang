@@ -124,14 +124,20 @@
     [self.view addSubview:_tableView];
     [_tableView registerClass:[MyselfTransCell class] forCellReuseIdentifier:@"cell"];
     
-    //当tradeArray为空时
-    [self tradeNilMethod];
+//    //当tradeArray为空时
+//    [self tradeNilMethod];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [MobClick beginLogPageView:@"MyselfTransactionController"];
     self.tabBarController.tabBar.hidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"MyselfTransactionController"];
 }
 
 - (void)configView {
@@ -242,6 +248,8 @@
                 model.type = @"1";
                 [_tradeArray addObject:model];
             }
+            //当tradeArray为空时
+            [self tradeNilMethod];
             [_tableView reloadData];
         } else {
             [SVProgressHUD dismiss];
@@ -269,6 +277,8 @@
                 model.type = @"2";
                 [_tradeArray addObject:model];
             }
+            //当tradeArray为空时
+            [self tradeNilMethod];
             [_tableView reloadData];
         } else {
             [SVProgressHUD dismiss];
@@ -297,6 +307,8 @@
                 model.type = @"3";
                 [_tradeArray addObject:model];
             }
+            //当tradeArray为空时
+            [self tradeNilMethod];
             [_tableView reloadData];
         } else {
             [SVProgressHUD dismiss];

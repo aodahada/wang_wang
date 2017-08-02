@@ -59,5 +59,7 @@
 #import <MMPopupView/MMAlertView.h>
 #import <SSKeychainQuery.h>
 #import <SSKeychain.h>
+//友盟app使用情况统计
+#import "UMMobClick/MobClick.h"
 
 #endif

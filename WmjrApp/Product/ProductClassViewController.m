@@ -38,6 +38,16 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"ProductClassViewController"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"ProductClassViewController"];
+}
+
 #pragma mark - 获取广告图
 - (void)getAdMethod {
     

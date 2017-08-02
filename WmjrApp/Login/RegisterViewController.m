@@ -76,7 +76,12 @@
     [_password addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     [_verificatword addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     
-    [self getCopyBoardMethod];
+    if (self.codeTextCanEdit) {
+        _invitedNum.userInteractionEnabled = YES;
+    } else {
+        _invitedNum.userInteractionEnabled = NO;
+        [self getCopyBoardMethod];
+    }
     
 }
 
@@ -164,11 +169,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"RegisterViewController"];
     self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"RegisterViewController"];
 }
 
 /* 获取验证码 */

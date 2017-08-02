@@ -63,12 +63,15 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
 //    self.navigationController.navigationBar.hidden = NO;
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"ProductListViewController"];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"ProductListViewController"];
     if ([SingletonManager sharedManager].isProductListViewWillAppear != 1) {
         if ([SingletonManager sharedManager].isJumpGun == 2) {
             

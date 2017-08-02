@@ -28,6 +28,7 @@ PODS:
   - SDWebImage/Core (3.7.3)
   - SSKeychain (1.3.1)
   - SVProgressHUD (1.1.3)
+  - UMengAnalytics (4.2.4)
   - XHLaunchAd (2.1.9)
 
 DEPENDENCIES:
@@ -43,6 +44,7 @@ DEPENDENCIES:
   - SDWebImage
   - SSKeychain
   - SVProgressHUD
+  - UMengAnalytics
   - XHLaunchAd
 
 SPEC CHECKSUMS:
@@ -58,8 +60,9 @@ SPEC CHECKSUMS:
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SSKeychain: 04c4ec40f4c3deda524e269bc76e5f30e638a174
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
+  UMengAnalytics: ef8d45f94c0e5771dc364cf6a5731d9d3b101da2
   XHLaunchAd: 36a28ceda12b4caaa0040cc60b286cd0429bb95d
 
-PODFILE CHECKSUM: 53dc78414f09bc90bc0bd2705338b2bb05ea2850
+PODFILE CHECKSUM: f7975fa6f61ec33bf5a8dc6c924da36166233159
 
 COCOAPODS: 1.2.1

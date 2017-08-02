@@ -46,6 +46,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"AddBankViewController"];
     self.tabBarController.tabBar.hidden = YES;
 }
 
@@ -72,6 +73,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"AddBankViewController"];
     self.tabBarController.tabBar.hidden = NO;
 }
 

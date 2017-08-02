@@ -46,6 +46,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"DrawalViewController"];
     /* 余额数 */
 //    _accountLab.text = self.accountStr;
     self.tabBarController.tabBar.hidden = YES;
@@ -60,6 +61,11 @@
             [SVProgressHUD dismiss];
         }
     }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"DrawalViewController"];
 }
 
 /* 确认提现 */

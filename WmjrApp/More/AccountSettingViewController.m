@@ -557,6 +557,9 @@
                 [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"passWord"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"logout" object:nil];
+                
+                //友盟不再统计
+                [MobClick profileSignOff];
                 //可能退出时也要删除手势密码
 //                [KeychainData forgotPsw];
                 [[SingletonManager sharedManager] removeHandGestureInfoDefault];

@@ -43,6 +43,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"MyRecommendatViewController"];
     self.tabBarController.tabBar.hidden = YES;
     
     UIImage *shareImage = [[UIImage imageNamed:@"icon_share"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -53,6 +54,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"MyRecommendatViewController"];
 }
 
 - (void)getNetDataMethod {

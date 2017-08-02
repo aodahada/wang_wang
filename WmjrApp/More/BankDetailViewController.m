@@ -72,6 +72,46 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return RESIZE_UI(40);
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc]init];
+    headerView.backgroundColor = RGBA(37, 108, 175, 1.0);
+    UILabel *bankLabel = [[UILabel alloc]init];
+    bankLabel.text = @"银行(借记卡)";
+    bankLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    bankLabel.textColor = RGBA(167, 210, 238, 1.0);
+    [headerView addSubview:bankLabel];
+    [bankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(headerView.mas_left).with.offset(RESIZE_UI(20));
+        make.centerY.equalTo(headerView.mas_centerY).with.offset(RESIZE_UI(10));
+    }];
+    
+    UILabel *firstLabel = [[UILabel alloc]init];
+    firstLabel.text = @"首次绑卡支付";
+    firstLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    firstLabel.textColor = RGBA(167, 210, 238, 1.0);
+    [headerView addSubview:firstLabel];
+    [firstLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(headerView.mas_centerY).with.offset(RESIZE_UI(10));
+        make.left.equalTo(headerView.mas_left).with.offset(RESIZE_UI(130));
+    }];
+    
+    UILabel *alreadyLabel = [[UILabel alloc]init];
+    alreadyLabel.text = @"已绑卡支付";
+    alreadyLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    alreadyLabel.textColor = RGBA(167, 210, 238, 1.0);
+    [headerView addSubview:alreadyLabel];
+    [alreadyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(headerView.mas_centerY).with.offset(RESIZE_UI(10));
+        make.right.equalTo(headerView.mas_right).with.offset(-RESIZE_UI(45));
+    }];
+    
+    return headerView;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }

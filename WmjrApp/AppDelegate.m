@@ -77,6 +77,12 @@
     /* 分享 */
     [self shareContent];
     
+    UMConfigInstance.appKey = @"598056e86e27a4084a000ffd";
+    UMConfigInstance.ChannelId = @"App Store";
+    UMConfigInstance.eSType = E_UM_GAME; //仅适用于游戏场景，应用统计不用设置
+    [MobClick startWithConfigure:UMConfigInstance];//配置以上参数后调用此方法初始化SDK！
+    [MobClick setEncryptEnabled:YES];//日志加密
+    
     
     //在这里处理界面跳转，didFinishLaunchingWithOptions这个方法不论是程序被杀死了，进入前台都会调用这个方法,从无到有进会走这个方法
     if (launchOptions[UIApplicationLaunchOptionsLocalNotificationKey]) {
@@ -297,8 +303,10 @@
     if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]) {
         UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
         NSString *content = [pasteboard string];
+        content = [self convertNullString:content];
         if ([content rangeOfString:@"wmcf-"].location !=NSNotFound) {
             RegisterViewController *registerVC = [[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
+            registerVC.codeTextCanEdit = NO;
             BaseNavigationController *registerNav = [[BaseNavigationController alloc]initWithRootViewController:registerVC];
             [self.window.rootViewController presentViewController:registerNav animated:YES completion:nil];
         }

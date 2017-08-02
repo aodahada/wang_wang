@@ -80,6 +80,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"ProductIntroViewController"];
     self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBar.hidden = NO;
     [self setUpNavigationBar];
@@ -87,6 +88,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"ProductIntroViewController"];
     self.tabBarController.tabBar.hidden = NO;
 }
 

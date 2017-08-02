@@ -82,11 +82,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"LoginViewController"];
     self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"LoginViewController"];
     /* 当页面消失的时候让输入框的内容也清空 */
     _phoneNum.text = @"";
     _passWord.text = @"";
@@ -110,6 +112,7 @@
 /* 快速注册 */
 - (IBAction)quickRegisterAction:(id)sender {
     RegisterViewController *registerVC = [[RegisterViewController alloc] init];
+    registerVC.codeTextCanEdit = YES;
     [self.navigationController pushViewController:registerVC animated:YES];
 }
 
@@ -137,6 +140,7 @@
                 }];
                 UserInfoModel *userModel = [UserInfoModel mj_objectWithKeyValues:dataDic];
                 [SingletonManager sharedManager].uid = dataDic[@"id"];
+                [MobClick profileSignInWithPUID:dataDic[@"id"]];
                 [SingletonManager sharedManager].userModel = userModel;
                 [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].uid forKey:@"uid"];
                 [[NSUserDefaults standardUserDefaults] setObject:_phoneNum.text forKey:@"mobile"];

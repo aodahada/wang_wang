@@ -28,6 +28,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"NewMoreViewController"];
     self.tabBarController.tabBar.hidden = YES;
     
 }
@@ -46,52 +47,139 @@
     tabViewForMore.tableFooterView = [[UIView alloc]init];
     [self.view addSubview:tabViewForMore];
     [tabViewForMore mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+        make.top.equalTo(self.view.mas_top);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-RESIZE_UI(44));
     }];
+    
+    UIButton *buttonForExit = [[UIButton alloc]init];
+    [buttonForExit setBackgroundColor:RGBA(236, 100, 52, 1.0)];
+    buttonForExit.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+    [buttonForExit setTitle:@"退出" forState:UIControlStateNormal];
+    [buttonForExit addTarget:self action:@selector(exitMethod) forControlEvents:UIControlEventTouchUpInside];
+    [buttonForExit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.view addSubview:buttonForExit];
+    [buttonForExit mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view.mas_bottom);
+        make.height.mas_offset(RESIZE_UI(44));
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+    }];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"NewMoreViewController"];
+}
+
+#pragma mark - 退出登录
+- (void)exitMethod {
+    /* 安全退出 */
+    MMPopupItemHandler block = ^(NSInteger index){
+        if (index == 0) {
+            return ;
+        }
+        if (index == 1) {
+            /* 将当前的uid置为空 */
+            [SingletonManager sharedManager].uid = @"";
+            [SingletonManager sharedManager].userModel = nil;
+            [[NSUserDefaults standardUserDefaults] setValue:[SingletonManager sharedManager].uid forKey:@"uid"];
+            [[NSUserDefaults standardUserDefaults] setValue:[SingletonManager sharedManager].userModel forKey:@"userModel"];
+            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"mobile"];
+            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"passWord"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"logout" object:nil];
+#warning 待定
+            //可能退出时也要删除手势密码
+            //                [KeychainData forgotPsw];
+            [[SingletonManager sharedManager] removeHandGestureInfoDefault];
+
+            LoginViewController *loginVC = [[LoginViewController alloc] init];
+            loginVC.loginIden = @"login";
+            loginVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
+            [self presentViewController:loginNa animated:YES completion:^{
+            }];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    };
+    NSArray *items =
+    @[MMItemMake(@"取消", MMItemTypeNormal, block),
+      MMItemMake(@"确定", MMItemTypeNormal, block)];
+    MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
+                                                         detail:@"是否确定退出"
+                                                          items:items];
+    [alertView show];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if (section == 0) {
         return 4;
-    } else if (section == 1) {
+    } else  {
         return 3;
-    } else {
-        return 1;
     }
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    if (section == 0) {
-        return 13;
-    } else if (section == 1) {
-        return 12;
-    } else if (section == 2) {
-        return 26;
+    if (section == 1) {
+        return 41;
     } else {
         return 0;
     }
-    
 }
 
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc]init];
-    headerView.backgroundColor = RGBA(237, 240, 242, 1.0);
-    return headerView;
+
+    UIView *viewForHeader = [[UIView alloc]init];
+    viewForHeader.backgroundColor = RGBA(237, 240, 242, 1.0);
+    if (section == 1) {
+        UIView *whiteView = [[UIView alloc]init];
+        whiteView.backgroundColor = [UIColor whiteColor];
+        [viewForHeader addSubview:whiteView];
+        [whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(viewForHeader.mas_top).with.offset(12);
+            make.left.equalTo(viewForHeader.mas_left);
+            make.right.equalTo(viewForHeader.mas_right);
+            make.bottom.equalTo(viewForHeader.mas_bottom).with.offset(-1);
+        }];
+        
+        UILabel *labelForLine = [[UILabel alloc]init];
+        labelForLine.backgroundColor = RGBA(42, 103, 170, 1.0);
+        [whiteView addSubview:labelForLine];
+        [labelForLine mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(whiteView.mas_centerY);
+            make.left.equalTo(whiteView.mas_left);
+            make.height.mas_offset(17);
+            make.width.mas_offset(5);
+        }];
+
+        UILabel *labelForTitle = [[UILabel alloc]init];
+        labelForTitle.text = @"新浪账户中心";
+        labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+        labelForTitle.textColor = RGBA(153, 153, 153, 1.0);
+        [whiteView addSubview:labelForTitle];
+        [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(whiteView.mas_centerY);
+            make.left.equalTo(whiteView.mas_left).with.offset(13);
+        }];
+    }
+    return viewForHeader;
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 3) {
-        return 212;
-    } else {
-        return 44;
-    }
+    
+    return RESIZE_UI(60);
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -105,103 +193,62 @@
         cell.textLabel.textColor = RGBA(20, 20, 23, 1.0);
     }
     if (indexPath.section == 0) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         switch (indexPath.row) {
-            case 0:{
-                cell.textLabel.text = @"实名认证";
-                UILabel *labelForRealName = [[UILabel alloc]init];
-                labelForRealName.textColor = RGBA(255, 88, 26, 1.0);
-                labelForRealName.font = [UIFont systemFontOfSize:15];
-                NSString *isRealName = [SingletonManager sharedManager].userModel.is_real_name;
-                if ([isRealName isEqualToString:@"1"]) {
-                    labelForRealName.text = @"已认证";
-                } else {
-                    labelForRealName.text = @"未认证";
-                }
-                [cell addSubview:labelForRealName];
-                [labelForRealName mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.right.equalTo(cell.mas_right).with.offset(-37);
+            case 0:
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.textLabel.text = @"关于我们";
+                break;
+            case 1:
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.textLabel.text = @"帮助中心";
+                break;
+            case 2:
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.textLabel.text = @"意见反馈";
+                break;
+            case 3:
+            {
+                cell.textLabel.text = @"当前版本";
+                NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+                UILabel *labelForVersion = [[UILabel alloc]init];
+                labelForVersion.text = [NSString stringWithFormat:@"已更新至%@版本",app_version];
+                labelForVersion.textColor = RGBA(255, 88, 26, 1.0);
+                labelForVersion.font = [UIFont systemFontOfSize:15];
+                [cell addSubview:labelForVersion];
+                [labelForVersion mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.right.equalTo(cell.mas_right).with.offset(-12);
                     make.centerY.equalTo(cell.mas_centerY);
                 }];
             }
-                
-                break;
-            case 1:
-                cell.textLabel.text = @"密码管理";
-                break;
-            case 2:
-                cell.textLabel.text = @"手势绘制";
-                break;
-            case 3:
-                cell.textLabel.text = @"关于我们";
                 break;
                 
             default:
                 break;
         }
-    } else if (indexPath.section == 1) {
+    } else {
         switch (indexPath.row) {
             case 0:{
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.textLabel.text = @"帮助中心";
+                cell.textLabel.text = @"账户管理";
             }
                 
                 break;
             case 1:{
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.textLabel.text = @"意见反馈";
+                cell.textLabel.text = @"安全中心";
             }
                 break;
 
             case 2:{
-                cell.textLabel.text = @"联系客服";
-                UILabel *labelForPhone = [[UILabel alloc]init];
-                labelForPhone.text = [SingletonManager sharedManager].companyTel;
-                labelForPhone.textColor = RGBA(255, 88, 26, 1.0);
-                labelForPhone.font = [UIFont systemFontOfSize:15];
-                [cell addSubview:labelForPhone];
-                [labelForPhone mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.right.equalTo(cell.mas_right).with.offset(-12);
-                    make.centerY.equalTo(cell.mas_centerY);
-                }];
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.textLabel.text = @"我的授权";
+                
             }
                 
                 break;
             default:
                 break;
         }
-    } else if (indexPath.section == 2) {
-        UILabel *labelForLogOut = [[UILabel alloc]init];
-        labelForLogOut.text = @"退出登录";
-        labelForLogOut.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
-        labelForLogOut.textColor = RGBA(153, 153, 153, 1.0);
-        [cell addSubview:labelForLogOut];
-        [labelForLogOut mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(cell.mas_centerX);
-            make.centerY.equalTo(cell.mas_centerY);
-        }];
-    } else {
-        cell.backgroundColor = RGBA(237, 240, 242, 1.0);
-        UIImageView *imageViewFor = [[UIImageView alloc]init];
-        imageViewFor.image = [UIImage imageNamed:@"wang"];
-        [cell addSubview:imageViewFor];
-        [imageViewFor mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(cell.mas_top).with.offset(65);
-            make.height.width.mas_offset(RESIZE_UI(73));
-            make.centerX.equalTo(cell.mas_centerX);
-        }];
-        
-        NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-        UILabel *labelForVersion = [[UILabel alloc]init];
-        labelForVersion.text = [NSString stringWithFormat:@"旺马财富%@版本",app_version];
-        labelForVersion.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
-        labelForVersion.textColor = RGBA(38, 44, 50, 1.0);
-        [cell addSubview:labelForVersion];
-        [labelForVersion mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(imageViewFor.mas_bottom).with.offset(12);
-            make.height.mas_offset(RESIZE_UI(22));
-            make.centerX.mas_equalTo(cell.mas_centerX);
-        }];
     }
     
     return cell;
@@ -212,41 +259,6 @@
     if (indexPath.section == 0) {
         switch (indexPath.row) {
             case 0:{
-                //实名认证
-                if ([[SingletonManager sharedManager].userModel.is_real_name isEqualToString:@"0"]) {
-                    RealNameCertificationViewController *realNameCerVC = [[RealNameCertificationViewController alloc] init];
-                    [self.navigationController pushViewController:realNameCerVC animated:YES];
-                }
-            }
-                break;
-            case 1:{
-                //密码管理
-                PasswordManageViewController *passWordVC = [[PasswordManageViewController alloc]init];
-                [self.navigationController pushViewController:passWordVC animated:YES];
-            }
-                break;
-            case 2:{
-                //手势绘制
-                BOOL isSave = [[SingletonManager sharedManager] isSave]; //是否有保存
-                if (isSave) {
-                    AliGesturePasswordViewController *aliGesVC = [[AliGesturePasswordViewController alloc]init];
-                    aliGesVC.string = @"修改密码";
-                    aliGesVC.type = @"更多";
-                    [self presentViewController:aliGesVC animated:YES completion:^{
-                        
-                    }];
-                } else {
-                    [[SingletonManager sharedManager] removeHandGestureInfoDefault];
-                    AliGesturePasswordViewController *aliGesVC = [[AliGesturePasswordViewController alloc]init];
-                    aliGesVC.string = @"重置密码";
-                    aliGesVC.type = @"更多";
-                    [self presentViewController:aliGesVC animated:YES completion:^{
-                        
-                    }];
-                }
-            }
-                break;
-            case 3:{
                 //关于我们
                 AgViewController *agVC =[[AgViewController alloc] init];
                 agVC.title = @"关于我们";
@@ -254,77 +266,47 @@
                 BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
                 [self presentViewController:baseNa animated:YES completion:^{
                 }];
-                
             }
                 break;
-                
-            default:
-                break;
-        }
-    } else if (indexPath.section == 1) {
-        switch (indexPath.row) {
-            case 0:{
+            case 1:{
                 //帮助中心
                 HelpViewController *helpVC = [[HelpViewController alloc] initWithStyle:(UITableViewStyleGrouped)];
                 [self.navigationController pushViewController:helpVC animated:YES];
             }
                 break;
-            case 1:{
+            case 2:{
                 //意见反馈
                 FeedbackViewController *feedbackVC = [[FeedbackViewController alloc] init];
                 [self.navigationController pushViewController:feedbackVC animated:YES];
-            }
-                break;
-            case 2:{
-                //联系客服
-                NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",[SingletonManager sharedManager].companyTel];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
             }
                 break;
                 
             default:
                 break;
         }
-    } else if (indexPath.section == 2) {
-        /* 安全退出 */
-        MMPopupItemHandler block = ^(NSInteger index){
-            if (index == 0) {
-                return ;
-            }
-            if (index == 1) {
-                /* 将当前的uid置为空 */
-                [SingletonManager sharedManager].uid = @"";
-                [SingletonManager sharedManager].userModel = nil;
-                [[NSUserDefaults standardUserDefaults] setValue:[SingletonManager sharedManager].uid forKey:@"uid"];
-                [[NSUserDefaults standardUserDefaults] setValue:[SingletonManager sharedManager].userModel forKey:@"userModel"];
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"mobile"];
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"passWord"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"logout" object:nil];
-#warning 待定
-                //可能退出时也要删除手势密码
-                //                [KeychainData forgotPsw];
-                [[SingletonManager sharedManager] removeHandGestureInfoDefault];
-                
-                LoginViewController *loginVC = [[LoginViewController alloc] init];
-                loginVC.loginIden = @"login";
-                loginVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-                BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNa animated:YES completion:^{
-                }];
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-        };
-        NSArray *items =
-        @[MMItemMake(@"取消", MMItemTypeNormal, block),
-          MMItemMake(@"确定", MMItemTypeNormal, block)];
-        MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
-                                                             detail:@"是否确定退出"
-                                                              items:items];
-        [alertView show];
     } else {
-        
+        switch (indexPath.row) {
+            case 0:{
+                //账户管理
+                [self jumpToXinLangMethod:@"DEFAULT" andTitle:@"账户管理"];
+            }
+                break;
+            case 1:{
+                //安全中心
+                [self jumpToXinLangMethod:@"SAFETY_CENTER" andTitle:@"安全中心"];
+            }
+                break;
+            case 2:{
+                //我的授权
+                [self jumpToXinLangMethod:@"WITHHOLD" andTitle:@"我的授权"];
+            }
+                break;
+                
+            default:
+                break;
+        }
     }
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -334,6 +316,27 @@
     } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
     }
+}
+
+- (void)jumpToXinLangMethod:(NSString *)default_page andTitle:(NSString *)title{
+    
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"请稍后"];
+    [manager postDataWithUrlActionStr:@"Sina/index" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"default_page":default_page} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            NSDictionary *dic = obj[@"data"];
+            AgViewController *agVC =[[AgViewController alloc] init];
+            agVC.title = title;
+            agVC.webUrl = dic[@"redirect_url"];
+            BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+            [SVProgressHUD dismiss];
+            [self presentViewController:baseNa animated:YES completion:^{
+            }];
+        }else {
+            [SVProgressHUD showErrorWithStatus:@"请求失败"];
+        }
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -28,9 +28,10 @@
 #import "MyselfTransactionController.h"
 #import "PersonalCategoryCollectionViewCell.h"
 #import "StoreClassCollectionReusableView.h"
+#import "AccountAndPasswordViewController.h"
 
 
-@interface ProfileViewController ()<UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, copy) NSString *balanceValue;
 
@@ -39,6 +40,7 @@
 @property (nonatomic, strong) UILabel *labelForName;
 
 @property (nonatomic, weak) UICollectionView *classCollectionView;
+@property (nonatomic, strong)UITableView *tableView;
 
 @property (nonatomic, strong)UIView *blackBottomView;//二维码黑背景
 @property (nonatomic, strong)UIView *whiteBottomView;//二维码白背景
@@ -53,9 +55,10 @@
 //头视图
 - (UIView *)setUpProfileHeadView {
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,RESIZE_UI(187+49))];
-    headView.backgroundColor = RGBA(220, 223, 225, 1.0);
+//    headView.backgroundColor = RGBA(220, 223, 225, 1.0);
+    headView.backgroundColor = [UIColor redColor];
     UIImageView *imageViewForBackground = [[UIImageView alloc]init];
-    imageViewForBackground.image = [UIImage imageNamed:@"image_me_bg"];
+    imageViewForBackground.image = [UIImage imageNamed:@"image_me_bg-2"];
     [headView addSubview:imageViewForBackground];
     [imageViewForBackground mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(headView.mas_top);
@@ -100,14 +103,14 @@
     /*  消息  */
     UIButton *buttonForMessCenter = [[UIButton alloc]init];
 //    [buttonForMessCenter setBackgroundImage:[UIImage imageNamed:@"notific"] forState:UIControlStateNormal];
-    [buttonForMessCenter setImage:[UIImage imageNamed:@"notific"] forState:UIControlStateNormal];
+    [buttonForMessCenter setImage:[UIImage imageNamed:@"icon_xx"] forState:UIControlStateNormal];
     [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:buttonForMessCenter];
     [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(33));
         make.right.equalTo(headView.mas_right).with.offset(RESIZE_UI(-15));
-        make.height.mas_offset(RESIZE_UI(24));
-        make.width.mas_offset(RESIZE_UI(24));
+        make.height.mas_offset(RESIZE_UI(30));
+        make.width.mas_offset(RESIZE_UI(30));
     }];
     
 //    UIButton *buttonForMessCenter = [[UIButton alloc]init];
@@ -126,12 +129,12 @@
     
     //二维码
     UIButton *codeButton = [[UIButton alloc]init];
-    [codeButton setBackgroundImage:[UIImage imageNamed:@"icon_erweima"] forState:UIControlStateNormal];
+    [codeButton setBackgroundImage:[UIImage imageNamed:@"icon_ewm"] forState:UIControlStateNormal];
     [codeButton addTarget:self action:@selector(watchCodeMethod) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:codeButton];
     [codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(buttonForMessCenter.mas_centerY);
-        make.width.height.mas_offset(RESIZE_UI(24));
+        make.width.height.mas_offset(RESIZE_UI(30));
         make.right.equalTo(buttonForMessCenter.mas_left).with.offset(RESIZE_UI(-15));
     }];
     
@@ -175,7 +178,7 @@
         make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(187));
         make.left.equalTo(headView.mas_left);
         make.right.equalTo(headView.mas_right);
-        make.height.mas_offset(RESIZE_UI(76));
+        make.height.mas_offset(RESIZE_UI(49));
     }];
     
     //我要充值
@@ -190,22 +193,22 @@
     }];
     
     UIView *viewBottomForRecharge = [[UIView alloc]init];
-    viewBottomForRecharge.backgroundColor = [UIColor clearColor];
+    viewBottomForRecharge.backgroundColor = [UIColor whiteColor];
     [viewForRecharge addSubview:viewBottomForRecharge];
     [viewBottomForRecharge mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(viewForRecharge.mas_centerX);
-        make.height.mas_offset(RESIZE_UI(76));
-        make.width.mas_offset(RESIZE_UI(105));
         make.centerY.equalTo(viewForRecharge.mas_centerY);
+        make.height.mas_offset(RESIZE_UI(49));
+        make.width.mas_offset(RESIZE_UI(110));
+        make.centerX.equalTo(viewForRecharge.mas_centerX);
     }];
     
     UIImageView *rechargeImageView = [[UIImageView alloc]init];
-    rechargeImageView.image = [UIImage imageNamed:@"icon_wycz"];
+    rechargeImageView.image = [UIImage imageNamed:@"icon_chzh"];
     [viewBottomForRecharge addSubview:rechargeImageView];
     [rechargeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(viewBottomForRecharge.mas_top).with.offset(RESIZE_UI(9));
-        make.centerX.equalTo(viewForRecharge.mas_centerX);
-        make.height.width.mas_offset(RESIZE_UI(32));
+        make.left.equalTo(viewBottomForRecharge.mas_left);
+        make.centerY.equalTo(viewForRecharge.mas_centerY);
+        make.height.width.mas_offset(RESIZE_UI(28));
     }];
     
     UILabel *rechargeLabel = [[UILabel alloc]init];
@@ -214,8 +217,8 @@
     rechargeLabel.textColor = RGBA(20, 20, 23, 1.0);
     [viewBottomForRecharge addSubview:rechargeLabel];
     [rechargeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(rechargeImageView.mas_bottom).with.offset(RESIZE_UI(2));
-        make.centerX.equalTo(viewForRecharge.mas_centerX);
+        make.left.equalTo(rechargeImageView.mas_right).with.offset(RESIZE_UI(12));
+        make.centerY.equalTo(viewForRecharge.mas_centerY);
         make.height.mas_offset(RESIZE_UI(24));
     }];
     
@@ -238,22 +241,23 @@
     }];
     
     UIView *viewBottomForWithdraw = [[UIView alloc]init];
-    viewBottomForWithdraw.backgroundColor = [UIColor clearColor];
+    viewBottomForWithdraw.backgroundColor = [UIColor whiteColor];
     [viewForWithdraw addSubview:viewBottomForWithdraw];
     [viewBottomForWithdraw mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(viewForWithdraw.mas_centerX);
-        make.height.mas_offset(RESIZE_UI(76));
-        make.width.mas_offset(RESIZE_UI(105));
+        make.height.mas_offset(RESIZE_UI(49));
+        make.width.mas_offset(RESIZE_UI(110));
         make.centerY.equalTo(viewForWithdraw.mas_centerY);
     }];
     
     UIImageView *withDrawImageView = [[UIImageView alloc]init];
-    withDrawImageView.image = [UIImage imageNamed:@"icon_wytx"];
+    withDrawImageView.image = [UIImage imageNamed:@"icon_tixian"];
     [viewBottomForWithdraw addSubview:withDrawImageView];
     [withDrawImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(viewBottomForWithdraw.mas_top).with.offset(RESIZE_UI(9));
-        make.centerX.equalTo(viewBottomForWithdraw.mas_centerX);
-        make.width.height.mas_offset(RESIZE_UI(32));
+        make.left.equalTo(viewBottomForWithdraw.mas_left);
+        make.centerY.equalTo(viewBottomForWithdraw.mas_centerY);
+        make.width.mas_offset(RESIZE_UI(28));
+        make.height.mas_offset(RESIZE_UI(23.2));
     }];
     
     UILabel *withDrawLabel = [[UILabel alloc]init];
@@ -262,8 +266,8 @@
     withDrawLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
     [viewBottomForWithdraw addSubview:withDrawLabel];
     [withDrawLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(withDrawImageView.mas_bottom).with.offset(RESIZE_UI(2));
-        make.centerX.equalTo(viewBottomForWithdraw.mas_centerX);
+        make.left.equalTo(withDrawImageView.mas_right).with.offset(RESIZE_UI(12));
+        make.centerY.equalTo(viewBottomForWithdraw.mas_centerY);
         make.height.mas_offset(RESIZE_UI(24));
     }];
     
@@ -550,72 +554,72 @@
     self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginSuccessMethod) name:@"loginSuccess" object:nil];
     
-//    _tableView = [[UITableView alloc] init];
-//    _tableView.backgroundColor = RGBA(237, 240, 242, 1.0);
-//    _tableView.delegate = self;
-//    _tableView.dataSource = self;
-//    _tableView.bounces = NO;
-//    _tableView.showsVerticalScrollIndicator = NO;
-//    _tableView.tableFooterView = [[UIView alloc]init];
-//    [self.view addSubview:_tableView];
-//    _tableView.tableHeaderView = [self setUpProfileHeadView];
-//    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.view.mas_top).with.offset(-20);
-//        make.left.equalTo(self.view.mas_left);
-//        make.right.equalTo(self.view.mas_right);
-//        make.bottom.equalTo(self.view.mas_bottom);
-//    }];
-    UIScrollView *mainScrollView = [[UIScrollView alloc]init];
-    [self.view addSubview:mainScrollView];
-    [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+    _tableView = [[UITableView alloc] init];
+    _tableView.backgroundColor = RGBA(237, 240, 242, 1.0);
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.bounces = NO;
+    _tableView.showsVerticalScrollIndicator = NO;
+    _tableView.tableFooterView = [[UIView alloc]init];
+    [self.view addSubview:_tableView];
+    _tableView.tableHeaderView = [self setUpProfileHeadView];
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).with.offset(-20);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.bottom.equalTo(self.view.mas_bottom);
     }];
-    
-    UIView *mainView = [[UIView alloc]init];
-    mainScrollView.backgroundColor = RGBA(231, 234, 236, 1.0);
-    [mainScrollView addSubview:mainView];
-    [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(mainScrollView);
-        make.width.mas_equalTo(self.view.mas_width);
-    }];
-    
-    UIView *headView = [self setUpProfileHeadView];
-    [mainView addSubview:headView];
-    [headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(mainView.mas_top);
-        make.left.equalTo(mainView.mas_left);
-        make.right.equalTo(mainView.mas_right);
-        make.height.mas_equalTo(RESIZE_UI(187+76));
-    }];
-    
-    UICollectionViewFlowLayout *flowLayout= [[UICollectionViewFlowLayout alloc]init];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:flowLayout];
-    self.classCollectionView = collectionView;
-    self.classCollectionView.scrollEnabled = NO;
-    [self.classCollectionView registerNib:[UINib nibWithNibName:@"PersonalCategoryCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"PersonalCategoryCollectionViewCell"];
-    [self.classCollectionView registerClass:[StoreClassCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"StoreClassCollectionReusableView"];
-    self.classCollectionView.delegate = self;
-    self.classCollectionView.dataSource = self;
-    self.classCollectionView.backgroundColor = RGBA(231, 234, 236, 1.0);
-//    self.classCollectionView.backgroundColor = [UIColor whiteColor];
-    self.classCollectionView.showsVerticalScrollIndicator = NO;
-    self.classCollectionView.showsHorizontalScrollIndicator = NO;
-    [mainView addSubview:self.classCollectionView];
-    [self.classCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(headView.mas_bottom).with.offset(0);
-            make.left.equalTo(mainView.mas_left);
-            make.right.equalTo(mainView.mas_right);
-//            make.bottom.equalTo(mainView.mas_bottom);
-            make.height.mas_equalTo(RESIZE_UI(80)*4+RESIZE_UI(24));
-    }];
-    
-    [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.classCollectionView.mas_bottom);
-    }];
+//    UIScrollView *mainScrollView = [[UIScrollView alloc]init];
+//    [self.view addSubview:mainScrollView];
+//    [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.view.mas_top).with.offset(-20);
+//        make.left.equalTo(self.view.mas_left);
+//        make.right.equalTo(self.view.mas_right);
+//        make.bottom.equalTo(self.view.mas_bottom);
+//    }];
+//    
+//    UIView *mainView = [[UIView alloc]init];
+//    mainScrollView.backgroundColor = RGBA(231, 234, 236, 1.0);
+//    [mainScrollView addSubview:mainView];
+//    [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(mainScrollView);
+//        make.width.mas_equalTo(self.view.mas_width);
+//    }];
+//    
+//    UIView *headView = [self setUpProfileHeadView];
+//    [mainView addSubview:headView];
+//    [headView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(mainView.mas_top);
+//        make.left.equalTo(mainView.mas_left);
+//        make.right.equalTo(mainView.mas_right);
+//        make.height.mas_equalTo(RESIZE_UI(187+76));
+//    }];
+//    
+//    UICollectionViewFlowLayout *flowLayout= [[UICollectionViewFlowLayout alloc]init];
+//    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+//    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:flowLayout];
+//    self.classCollectionView = collectionView;
+//    self.classCollectionView.scrollEnabled = NO;
+//    [self.classCollectionView registerNib:[UINib nibWithNibName:@"PersonalCategoryCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"PersonalCategoryCollectionViewCell"];
+//    [self.classCollectionView registerClass:[StoreClassCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"StoreClassCollectionReusableView"];
+//    self.classCollectionView.delegate = self;
+//    self.classCollectionView.dataSource = self;
+//    self.classCollectionView.backgroundColor = RGBA(231, 234, 236, 1.0);
+////    self.classCollectionView.backgroundColor = [UIColor whiteColor];
+//    self.classCollectionView.showsVerticalScrollIndicator = NO;
+//    self.classCollectionView.showsHorizontalScrollIndicator = NO;
+//    [mainView addSubview:self.classCollectionView];
+//    [self.classCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(headView.mas_bottom).with.offset(0);
+//            make.left.equalTo(mainView.mas_left);
+//            make.right.equalTo(mainView.mas_right);
+////            make.bottom.equalTo(mainView.mas_bottom);
+//            make.height.mas_equalTo(RESIZE_UI(80)*4+RESIZE_UI(24));
+//    }];
+//    
+//    [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(self.classCollectionView.mas_bottom);
+//    }];
 }
 
 - (void)loginSuccessMethod {
@@ -625,6 +629,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"ProfileViewController"];
     
     self.tabBarController.tabBar.hidden = NO;
     
@@ -660,32 +665,31 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 //    self.navigationController.navigationBarHidden = NO;
+    [MobClick endLogPageView:@"ProfileViewController"];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 
 
-//#pragma mark - UITableView dataSource delegate -
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    return 2;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    if (section == 0) {
-//        return 5;
-//    } else {
-//        return 3;
-//    }
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    if (section == 0) {
-//        return 12;
-//    } else {
-//        return 27;
-//    }
-//}
-//
+#pragma mark - UITableView dataSource delegate -
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 6;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return RESIZE_UI(12);
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return RESIZE_UI(60);
+    
+}
+
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 //    
 //    UIView *viewForHeader = [[UIView alloc]init];
@@ -714,67 +718,225 @@
 //    return viewForHeader;
 //    
 //}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *identifier  = @"cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+        cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+        switch (indexPath.row) {
+            case 0:
+                cell.imageView.image = [UIImage imageNamed:@"icon_licai"];
+                cell.textLabel.text = @"我的理财";
+                break;
+            case 1:
+                cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
+                cell.textLabel.text = @"好友推荐";
+                break;
+            case 2:
+                cell.imageView.image = [UIImage imageNamed:@"icon_yhk"];
+                cell.textLabel.text = @"我的银行卡";
+                break;
+            case 3:
+                cell.imageView.image = [UIImage imageNamed:@"icon_zhmm"];
+                cell.textLabel.text = @"账号和密码";
+                break;
+            case 4:
+                cell.imageView.image = [UIImage imageNamed:@"icon_jiaoyi"];
+                cell.textLabel.text = @"交易记录";
+                break;
+            case 5:
+            {
+                cell.imageView.image = [UIImage imageNamed:@"icon_lxkf"];
+                cell.textLabel.text = @"联系客服";
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                UILabel *labelForPhone = [[UILabel alloc]init];
+                labelForPhone.text = [SingletonManager sharedManager].companyTel;
+                labelForPhone.textColor = RGBA(255, 88, 26, 1.0);
+                labelForPhone.font = [UIFont systemFontOfSize:15];
+                [cell addSubview:labelForPhone];
+                [labelForPhone mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.right.equalTo(cell.mas_right).with.offset(-12);
+                    make.centerY.equalTo(cell.mas_centerY);
+                }];
+            }
+            default:
+                break;
+        }
+    cell.textLabel.textColor = TITLE_COLOR;
+
+    cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    switch (indexPath.row) {
+        case 0:{
+            /* 我的理财 */
+            MyselfManageFinanceController *myselfMFVC = [[MyselfManageFinanceController alloc] init];
+            [self.navigationController pushViewController:myselfMFVC animated:YES];
+            break;
+        }
+        case 1: {
+            /* 我的推荐 */
+            MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]init];
+            [self.navigationController pushViewController:myrecommendVC animated:YES];
+            break;
+        }
+        case 2: {
+            /* 我的银行卡 */
+            if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
+                /*  我的银行卡 */
+                UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
+                AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
+                addBankVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:addBankVC animated:YES];
+            } else {
+                MyselfBankViewController *myselfBankVC = [[MyselfBankViewController alloc] init];
+                myselfBankVC.card_id = [SingletonManager sharedManager].userModel.card_id;
+                [self.navigationController pushViewController:myselfBankVC animated:YES];
+            }
+            break;
+        }
+        case 3: {
+            /* 账号和密码 */
+            AccountAndPasswordViewController *accountAndPassVC = [[AccountAndPasswordViewController alloc]init];
+            [self.navigationController pushViewController:accountAndPassVC animated:YES];
+            break;
+        }
+        case 4: {
+            /** 交易记录*/
+            MyselfTransactionController *mySelfTrans = [[MyselfTransactionController alloc]init];
+            [self.navigationController pushViewController:mySelfTrans animated:YES];
+            break;
+        }
+        case 5:{
+            //联系客服
+            NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",[SingletonManager sharedManager].companyTel];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+        }
+            break;
+            
+        default:
+            break;
+    }
+
+}
+
+//#pragma mark - collectionview - delegate
+//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+//    
+//    return 2;
+//    
+//}
 //
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    static NSString *identifier  = @"cell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+//    
+//    if (section == 0) {
+//        return 4;
+//    } else {
+//        return 4;
 //    }
+//    
+//}
+//
+////Header 方法
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+//    return CGSizeMake(self.classCollectionView.frame.size.width, RESIZE_UI(12));
+//}
+//
+////Header布局
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+//    if ([kind isEqual:UICollectionElementKindSectionHeader]) {
+//        StoreClassCollectionReusableView *headerView = (StoreClassCollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"StoreClassCollectionReusableView" forIndexPath:indexPath];
+//        return headerView;
+//    }
+//    return nil;
+//}
+//
+//- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    static NSString *CellIdentifier = @"PersonalCategoryCollectionViewCell";
+//    PersonalCategoryCollectionViewCell *cell = (PersonalCategoryCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
 //    if (indexPath.section == 0) {
 //        switch (indexPath.row) {
 //            case 0:
-//                cell.imageView.image = [UIImage imageNamed:@"icon_licai"];
-//                cell.textLabel.text = @"我的理财";
+//                cell.headImageView.image = [UIImage imageNamed:@"icon_licai"];
+//                cell.titleLabel.text = @"我的理财";
 //                break;
 //            case 1:
-//                cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
-//                cell.textLabel.text = @"好友推荐";
+//                cell.headImageView.image = [UIImage imageNamed:@"icon_haoyou"];
+//                cell.titleLabel.text = @"好友推荐";
 //                break;
 //            case 2:
-//                cell.imageView.image = [UIImage imageNamed:@"icon_yhk"];
-//                cell.textLabel.text = @"我的银行卡";
+//                cell.headImageView.image = [UIImage imageNamed:@"icon_yhk"];
+//                cell.titleLabel.text = @"我的银行卡";
 //                break;
 //            case 3:
-//                cell.imageView.image = [UIImage imageNamed:@"icon_jifen"];
-//                cell.textLabel.text = @"我的积分";
+//                cell.headImageView.image = [UIImage imageNamed:@"icon_jiaoyi"];
+//                cell.titleLabel.text = @"交易记录";
 //                break;
-//            case 4:
-//                cell.imageView.image = [UIImage imageNamed:@"icon_jiaoyi"];
-//                cell.textLabel.text = @"交易记录";
-//                break;
+//                
 //            default:
 //                break;
 //        }
 //    } else {
 //        switch (indexPath.row) {
 //            case 0:
-//                cell.imageView.image = [UIImage imageNamed:@"icon_zhanghu"];
-//                cell.textLabel.text = @"账户管理";
+//                cell.headImageView.image = [UIImage imageNamed:@"icon_zhanghu"];
+//                cell.titleLabel.text = @"账户管理";
 //                break;
 //            case 1:
-//                cell.imageView.image = [UIImage imageNamed:@"icon_anquan"];
-//                cell.textLabel.text = @"安全中心";
+//                cell.headImageView.image = [UIImage imageNamed:@"icon_anquan"];
+//                cell.titleLabel.text = @"安全中心";
 //                break;
 //            case 2:
-//                cell.imageView.image = [UIImage imageNamed:@"icon_shouquan"];
-//                cell.textLabel.text = @"我的授权";
+//                cell.headImageView.image = [UIImage imageNamed:@"icon_wdsq"];
+//                cell.titleLabel.text = @"我的授权";
 //                break;
 //                
 //            default:
 //                break;
 //        }
 //    }
-//    cell.textLabel.textColor = TITLE_COLOR;
-//
-//    cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//    
 //    return cell;
+//    
 //}
 //
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//#pragma mark --UICollectionViewDelegateFlowLayout
+////定义每个UICollectionView 的大小
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    float width = (collectionView.frame.size.width-1)/2;
+//    if (indexPath.section == 1) {
+//        if (indexPath.row>2) {
+//            width = collectionView.frame.size.width/2;
+//        }
+//    }
+//    return CGSizeMake(width , RESIZE_UI(80));
+//}
+//
+////定义每个UICollectionView 的 margin
+//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+//    return UIEdgeInsetsMake(0,0,0,0);
+//}
+//
+//// 定义上下cell的最小间距
+//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+//    return 1.0f;
+//}
+//
+//// 定义cell间的最小间距
+//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+//    return 0.0f;
+//}
+//
+//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 //    
 //    if (indexPath.section == 0) {
 //        switch (indexPath.row) {
@@ -786,7 +948,7 @@
 //            }
 //            case 1: {
 //                /* 我的推荐 */
-//                MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]initWithNibName:@"MyRecommendatViewController" bundle:nil];
+//                MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]init];
 //                [self.navigationController pushViewController:myrecommendVC animated:YES];
 //                break;
 //            }
@@ -806,17 +968,11 @@
 //                break;
 //            }
 //            case 3: {
-//                /* 我的积分 */
-//                [[[UIAlertView alloc]initWithTitle:@"该功能正在开发中" message:nil delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil]show];
-//                break;
-//            }
-//            case 4: {
 //                /** 交易记录*/
 //                MyselfTransactionController *mySelfTrans = [[MyselfTransactionController alloc]init];
 //                [self.navigationController pushViewController:mySelfTrans animated:YES];
 //                break;
 //            }
-//                
 //            default:
 //                break;
 //        }
@@ -842,207 +998,15 @@
 //                break;
 //        }
 //    }
-//
 //}
-
-#pragma mark - collectionview - delegate
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    
-    return 2;
-    
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
-    if (section == 0) {
-        return 4;
-    } else {
-        return 4;
-    }
-    
-}
-
-//Header 方法
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(self.classCollectionView.frame.size.width, RESIZE_UI(12));
-}
-
-//Header布局
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    if ([kind isEqual:UICollectionElementKindSectionHeader]) {
-        StoreClassCollectionReusableView *headerView = (StoreClassCollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"StoreClassCollectionReusableView" forIndexPath:indexPath];
-        return headerView;
-    }
-    return nil;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *CellIdentifier = @"PersonalCategoryCollectionViewCell";
-    PersonalCategoryCollectionViewCell *cell = (PersonalCategoryCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    if (indexPath.section == 0) {
-        switch (indexPath.row) {
-            case 0:
-                cell.headImageView.image = [UIImage imageNamed:@"icon_licai"];
-                cell.titleLabel.text = @"我的理财";
-                break;
-            case 1:
-                cell.headImageView.image = [UIImage imageNamed:@"icon_haoyou"];
-                cell.titleLabel.text = @"好友推荐";
-                break;
-            case 2:
-                cell.headImageView.image = [UIImage imageNamed:@"icon_yhk"];
-                cell.titleLabel.text = @"我的银行卡";
-                break;
-            case 3:
-                cell.headImageView.image = [UIImage imageNamed:@"icon_jiaoyi"];
-                cell.titleLabel.text = @"交易记录";
-                break;
-                
-            default:
-                break;
-        }
-    } else {
-        switch (indexPath.row) {
-            case 0:
-                cell.headImageView.image = [UIImage imageNamed:@"icon_zhanghu"];
-                cell.titleLabel.text = @"账户管理";
-                break;
-            case 1:
-                cell.headImageView.image = [UIImage imageNamed:@"icon_anquan"];
-                cell.titleLabel.text = @"安全中心";
-                break;
-            case 2:
-                cell.headImageView.image = [UIImage imageNamed:@"icon_wdsq"];
-                cell.titleLabel.text = @"我的授权";
-                break;
-                
-            default:
-                break;
-        }
-    }
-    return cell;
-    
-}
-
-#pragma mark --UICollectionViewDelegateFlowLayout
-//定义每个UICollectionView 的大小
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    float width = (collectionView.frame.size.width-1)/2;
-    if (indexPath.section == 1) {
-        if (indexPath.row>2) {
-            width = collectionView.frame.size.width/2;
-        }
-    }
-    return CGSizeMake(width , RESIZE_UI(80));
-}
-
-//定义每个UICollectionView 的 margin
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(0,0,0,0);
-}
-
-// 定义上下cell的最小间距
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 1.0f;
-}
-
-// 定义cell间的最小间距
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 0.0f;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (indexPath.section == 0) {
-        switch (indexPath.row) {
-            case 0:{
-                /* 我的理财 */
-                MyselfManageFinanceController *myselfMFVC = [[MyselfManageFinanceController alloc] init];
-                [self.navigationController pushViewController:myselfMFVC animated:YES];
-                break;
-            }
-            case 1: {
-                /* 我的推荐 */
-                MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]init];
-                [self.navigationController pushViewController:myrecommendVC animated:YES];
-                break;
-            }
-            case 2: {
-                /* 我的银行卡 */
-                if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
-                    /*  我的银行卡 */
-                    UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
-                    AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
-                    addBankVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:addBankVC animated:YES];
-                } else {
-                    MyselfBankViewController *myselfBankVC = [[MyselfBankViewController alloc] init];
-                    myselfBankVC.card_id = [SingletonManager sharedManager].userModel.card_id;
-                    [self.navigationController pushViewController:myselfBankVC animated:YES];
-                }
-                break;
-            }
-            case 3: {
-                /** 交易记录*/
-                MyselfTransactionController *mySelfTrans = [[MyselfTransactionController alloc]init];
-                [self.navigationController pushViewController:mySelfTrans animated:YES];
-                break;
-            }
-            default:
-                break;
-        }
-    } else {
-        switch (indexPath.row) {
-            case 0:{
-                //账户管理
-                [self jumpToXinLangMethod:@"DEFAULT" andTitle:@"账户管理"];
-            }
-                break;
-            case 1:{
-                //安全中心
-                [self jumpToXinLangMethod:@"SAFETY_CENTER" andTitle:@"安全中心"];
-            }
-                break;
-            case 2:{
-                //我的授权
-                [self jumpToXinLangMethod:@"WITHHOLD" andTitle:@"我的授权"];
-            }
-                break;
-                
-            default:
-                break;
-        }
-    }
-}
-
-//返回这个UICollectionView是否可以被选择
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
+//
+////返回这个UICollectionView是否可以被选择
+//- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+//    return YES;
+//}
+//
 
 
-
-- (void)jumpToXinLangMethod:(NSString *)default_page andTitle:(NSString *)title{
-    
-    NetManager *manager = [[NetManager alloc] init];
-    [SVProgressHUD showWithStatus:@"请稍后"];
-    [manager postDataWithUrlActionStr:@"Sina/index" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"default_page":default_page} withBlock:^(id obj) {
-        if ([obj[@"result"] isEqualToString:@"1"]) {
-            NSDictionary *dic = obj[@"data"];
-            AgViewController *agVC =[[AgViewController alloc] init];
-            agVC.title = title;
-            agVC.webUrl = dic[@"redirect_url"];
-            BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
-            [SVProgressHUD dismiss];
-            [self presentViewController:baseNa animated:YES completion:^{
-            }];
-        }else {
-            [SVProgressHUD showErrorWithStatus:@"请求失败"];
-        }
-    }];
-    
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -10,4 +10,6 @@
 
 @interface RegisterViewController : UIViewController
 
+@property (nonatomic, assign)BOOL codeTextCanEdit;
+
 @end

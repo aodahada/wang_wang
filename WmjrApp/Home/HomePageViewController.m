@@ -117,6 +117,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"HomePageViewController"];
     self.tabBarController.tabBar.hidden = NO;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
@@ -131,6 +132,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 //    self.navigationController.navigationBar.hidden = NO;
+    [MobClick endLogPageView:@"HomePageViewController"];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 

@@ -56,6 +56,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"MyselfAccountController"];
     
     /* 余额数 */
     NetManager *manager = [[NetManager alloc] init];
@@ -74,6 +75,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"MyselfAccountController"];
 }
 
 - (void)didReceiveMemoryWarning {

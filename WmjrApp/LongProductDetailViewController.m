@@ -72,12 +72,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"LongProductDetailViewController"];
     [[IQKeyboardManager sharedManager] setEnable:NO];
     [self setUpNavigationBar];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"LongProductDetailViewController"];
     [[IQKeyboardManager sharedManager] setEnable:YES];
     
 }

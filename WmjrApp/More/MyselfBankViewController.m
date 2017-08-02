@@ -9,6 +9,7 @@
 #import "MyselfBankViewController.h"
 #import "MMPopupItem.h"
 #import "MMPopupWindow.h"
+#import "BankDetailViewController.h"
 
 @interface MyselfBankViewController ()
 
@@ -27,6 +28,7 @@
 
 @property (nonatomic, strong) NSMutableArray *bankInfoArray;  /* 银行卡信息数组 */
 @property (nonatomic, strong) UIBarButtonItem *button;
+@property (weak, nonatomic) IBOutlet UIView *cardBottomView;
 
 @end
 
@@ -36,6 +38,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"MyselfBankViewController"];
     self.tabBarController.tabBar.hidden = YES;
 }
 
@@ -59,6 +62,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"MyselfBankViewController"];
     self.tabBarController.tabBar.hidden = NO;
 }
 
@@ -67,10 +71,21 @@
     [self setUpNavigationBar];
 //    self.title = @"我的银行卡";
     self.view.backgroundColor = RGBA(237, 238, 242, 1.0);
+    _cardBottomView.layer.masksToBounds = YES;
+    _cardBottomView.layer.cornerRadius = 10;
     _bankInfoArray = [NSMutableArray array];
     
     /* 获取数据 */
     [self loadRequestData];
+    
+    
+    
+}
+- (IBAction)jumpToBankDetailMethod:(id)sender {
+    
+    BankDetailViewController *bankDeatailVC = [[BankDetailViewController alloc]init];
+    [self.navigationController pushViewController:bankDeatailVC animated:YES];
+    
 }
 
 /* 获取绑定银行卡信息 */

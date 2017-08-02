@@ -71,6 +71,16 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"AliGesturePasswordViewController"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"AliGesturePasswordViewController"];
+}
+
 - (void)buttonHaMethod {
     
     if ([_type isEqualToString:@"更多"]) {

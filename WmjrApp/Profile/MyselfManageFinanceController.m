@@ -264,6 +264,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"MyselfManageFinanceController"];
     self.tabBarController.tabBar.hidden = YES;
     /* 设置导航条 */
     [self setUpNavigationBar];
@@ -281,6 +282,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear: animated];
+    [MobClick endLogPageView:@"MyselfManageFinanceController"];
 }
 
 - (void)dealloc {
