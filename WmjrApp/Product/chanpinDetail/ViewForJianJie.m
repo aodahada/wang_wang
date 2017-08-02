@@ -35,6 +35,7 @@
 //    self.automaticallyAdjustsScrollViewInsets = NO;
     _webView = [[UIWebView alloc]init];
     _webView.scrollView.bounces = NO;
+    _webView.scrollView.scrollEnabled = NO;
     _webView.delegate = self;
     [self addSubview:_webView];
     [_webView mas_makeConstraints:^(MASConstraintMaker *make) {

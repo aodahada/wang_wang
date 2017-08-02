@@ -19,9 +19,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIImage *image = [[UIImage imageNamed:@"arrow_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
-    self.navigationItem.leftBarButtonItem = backButton;
+//    UIImage *image = [[UIImage imageNamed:@"arrow_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+//    self.navigationItem.leftBarButtonItem = backButton;
     
     _agWeb.delegate = self;
     [_agWeb setScalesPageToFit:YES];
@@ -71,10 +71,10 @@
     [SVProgressHUD dismiss];
 }
 
-- (void)backAction {
-    [self dismissViewControllerAnimated:YES completion:^{
-    }];
-}
+//- (void)backAction {
+//    [self dismissViewControllerAnimated:YES completion:^{
+//    }];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
