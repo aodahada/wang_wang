@@ -328,10 +328,11 @@
             AgViewController *agVC =[[AgViewController alloc] init];
             agVC.title = title;
             agVC.webUrl = dic[@"redirect_url"];
-            BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+//            BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
             [SVProgressHUD dismiss];
-            [self presentViewController:baseNa animated:YES completion:^{
-            }];
+//            [self presentViewController:baseNa animated:YES completion:^{
+//            }];
+            [self.navigationController pushViewController:agVC animated:YES];
         }else {
             [SVProgressHUD showErrorWithStatus:@"请求失败"];
         }
