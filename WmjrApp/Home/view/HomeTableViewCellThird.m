@@ -129,6 +129,7 @@
 
 /* 立即购买 */
 - (void)buyBtnAction {
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(buttonClickProductModel:)]) {
         [self.delegate buttonClickProductModel:_productModelHa];
     }

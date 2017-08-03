@@ -69,15 +69,15 @@
     
     //如果有手势密码让他验证手势密码
     //    BOOL isSave = [KeychainData isSave]; //是否有保存
-    _isSave = [[SingletonManager sharedManager] isSave]; //是否有保存
-    if (_isSave) {
-        
-        AliGesturePasswordViewController *setpass = [[AliGesturePasswordViewController alloc] init];
-        setpass.string = @"验证密码";
-        setpass.isHome = @"yes";
-        [self presentViewController:setpass animated:YES completion:nil];
-        
-    }
+//    _isSave = [[SingletonManager sharedManager] isSave]; //是否有保存
+//    if (_isSave) {
+//        
+//        AliGesturePasswordViewController *setpass = [[AliGesturePasswordViewController alloc] init];
+//        setpass.string = @"验证密码";
+//        setpass.isHome = @"yes";
+//        [self presentViewController:setpass animated:YES completion:nil];
+//        
+//    }
     
     
     //退出登录时响应执行还有在主页重新登录的时候响应
@@ -373,6 +373,18 @@
                 }];
                 UserInfoModel *userModel = [UserInfoModel mj_objectWithKeyValues:dataDic];
                 [SingletonManager sharedManager].userModel = userModel;
+                
+                //登录成功才出手势验证码
+                _isSave = [[SingletonManager sharedManager] isSave]; //是否有保存
+                if (_isSave) {
+                    
+                    AliGesturePasswordViewController *setpass = [[AliGesturePasswordViewController alloc] init];
+                    setpass.string = @"验证密码";
+                    setpass.isHome = @"yes";
+                    [self presentViewController:setpass animated:YES completion:nil];
+                    
+                }
+                
                 return ;
             } else {
                 [SVProgressHUD showInfoWithStatus:@"账号密码有误,请重新登录"];

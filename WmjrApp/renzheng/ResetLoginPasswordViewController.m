@@ -34,6 +34,8 @@
 - (void)setUpNavigationBar {
     self.view.backgroundColor = VIEWBACKCOLOR;
     self.title = @"重置密码";
+    _phoneNum.text = [SingletonManager sharedManager].userModel.mobile;
+    _phoneNum.userInteractionEnabled = NO;
     _verificationBtn.backgroundColor = BASECOLOR;
     _verificationBtn.layer.cornerRadius = 10;
     _verificationBtn.layer.masksToBounds = YES;

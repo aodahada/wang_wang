@@ -40,6 +40,7 @@
 @property (nonatomic, strong) UIView *viewForBack;//背景View;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGes;
 @property (nonatomic, strong) UIView *bottomview;
+@property (nonatomic, assign) BOOL isCheck;//是否同意协议
 
 @end
 
@@ -53,6 +54,9 @@
     
     //监听键盘弹出
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardFrameChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    _isCheck = YES;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noSelectContract) name:@"noselectContract" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(selectContract) name:@"selectContract" object:nil];
     
     self.segmentArray = _productModel.segment;
     for (int i=0; i<self.segmentArray.count; i++) {
@@ -70,6 +74,18 @@
     [self setUpLayout];
 }
 
+
+- (void)noSelectContract {
+    
+    _isCheck = NO;
+    
+}
+
+- (void)selectContract {
+    
+    _isCheck = YES;
+    
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"LongProductDetailViewController"];
@@ -439,6 +455,13 @@
 - (void)payButtonMethod {
     [_restBuyMoneyText resignFirstResponder];
     LongProductSegment *model;
+    if (!_isCheck) {
+        MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+        alertConfig.defaultTextOK = @"确认";
+        MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"你还未同意购买合同" detail:nil];
+        [alertView show];
+        return;
+    }
     for (int i=0; i<self.segmentArray.count; i++) {
         
         LongProductSegment *haha = self.segmentArray[i];
