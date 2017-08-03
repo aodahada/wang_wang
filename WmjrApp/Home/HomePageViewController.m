@@ -291,6 +291,7 @@
         if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]) {
             UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
             NSString *content = [pasteboard string];
+            content = [self convertNullString:content];
             if ([content rangeOfString:@"wmcf-"].location ==NSNotFound) {
                 [self homeGuideLayout];
             }
