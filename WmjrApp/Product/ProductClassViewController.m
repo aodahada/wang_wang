@@ -177,9 +177,10 @@
         AgViewController *agVC =[[AgViewController alloc] init];
         agVC.title = _adModel.title;
         agVC.webUrl = _adModel.url;
-        BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
-        [self presentViewController:baseNa animated:YES completion:^{
-        }];
+        [self.navigationController pushViewController:agVC animated:YES];
+//        BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+//        [self presentViewController:baseNa animated:YES completion:^{
+//        }];
     } else {
 //        ProductCategoryModel *productCategory = _categoryArray[indexPath.section-1];
         ProductCategoryModel *productCategory = [_categoryArray objectAtIndexCheck:indexPath.section-1];

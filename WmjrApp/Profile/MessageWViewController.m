@@ -139,9 +139,10 @@
     AgViewController *agVC =[[AgViewController alloc] init];
     agVC.title = model.message_title;
     agVC.webUrl = model.url;
-    BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
-    [self presentViewController:baseNa animated:YES completion:^{
-    }];
+    [self.navigationController pushViewController:agVC animated:YES];
+//    BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+//    [self presentViewController:baseNa animated:YES completion:^{
+//    }];
     
 }
 

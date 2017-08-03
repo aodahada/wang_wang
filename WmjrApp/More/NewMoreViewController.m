@@ -263,9 +263,10 @@
                 AgViewController *agVC =[[AgViewController alloc] init];
                 agVC.title = @"关于我们";
                 agVC.webUrl = @"http://api.wmjr888.com/home/page/app/id/12";
-                BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
-                [self presentViewController:baseNa animated:YES completion:^{
-                }];
+                [self.navigationController pushViewController:agVC animated:YES];
+//                BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+//                [self presentViewController:baseNa animated:YES completion:^{
+//                }];
             }
                 break;
             case 1:{

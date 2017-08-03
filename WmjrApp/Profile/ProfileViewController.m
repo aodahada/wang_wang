@@ -23,7 +23,6 @@
 #import "AddBankViewController.h"
 #import "PersonalMessageViewController.h"
 #import "NewMoreViewController.h"
-#import "AgViewController.h"
 #import "BaseNavigationController.h"
 #import "MyselfTransactionController.h"
 #import "PersonalCategoryCollectionViewCell.h"

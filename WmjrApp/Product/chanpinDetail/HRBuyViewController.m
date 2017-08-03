@@ -231,11 +231,12 @@
 - (void)watchDelegateMethod{
     
     AgViewController *agVC =[[AgViewController alloc] init];
-    BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+//    BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
     agVC.title = @"交易协议";
     agVC.webUrl = @"http://api.wmjr888.com/home/page/app/id/11";
-    [self presentViewController:baseNa animated:YES completion:^{
-    }];
+    [self.navigationController pushViewController:agVC animated:YES];
+//    [self presentViewController:baseNa animated:YES completion:^{
+//    }];
     
 }
 
