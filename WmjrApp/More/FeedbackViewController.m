@@ -52,8 +52,12 @@
         return;
     }
     
-    /* 数据反馈 */
-    [self getDataWithNetManager];
+    if (_feedText.text.length>150) {
+        [SVProgressHUD showInfoWithStatus:@"不能超过150个字符"];
+    } else {
+        /* 数据反馈 */
+        [self getDataWithNetManager];
+    }
 }
 
 #pragma mark - 数据处理 －

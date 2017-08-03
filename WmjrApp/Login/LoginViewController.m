@@ -105,7 +105,7 @@
 
 /* 忘记密码 */
 - (IBAction)forgetPasswordAction:(id)sender {
-    FindwordViewController *findwordVC = [[FindwordViewController alloc] init];
+    FindwordViewController *findwordVC = [[FindwordViewController alloc] initWithNibName:@"FindwordViewController" bundle:nil];
     [self.navigationController pushViewController:findwordVC animated:YES];
 }
 

@@ -139,15 +139,50 @@
 - (IBAction)unbindAction:(id)sender {
     NetManager *manager = [[NetManager alloc] init];
     /* 余额不为零,不能解绑 */
-//    [manager postDataWithUrlActionStr:@"User/queryBalance" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"} withBlock:^(id obj) {
-//        if (obj) {
-//            NSString *balanceValue = [obj[@"data"] objectForKey:@"available_balance"];
-//            if ([balanceValue floatValue] > 0) {
-//                [[SingletonManager sharedManager] alert1PromptInfo:@"余额不为零,不能解绑"];
-//                return ;
-//            }
-//        }
-//    }];
+    [SVProgressHUD showInfoWithStatus:@"请稍等"];
+    [manager postDataWithUrlActionStr:@"User/queryBalance" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"} withBlock:^(id obj) {
+        if (obj) {
+            [SVProgressHUD dismiss];
+            NSString *balanceValue = [obj[@"data"] objectForKey:@"available_balance"];
+            if ([balanceValue floatValue] > 0) {
+                [[SingletonManager sharedManager] alert1PromptInfo:@"余额不为零,不能解绑"];
+                return ;
+            } else {
+                /* 点击确定,可解绑银行卡 */
+                MMPopupItemHandler block = ^(NSInteger index){
+                    if (index == 0) {
+                        return ;
+                    }
+                    if (index == 1) {
+                        NSMutableDictionary *paramMutableDic = [NSMutableDictionary dictionary];
+                        paramMutableDic[@"member_id"] = [SingletonManager sharedManager].uid;
+                        paramMutableDic[@"card_id"] = self.card_id;
+                        NSDictionary *paramDic = (NSDictionary *)paramMutableDic;
+                        [manager postDataWithUrlActionStr:@"Card/unbind" withParamDictionary:paramDic withBlock:^(id obj) {
+                            if ([obj[@"result"] isEqualToString:@"1"]) {
+                                [SVProgressHUD showSuccessWithStatus:@"解绑成功" maskType:(SVProgressHUDMaskTypeNone)];
+                                
+                                [SingletonManager sharedManager].userModel.card_id = @"0";
+                                [[NSUserDefaults standardUserDefaults] synchronize];
+                                
+                                [self.navigationController popToRootViewControllerAnimated:YES];
+                            } else {
+                                [[SingletonManager sharedManager] alert1PromptInfo:[obj[@"data"] objectForKey:@"mes"]];
+                            }
+                        }];
+                    }
+                };
+                NSArray *items =
+                @[MMItemMake(@"取消", MMItemTypeNormal, block),
+                  MMItemMake(@"确定", MMItemTypeNormal, block)];
+                MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
+                                                                     detail:@"你确定解绑绑定银行卡?"
+                                                                      items:items];
+                [alertView show];
+            }
+        }
+    }];
+    
 //    /* 存钱罐不为零,不能解绑 */
 //    [manager postDataWithUrlActionStr:@"User/queryBalance" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"} withBlock:^(id obj) {
 //        if (obj) {
@@ -158,37 +193,7 @@
 //            }
 //        }
 //    }];
-    /* 点击确定,可解绑银行卡 */
-    MMPopupItemHandler block = ^(NSInteger index){
-        if (index == 0) {
-            return ;
-        }
-        if (index == 1) {
-            NSMutableDictionary *paramMutableDic = [NSMutableDictionary dictionary];
-            paramMutableDic[@"member_id"] = [SingletonManager sharedManager].uid;
-            paramMutableDic[@"card_id"] = self.card_id;
-            NSDictionary *paramDic = (NSDictionary *)paramMutableDic;
-            [manager postDataWithUrlActionStr:@"Card/unbind" withParamDictionary:paramDic withBlock:^(id obj) {
-                if ([obj[@"result"] isEqualToString:@"1"]) {
-                    [SVProgressHUD showSuccessWithStatus:@"解绑成功" maskType:(SVProgressHUDMaskTypeNone)];
-                    
-                    [SingletonManager sharedManager].userModel.card_id = @"0";
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                    
-                    [self.navigationController popToRootViewControllerAnimated:YES];
-                } else {
-                    [[SingletonManager sharedManager] alert1PromptInfo:[obj[@"data"] objectForKey:@"mes"]];
-                }
-            }];
-        }
-    };
-    NSArray *items =
-    @[MMItemMake(@"取消", MMItemTypeNormal, block),
-      MMItemMake(@"确定", MMItemTypeNormal, block)];
-    MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
-                                                         detail:@"你确定解绑绑定银行卡?"
-                                                          items:items];
-    [alertView show];
+    
 }
 
 - (void)didReceiveMemoryWarning {

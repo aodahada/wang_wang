@@ -381,14 +381,14 @@
                 UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
                 [self presentViewController:loginNa animated:YES completion:nil];
             }
-            if ([obj[@"result"] isEqualToString:@"1000"]) {
-                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
-                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
-                alertConfig.defaultTextOK = @"确定";
-                [SVProgressHUD dismiss];
-                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
-                [alertView show];
-            }
+//            if ([obj[@"result"] isEqualToString:@"1000"]) {
+//                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+//                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+//                alertConfig.defaultTextOK = @"确定";
+//                [SVProgressHUD dismiss];
+//                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+//                [alertView show];
+//            }
         }
     }];
 }
@@ -682,9 +682,10 @@
                 AgViewController *agVC =[[AgViewController alloc] init];
                 agVC.title = imgModel.title;
                 agVC.webUrl = url;
-                BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
-                [self presentViewController:baseNa animated:YES completion:^{
-                }];
+                [self.navigationController pushViewController:agVC animated:YES];
+//                BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+//                [self presentViewController:baseNa animated:YES completion:^{
+//                }];
                 return;
             }
             if (![productId isEqualToString:@""]) {
@@ -804,9 +805,10 @@
         AgViewController *agVC =[[AgViewController alloc] init];
         agVC.title = newsModel.title;
         agVC.webUrl = newsModel.url;
-        BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
-        [self presentViewController:baseNa animated:YES completion:^{
-        }];
+        [self.navigationController pushViewController:agVC animated:YES];
+//        BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+//        [self presentViewController:baseNa animated:YES completion:^{
+//        }];
     }
     
 }
@@ -845,9 +847,10 @@
     AgViewController *agVC =[[AgViewController alloc] init];
     agVC.title = title;
     agVC.webUrl = url;
-    BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
-    [self presentViewController:baseNa animated:YES completion:^{
-    }];
+    [self.navigationController pushViewController:agVC animated:YES];
+//    BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
+//    [self presentViewController:baseNa animated:YES completion:^{
+//    }];
     
 }
 

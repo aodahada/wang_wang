@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -134,7 +134,7 @@
                             </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" tag="201" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DxV-en-VN8">
-                            <rect key="frame" x="108" y="5" width="477" height="30"/>
+                            <rect key="frame" x="108" y="5" width="245" height="30"/>
                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="BCr-fY-120"/>
@@ -211,7 +211,7 @@
                 <constraint firstItem="bFE-TD-o6u" firstAttribute="leading" secondItem="uV3-Ge-eNp" secondAttribute="leading" id="dAB-eN-gZd"/>
                 <constraint firstAttribute="trailing" secondItem="bFE-TD-o6u" secondAttribute="trailing" id="wdO-PI-Qi6"/>
             </constraints>
-            <point key="canvasLocation" x="-34" y="-220"/>
+            <point key="canvasLocation" x="-34.5" y="-220.5"/>
         </view>
     </objects>
 </document>
