@@ -744,7 +744,7 @@
                 cell.textLabel.text = @"账号和密码";
                 break;
             case 4:
-                cell.imageView.image = [UIImage imageNamed:@"icon_jiaoyi"];
+                cell.imageView.image = [UIImage imageNamed:@"icon_jyjl"];
                 cell.textLabel.text = @"交易记录";
                 break;
             case 5:

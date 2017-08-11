@@ -19,6 +19,8 @@
 
 @property (nonatomic, strong)UIView *viewForHa;
 
+@property (nonatomic, copy)NSString *codeStr;
+
 @end
 
 @implementation ModifyPhoneView
@@ -26,6 +28,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _codeStr = @"";
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.68];
         _viewForHa = [[UIView alloc]init];
         _viewForHa.backgroundColor = [UIColor whiteColor];
@@ -188,6 +191,8 @@
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];
             _buttonForGetCaptcha.enabled = NO;
+            NSDictionary *data = obj;
+            _codeStr = data[@"data"][@"code"];
             __block int timeout = 60; //倒计时时间
             __weak typeof(self) weakSelf = self;
             dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -241,6 +246,10 @@
     }
     if ([_textFieldForCaptcha.text isEqualToString:@""]) {
         [SVProgressHUD showInfoWithStatus:@"请输入验证码"];
+        return;
+    }
+    if (![_textFieldForCaptcha.text isEqualToString:_codeStr]) {
+        [SVProgressHUD showInfoWithStatus:@"验证码不正确"];
         return;
     }
     NetManager *manager = [[NetManager alloc] init];

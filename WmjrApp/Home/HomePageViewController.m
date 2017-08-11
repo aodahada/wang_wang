@@ -49,7 +49,8 @@
 
 @property (nonatomic, assign) BOOL isSave;//是否保存手势了
 
-@property (nonatomic, strong) ProductModel *longProduct;//新人购产品
+//@property (nonatomic, strong) ProductModel *longProduct;//新人购产品
+@property (nonatomic, strong) NSMutableArray *arrayForNewBuy;//新人购数组
 
 @end
 
@@ -208,7 +209,7 @@
     NSDictionary *paramDic = @{@"is_recommend":@"1",@"is_newer":@"1"};
     [manager postDataWithUrlActionStr:@"Finance/index" withParamDictionary:paramDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
-            _arrayForRecommendPro = [NSMutableArray array];
+            _arrayForNewBuy = [[NSMutableArray alloc]init];
             [ProductModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
                 return @{@"proIntro_id" : @"id"};
             }];
@@ -218,10 +219,14 @@
                          };
             }];
             NSArray *longProArr = obj[@"data"];
-            if (longProArr.count>0) {
-                _longProduct = [ProductModel mj_objectWithKeyValues:longProArr[0]];
+//            if (longProArr.count>0) {
+//                _longProduct = [ProductModel mj_objectWithKeyValues:longProArr[0]];
+//            }
+            for (int i=0; i<longProArr.count; i++) {
+                NSDictionary *dict = longProArr[i];
+                ProductModel *product = [ProductModel mj_objectWithKeyValues:dict];
+                [_arrayForNewBuy addObject:product];
             }
-            
             [self getShortProductList];
             
         } else {
@@ -557,7 +562,7 @@
     } else if (section == 1) {
         return 1;
     } else if (section == 2){
-        return 1;
+        return _arrayForNewBuy.count;
     } else if (section == 3) {
         return _arrayForRecommendPro.count;
     } else {
@@ -719,14 +724,15 @@
         return cell;
         
     } else if (indexPath.section == 2){
-        if ([_longProduct.is_long isEqualToString:@"1"]) {
-            HomeTableViewCellThirdFirst *cell = [[HomeTableViewCellThirdFirst alloc]initWithProductModel:_longProduct];
+        ProductModel *productModel = [_arrayForNewBuy objectAtIndexCheck:indexPath.row];
+        if ([productModel.is_long isEqualToString:@"1"]) {
+            HomeTableViewCellThirdFirst *cell = [[HomeTableViewCellThirdFirst alloc]initWithProductModel:productModel];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         } else {
             HomeTableViewCellThird *cell = [[HomeTableViewCellThird alloc]init];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [cell configCellWithModel:_longProduct];
+            [cell configCellWithModel:productModel];
             return cell;
         }
     } else if (indexPath.section == 3) {
@@ -774,16 +780,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 2) {
-        
-        if ([_longProduct.is_long isEqualToString:@"1"]) {
+        ProductModel *productModel = [_arrayForNewBuy objectAtIndexCheck:indexPath.row];
+        if ([productModel.is_long isEqualToString:@"1"]) {
             LongProductDetailViewController *newproductbuyVC = [[LongProductDetailViewController alloc]init];
-            newproductbuyVC.productModel = _longProduct;
+            newproductbuyVC.productModel = productModel;
             newproductbuyVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:newproductbuyVC animated:YES];
         } else {
             ProductIntroViewController *proIntroVC = [[ProductIntroViewController alloc] init];
-            proIntroVC.getPro_id = _longProduct.proIntro_id;
-            proIntroVC.title = _longProduct.name;
+            proIntroVC.getPro_id = productModel.proIntro_id;
+            proIntroVC.title = productModel.name;
             [self.navigationController pushViewController:proIntroVC animated:YES];
         }
         
