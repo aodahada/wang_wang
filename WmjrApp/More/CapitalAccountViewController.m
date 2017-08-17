@@ -11,11 +11,9 @@
 
 @interface CapitalAccountViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *capitalTable;
-@property (nonatomic, copy) NSArray *quesArray; /*   */
-@property (nonatomic, copy) NSArray *ansArray; /*  */
-
-@property (nonatomic, strong) NSMutableArray *capitalArray;
+@property (nonatomic, copy) NSMutableArray *quesArray; /*   */
+@property (nonatomic, copy) NSMutableArray *ansArray; /*  */
+@property (nonatomic, strong) UITableView *mainTableView;
 
 @end
 
@@ -26,14 +24,36 @@
 
     self.tabBarController.tabBar.hidden = YES;
     self.title = @"资金账户";
-    _capitalArray = [NSMutableArray array];
+    [self loadRequestData];
     
-    NSDictionary *capicalDic = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"CapitalAccountViewController.plist" ofType:nil]];
-    _quesArray = [NSArray arrayWithArray:[capicalDic allKeys]];
-    _ansArray = [NSArray arrayWithArray:[capicalDic allValues]];
+}
 
-    [_capitalTable registerNib:[UINib nibWithNibName:@"CapitalAccountViewCell" bundle:nil] forCellReuseIdentifier:@"captial"];
-    
+#pragma mark - 获取资金账户数据
+- (void)loadRequestData {
+    NetManager *manager = [[NetManager alloc] init];
+    [manager postDataWithUrlActionStr:@"Page/knowledge" withParamDictionary:@{@"type":@"question"} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            NSArray *dataArray = obj[@"data"];
+            _quesArray = [[NSMutableArray alloc]init];
+            _ansArray = [[NSMutableArray alloc]init];
+            for (int i=0; i<dataArray.count; i++) {
+                NSDictionary *dict = dataArray[i];
+                [_quesArray addObject:dict[@"title"]];
+                [_ansArray addObject:dict[@"content"]];
+            }
+            _mainTableView = [[UITableView alloc]init];
+            _mainTableView.delegate = self;
+            _mainTableView.dataSource = self;
+            [_mainTableView registerNib:[UINib nibWithNibName:@"CapitalAccountViewCell" bundle:nil] forCellReuseIdentifier:@"captial"];
+            _mainTableView.tableFooterView = [[UIView alloc]init];
+            [self.view addSubview:_mainTableView];
+            [_mainTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(self.view);
+            }];
+            
+            
+        }
+    }];
 }
 
 #pragma mark - uitableview - 
@@ -47,6 +67,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CapitalAccountViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"captial" forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell.indexCap setTitle:[NSString stringWithFormat:@"%ld", indexPath.section + 1] forState:UIControlStateNormal];
     cell.questionLab.text = _quesArray[indexPath.section];
     cell.ansLab.text = _ansArray[indexPath.section];

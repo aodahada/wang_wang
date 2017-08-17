@@ -11,10 +11,10 @@
 
 @interface NounExplanViewController ()<UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *nounTable;
+@property (nonatomic, strong) UITableView *mainTableView;
 @property (nonatomic, strong) NSMutableArray *nounExplanArray;
-@property (nonatomic, copy) NSArray *titleArray;
-@property (nonatomic, copy) NSArray *contentArray;
+@property (nonatomic, copy) NSMutableArray *titleArray;
+@property (nonatomic, copy) NSMutableArray *contentArray;
 
 @end
 
@@ -24,14 +24,36 @@
     [super viewDidLoad];
     self.tabBarController.tabBar.hidden = YES;
     self.title = @"名词解释";
+    [self loadRequestData];
     
-    _nounExplanArray = [NSMutableArray array];
-    NSDictionary *nounDic = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NounExplanViewController.plist" ofType:nil]];
-    _titleArray = [NSArray arrayWithArray:[nounDic allKeys]];
-    _contentArray = [NSArray arrayWithArray:[nounDic allValues]];
-    
-    [_nounTable registerNib:[UINib nibWithNibName:@"NounExplanViewCell" bundle:nil] forCellReuseIdentifier:@"cell"];
-    
+}
+
+#pragma mark - 获取资金账户数据
+- (void)loadRequestData {
+    NetManager *manager = [[NetManager alloc] init];
+    [manager postDataWithUrlActionStr:@"Page/knowledge" withParamDictionary:@{@"type":@"term"} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            NSArray *dataArray = obj[@"data"];
+            _titleArray = [[NSMutableArray alloc]init];
+            _contentArray = [[NSMutableArray alloc]init];
+            for (int i=0; i<dataArray.count; i++) {
+                NSDictionary *dict = dataArray[i];
+                [_titleArray addObject:dict[@"title"]];
+                [_contentArray addObject:dict[@"content"]];
+            }
+            _mainTableView = [[UITableView alloc]init];
+            _mainTableView.delegate = self;
+            _mainTableView.dataSource = self;
+            [_mainTableView registerNib:[UINib nibWithNibName:@"NounExplanViewCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+            _mainTableView.tableFooterView = [[UIView alloc]init];
+            [self.view addSubview:_mainTableView];
+            [_mainTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(self.view);
+            }];
+            
+            
+        }
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -50,7 +72,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NounExplanViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell.indexBtn setTitle:[NSString stringWithFormat:@"%ld", indexPath.section + 1] forState:UIControlStateNormal];
     cell.nounLab.text = _titleArray[indexPath.section];
     cell.complainLab.text = _contentArray[indexPath.section];
