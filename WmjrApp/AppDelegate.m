@@ -22,6 +22,8 @@
 #import "WXApi.h"
 #import "WeiboSDK.h"
 #import "JPUSHService.h"
+#import "AgViewController.h"
+#import "UIAlertView+Block.h"
 // iOS10注册APNs所需头文件
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h>
@@ -370,6 +372,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if
     // appropriate. See also applicationDidEnterBackground:.
+    [[NSUserDefaults standardUserDefaults] setObject:@"death" forKey:@"death"];
 }
 
 - (void)application:(UIApplication *)application
@@ -453,6 +456,12 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
         NSLog(@"iOS10 前台收到远程通知:%@", [self logDic:userInfo]);
+        [UIAlertView alertWithCallBackBlock:^(NSInteger buttonIndex) {
+            if (buttonIndex == 1) {
+                [self jumpToAdVC:userInfo[@"title"] andUrl:userInfo[@"url"]];
+//                [self jumpToAdVC:@"年后" andUrl:@"http://www.baidu.com"];
+            }
+        } title:@"收到新消息" message:@"哈哈" cancelButtonName:@"取消" otherButtonTitles:@"前往", nil];
     }
     else {
         // 判断为本地通知
@@ -476,6 +485,18 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
         NSLog(@"iOS10 收到远程通知:%@", [self logDic:userInfo]);
+        NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"death"];
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"death"] isEqualToString:@"death"]) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                                [self jumpToAdVC:userInfo[@"title"] andUrl:userInfo[@"url"]];
+//                    [self jumpToAdVC:@"年后" andUrl:@"http://www.baidu.com"];
+                });
+            });
+        } else {
+            [self jumpToAdVC:userInfo[@"title"] andUrl:userInfo[@"url"]];
+//            [self jumpToAdVC:@"年后" andUrl:@"http://www.baidu.com"];
+        }
     }
     else {
         // 判断为本地通知
@@ -506,6 +527,18 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                                                format:NULL
                                      errorDescription:NULL];
     return str;
+}
+
+- (void)jumpToAdVC:(NSString *)title andUrl:(NSString *)url {
+    AgViewController *agVC =[[AgViewController alloc] init];
+    agVC.title = title;
+    agVC.webUrl = url;
+    agVC.isNotification = @"yes";
+    BaseNavigationController *navigation = [[BaseNavigationController alloc]initWithRootViewController:agVC];
+    [self.window.rootViewController presentViewController:navigation animated:YES completion:^{
+        
+    }];
+
 }
 
 @end
