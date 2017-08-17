@@ -461,7 +461,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                 [self jumpToAdVC:userInfo[@"title"] andUrl:userInfo[@"url"]];
 //                [self jumpToAdVC:@"年后" andUrl:@"http://www.baidu.com"];
             }
-        } title:@"收到新消息" message:@"哈哈" cancelButtonName:@"取消" otherButtonTitles:@"前往", nil];
+        } title:@"收到新消息" message:@"点击前往查看详情" cancelButtonName:@"取消" otherButtonTitles:@"前往", nil];
     }
     else {
         // 判断为本地通知
