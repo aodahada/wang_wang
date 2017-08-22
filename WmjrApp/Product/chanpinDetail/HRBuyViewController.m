@@ -110,7 +110,7 @@
 - (void)getRedPackMethod {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"Redpacket/my" withParamDictionary:@{@"member_id":@"90221",@"status":@"2",@"product_id":_productModel.proIntro_id} withBlock:^(id obj) {
+    [manager postDataWithUrlActionStr:@"Redpacket/my" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"status":@"2",@"product_id":_productModel.proIntro_id} withBlock:^(id obj) {
         if (obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 NSArray *dataArray = obj[@"data"];
@@ -262,7 +262,7 @@
     NetManager *manager = [[NetManager alloc] init];
     LongProductSegment *longSegPro = _productModel.segment[0];
     [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"Finance/order" withParamDictionary:@{@"member_id":@"90221", @"product_id":_productModel.proIntro_id,@"segment_id":longSegPro.segment_id,@"money":_textFieldForBuy.text,@"returnrate":longSegPro.returnrate,@"redpacket_member_id":_redPackageId} withBlock:^(id obj) {
+    [manager postDataWithUrlActionStr:@"Finance/order" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"product_id":_productModel.proIntro_id,@"segment_id":longSegPro.segment_id,@"money":_textFieldForBuy.text,@"returnrate":longSegPro.returnrate,@"redpacket_member_id":_redPackageId} withBlock:^(id obj) {
         if (obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 NSDictionary *dataDic = obj[@"data"];

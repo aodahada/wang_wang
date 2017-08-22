@@ -85,7 +85,7 @@
 - (void)getRedPackageMethod {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"Redpacket/my" withParamDictionary:@{@"member_id":@"90221",@"product_id":_productId,@"status":@"2"} withBlock:^(id obj) {
+    [manager postDataWithUrlActionStr:@"Redpacket/my" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"product_id":_productId,@"status":@"2"} withBlock:^(id obj) {
         if (obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 NSArray *dataArray = obj[@"data"];
@@ -119,7 +119,6 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger row = _redPackageArray.count;
     return _redPackageArray.count;
 }
 
@@ -138,7 +137,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    RedPackageModel *redPackageModel = _redPackageArray[indexPath.row];
+    RedPackageModel *redPackageModel = _redPackageArray[indexPath.section];
     MyRedPackageTableViewCell *cell = [[MyRedPackageTableViewCell alloc]initWithModel:redPackageModel andIsOut:NO];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -153,10 +152,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    RedPackageModel *redPackageModel = _redPackageArray[indexPath.row];
-    [self.navigationController popViewControllerAnimated:YES];
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(selectRedPackage:)]) {
-        [self.delegate selectRedPackage:redPackageModel];
+    RedPackageModel *redPackageModel = _redPackageArray[indexPath.section];
+    if ([redPackageModel.status isEqualToString:@"3"]) {
+        [SVProgressHUD showInfoWithStatus:@"该红包未激活"];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+        if (self.delegate&&[self.delegate respondsToSelector:@selector(selectRedPackage:)]) {
+            [self.delegate selectRedPackage:redPackageModel];
+        }
     }
 }
 

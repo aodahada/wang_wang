@@ -10,8 +10,9 @@
 #import "MyRedPackageTableViewCell.h"
 #import "RedPackageModel.h"
 #import "MyUnuseRedPackageViewController.h"
+#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 
-@interface MyRedPackageViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface MyRedPackageViewController ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong)NSMutableArray *redPackageArray;
 
@@ -46,17 +47,17 @@
 - (void)getDataMethod {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"Redpacket/my" withParamDictionary:@{@"member_id":@"90221",@"status":@"2"} withBlock:^(id obj) {
+    [manager postDataWithUrlActionStr:@"Redpacket/my" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"status":@"2"} withBlock:^(id obj) {
         _redPackageArray = [[NSMutableArray alloc]init];
         if (obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 NSArray *dataArray = obj[@"data"];
+                _redPackageArray = [[NSMutableArray alloc]init];
                 for (int i=0; i<dataArray.count; i++) {
                     NSDictionary *dict = dataArray[i];
                     RedPackageModel *redPackageModel = [RedPackageModel mj_objectWithKeyValues:dict];
                     [_redPackageArray addObject:redPackageModel];
                 }
-                
                 
                 UIButton *watchButotn = [[UIButton alloc]init];
                 [watchButotn setTitle:@"查看失效红包>>" forState:UIControlStateNormal];
@@ -77,6 +78,8 @@
                 mainTableView.backgroundColor = RGBA(243, 244, 246, 1.0);
                 mainTableView.delegate = self;
                 mainTableView.dataSource = self;
+                mainTableView.emptyDataSetSource = self;
+                mainTableView.emptyDataSetDelegate = self;
                 [self.view addSubview:mainTableView];
                 [mainTableView mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.view.mas_top).with.offset(RESIZE_UI(12));
@@ -123,7 +126,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    RedPackageModel *redPackageModel = _redPackageArray[indexPath.row];
+    RedPackageModel *redPackageModel = _redPackageArray[indexPath.section];
     MyRedPackageTableViewCell *cell = [[MyRedPackageTableViewCell alloc]initWithModel:redPackageModel andIsOut:NO];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -133,6 +136,23 @@
 - (void)watchUnuseRed {
     MyUnuseRedPackageViewController *myUnuseVC = [[MyUnuseRedPackageViewController alloc]init];
     [self.navigationController pushViewController:myUnuseVC animated:YES];
+}
+
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    return [UIImage imageNamed:@"image_zwhb"];
+}
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"暂无红包";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 - (void)didReceiveMemoryWarning {

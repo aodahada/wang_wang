@@ -15,5 +15,6 @@ pod 'MBProgressHUD'
 #pod 'KSCrash', '~> 1.8'
 pod 'Bugly'
 pod 'UMengAnalytics'
+pod 'DZNEmptyDataSet'
 end
 
