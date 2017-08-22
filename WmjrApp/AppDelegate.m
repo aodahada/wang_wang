@@ -485,7 +485,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
         NSLog(@"iOS10 收到远程通知:%@", [self logDic:userInfo]);
-        NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"death"];
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"death"] isEqualToString:@"death"]) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 dispatch_async(dispatch_get_main_queue(), ^{

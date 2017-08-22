@@ -28,7 +28,7 @@
 #import "PersonalCategoryCollectionViewCell.h"
 #import "StoreClassCollectionReusableView.h"
 #import "AccountAndPasswordViewController.h"
-
+#import "MyRedPackageViewController.h"
 
 @interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -676,7 +676,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 6;
+    return 7;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -732,22 +732,26 @@
                 cell.textLabel.text = @"我的理财";
                 break;
             case 1:
+                cell.imageView.image = [UIImage imageNamed:@"icon_wdhb"];
+                cell.textLabel.text = @"我的红包";
+                break;
+            case 2:
                 cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
                 cell.textLabel.text = @"好友推荐";
                 break;
-            case 2:
+            case 3:
                 cell.imageView.image = [UIImage imageNamed:@"icon_yhk"];
                 cell.textLabel.text = @"我的银行卡";
                 break;
-            case 3:
+            case 4:
                 cell.imageView.image = [UIImage imageNamed:@"icon_zhmm"];
                 cell.textLabel.text = @"账号和密码";
                 break;
-            case 4:
+            case 5:
                 cell.imageView.image = [UIImage imageNamed:@"icon_jyjl"];
                 cell.textLabel.text = @"交易记录";
                 break;
-            case 5:
+            case 6:
             {
                 cell.imageView.image = [UIImage imageNamed:@"icon_lxkf"];
                 cell.textLabel.text = @"联系客服";
@@ -782,13 +786,19 @@
             [self.navigationController pushViewController:myselfMFVC animated:YES];
             break;
         }
-        case 1: {
+        case 1:{
+            /* 我的红包 */
+            MyRedPackageViewController *myRedVC = [[MyRedPackageViewController alloc] init];
+            [self.navigationController pushViewController:myRedVC animated:YES];
+            break;
+        }
+        case 2: {
             /* 我的推荐 */
             MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]init];
             [self.navigationController pushViewController:myrecommendVC animated:YES];
             break;
         }
-        case 2: {
+        case 3: {
             /* 我的银行卡 */
             if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
                 /*  我的银行卡 */
@@ -803,19 +813,19 @@
             }
             break;
         }
-        case 3: {
+        case 4: {
             /* 账号和密码 */
             AccountAndPasswordViewController *accountAndPassVC = [[AccountAndPasswordViewController alloc]init];
             [self.navigationController pushViewController:accountAndPassVC animated:YES];
             break;
         }
-        case 4: {
+        case 5: {
             /** 交易记录*/
             MyselfTransactionController *mySelfTrans = [[MyselfTransactionController alloc]init];
             [self.navigationController pushViewController:mySelfTrans animated:YES];
             break;
         }
-        case 5:{
+        case 6:{
             //联系客服
             NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",[SingletonManager sharedManager].companyTel];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];

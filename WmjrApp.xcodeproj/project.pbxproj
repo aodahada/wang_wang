@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		6425D3D61F16450900D61F87 /* NSArray+HRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 6425D3D51F16450900D61F87 /* NSArray+HRUtil.m */; };
 		6458892B1F457A8000E69574 /* UIAlertView+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 6458892A1F457A8000E69574 /* UIAlertView+Block.m */; };
+		645889A41F4BD70100E69574 /* RedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889A31F4BD70100E69574 /* RedPackageViewController.m */; };
+		645889A71F4BD9D900E69574 /* MyRedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889A61F4BD9D900E69574 /* MyRedPackageViewController.m */; };
+		645889AA1F4BDFAC00E69574 /* RedPackageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889A91F4BDFAC00E69574 /* RedPackageTableViewCell.m */; };
+		645889AD1F4C04BE00E69574 /* MyRedPackageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889AC1F4C04BE00E69574 /* MyRedPackageTableViewCell.m */; };
+		645889B01F4C0D4E00E69574 /* RedPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889AF1F4C0D4E00E69574 /* RedPackageModel.m */; };
+		645889B31F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */; };
 		64A6BA381F31E5CE00057903 /* AccountAndPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */; };
 		64DA5F511EFFFD5200CB10B1 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 64DA5F501EFFFD5200CB10B1 /* libc++.tbd */; };
 		8025C340AF3BC04829866A39 /* libPods-WmjrApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D8A6E41F0CB7D2794DFD556 /* libPods-WmjrApp.a */; };
@@ -502,6 +508,18 @@
 		6425D3D51F16450900D61F87 /* NSArray+HRUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+HRUtil.m"; path = "Category/NSArray+HRUtil.m"; sourceTree = "<group>"; };
 		645889291F457A8000E69574 /* UIAlertView+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Block.h"; sourceTree = "<group>"; };
 		6458892A1F457A8000E69574 /* UIAlertView+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Block.m"; sourceTree = "<group>"; };
+		645889A21F4BD70100E69574 /* RedPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPackageViewController.h; sourceTree = "<group>"; };
+		645889A31F4BD70100E69574 /* RedPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPackageViewController.m; sourceTree = "<group>"; };
+		645889A51F4BD9D900E69574 /* MyRedPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPackageViewController.h; sourceTree = "<group>"; };
+		645889A61F4BD9D900E69574 /* MyRedPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRedPackageViewController.m; sourceTree = "<group>"; };
+		645889A81F4BDFAC00E69574 /* RedPackageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPackageTableViewCell.h; sourceTree = "<group>"; };
+		645889A91F4BDFAC00E69574 /* RedPackageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPackageTableViewCell.m; sourceTree = "<group>"; };
+		645889AB1F4C04BE00E69574 /* MyRedPackageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPackageTableViewCell.h; sourceTree = "<group>"; };
+		645889AC1F4C04BE00E69574 /* MyRedPackageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRedPackageTableViewCell.m; sourceTree = "<group>"; };
+		645889AE1F4C0D4E00E69574 /* RedPackageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPackageModel.h; sourceTree = "<group>"; };
+		645889AF1F4C0D4E00E69574 /* RedPackageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPackageModel.m; sourceTree = "<group>"; };
+		645889B11F4C2EDF00E69574 /* MyUnuseRedPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyUnuseRedPackageViewController.h; sourceTree = "<group>"; };
+		645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUnuseRedPackageViewController.m; sourceTree = "<group>"; };
 		64A6BA361F31E5CE00057903 /* AccountAndPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountAndPasswordViewController.h; sourceTree = "<group>"; };
 		64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountAndPasswordViewController.m; sourceTree = "<group>"; };
 		64DA5F501EFFFD5200CB10B1 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -1275,6 +1293,10 @@
 				8B1D232B1E5D5AC90035FD5E /* ProductLongTopCell.m */,
 				8B1D23301E5DB5490035FD5E /* ShortListTopCell.h */,
 				8B1D23311E5DB5490035FD5E /* ShortListTopCell.m */,
+				645889A81F4BDFAC00E69574 /* RedPackageTableViewCell.h */,
+				645889A91F4BDFAC00E69574 /* RedPackageTableViewCell.m */,
+				645889AB1F4C04BE00E69574 /* MyRedPackageTableViewCell.h */,
+				645889AC1F4C04BE00E69574 /* MyRedPackageTableViewCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1576,6 +1598,12 @@
 				8B3343091D8016A7004DB390 /* ViewForJianJie.m */,
 				8BBF1F211DAF0F79009682D9 /* InvestConfirmView.h */,
 				8BBF1F221DAF0F79009682D9 /* InvestConfirmView.m */,
+				645889A21F4BD70100E69574 /* RedPackageViewController.h */,
+				645889A31F4BD70100E69574 /* RedPackageViewController.m */,
+				645889A51F4BD9D900E69574 /* MyRedPackageViewController.h */,
+				645889A61F4BD9D900E69574 /* MyRedPackageViewController.m */,
+				645889B11F4C2EDF00E69574 /* MyUnuseRedPackageViewController.h */,
+				645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */,
 			);
 			path = chanpinDetail;
 			sourceTree = "<group>";
@@ -1593,6 +1621,8 @@
 				8B3342FE1D7F9E91004DB390 /* ProductCategoryModel.m */,
 				8B9D0C751E5AF86E00BD296E /* LongProductSegment.h */,
 				8B9D0C761E5AF86E00BD296E /* LongProductSegment.m */,
+				645889AE1F4C0D4E00E69574 /* RedPackageModel.h */,
+				645889AF1F4C0D4E00E69574 /* RedPackageModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2453,7 +2483,7 @@
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -2887,6 +2917,7 @@
 				C51B43761C78564E001679B5 /* BaseNavigationController.m in Sources */,
 				C51B429F1C7852B4001679B5 /* SmartModel.m in Sources */,
 				C51B435C1C785600001679B5 /* NSString+StringCode.m in Sources */,
+				645889AD1F4C04BE00E69574 /* MyRedPackageTableViewCell.m in Sources */,
 				8B44C4561DC7281A00DE0EA5 /* HomeTableViewCellThird.m in Sources */,
 				8B878B171E2B0A45007646C5 /* HomeTableViewCellThirdFirst.m in Sources */,
 				C51B43441C7855AD001679B5 /* RegisterViewController.m in Sources */,
@@ -2955,16 +2986,20 @@
 				C51B42F81C7854AC001679B5 /* MyselfBankViewController.m in Sources */,
 				C51B43231C785535001679B5 /* CapitalAccountViewController.m in Sources */,
 				C51B436E1C785641001679B5 /* SharedView.m in Sources */,
+				645889A71F4BD9D900E69574 /* MyRedPackageViewController.m in Sources */,
 				C51B42561C78509C001679B5 /* ProductIntroViewController.m in Sources */,
+				645889A41F4BD70100E69574 /* RedPackageViewController.m in Sources */,
 				C51B42881C785247001679B5 /* MessageViewCell.m in Sources */,
 				C51B43911C785691001679B5 /* ZHPickView.m in Sources */,
 				BDD824F71D62E84400A31C21 /* RestPassWordViewController.m in Sources */,
 				8B34020A1D7E52E100320072 /* KeychainData.m in Sources */,
+				645889B01F4C0D4E00E69574 /* RedPackageModel.m in Sources */,
 				C51B43011C7854BA001679B5 /* AvatorSettingCell.m in Sources */,
 				C51B43461C7855AD001679B5 /* RegisterAgreeViewController.m in Sources */,
 				C507C9501ECD84F500875459 /* StoreClassCollectionReusableView.m in Sources */,
 				8B1D23231E5D24040035FD5E /* ProductCategoryTopCell.m in Sources */,
 				C51B43A21C78570B001679B5 /* ResetLoginPasswordViewController.m in Sources */,
+				645889AA1F4BDFAC00E69574 /* RedPackageTableViewCell.m in Sources */,
 				C51B42E11C7853CE001679B5 /* MyselfTransCell.m in Sources */,
 				8B513A571E56C7E50079D49A /* RateTypeButton.m in Sources */,
 				C51B427B1C7851F0001679B5 /* ProfileViewController.m in Sources */,
@@ -2981,6 +3016,7 @@
 				C51B43301C78555A001679B5 /* JoinUsViewController.m in Sources */,
 				8B76662C1E53EA66002FC5F2 /* LongProductDetailViewController.m in Sources */,
 				C51B438C1C78566B001679B5 /* SDCycleScrollView.m in Sources */,
+				645889B31F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m in Sources */,
 				8B4446821D990EB100EDCDBC /* MyRecommandTableViewCell.m in Sources */,
 				8B44C4431DC6D5DB00DE0EA5 /* HomePageViewController.m in Sources */,
 				C51B43071C7854C5001679B5 /* PhoneChangeView.m in Sources */,
@@ -3156,9 +3192,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = WmjrApp/WmjrApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3179,7 +3214,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a7723a71-1955-4188-855f-51e4f11f06a6";
+				PROVISIONING_PROFILE = "bf04d25e-e2f7-4120-a1a5-0e273f04d45b";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
@@ -3191,9 +3226,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = WmjrApp/WmjrApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3214,7 +3248,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a7723a71-1955-4188-855f-51e4f11f06a6";
+				PROVISIONING_PROFILE = "bf04d25e-e2f7-4120-a1a5-0e273f04d45b";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};

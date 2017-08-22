@@ -18,5 +18,6 @@
 @property (nonatomic, copy) NSString *duedate;  /*  结息日期 */
 @property (nonatomic, copy) NSString *expirydate;  /*  还款日期 */
 @property (nonatomic, copy) NSString *createtime;  /* 购买日期 */
+@property (nonatomic, copy) NSString *redpacket;/* 红包收益，为0时不显示 */
 
 @end

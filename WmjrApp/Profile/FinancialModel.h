@@ -20,5 +20,6 @@
 @property (nonatomic, copy) NSString *duedate;
 @property (nonatomic, copy) NSString *expirydate;
 @property (nonatomic, copy) NSString *createtime;
+@property (nonatomic, copy) NSString *redpacket;
 
 @end

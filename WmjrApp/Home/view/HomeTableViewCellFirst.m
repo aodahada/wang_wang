@@ -185,7 +185,7 @@
     
     UILabel *labelForConsult = [[UILabel alloc]init];
     labelForConsult.text = @"咨询联系客服";
-    labelForConsult.textColor = RGBA(186, 218, 255, 1.0);
+    labelForConsult.textColor = [UIColor whiteColor];
     labelForConsult.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [viewForConsult addSubview:labelForConsult];
     [labelForConsult mas_makeConstraints:^(MASConstraintMaker *make) {

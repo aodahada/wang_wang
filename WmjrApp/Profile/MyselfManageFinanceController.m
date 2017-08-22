@@ -323,6 +323,7 @@
     trandDetailVC.duedate = model.duedate;
     trandDetailVC.expirydate = model.expirydate;
     trandDetailVC.createtime = model.createtime;
+    trandDetailVC.redpacket = model.redpacket;
     [self.navigationController pushViewController:trandDetailVC animated:YES];
 }
 

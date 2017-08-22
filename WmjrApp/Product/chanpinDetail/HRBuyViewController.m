@@ -15,11 +15,17 @@
 #import "MMPopupItem.h"
 #import "RechargeViewController.h"
 #import "LongProductSegment.h"
+#import "RedPackageViewController.h"
+#import "RedPackageModel.h"
 
-@interface HRBuyViewController ()
+@interface HRBuyViewController ()<RedPackageVCDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewForTitle;//标题图片
-@property (weak, nonatomic) IBOutlet UILabel *labelForTitle;//标题名称
+//@property (weak, nonatomic) IBOutlet UIImageView *imageViewForTitle;//标题图片
+//@property (weak, nonatomic) IBOutlet UILabel *labelForTitle;//标题名称
+@property (weak, nonatomic) IBOutlet UILabel *hongbaoLabel;//红包label
+@property (weak, nonatomic) IBOutlet UIButton *hongbaoButton;
+
+@property (weak, nonatomic) IBOutlet UILabel *labelForMoney;//收益金额
 @property (weak, nonatomic) IBOutlet UILabel *labelForYearRate;//预期年化率
 @property (weak, nonatomic) IBOutlet UILabel *labelForGetLimit;//持有期限
 @property (weak, nonatomic) IBOutlet UILabel *labelForRaiseSum;//融资总额
@@ -31,6 +37,8 @@
 @property (nonatomic, strong) UIView *viewForBack;//背景View;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGes;
 @property (nonatomic, strong) InvestConfirmView *investConfirmView;
+@property (nonatomic, copy) NSString *redPackageId;//红包id
+@property (nonatomic, copy)NSString *red_low_buy;//红包最低购买值
 
 @end
 
@@ -49,26 +57,27 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"购买金额";
     _buttonForConfirm.userInteractionEnabled = YES;
+    _redPackageId = @"0";
+    _red_low_buy = @"";
     
-    NSString *type_id = _productModel.type_id;
-    if ([type_id isEqualToString:@"1"]) {
-        _imageViewForTitle.image = [UIImage imageNamed:@"icon_qtl"];
-    } else if ([type_id isEqualToString:@"2"]) {
-        _imageViewForTitle.image = [UIImage imageNamed:@"icon_wsx"];
-    } else {
-        _imageViewForTitle.image = [UIImage imageNamed:@"icon_yft"];
-    }
+//    NSString *type_id = _productModel.type_id;
+//    if ([type_id isEqualToString:@"1"]) {
+//        _imageViewForTitle.image = [UIImage imageNamed:@"icon_qtl"];
+//    } else if ([type_id isEqualToString:@"2"]) {
+//        _imageViewForTitle.image = [UIImage imageNamed:@"icon_wsx"];
+//    } else {
+//        _imageViewForTitle.image = [UIImage imageNamed:@"icon_yft"];
+//    }
+//    
+//    _labelForTitle.text = _productModel.name;
     
-    _labelForTitle.text = _productModel.name;
-    
-    CGFloat returnRate = [_productModel.returnrate floatValue];
     
     //    NSNumberFormatter *hereNumFormatter = [[NSNumberFormatter alloc] init];
     //    [hereNumFormatter setNumberStyle:NSNumberFormatterPercentStyle];
     //    hereNumFormatter.maximumFractionDigits = 2;
     //    NSString *str = [hereNumFormatter stringFromNumber:[NSNumber numberWithDouble:0.3358]];// 0.3358转33.58%
     LongProductSegment *longProductSegment = _productModel.segment[0];
-    
+    CGFloat returnRate = [longProductSegment.returnrate floatValue];
     
     _labelForYearRate.text = [NSString stringWithFormat:@"预期年化率%.2f%%",returnRate*100];
     
@@ -79,10 +88,61 @@
     _labelForSetDate.text = [NSString stringWithFormat:@"结算日期%@",endTime];
     
     _textFieldForBuy.placeholder = [NSString stringWithFormat:@"建议购买金额%@元以上",_productModel.lowpurchase];
+    [_textFieldForBuy addTarget:self action:@selector(configGuessMoneyMethod) forControlEvents:UIControlEventEditingChanged];
     
     NSString *newBalance = [[SingletonManager sharedManager] getQianWeiFenGeFuString:longProductSegment.can_buy];
     _labelForSurplus.text = [NSString stringWithFormat:@"产品可购余额%@元",newBalance];
     
+//    [_hongbaoButton addTarget:self action:@selector(jumpToRedPackageVC) forControlEvents:UIControlEventTouchUpInside];
+    [self getRedPackMethod];
+    
+}
+
+#pragma mark - 红包按钮
+- (void)jumpToRedPackageVC {
+    RedPackageViewController *redPackageVC = [[RedPackageViewController alloc]init];
+    redPackageVC.delegate = self;
+    redPackageVC.productId = _productModel.proIntro_id;
+    [self.navigationController pushViewController:redPackageVC animated:YES];
+}
+
+#pragma mark - 获取红包信息
+- (void)getRedPackMethod {
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"加载中"];
+    [manager postDataWithUrlActionStr:@"Redpacket/my" withParamDictionary:@{@"member_id":@"90221",@"status":@"2",@"product_id":_productModel.proIntro_id} withBlock:^(id obj) {
+        if (obj) {
+            if ([obj[@"result"] isEqualToString:@"1"]) {
+                NSArray *dataArray = obj[@"data"];
+                if (dataArray.count == 0) {
+                    _hongbaoLabel.text = @"没有可使用的红包";
+                    [_hongbaoButton addTarget:self action:@selector(nibName) forControlEvents:UIControlEventTouchUpInside];
+                } else {
+                    _hongbaoLabel.text = @"有可使用的红包";
+                    [_hongbaoButton addTarget:self action:@selector(jumpToRedPackageVC) forControlEvents:UIControlEventTouchUpInside];
+                }
+                [SVProgressHUD dismiss];
+                return ;
+            } else {
+                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+                alertConfig.defaultTextOK = @"确定";
+                [SVProgressHUD dismiss];
+                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+                [alertView show];
+            }
+        }
+    }];
+}
+
+#pragma mark - 计算预计收益
+- (void)configGuessMoneyMethod {
+    LongProductSegment *longProductSegment = _productModel.segment[0];
+    CGFloat returnRate = [longProductSegment.returnrate floatValue];
+    CGFloat day = [longProductSegment.duration floatValue];
+    CGFloat buyMoney = [_textFieldForBuy.text floatValue];
+    CGFloat sumRaise = buyMoney*returnRate*day/365;
+    _labelForMoney.text = [NSString stringWithFormat:@"%.2f",sumRaise];
 }
 
 #pragma mark - 获取当前余额
@@ -186,6 +246,12 @@
         return;
     }
     
+    float redLowMoney = [_red_low_buy floatValue];
+    if (investMoney<redLowMoney) {
+        [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"该红包起购金额为%@元",_red_low_buy]];
+        return;
+    }
+    
     //获取当前余额
     [self getCurrentRest];
     
@@ -196,7 +262,7 @@
     NetManager *manager = [[NetManager alloc] init];
     LongProductSegment *longSegPro = _productModel.segment[0];
     [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"Finance/order" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"product_id":_productModel.proIntro_id,@"segment_id":longSegPro.segment_id,@"money":_textFieldForBuy.text,@"returnrate":longSegPro.returnrate} withBlock:^(id obj) {
+    [manager postDataWithUrlActionStr:@"Finance/order" withParamDictionary:@{@"member_id":@"90221", @"product_id":_productModel.proIntro_id,@"segment_id":longSegPro.segment_id,@"money":_textFieldForBuy.text,@"returnrate":longSegPro.returnrate,@"redpacket_member_id":_redPackageId} withBlock:^(id obj) {
         if (obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 NSDictionary *dataDic = obj[@"data"];
@@ -251,6 +317,22 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
     [_textFieldForBuy resignFirstResponder];
+    
+}
+
+#pragma mark - RedPackageVCDelegate方法
+- (void)selecNoRedPackage {
+    _hongbaoLabel.text = @"不使用红包";
+    _hongbaoLabel.textColor = RGBA(255, 88, 26, 1.0);
+    _redPackageId = @"0";
+    _red_low_buy = @"";
+}
+
+- (void)selectRedPackage:(RedPackageModel *)redPackageModel {
+    _hongbaoLabel.text = [NSString stringWithFormat:@"%@¥%@",redPackageModel.name,redPackageModel.money];
+    _hongbaoLabel.textColor = RGBA(255, 88, 26, 1.0);
+    _redPackageId = redPackageModel.redpacket_member_id;
+    _red_low_buy = redPackageModel.low_use;
     
 }
 

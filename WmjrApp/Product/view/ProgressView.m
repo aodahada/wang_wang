@@ -128,10 +128,10 @@
         [self drawLineAnimation:_arcLayer];
         });
     if (_percent > 1) {
-        NSLog(@"传入数值范围为 0-1");
+//        NSLog(@"传入数值范围为 0-1");
         _percent = 1;
     }else if (_percent < 0){
-        NSLog(@"传入数值范围为 0-1");
+//        NSLog(@"传入数值范围为 0-1");
         _percent = 0;
         return;
     }
