@@ -154,6 +154,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     RedPackageModel *redPackageModel = _redPackageArray[indexPath.section];
     if ([redPackageModel.status isEqualToString:@"3"]) {
+        [SVProgressHUD showInfoWithStatus:@"该红包未开始"];
+    } else if ([redPackageModel.status isEqualToString:@"4"]) {
         [SVProgressHUD showInfoWithStatus:@"该红包未激活"];
     } else {
         [self.navigationController popViewControllerAnimated:YES];

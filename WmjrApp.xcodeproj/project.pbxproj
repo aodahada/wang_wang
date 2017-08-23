@@ -11,7 +11,6 @@
 		6458892B1F457A8000E69574 /* UIAlertView+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 6458892A1F457A8000E69574 /* UIAlertView+Block.m */; };
 		645889A41F4BD70100E69574 /* RedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889A31F4BD70100E69574 /* RedPackageViewController.m */; };
 		645889A71F4BD9D900E69574 /* MyRedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889A61F4BD9D900E69574 /* MyRedPackageViewController.m */; };
-		645889AA1F4BDFAC00E69574 /* RedPackageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889A91F4BDFAC00E69574 /* RedPackageTableViewCell.m */; };
 		645889AD1F4C04BE00E69574 /* MyRedPackageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889AC1F4C04BE00E69574 /* MyRedPackageTableViewCell.m */; };
 		645889B01F4C0D4E00E69574 /* RedPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889AF1F4C0D4E00E69574 /* RedPackageModel.m */; };
 		645889B31F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */; };
@@ -512,8 +511,6 @@
 		645889A31F4BD70100E69574 /* RedPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPackageViewController.m; sourceTree = "<group>"; };
 		645889A51F4BD9D900E69574 /* MyRedPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPackageViewController.h; sourceTree = "<group>"; };
 		645889A61F4BD9D900E69574 /* MyRedPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRedPackageViewController.m; sourceTree = "<group>"; };
-		645889A81F4BDFAC00E69574 /* RedPackageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPackageTableViewCell.h; sourceTree = "<group>"; };
-		645889A91F4BDFAC00E69574 /* RedPackageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPackageTableViewCell.m; sourceTree = "<group>"; };
 		645889AB1F4C04BE00E69574 /* MyRedPackageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPackageTableViewCell.h; sourceTree = "<group>"; };
 		645889AC1F4C04BE00E69574 /* MyRedPackageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRedPackageTableViewCell.m; sourceTree = "<group>"; };
 		645889AE1F4C0D4E00E69574 /* RedPackageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPackageModel.h; sourceTree = "<group>"; };
@@ -1293,8 +1290,6 @@
 				8B1D232B1E5D5AC90035FD5E /* ProductLongTopCell.m */,
 				8B1D23301E5DB5490035FD5E /* ShortListTopCell.h */,
 				8B1D23311E5DB5490035FD5E /* ShortListTopCell.m */,
-				645889A81F4BDFAC00E69574 /* RedPackageTableViewCell.h */,
-				645889A91F4BDFAC00E69574 /* RedPackageTableViewCell.m */,
 				645889AB1F4C04BE00E69574 /* MyRedPackageTableViewCell.h */,
 				645889AC1F4C04BE00E69574 /* MyRedPackageTableViewCell.m */,
 			);
@@ -2999,7 +2994,6 @@
 				C507C9501ECD84F500875459 /* StoreClassCollectionReusableView.m in Sources */,
 				8B1D23231E5D24040035FD5E /* ProductCategoryTopCell.m in Sources */,
 				C51B43A21C78570B001679B5 /* ResetLoginPasswordViewController.m in Sources */,
-				645889AA1F4BDFAC00E69574 /* RedPackageTableViewCell.m in Sources */,
 				C51B42E11C7853CE001679B5 /* MyselfTransCell.m in Sources */,
 				8B513A571E56C7E50079D49A /* RateTypeButton.m in Sources */,
 				C51B427B1C7851F0001679B5 /* ProfileViewController.m in Sources */,

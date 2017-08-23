@@ -120,7 +120,7 @@
         }];
         
         NSString *status = model.status;
-        NSLog(@"我的状态：%@",status);
+//        NSLog(@"我的状态：%@",status);
         if (isOut) {
             _imageViewForStatus = [[UIImageView alloc]init];
             if ([status isEqualToString:@"1"]) {
@@ -130,8 +130,8 @@
                 [_imageViewForStatus mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(15));
                     make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15));
-                    make.width.mas_offset(RESIZE_UI(77));
-                    make.height.mas_offset(RESIZE_UI(77));
+                    make.width.mas_offset(RESIZE_UI(61));
+                    make.height.mas_offset(RESIZE_UI(53));
                 }];
             }
             if ([status isEqualToString:@"2"]) {
@@ -141,21 +141,35 @@
                 [_imageViewForStatus mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(15));
                     make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15));
-                    make.width.mas_offset(RESIZE_UI(77));
-                    make.height.mas_offset(RESIZE_UI(77));
+                    make.width.mas_offset(RESIZE_UI(61));
+                    make.height.mas_offset(RESIZE_UI(53));
                 }];
             }
-        } else {
-            if ([status isEqualToString:@"3"]) {
-                //已过期
+            if ([status isEqualToString:@"4"]) {
+                //未激活
                 _imageViewForStatus = [[UIImageView alloc]init];
                 _imageViewForStatus.image = [UIImage imageNamed:@"icon_wjh"];
                 [self addSubview:_imageViewForStatus];
                 [_imageViewForStatus mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(15));
                     make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15));
-                    make.width.mas_offset(RESIZE_UI(77));
-                    make.height.mas_offset(RESIZE_UI(77));
+                    make.width.mas_offset(RESIZE_UI(61));
+                    make.height.mas_offset(RESIZE_UI(53));
+                }];
+                
+            }
+            
+        } else {
+            if ([status isEqualToString:@"3"]) {
+                //未开始
+                _imageViewForStatus = [[UIImageView alloc]init];
+                _imageViewForStatus.image = [UIImage imageNamed:@"icon_wks"];
+                [self addSubview:_imageViewForStatus];
+                [_imageViewForStatus mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(15));
+                    make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15));
+                    make.width.mas_offset(RESIZE_UI(61));
+                    make.height.mas_offset(RESIZE_UI(53));
                 }];
             } else {
                 if (_imageViewForStatus) {
