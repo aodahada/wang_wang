@@ -45,7 +45,8 @@
             moneyLabel.textColor = RGBA(255, 88, 26, 1.0);
             moneyLabel.text = model.money;
         }
-        moneyLabel.font = [UIFont systemFontOfSize:RESIZE_UI(32)];
+//        moneyLabel.font = [UIFont systemFontOfSize:RESIZE_UI(32)];
+        moneyLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(32)];
         [self addSubview:moneyLabel];
         [moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15.8));
@@ -69,7 +70,7 @@
         
         UILabel *moneySatisfy = [[UILabel alloc]init];
         moneySatisfy.text = [NSString stringWithFormat:@"单笔满%@可用",model.low_use];
-        moneySatisfy.textColor = RGBA(197, 197, 197, 1.0);
+        moneySatisfy.textColor = RGBA(153, 153, 153, 1.0);
         moneySatisfy.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         [self addSubview:moneySatisfy];
         [moneySatisfy mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -79,7 +80,8 @@
         
         UILabel *newRedPackage = [[UILabel alloc]init];
         newRedPackage.text = model.name;
-        newRedPackage.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+//        newRedPackage.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+        newRedPackage.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(17)];
         if (isOut) {
             newRedPackage.textColor = RGBA(197, 197, 197, 1.0);
         } else {
@@ -102,7 +104,7 @@
         NSString *typeString = [typeMutableArray componentsJoinedByString:@","];
         suitableLabel.text = [NSString stringWithFormat:@"适用产品:%@",typeString];
         suitableLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
-        suitableLabel.textColor = RGBA(197, 197, 197, 1.0);
+        suitableLabel.textColor = RGBA(153, 153, 153, 1.0);
         [self addSubview:suitableLabel];
         [suitableLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(newRedPackage.mas_bottom).with.offset(RESIZE_UI(4));
@@ -110,7 +112,7 @@
         }];
         
         UILabel *useableDay = [[UILabel alloc]init];
-        useableDay.textColor = RGBA(197, 197, 197, 1.0);
+        useableDay.textColor = RGBA(153, 153, 153, 1.0);
         useableDay.text = [NSString stringWithFormat:@"有效期:%@-%@",model.start_date,model.end_date];
         useableDay.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         [self addSubview:useableDay];
