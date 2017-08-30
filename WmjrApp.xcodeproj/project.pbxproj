@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6425D3D61F16450900D61F87 /* NSArray+HRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 6425D3D51F16450900D61F87 /* NSArray+HRUtil.m */; };
+		6431A4AC1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6431A4AB1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m */; };
 		6458892B1F457A8000E69574 /* UIAlertView+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 6458892A1F457A8000E69574 /* UIAlertView+Block.m */; };
 		645889A41F4BD70100E69574 /* RedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889A31F4BD70100E69574 /* RedPackageViewController.m */; };
 		645889A71F4BD9D900E69574 /* MyRedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889A61F4BD9D900E69574 /* MyRedPackageViewController.m */; };
@@ -505,6 +506,8 @@
 /* Begin PBXFileReference section */
 		6425D3D41F16450900D61F87 /* NSArray+HRUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+HRUtil.h"; path = "Category/NSArray+HRUtil.h"; sourceTree = "<group>"; };
 		6425D3D51F16450900D61F87 /* NSArray+HRUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+HRUtil.m"; path = "Category/NSArray+HRUtil.m"; sourceTree = "<group>"; };
+		6431A4AA1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPackageTableViewCellTwo.h; sourceTree = "<group>"; };
+		6431A4AB1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRedPackageTableViewCellTwo.m; sourceTree = "<group>"; };
 		645889291F457A8000E69574 /* UIAlertView+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Block.h"; sourceTree = "<group>"; };
 		6458892A1F457A8000E69574 /* UIAlertView+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Block.m"; sourceTree = "<group>"; };
 		645889A21F4BD70100E69574 /* RedPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPackageViewController.h; sourceTree = "<group>"; };
@@ -1292,6 +1295,8 @@
 				8B1D23311E5DB5490035FD5E /* ShortListTopCell.m */,
 				645889AB1F4C04BE00E69574 /* MyRedPackageTableViewCell.h */,
 				645889AC1F4C04BE00E69574 /* MyRedPackageTableViewCell.m */,
+				6431A4AA1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.h */,
+				6431A4AB1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -2913,6 +2918,7 @@
 				C51B429F1C7852B4001679B5 /* SmartModel.m in Sources */,
 				C51B435C1C785600001679B5 /* NSString+StringCode.m in Sources */,
 				645889AD1F4C04BE00E69574 /* MyRedPackageTableViewCell.m in Sources */,
+				6431A4AC1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m in Sources */,
 				8B44C4561DC7281A00DE0EA5 /* HomeTableViewCellThird.m in Sources */,
 				8B878B171E2B0A45007646C5 /* HomeTableViewCellThirdFirst.m in Sources */,
 				C51B43441C7855AD001679B5 /* RegisterViewController.m in Sources */,

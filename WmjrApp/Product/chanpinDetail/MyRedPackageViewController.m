@@ -11,6 +11,7 @@
 #import "RedPackageModel.h"
 #import "MyUnuseRedPackageViewController.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
+#import "AgViewController.h"
 
 @interface MyRedPackageViewController ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
@@ -25,6 +26,14 @@
     // Do any additional setup after loading the view.
     self.title = @"我的红包";
     self.view.backgroundColor = RGBA(243, 244, 246, 1.0);
+    
+        UIButton *rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, RESIZE_UI(70), RESIZE_UI(30))];
+        [rightButton setTitle:@"使用说明" forState:UIControlStateNormal];
+        rightButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [rightButton addTarget:self action:@selector(jumpToUseGuide) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"使用说明" style:UIBarButtonItemStylePlain target:self action:@selector(jumpToUseGuide)];
     
     [self getDataMethod];
     
@@ -130,6 +139,14 @@
     MyRedPackageTableViewCell *cell = [[MyRedPackageTableViewCell alloc]initWithModel:redPackageModel andIsOut:NO];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
+}
+
+#pragma mark - 跳转到使用说明
+- (void)jumpToUseGuide {
+    AgViewController *agView = [[AgViewController alloc]init];
+    agView.webUrl = @"http://api.wmjr888.com/home/page/index/page_id/14";
+    agView.title = @"使用说明";
+    [self.navigationController pushViewController:agView animated:YES];
 }
 
 #pragma mark - 查看失效红包

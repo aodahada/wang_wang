@@ -8,7 +8,8 @@
 
 #import "RedPackageViewController.h"
 #import "RedPackageModel.h"
-#import "MyRedPackageTableViewCell.h"
+//#import "MyRedPackageTableViewCell.h"
+#import "MyRedPackageTableViewCellTwo.h"
 
 @interface RedPackageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -24,6 +25,7 @@
     // Do any additional setup after loading the view.
     self.title = @"可用红包";
     self.view.backgroundColor = [UIColor whiteColor];
+    
     
     UIScrollView *mainScrollView = [[UIScrollView alloc]init];
     [self.view addSubview:mainScrollView];
@@ -138,7 +140,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     RedPackageModel *redPackageModel = _redPackageArray[indexPath.section];
-    MyRedPackageTableViewCell *cell = [[MyRedPackageTableViewCell alloc]initWithModel:redPackageModel andIsOut:NO];
+    CGFloat money = [_buyMoney floatValue];
+    CGFloat lowMoney = [redPackageModel.low_use floatValue];
+    BOOL canBuy;
+    if (money>lowMoney) {
+        canBuy = YES;
+    } else {
+        canBuy = NO;
+    }
+    MyRedPackageTableViewCellTwo *cell = [[MyRedPackageTableViewCellTwo alloc]initWithModel:redPackageModel andIsOut:NO andIsEnough:canBuy];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -153,7 +163,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     RedPackageModel *redPackageModel = _redPackageArray[indexPath.section];
-    if ([redPackageModel.status isEqualToString:@"3"]) {
+    CGFloat money = [_buyMoney floatValue];
+    CGFloat lowMoney = [redPackageModel.low_use floatValue];
+    BOOL canBuy;
+    if (money>lowMoney) {
+        canBuy = YES;
+    } else {
+        canBuy = NO;
+    }
+    if (!canBuy) {
+        [SVProgressHUD showInfoWithStatus:@"未达到红包使用条件"];
+    } else if ([redPackageModel.status isEqualToString:@"3"]) {
         [SVProgressHUD showInfoWithStatus:@"该红包未开始"];
     } else if ([redPackageModel.status isEqualToString:@"4"]) {
         [SVProgressHUD showInfoWithStatus:@"该红包未激活"];

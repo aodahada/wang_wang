@@ -22,6 +22,8 @@
 
 @property (nonatomic, copy)NSString *productId;
 
+@property (nonatomic, copy)NSString *buyMoney;//是否满足使用红包条件
+
 @property (nonatomic, weak) id<RedPackageVCDelegate> delegate;
 
 @end

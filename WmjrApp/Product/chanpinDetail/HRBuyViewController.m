@@ -102,6 +102,7 @@
 - (void)jumpToRedPackageVC {
     RedPackageViewController *redPackageVC = [[RedPackageViewController alloc]init];
     redPackageVC.delegate = self;
+    redPackageVC.buyMoney = _textFieldForBuy.text;
     redPackageVC.productId = _productModel.proIntro_id;
     [self.navigationController pushViewController:redPackageVC animated:YES];
 }

@@ -18,6 +18,6 @@
 @property (nonatomic, strong)NSString *redpacket_id;
 @property (nonatomic, strong)NSString *redpacket_member_id;
 @property (nonatomic, strong)NSString *start_date;
-@property (nonatomic, strong)NSString *status;//0：可使用 1：已使用 2：已过期 3：未开始
+@property (nonatomic, strong)NSString *status;//0：可使用 1：已使用 2：已过期 3：未开始 4：未激活
 
 @end

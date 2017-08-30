@@ -1,28 +1,28 @@
 //
-//  MyRedPackageTableViewCell.m
+//  MyRedPackageTableViewCellTwo.m
 //  WmjrApp
 //
-//  Created by 霍锐 on 2017/8/22.
+//  Created by 霍锐 on 2017/8/30.
 //  Copyright © 2017年 Baimifan. All rights reserved.
 //
 
-#import "MyRedPackageTableViewCell.h"
+#import "MyRedPackageTableViewCellTwo.h"
 #import "RedPackageModel.h"
 
-@interface MyRedPackageTableViewCell ()
+@interface MyRedPackageTableViewCellTwo ()
 
 @property (nonatomic, strong)UIImageView *imageViewForStatus;
 
 @end
 
-@implementation MyRedPackageTableViewCell
+@implementation MyRedPackageTableViewCellTwo
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
 }
 
-- (instancetype)initWithModel:(RedPackageModel *)model andIsOut:(BOOL)isOut{
+- (instancetype)initWithModel:(RedPackageModel *)model andIsOut:(BOOL)isOut andIsEnough:(BOOL)isEnough{
     self = [super init];
     if (self) {
         self.backgroundColor = RGBA(243, 244, 246, 1.0);
@@ -35,17 +35,18 @@
         }];
         
         UILabel *moneyLabel = [[UILabel alloc]init];
-        if (isOut || [model.status isEqualToString:@"4"]) {
+        if (!isEnough) {
             moneyLabel.textColor = RGBA(197, 197, 197, 1.0);
-            NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@",model.money]
-                                                                                        attributes:@{NSStrikethroughStyleAttributeName : @(NSUnderlineStyleSingle)}];
-            moneyLabel.attributedText = attrStr;
+//            NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@",model.money]
+//                                                                                        attributes:@{NSStrikethroughStyleAttributeName : @(NSUnderlineStyleSingle)}];
+//            moneyLabel.attributedText = attrStr;
+            moneyLabel.text = model.money;
             
         } else {
             moneyLabel.textColor = RGBA(255, 88, 26, 1.0);
             moneyLabel.text = model.money;
         }
-//        moneyLabel.font = [UIFont systemFontOfSize:RESIZE_UI(32)];
+        //        moneyLabel.font = [UIFont systemFontOfSize:RESIZE_UI(32)];
         moneyLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(32)];
         [self addSubview:moneyLabel];
         [moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -54,12 +55,11 @@
         }];
         
         UILabel *moneyTitle = [[UILabel alloc]init];
-        if (isOut || [model.status isEqualToString:@"4"]) {
-            moneyTitle.hidden = YES;
+        if (!isEnough) {
+            moneyTitle.textColor = RGBA(197, 197, 197, 1.0);
         } else {
-            moneyTitle.hidden = NO;
+            moneyTitle.textColor = RGBA(255, 88, 26, 1.0);
         }
-        moneyTitle.textColor = RGBA(255, 88, 26, 1.0);
         moneyTitle.text = @"¥";
         moneyTitle.font = [UIFont systemFontOfSize:RESIZE_UI(18)];
         [self addSubview:moneyTitle];
@@ -80,9 +80,9 @@
         
         UILabel *newRedPackage = [[UILabel alloc]init];
         newRedPackage.text = model.name;
-//        newRedPackage.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+        //        newRedPackage.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
         newRedPackage.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(17)];
-        if (isOut || [model.status isEqualToString:@"4"]) {
+        if (!isEnough) {
             newRedPackage.textColor = RGBA(197, 197, 197, 1.0);
         } else {
             newRedPackage.textColor = RGBA(255, 88, 26, 1.0);
@@ -122,7 +122,7 @@
         }];
         
         NSString *status = model.status;
-//        NSLog(@"我的状态：%@",status);
+        //        NSLog(@"我的状态：%@",status);
         if (isOut) {
             _imageViewForStatus = [[UIImageView alloc]init];
             if ([status isEqualToString:@"1"]) {
@@ -147,19 +147,19 @@
                     make.height.mas_offset(RESIZE_UI(53));
                 }];
             }
-//            if ([status isEqualToString:@"4"]) {
-//                //未激活
-//                _imageViewForStatus = [[UIImageView alloc]init];
-//                _imageViewForStatus.image = [UIImage imageNamed:@"icon_wjh"];
-//                [self addSubview:_imageViewForStatus];
-//                [_imageViewForStatus mas_makeConstraints:^(MASConstraintMaker *make) {
-//                    make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(15));
-//                    make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15));
-//                    make.width.mas_offset(RESIZE_UI(61));
-//                    make.height.mas_offset(RESIZE_UI(53));
-//                }];
-//                
-//            }
+            //            if ([status isEqualToString:@"4"]) {
+            //                //未激活
+            //                _imageViewForStatus = [[UIImageView alloc]init];
+            //                _imageViewForStatus.image = [UIImage imageNamed:@"icon_wjh"];
+            //                [self addSubview:_imageViewForStatus];
+            //                [_imageViewForStatus mas_makeConstraints:^(MASConstraintMaker *make) {
+            //                    make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(15));
+            //                    make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15));
+            //                    make.width.mas_offset(RESIZE_UI(61));
+            //                    make.height.mas_offset(RESIZE_UI(53));
+            //                }];
+            //
+            //            }
             
         } else {
             if ([status isEqualToString:@"3"]) {
@@ -198,7 +198,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
