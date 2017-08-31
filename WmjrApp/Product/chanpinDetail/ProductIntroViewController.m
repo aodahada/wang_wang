@@ -609,11 +609,16 @@
                 [alertView show];
                 return;
             }
-            /* 购买 */
-//            FundBuyViewController *fundBuyVC = [[FundBuyViewController alloc] init];
-            HRBuyViewController *fundBuyVC = [[HRBuyViewController alloc]initWithNibName:@"HRBuyViewController" bundle:nil];
-            fundBuyVC.productModel = _productModel;
-            [self.navigationController pushViewController:fundBuyVC animated:YES];
+            NSLog(@"我的身份:%@",[SingletonManager sharedManager].userModel.is_newer);
+            if ([_productModel.is_newer isEqualToString:@"1"]&&[[SingletonManager sharedManager].userModel.is_newer isEqualToString:@"0"]) {
+                    [SVProgressHUD showInfoWithStatus:@"该产品为新人购产品"];
+            } else {
+                /* 购买 */
+                //            FundBuyViewController *fundBuyVC = [[FundBuyViewController alloc] init];
+                HRBuyViewController *fundBuyVC = [[HRBuyViewController alloc]initWithNibName:@"HRBuyViewController" bundle:nil];
+                fundBuyVC.productModel = _productModel;
+                [self.navigationController pushViewController:fundBuyVC animated:YES];
+            }
         } else {
             [[MMPopupWindow sharedWindow] cacheWindow];
             MMPopupItemHandler block = ^(NSInteger index){

@@ -112,6 +112,10 @@
         } else {
             MyselfManageFinanceController *mySelfFianceVC = [[MyselfManageFinanceController alloc]init];
             mySelfFianceVC.isPay = @"YES";
+            //购买成功改变用户新人状态
+            if ([[SingletonManager sharedManager].userModel.is_newer isEqualToString:@"1"]) {
+                [SingletonManager sharedManager].userModel.is_newer = @"0";
+            }
             [self.navigationController pushViewController:mySelfFianceVC animated:YES];
             
             NSMutableArray *tempVCA = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];

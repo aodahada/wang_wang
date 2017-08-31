@@ -128,6 +128,7 @@
     cell.cerType.text = model.type_name;
     cell.cerLab.text = model.message_title;
     cell.introLab.text = model.message_intro;
+    cell.timeLabel.text = model.create_time;
     
     return cell;
 }

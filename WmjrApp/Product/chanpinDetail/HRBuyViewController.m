@@ -157,64 +157,95 @@
                 
                 NSDictionary *dataDic = obj[@"data"];
                 self.personalYuEStr = dataDic[@"balance"];
-                
-                _investConfirmView = [[InvestConfirmView alloc]initWithInvestMoney:_textFieldForBuy.text restMoney:_personalYuEStr];
-                @weakify(self)
-                _investConfirmView.closeViewMethod = ^(){
-                    @strongify(self)
-                    [self tapGesMethod];
-                };
-                _investConfirmView.jumToReadDelegate = ^(){
-                    @strongify(self)
-                    [self watchDelegateMethod];
-                };
-                _investConfirmView.buttonNextMethod = ^(BOOL canPay){
-                    @strongify(self)
-                    if (canPay) {
-                        [self useInterfaceForPay];
-                    } else {
-                        MMPopupItemHandler block = ^(NSInteger index){
-                            if (index == 0) {
-                                return ;
-                            }
-                            if (index == 1) {
-                                [self tapGesMethod];
-                                /*  充值 */
-                                RechargeViewController *rechangeVC = [[RechargeViewController alloc] init];
-                                rechangeVC.isPayJump = @"yes";
-                                [self.navigationController pushViewController:rechangeVC animated:YES];
-                                return;
-                            }
-                        };
-                        NSArray *items =
-                        @[MMItemMake(@"取消", MMItemTypeNormal, block),
-                          MMItemMake(@"确定", MMItemTypeNormal, block)];
-                        MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
-                                                                             detail:@"您的余额不足，请先去充值"
-                                                                              items:items];
-                        [alertView show];
-                    }
-                };
-                [self.view addSubview:_investConfirmView];
-                [_investConfirmView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.bottom.equalTo(self.view.mas_bottom);
-                    make.height.mas_offset(319);
-                    make.left.equalTo(self.view.mas_left);
-                    make.right.equalTo(self.view.mas_right);
-                }];
-                
-                _viewForBack = [[UIView alloc]init];
-                _viewForBack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.36];
-                [self.view addSubview:_viewForBack];
-                [_viewForBack mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(self.view.mas_top);
-                    make.left.equalTo(self.view.mas_left);
-                    make.right.equalTo(self.view.mas_right);
-                    make.bottom.equalTo(_investConfirmView.mas_top);
-                }];
-                
-                _tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGesMethod)];
-                [_viewForBack addGestureRecognizer:_tapGes];
+                BOOL isSatisfy;
+                CGFloat investMoneyFlo = [_textFieldForBuy.text floatValue];
+                CGFloat restMoneyFlo = [self.personalYuEStr floatValue];
+                if (restMoneyFlo>=investMoneyFlo) {
+                    isSatisfy = YES;
+                } else {
+                    isSatisfy = NO;
+                }
+                if (isSatisfy) {
+                    _investConfirmView = [[InvestConfirmView alloc]initWithInvestMoney:_textFieldForBuy.text restMoney:_personalYuEStr];
+                    @weakify(self)
+                    _investConfirmView.closeViewMethod = ^(){
+                        @strongify(self)
+                        [self tapGesMethod];
+                    };
+                    _investConfirmView.jumToReadDelegate = ^(){
+                        @strongify(self)
+                        [self watchDelegateMethod];
+                    };
+                    _investConfirmView.buttonNextMethod = ^(BOOL canPay){
+                        @strongify(self)
+                        if (canPay) {
+                            [self useInterfaceForPay];
+                        } else {
+                            MMPopupItemHandler block = ^(NSInteger index){
+                                if (index == 0) {
+                                    return ;
+                                }
+                                if (index == 1) {
+                                    [self tapGesMethod];
+                                    /*  充值 */
+                                    RechargeViewController *rechangeVC = [[RechargeViewController alloc] init];
+                                    rechangeVC.isPayJump = @"yes";
+                                    [self.navigationController pushViewController:rechangeVC animated:YES];
+                                    return;
+                                }
+                            };
+                            NSArray *items =
+                            @[MMItemMake(@"取消", MMItemTypeNormal, block),
+                              MMItemMake(@"确定", MMItemTypeNormal, block)];
+                            MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
+                                                                                 detail:@"您的余额不足，请先去充值"
+                                                                                  items:items];
+                            [alertView show];
+                        }
+                    };
+                    [self.view addSubview:_investConfirmView];
+                    [_investConfirmView mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.bottom.equalTo(self.view.mas_bottom);
+                        make.height.mas_offset(319);
+                        make.left.equalTo(self.view.mas_left);
+                        make.right.equalTo(self.view.mas_right);
+                    }];
+                    
+                    _viewForBack = [[UIView alloc]init];
+                    _viewForBack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.36];
+                    [self.view addSubview:_viewForBack];
+                    [_viewForBack mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.top.equalTo(self.view.mas_top);
+                        make.left.equalTo(self.view.mas_left);
+                        make.right.equalTo(self.view.mas_right);
+                        make.bottom.equalTo(_investConfirmView.mas_top);
+                    }];
+                    
+                    _tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGesMethod)];
+                    [_viewForBack addGestureRecognizer:_tapGes];
+                } else {
+                    MMPopupItemHandler block = ^(NSInteger index){
+                        if (index == 0) {
+                            return ;
+                        }
+                        if (index == 1) {
+                            [self tapGesMethod];
+                            /*  充值 */
+                            RechargeViewController *rechangeVC = [[RechargeViewController alloc] init];
+                            rechangeVC.isPayJump = @"yes";
+                            [self.navigationController pushViewController:rechangeVC animated:YES];
+                            return;
+                        }
+                    };
+                    NSArray *items =
+                    @[MMItemMake(@"取消", MMItemTypeNormal, block),
+                      MMItemMake(@"确定", MMItemTypeNormal, block)];
+                    MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
+                                                                         detail:@"您的余额不足，请先去充值"
+                                                                          items:items];
+                    [alertView show];
+
+                }
 
                 
                 [SVProgressHUD dismiss];

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -42,29 +42,38 @@
                         <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZI-4M-Wne">
+                        <rect key="frame" x="385" y="16" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="B6h-fF-bjr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="Cg3-b8-AE4"/>
                     <constraint firstItem="B6h-fF-bjr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="HDN-2o-ZdG"/>
                     <constraint firstItem="2fJ-Xi-8ik" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="InM-5f-5ca"/>
                     <constraint firstAttribute="bottomMargin" secondItem="2fJ-Xi-8ik" secondAttribute="bottom" constant="6" id="Q67-hJ-urB"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="vZI-4M-Wne" secondAttribute="trailing" constant="10" id="WfU-Fy-6bl"/>
                     <constraint firstItem="B6h-fF-bjr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="dVE-Oa-b7E"/>
                     <constraint firstItem="2fJ-Xi-8ik" firstAttribute="top" secondItem="B6h-fF-bjr" secondAttribute="bottom" constant="6" id="ed6-1A-mq6"/>
+                    <constraint firstItem="vZI-4M-Wne" firstAttribute="centerY" secondItem="B6h-fF-bjr" secondAttribute="centerY" id="nMQ-JF-Ics"/>
                     <constraint firstAttribute="trailingMargin" secondItem="B6h-fF-bjr" secondAttribute="trailing" constant="10" id="oxu-tP-Yi1"/>
                     <constraint firstItem="2fJ-Xi-8ik" firstAttribute="top" secondItem="B6h-fF-bjr" secondAttribute="bottom" id="xfH-Pp-Ith"/>
                     <constraint firstAttribute="trailingMargin" secondItem="2fJ-Xi-8ik" secondAttribute="trailing" constant="10" id="xgg-lz-3KJ"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="HDN-2o-ZdG"/>
                         <exclude reference="Q67-hJ-urB"/>
                         <exclude reference="xfH-Pp-Ith"/>
-                        <exclude reference="HDN-2o-ZdG"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="cerLab" destination="B6h-fF-bjr" id="rmm-0c-qEr"/>
                 <outlet property="introLab" destination="2fJ-Xi-8ik" id="khT-zy-gqQ"/>
+                <outlet property="timeLabel" destination="vZI-4M-Wne" id="EaF-Hv-2aO"/>
             </connections>
             <point key="canvasLocation" x="435.5" y="300.5"/>
         </tableViewCell>
