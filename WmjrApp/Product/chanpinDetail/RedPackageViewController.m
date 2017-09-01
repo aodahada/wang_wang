@@ -143,7 +143,7 @@
     CGFloat money = [_buyMoney floatValue];
     CGFloat lowMoney = [redPackageModel.low_use floatValue];
     BOOL canBuy;
-    if (money>lowMoney) {
+    if (money>=lowMoney) {
         canBuy = YES;
     } else {
         canBuy = NO;
@@ -166,7 +166,7 @@
     CGFloat money = [_buyMoney floatValue];
     CGFloat lowMoney = [redPackageModel.low_use floatValue];
     BOOL canBuy;
-    if (money>lowMoney) {
+    if (money>=lowMoney) {
         canBuy = YES;
     } else {
         canBuy = NO;

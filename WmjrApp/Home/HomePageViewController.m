@@ -92,15 +92,15 @@
     [self setReplaceNavMethod];
     
     //检查是否开启推送
-    if (IOS8) { //iOS8以上包含iOS8
-        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types  == UIRemoteNotificationTypeNone) {
-            [[[UIAlertView alloc]initWithTitle:@"您没有开启推送通知" message:@"请去设置-通知中修改" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil] show];
-        }
-    }else{ // ios7 一下
-        if ([[UIApplication sharedApplication] enabledRemoteNotificationTypes]  == UIRemoteNotificationTypeNone) {
-            [[[UIAlertView alloc]initWithTitle:@"您没有开启推送通知" message:@"请去设置-通知中修改" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil] show];
-        }
-    }
+//    if (IOS8) { //iOS8以上包含iOS8
+//        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types  == UIRemoteNotificationTypeNone) {
+//            [[[UIAlertView alloc]initWithTitle:@"您没有开启推送通知" message:@"请去设置-通知中修改" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil] show];
+//        }
+//    }else{ // ios7 一下
+//        if ([[UIApplication sharedApplication] enabledRemoteNotificationTypes]  == UIRemoteNotificationTypeNone) {
+//            [[[UIAlertView alloc]initWithTitle:@"您没有开启推送通知" message:@"请去设置-通知中修改" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil] show];
+//        }
+//    }
     
 }
 

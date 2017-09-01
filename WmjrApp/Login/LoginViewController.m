@@ -150,6 +150,7 @@
                 [_passWord resignFirstResponder];
                 
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"loginSuccess" object:nil];
+                NSLog(@"我的id：%@",[SingletonManager sharedManager].uid);
                 [JPUSHService setAlias:[SingletonManager sharedManager].uid callbackSelector:nil object:self];
                 
                 BOOL isSave = [[SingletonManager sharedManager]isSave];

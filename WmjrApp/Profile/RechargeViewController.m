@@ -79,30 +79,35 @@
 
 /* 确认充值 */
 - (IBAction)submitAction:(id)sender {
-    
-    [SVProgressHUD showWithStatus:@"加载中"];
-    NetManager *manager = [[NetManager alloc] init];
-    [manager postDataWithUrlActionStr:@"Trade/new_deposit" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"money":_rechargeLab.text,} withBlock:^(id obj) {
-        NSLog(@"我的书1 ：%@",obj);
-        if ([obj[@"result"] isEqualToString:@"1"]) {
-            [SVProgressHUD dismiss];
-//            _ticket = [obj[@"data"] objectForKey:@"ticket"];
-//            _order_id = [obj[@"data"] objectForKey:@"order_id"];
-            NSDictionary *dataDic = obj[@"data"];
-            WebViewForPayViewController *webViewForPayVC = [[WebViewForPayViewController alloc]initWithNibName:@"WebViewForPayViewController" bundle:nil];
-            webViewForPayVC.htmlString = dataDic[@"html"];
-            webViewForPayVC.isPayJump = _isPayJump;
-            webViewForPayVC.title = @"充值界面";
-            [self.navigationController pushViewController:webViewForPayVC animated:YES];
-        } else {
-            [SVProgressHUD dismiss];
-            NSString *mes = [obj[@"data"] objectForKey:@"mes"];
-            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
-            alertConfig.defaultTextOK = @"确定";
-            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:mes];
-            [alertView show];
-        }
-    }];
+    NSString *inputMoney = _rechargeLab.text;
+    CGFloat money = [inputMoney floatValue];
+    if (money>0) {
+        [SVProgressHUD showWithStatus:@"加载中"];
+        NetManager *manager = [[NetManager alloc] init];
+        [manager postDataWithUrlActionStr:@"Trade/new_deposit" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"money":_rechargeLab.text,} withBlock:^(id obj) {
+            NSLog(@"我的书1 ：%@",obj);
+            if ([obj[@"result"] isEqualToString:@"1"]) {
+                [SVProgressHUD dismiss];
+                //            _ticket = [obj[@"data"] objectForKey:@"ticket"];
+                //            _order_id = [obj[@"data"] objectForKey:@"order_id"];
+                NSDictionary *dataDic = obj[@"data"];
+                WebViewForPayViewController *webViewForPayVC = [[WebViewForPayViewController alloc]initWithNibName:@"WebViewForPayViewController" bundle:nil];
+                webViewForPayVC.htmlString = dataDic[@"html"];
+                webViewForPayVC.isPayJump = _isPayJump;
+                webViewForPayVC.title = @"充值界面";
+                [self.navigationController pushViewController:webViewForPayVC animated:YES];
+            } else {
+                [SVProgressHUD dismiss];
+                NSString *mes = [obj[@"data"] objectForKey:@"mes"];
+                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+                alertConfig.defaultTextOK = @"确定";
+                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:mes];
+                [alertView show];
+            }
+        }];
+    } else {
+        [SVProgressHUD showInfoWithStatus:@"充值金额必须大于0"];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

@@ -363,7 +363,8 @@
         SharedManager *sharedManager = [[SharedManager alloc] init];
         if (_invitationcode) {
             NSString *contentStr = [NSString stringWithFormat:@"使用我的旺马财富推荐码 %@", _invitationcode];
-            NSString *urlStr = [NSString stringWithFormat:@"http://m.wmjr888.com/?invitationcode=%@#login-register",_invitationcode];
+//            NSString *urlStr = [NSString stringWithFormat:@"http://m.wmjr888.com/?invitationcode=%@#login-register",_invitationcode];
+            NSString *urlStr = [NSString stringWithFormat:@"http://m.wangmacaifu.com/#/register/wmcf-%@",[SingletonManager sharedManager].userModel.invitationcode];
             [sharedManager shareContent:sender withTitle:@"这是一个值得信赖的的投资理财平台" andContent:contentStr andUrl:urlStr];
             
         } else {

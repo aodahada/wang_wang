@@ -84,6 +84,41 @@
     self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBar.hidden = NO;
     [self setUpNavigationBar];
+    [self getDataWithLogin];
+}
+
+#pragma mark - 数据处理 －
+- (void)getDataWithLogin {
+    
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"加载中"];
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *mobile = [userDefault objectForKey:@"mobile"];
+    NSString *pwd = [userDefault objectForKey:@"passWord"];
+    mobile = [self convertNullString:mobile];
+    pwd = [self convertNullString:pwd];
+    [manager postDataWithUrlActionStr:@"User/login" withParamDictionary:@{@"mobile":mobile, @"pwd":pwd} withBlock:^(id obj) {
+        [SVProgressHUD dismiss];
+        if (obj) {
+            if ([obj[@"result"] isEqualToString:@"1"]) {
+                NSDictionary *dataDic = obj[@"data"];
+                [UserInfoModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                    return @{@"user_id" : @"id"};
+                }];
+                UserInfoModel *userModel = [UserInfoModel mj_objectWithKeyValues:dataDic];
+                [SingletonManager sharedManager].userModel = userModel;
+                
+                return ;
+            } else {
+//                [SVProgressHUD showInfoWithStatus:@"账号密码有误,请重新登录"];
+//                LoginViewController *loginVC = [[LoginViewController alloc] init];
+//                loginVC.loginIden = @"login";
+//                loginVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//                UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
+//                [self presentViewController:loginNa animated:YES completion:nil];
+            }
+        }
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
