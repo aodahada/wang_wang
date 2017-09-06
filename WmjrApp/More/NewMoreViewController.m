@@ -211,7 +211,7 @@
                 cell.textLabel.text = @"当前版本";
                 NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
                 UILabel *labelForVersion = [[UILabel alloc]init];
-                labelForVersion.text = [NSString stringWithFormat:@"已更新至%@版本",app_version];
+                labelForVersion.text = app_version;
                 labelForVersion.textColor = RGBA(255, 88, 26, 1.0);
                 labelForVersion.font = [UIFont systemFontOfSize:15];
                 [cell addSubview:labelForVersion];
