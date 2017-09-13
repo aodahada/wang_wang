@@ -137,13 +137,13 @@
     
 //    MessageModel *model = _messArray[indexPath.row];
     MessageModel *model = [_messArray objectAtIndexCheck:indexPath.row];
-    AgViewController *agVC =[[AgViewController alloc] init];
-    agVC.title = model.message_title;
-    agVC.webUrl = model.url;
-    [self.navigationController pushViewController:agVC animated:YES];
-//    BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
-//    [self presentViewController:baseNa animated:YES completion:^{
-//    }];
+    if ([model.can_click isEqualToString:@"1"]) {
+        AgViewController *agVC =[[AgViewController alloc] init];
+        agVC.title = model.message_title;
+        agVC.webUrl = model.url;
+        [self.navigationController pushViewController:agVC animated:YES];
+    }
+
     
 }
 

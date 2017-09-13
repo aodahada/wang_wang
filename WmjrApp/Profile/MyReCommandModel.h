@@ -15,4 +15,5 @@
 @property (nonatomic, copy) NSString *mobile;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *invitation;
+@property (nonatomic, copy) NSString *money;//购买金额
 @end

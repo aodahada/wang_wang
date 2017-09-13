@@ -52,6 +52,8 @@
 //@property (nonatomic, strong) ProductModel *longProduct;//新人购产品
 @property (nonatomic, strong) NSMutableArray *arrayForNewBuy;//新人购数组
 
+@property (nonatomic, assign) NSInteger currentPage;//当前页
+
 @end
 
 @implementation HomePageViewController
@@ -67,6 +69,8 @@
         [SingletonManager sharedManager].uid = uid;
         [self getDataWithLogin];
     }
+    
+    self.currentPage = 0;
     
     //如果有手势密码让他验证手势密码
     //    BOOL isSave = [KeychainData isSave]; //是否有保存
@@ -84,7 +88,7 @@
     //退出登录时响应执行还有在主页重新登录的时候响应
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutMethod) name:@"logout" object:nil];
     //手势验证成功时显示
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(homeGuideLayout) name:@"addHomeGudie" object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(homeGuideLayout) name:@"addHomeGudie" object:nil];
     //登录成功广播
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginSuccessMethod) name:@"loginSuccess" object:nil];
     
@@ -283,7 +287,7 @@
 - (void)getNewsListMethod {
     
     NetManager *manager = [[NetManager alloc] init];
-    [manager postDataWithUrlActionStr:@"Page/news" withParamDictionary:@{@"mobile":@"as"} withBlock:^(id obj) {
+    [manager postDataWithUrlActionStr:@"Page/news" withParamDictionary:@{@"page":@"1",@"size":@""} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             _arrayForNewsList = [NSMutableArray array];
             [NewsModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
@@ -302,7 +306,7 @@
             NSString *content = [pasteboard string];
             content = [self convertNullString:content];
             if ([content rangeOfString:@"wmcf-"].location ==NSNotFound) {
-                [self homeGuideLayout];
+//                [self homeGuideLayout];
             }
             
         }
@@ -311,6 +315,41 @@
             
         } else {
             [SVProgressHUD dismiss];
+            NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+            alertConfig.defaultTextOK = @"确定";
+            [SVProgressHUD dismiss];
+            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+            [alertView show];
+        }
+    }];
+    
+}
+
+#pragma mark - 获取新闻列表2
+- (void)getNewsListMethodTwo:(NSInteger)page {
+    
+    NetManager *manager = [[NetManager alloc] init];
+    [manager postDataWithUrlActionStr:@"Page/news" withParamDictionary:@{@"page":@(page),@"size":@""} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+//            _arrayForNewsList = [NSMutableArray array];
+            [NewsModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                return @{@"news_id" : @"id"};
+            }];
+            NSArray *newArray = [NewsModel mj_objectArrayWithKeyValuesArray:obj[@"data"]];
+            for (int i=0; i<newArray.count; i++) {
+                NewsModel *newsModel = newArray[i];
+                [_arrayForNewsList addObject:newsModel];
+            }
+            
+            [_homeTableView reloadData];
+            
+            [_homeTableView.mj_footer endRefreshing];
+            
+            
+        } else {
+            [SVProgressHUD dismiss];
+            [_homeTableView.mj_footer endRefreshing];
             NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
             MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
             alertConfig.defaultTextOK = @"确定";
@@ -505,7 +544,7 @@
 //    _homeTableView.backgroundColor = [UIColor redColor];
     _homeTableView.delegate = self;
     _homeTableView.dataSource = self;
-    _homeTableView.bounces = NO;
+//    _homeTableView.bounces = NO;
     _homeTableView.showsVerticalScrollIndicator = NO;
     _homeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_homeTableView registerClass:[HomeTableViewCellFirst class] forCellReuseIdentifier:@"HomeTableViewCellFirst"];
@@ -513,7 +552,6 @@
     [_homeTableView registerClass:[HomeTableViewCellThird class] forCellReuseIdentifier:@"HomeTableViewCellThird"];
     [_homeTableView registerClass:[HomeTableViewCellThirdFirst class] forCellReuseIdentifier:@"HomeTableViewCellThirdFirst"];
     [_homeTableView registerNib:[UINib nibWithNibName:@"HomeTableViewCellForth" bundle:nil] forCellReuseIdentifier:@"forthcell"];
-
     
     [self.view addSubview:_homeTableView];
     [_homeTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -523,41 +561,47 @@
         make.bottom.equalTo(self.view.mas_bottom).with.offset(0);
     }];
     
+    _homeTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self.currentPage ++;
+        [self getNewsListMethodTwo:self.currentPage];
+    }];
+
+    
 }
 
 #pragma mark - 首页引导
-- (void)homeGuideLayout {
-    NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    NSString *userId = [self convertNullString:[SingletonManager sharedManager].uid];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"appVersion"];
-    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]) {
-        [[NSUserDefaults standardUserDefaults]setObject:app_version forKey:@"appVersion"];
-        CGRect frame = [UIScreen mainScreen].bounds;
-        NSInteger count;
-        if (self.arrayForNewsList.count<=3) {
-            count = self.arrayForNewsList.count;
-        } else {
-            count = 3;
-        }
-        HomeGuideView *homeGuideView = [[HomeGuideView alloc]initWithFrame:frame andNewsListCount:count];
-        @weakify(self)
-        homeGuideView.forthLearnMethod = ^(){
-            @strongify(self)
-            NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:count-1 inSection:4];
-            [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        };
-        homeGuideView.destroySelfMethod = ^(){
-            @strongify(self)
-            NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        };
-//        UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-//        [window addSubview:homeGuideView];
-        [[UIApplication sharedApplication].keyWindow addSubview:homeGuideView];
-        
-    }
-    
-}
+//- (void)homeGuideLayout {
+//    NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+//    NSString *userId = [self convertNullString:[SingletonManager sharedManager].uid];
+//    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"appVersion"];
+//    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]) {
+//        [[NSUserDefaults standardUserDefaults]setObject:app_version forKey:@"appVersion"];
+//        CGRect frame = [UIScreen mainScreen].bounds;
+//        NSInteger count;
+//        if (self.arrayForNewsList.count<=3) {
+//            count = self.arrayForNewsList.count;
+//        } else {
+//            count = 3;
+//        }
+//        HomeGuideView *homeGuideView = [[HomeGuideView alloc]initWithFrame:frame andNewsListCount:count];
+//        @weakify(self)
+//        homeGuideView.forthLearnMethod = ^(){
+//            @strongify(self)
+//            NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:count-1 inSection:4];
+//            [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
+//        };
+//        homeGuideView.destroySelfMethod = ^(){
+//            @strongify(self)
+//            NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//            [self.homeTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//        };
+////        UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+////        [window addSubview:homeGuideView];
+//        [[UIApplication sharedApplication].keyWindow addSubview:homeGuideView];
+//        
+//    }
+//    
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     

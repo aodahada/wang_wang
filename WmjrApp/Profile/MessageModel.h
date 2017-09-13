@@ -18,5 +18,6 @@
 @property (nonatomic ,copy) NSString *type_name;
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, copy) NSString *create_time;
+@property (nonatomic, copy) NSString *can_click;
 
 @end

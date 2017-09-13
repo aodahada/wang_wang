@@ -23,7 +23,7 @@
     NSTimer *_timer;
 }
 
-@property (strong, nonatomic) IBOutlet UITextField *userName; /* 昵称 */
+//@property (strong, nonatomic) IBOutlet UITextField *userName; /* 昵称 */
 @property (strong, nonatomic) IBOutlet UITextField *phoneNum;  /* 手机号 */
 @property (strong, nonatomic) IBOutlet UITextField *password;  /*  登录密码 */
 @property (strong, nonatomic) IBOutlet UITextField *nPassword;  /* 登录密码 */
@@ -261,7 +261,7 @@
 #pragma mark - 数据处理 －
 - (void)getDataWithNetManager {
     NetManager *manager = [[NetManager alloc] init];
-    NSDictionary *paramDic = @{@"name":_userName.text,@"pwd":_nPassword.text,@"invitationcode":_invitedNum.text,@"mobile":_phoneNum.text,@"verify":_verificatword.text};
+    NSDictionary *paramDic = @{@"pwd":_nPassword.text,@"invitationcode":_invitedNum.text,@"mobile":_phoneNum.text,@"verify":_verificatword.text};
     [manager postDataWithUrlActionStr:@"User/register" withParamDictionary:paramDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             NSDictionary *dataDic = obj[@"data"];
@@ -314,7 +314,7 @@
                 [SingletonManager sharedManager].uid = dataDic[@"id"];
                 [SingletonManager sharedManager].userModel = userModel;
                 [[NSUserDefaults standardUserDefaults] setObject:[SingletonManager sharedManager].uid forKey:@"uid"];
-                [[NSUserDefaults standardUserDefaults] setObject:_userName.text forKey:@"mobile"];
+                [[NSUserDefaults standardUserDefaults] setObject:_phoneNum.text forKey:@"mobile"];
                 [[NSUserDefaults standardUserDefaults] setObject:_nPassword.text forKey:@"passWord"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [_phoneNum resignFirstResponder];
@@ -383,15 +383,12 @@
             return YES;
         }
     } else {
-        if ([[SingletonManager sharedManager] isIncludeSpecialCharact:_userName.text]) {
-            [[SingletonManager sharedManager] alert1PromptInfo:@"昵称含有特殊字符"];
-            return NO;
-        }
+        
 //        else if ([[SingletonManager sharedManager] isValidateMobile:_phoneNum.text] == NO) {
 //            [[SingletonManager sharedManager] alert1PromptInfo:@"请输入正确的手机号"];
 //            return NO;
 //        }
-        else if (_password.text.length < 6 || _password.text.length > 18) {
+        if (_password.text.length < 6 || _password.text.length > 18) {
             [[SingletonManager sharedManager] alert1PromptInfo:@"登录密码格式不正确"];
             return NO;
         } else if (![[SingletonManager sharedManager] checkPassword:_password.text]) {

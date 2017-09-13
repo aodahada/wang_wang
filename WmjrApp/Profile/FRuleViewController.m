@@ -24,8 +24,8 @@
     [imageViewForMess mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
         make.top.equalTo(self.view.mas_top).with.offset(10);
-        make.height.mas_offset(RESIZE_UI(302));
-        make.width.mas_offset(RESIZE_UI(375));
+        make.height.mas_offset(SCREEN_WIDTH/375*600);
+        make.width.mas_offset(SCREEN_WIDTH);
     }];
     
 }

@@ -28,7 +28,7 @@
 - (void)setMyRecommandModel:(MyReCommandModel *)myRecommandModel {
     
     _labelForName.text = myRecommandModel.name;
-    _labelForInvitation.text = [NSString stringWithFormat:@"￥%@",myRecommandModel.invitation];
+    _labelForInvitation.text = [NSString stringWithFormat:@"￥%@",myRecommandModel.money];
     _labelForMobile.text = myRecommandModel.mobile;
     _labelForCreattime.text = myRecommandModel.createtime;
     

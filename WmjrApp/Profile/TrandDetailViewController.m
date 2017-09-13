@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *trandDetailTable;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *earnTotal;
+@property (weak, nonatomic) IBOutlet UILabel *hongbaoBenXi;//top红包本息
 
 
 @end
@@ -30,6 +31,7 @@
     
     _name.text = self.nameStr;
     _earnTotal.text = self.earnToatl;
+    _hongbaoBenXi.text = [NSString stringWithFormat:@"+%@(元)",self.redpacket];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -125,7 +127,7 @@
                 break;
             case 2:
             {
-                cell.textLabel.text = @"红包收益";
+                cell.textLabel.text = @"红包本息";
                 cell.detailTextLabel.text = self.redpacket;
                 cell.detailTextLabel.textColor = AUXILY_COLOR;
             }
