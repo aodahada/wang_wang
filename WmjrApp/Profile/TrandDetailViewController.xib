@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="earnTotal" destination="spj-LK-Xi7" id="7zT-Bj-h6Z"/>
                 <outlet property="hongbaoBenXi" destination="q4T-js-mOe" id="33y-Yl-jHL"/>
+                <outlet property="hongbaoLabel" destination="3fo-Ra-cYD" id="kgd-QD-Nwr"/>
                 <outlet property="name" destination="McQ-zm-sl3" id="tzJ-Po-wrL"/>
                 <outlet property="trandDetailTable" destination="dxS-BW-Ljw" id="gs1-od-sf4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

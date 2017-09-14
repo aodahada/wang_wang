@@ -284,6 +284,13 @@
         return;
     }
     
+    LongProductSegment *longProductSegment = _productModel.segment[0];
+    CGFloat canbuy = [longProductSegment.can_buy floatValue];
+    if (investMoney>canbuy) {
+        [SVProgressHUD showInfoWithStatus:@"购买金额不能大于可购余额"];
+        return;
+    }
+    
     //获取当前余额
     [self getCurrentRest];
     

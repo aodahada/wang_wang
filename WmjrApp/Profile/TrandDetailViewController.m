@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *earnTotal;
 @property (weak, nonatomic) IBOutlet UILabel *hongbaoBenXi;//top红包本息
+@property (weak, nonatomic) IBOutlet UILabel *hongbaoLabel;//top红包label
 
 
 @end
@@ -31,7 +32,15 @@
     
     _name.text = self.nameStr;
     _earnTotal.text = self.earnToatl;
-    _hongbaoBenXi.text = [NSString stringWithFormat:@"+%@(元)",self.redpacket];
+    if ([self.redpacket isEqualToString:@"0"]) {
+        _hongbaoBenXi.hidden = YES;
+        _hongbaoLabel.hidden = YES;
+        
+    } else {
+        _hongbaoBenXi.hidden = NO;
+        _hongbaoLabel.hidden = NO;
+        _hongbaoBenXi.text = [NSString stringWithFormat:@"+%@(元)",self.redpacket];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

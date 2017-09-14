@@ -101,10 +101,11 @@
 //                    [_arrayForTypeName addObject:productCategoryModel];
 //                }
                 ProductCategoryModel *productCategoryModel1 = [[ProductCategoryModel alloc]init];
-                productCategoryModel1.name = @"定期投";
+                productCategoryModel1.name = @"理财";
                 ProductCategoryModel *productCategoryModel2 = [[ProductCategoryModel alloc]init];
                 productCategoryModel2.name = @"旺马长存";
-                _arrayForTypeName = [[NSMutableArray alloc]initWithArray:@[productCategoryModel1,productCategoryModel2]];
+//                _arrayForTypeName = [[NSMutableArray alloc]initWithArray:@[productCategoryModel1,productCategoryModel2]];
+    _arrayForTypeName = [[NSMutableArray alloc]initWithArray:@[productCategoryModel1]];
                 _silderBar.arrayForCategory = _arrayForTypeName;
     
                 [self addChildViewController];
@@ -187,10 +188,10 @@
     shortCon.view.frame = CGRectMake(0*screenW,0,screenW,_scrollView.frame.size.height);
     [_scrollView addSubview:shortCon.view];
     
-    ProductLongClassViewController *longCon = [[ProductLongClassViewController alloc]init];
-    [self addChildViewController:longCon];
-    longCon.view.frame = CGRectMake(screenW,0,screenW,_scrollView.frame.size.height);
-    [_scrollView addSubview:longCon.view];
+//    ProductLongClassViewController *longCon = [[ProductLongClassViewController alloc]init];
+//    [self addChildViewController:longCon];
+//    longCon.view.frame = CGRectMake(screenW,0,screenW,_scrollView.frame.size.height);
+//    [_scrollView addSubview:longCon.view];
 }
 
 

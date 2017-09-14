@@ -328,7 +328,7 @@
     _tableViewForList.delegate = self;
     _tableViewForList.dataSource = self;
     [_tableViewForList registerNib:[UINib nibWithNibName:@"MyRecommandTableViewCell" bundle:nil] forCellReuseIdentifier:@"MyRecommandTableViewCell"];
-    _tableViewForList.separatorStyle = UITableViewCellSelectionStyleNone;
+//    _tableViewForList.separatorStyle = UITableViewCellSelectionStyleNone;
     [mainView addSubview:_tableViewForList];
     [_tableViewForList mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(haveRecommendedView.mas_bottom);
@@ -401,11 +401,12 @@
     MyRecommandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyRecommandTableViewCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSInteger row = indexPath.row;
-    if (row%2 == 0) {
-        cell.backgroundColor = RGBA(242, 242, 242, 1.0);
-    } else {
-        cell.backgroundColor = [UIColor whiteColor];
-    }
+//    if (row%2 == 0) {
+//        cell.backgroundColor = RGBA(242, 242, 242, 1.0);
+//    } else {
+//        cell.backgroundColor = [UIColor whiteColor];
+//    }
+    cell.backgroundColor = RGBA(242, 242, 242, 1.0);
 //    cell.myRecommandModel = _arrayForModel[row];
     cell.myRecommandModel = [_arrayForModel objectAtIndexCheck:row];
     return cell;

@@ -2477,13 +2477,14 @@
 				TargetAttributes = {
 					C51B41AC1C784B02001679B5 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = E9DZ9T2VGD;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -3192,11 +3193,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = WmjrApp/WmjrApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = E9DZ9T2VGD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK",
@@ -3214,10 +3214,10 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.bighuotalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "286e119e-90a4-4c3c-9b30-75aa204add7b";
-				PROVISIONING_PROFILE_SPECIFIER = wangmadis;
+				PROVISIONING_PROFILE = "58708e49-8ebf-43e4-896f-8015af2a3f8e";
+				PROVISIONING_PROFILE_SPECIFIER = bighuotalkinhouse;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Debug;
@@ -3228,11 +3228,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = WmjrApp/WmjrApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = E9DZ9T2VGD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK",
@@ -3250,10 +3249,10 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.bighuotalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "286e119e-90a4-4c3c-9b30-75aa204add7b";
-				PROVISIONING_PROFILE_SPECIFIER = wangmadis;
+				PROVISIONING_PROFILE = "58708e49-8ebf-43e4-896f-8015af2a3f8e";
+				PROVISIONING_PROFILE_SPECIFIER = bighuotalkinhouse;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Release;
