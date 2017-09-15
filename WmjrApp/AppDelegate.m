@@ -33,6 +33,7 @@
 #import "BaseNavigationController.h"
 //#import "HomeViewController.h"
 #import "HomePageViewController.h"
+#import "GuideScrollViewController.h"
 #import "ProductListViewController.h"
 #import "ProfileViewController.h"
 #import "UserInfoModel.h"
@@ -64,6 +65,8 @@
 #define ImgUrlString2 @"http://c.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a6a943c180b3b5bb5c8eab8e7.jpg"
 
 @interface AppDelegate ()<UITabBarControllerDelegate,JPUSHRegisterDelegate>
+
+@property (nonatomic, strong) GuideScrollViewController *guideVC;
 
 @end
 
@@ -143,6 +146,11 @@
 //    NSSetUncaughtExceptionHandler(&UncaughtExceptionHandler);
     //用bugly收集bug信息
     [Bugly startWithAppId:@"9a7c6cfa5d"];
+    
+    //关闭引导页
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeGuide) name:@"closeGuide" object:nil];
+    
+    
     
     return YES;
 }
@@ -314,11 +322,31 @@
     self.tabbarC.viewControllers = @[homeNa, productNa, profileNa];
     self.tabbarC.tabBar.tintColor = RGBA(0, 102, 177, 1.0);
     self.tabbarC.delegate = self;
-    
     self.window.rootViewController = self.tabbarC;
+    
+    NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString *userId = [self convertNullString:[SingletonManager sharedManager].uid];
+//    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"appVersion"];
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]) {
+        [[NSUserDefaults standardUserDefaults]setObject:app_version forKey:@"appVersion"];
+        GuideScrollViewController *guideVC = [[GuideScrollViewController alloc]init];
+        self.window.rootViewController = guideVC;
+    } else {
+        self.window.rootViewController = self.tabbarC;
+    }
     
     [self getCopyBoardMethod];
     
+}
+
+- (void)closeGuide {
+//    [UIView animateWithDuration:1.0 animations:^{
+//        _guideVC.view.alpha = 0.0;
+//    } completion:^(BOOL finished) {
+//        _guideVC = nil;
+//        self.window.rootViewController = self.tabbarC;
+//    }];
+    self.window.rootViewController = self.tabbarC;
 }
 
 #pragma mark - 获取邀请码

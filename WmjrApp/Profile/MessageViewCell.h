@@ -8,12 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class MessageModel;
 @interface MessageViewCell : UITableViewCell
 
-//@property (weak, nonatomic) IBOutlet UIImageView *imgView; /* 认证图片 */
-@property (weak, nonatomic) IBOutlet UILabel *cerLab; /* 认证类型 */
-@property (weak, nonatomic) IBOutlet UILabel *introLab; /* 认证描述 */
-@property (weak, nonatomic) IBOutlet UILabel *cerType;/* 类型 */
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;/* 时间 */
+- (instancetype)initWithMessageModel:(MessageModel *)model;
 
 @end

@@ -35,7 +35,7 @@
     self.currentPage = 1;
     _messArray = [NSMutableArray array];
     
-    [_messTbale registerNib:[UINib nibWithNibName:@"MessageViewCell" bundle:nil] forCellReuseIdentifier:@"messCell"];
+//    [_messTbale registerNib:[UINib nibWithNibName:@"MessageViewCell" bundle:nil] forCellReuseIdentifier:@"messCell"];
     _messTbale.tableFooterView = [[UIView alloc]init];
     
     //下拉刷新
@@ -114,21 +114,19 @@
 
 #pragma mark - uitableView -
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return _messArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    MessageModel *model = _messArray[indexPath.row];
-    MessageModel *model = [_messArray objectAtIndexCheck:indexPath.row];
-    MessageViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"messCell" forIndexPath:indexPath];
+    MessageModel *model = [_messArray objectAtIndexCheck:indexPath.section];
+    MessageViewCell *cell = [[MessageViewCell alloc] initWithMessageModel:model];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    NSString *typeColor = [NSString stringWithFormat:@"#%@",model.type_color];
-//    UIColor *realColor = [self hexStringToColor:typeColor];
-//    cell.cerType.textColor = realColor;
-    cell.cerType.text = model.type_name;
-    cell.cerLab.text = model.message_title;
-    cell.introLab.text = model.message_intro;
-    cell.timeLabel.text = model.create_time;
+
     
     return cell;
 }
@@ -136,7 +134,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 //    MessageModel *model = _messArray[indexPath.row];
-    MessageModel *model = [_messArray objectAtIndexCheck:indexPath.row];
+    MessageModel *model = [_messArray objectAtIndexCheck:indexPath.section];
     if ([model.can_click isEqualToString:@"1"]) {
         AgViewController *agVC =[[AgViewController alloc] init];
         agVC.title = model.message_title;
@@ -178,7 +176,22 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 85;
+    MessageModel *model = [_messArray objectAtIndexCheck:indexPath.section];
+    if ([model.can_click isEqualToString:@"0"]) {
+        return RESIZE_UI(89);
+    } else {
+        return RESIZE_UI(134);
+    }
+
+}
+
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+//    UIView *mainView = [[UIView alloc]init];
+//    
+//}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return RESIZE_UI(12);
 }
 
 - (void)didReceiveMemoryWarning {
