@@ -47,6 +47,8 @@
 @property (nonatomic, strong)UIImageView *codeHeadImage;//二维码中间头像
 @property (nonatomic, strong)UITapGestureRecognizer *tapGes;//点击手势
 
+@property (nonatomic, strong)UIView *naviView;
+
 @end
 
 @implementation ProfileViewController
@@ -106,7 +108,8 @@
     [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:buttonForMessCenter];
     [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(33));
+//        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(33));
+        make.centerY.equalTo(lableForMore.mas_centerY);
         make.right.equalTo(headView.mas_right).with.offset(RESIZE_UI(-15));
         make.height.mas_offset(RESIZE_UI(30));
         make.width.mas_offset(RESIZE_UI(30));
@@ -568,6 +571,10 @@
         make.right.equalTo(self.view.mas_right);
         make.bottom.equalTo(self.view.mas_bottom);
     }];
+    
+    [self setHeadView];
+    
+    
 //    UIScrollView *mainScrollView = [[UIScrollView alloc]init];
 //    [self.view addSubview:mainScrollView];
 //    [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1015,6 +1022,78 @@
 //}
 //
 
+- (void)setHeadView {
+    UIView *topView = [[UIView alloc]init];
+    topView.backgroundColor = RGBA(0, 104, 178, 1.0);
+//    topView.backgroundColor = [UIColor redColor];
+    topView.alpha = 1.0;
+    [self.view addSubview:topView];
+    [topView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.height.mas_offset(64);
+    }];
+    
+    UIImageView *imageViewForLeft = [[UIImageView alloc]init];
+    imageViewForLeft.image = [UIImage imageNamed:@"icon_more"];
+    [topView addSubview:imageViewForLeft];
+    [imageViewForLeft mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topView.mas_top).with.offset(RESIZE_UI(34));
+        make.left.equalTo(topView.mas_left).with.offset(RESIZE_UI(15));
+        make.height.mas_offset(RESIZE_UI(16));
+        make.width.mas_offset(RESIZE_UI(6));
+    }];
+    
+    UILabel *lableForMore = [[UILabel alloc] init];
+    lableForMore.text = @"更多";
+    lableForMore.textAlignment = NSTextAlignmentLeft;
+    lableForMore.textColor = [UIColor whiteColor];
+    lableForMore.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+    [topView addSubview:lableForMore];
+    [lableForMore mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topView.mas_top).with.offset(RESIZE_UI(34));
+        make.left.equalTo(topView.mas_left).with.offset(RESIZE_UI(34));
+        make.height.mas_offset(RESIZE_UI(16));
+    }];
+    
+    UIButton *buttonForMore = [[UIButton alloc]init];
+    buttonForMore.backgroundColor = [UIColor clearColor];
+    [buttonForMore addTarget:self action:@selector(jumpToMoreMethod) forControlEvents:UIControlEventTouchUpInside];
+    [topView addSubview:buttonForMore];
+    [buttonForMore mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(imageViewForLeft.mas_top).with.offset(-20);
+        make.bottom.equalTo(imageViewForLeft.mas_bottom).with.offset(20);
+        make.left.equalTo(topView.mas_left);
+        make.right.equalTo(lableForMore.mas_right).with.offset(20);
+    }];
+    
+    /*  消息  */
+    UIButton *buttonForMessCenter = [[UIButton alloc]init];
+    //    [buttonForMessCenter setBackgroundImage:[UIImage imageNamed:@"notific"] forState:UIControlStateNormal];
+    [buttonForMessCenter setImage:[UIImage imageNamed:@"icon_xx"] forState:UIControlStateNormal];
+    [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [topView addSubview:buttonForMessCenter];
+    [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(topView.mas_top).with.offset(RESIZE_UI(33));
+        make.centerY.equalTo(lableForMore.mas_centerY);
+        make.right.equalTo(topView.mas_right).with.offset(RESIZE_UI(-15));
+        make.height.mas_offset(RESIZE_UI(30));
+        make.width.mas_offset(RESIZE_UI(30));
+    }];
+    
+    //二维码
+    UIButton *codeButton = [[UIButton alloc]init];
+    [codeButton setBackgroundImage:[UIImage imageNamed:@"icon_ewm"] forState:UIControlStateNormal];
+    [codeButton addTarget:self action:@selector(watchCodeMethod) forControlEvents:UIControlEventTouchUpInside];
+    [topView addSubview:codeButton];
+    [codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(buttonForMessCenter.mas_centerY);
+        make.width.height.mas_offset(RESIZE_UI(30));
+        make.right.equalTo(buttonForMessCenter.mas_left).with.offset(RESIZE_UI(-15));
+    }];
+    
+}
 
 
 - (void)didReceiveMemoryWarning {

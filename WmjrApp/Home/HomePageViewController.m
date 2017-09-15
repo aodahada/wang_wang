@@ -882,6 +882,12 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+//    NSLog(@"我的尺寸:%.2f",scrollView.contentOffset.y);
+    if (scrollView.contentOffset.y <= -20) {
+        _homeTableView.bounces = NO;
+    } else {
+        _homeTableView.bounces = YES;
+    }
     CGFloat alpha = (RESIZE_UI(scrollView.contentOffset.y)-RESIZE_UI(18)) / 100;
     if (alpha >= 1) {
         alpha = 1;
@@ -965,6 +971,8 @@
     }
     return NO;
 }
+
+
 
 
 /**

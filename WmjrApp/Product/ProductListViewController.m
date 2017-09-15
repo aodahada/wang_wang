@@ -173,7 +173,8 @@
     }];
     NSInteger count = [SingletonManager sharedManager].productListCount;
     //contentSize的宽度等于顶部滑动栏的item个数乘与屏幕宽度screenW
-    _scrollView.contentSize = CGSizeMake(2*screenW,_scrollView.frame.size.height);
+//    _scrollView.contentSize = CGSizeMake(2*screenW,_scrollView.frame.size.height);
+    _scrollView.contentSize = CGSizeMake(screenW,_scrollView.frame.size.height);
 }
 
 
