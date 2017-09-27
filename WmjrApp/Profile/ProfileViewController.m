@@ -49,6 +49,8 @@
 
 @property (nonatomic, strong)UIView *naviView;
 
+@property (nonatomic, strong)UILabel *numberLabel;//我的红包数字label
+
 @end
 
 @implementation ProfileViewController
@@ -666,6 +668,14 @@
         _labelForName.text = [SingletonManager sharedManager].userModel.name;
     }
     
+    NSString *ballNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"redBallNumber"];
+    NSInteger redBall = [ballNumber integerValue];
+    if (redBall == 0) {
+        _numberLabel.hidden = YES;
+    } else {
+        _numberLabel.hidden = NO;
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -738,9 +748,21 @@
                 cell.imageView.image = [UIImage imageNamed:@"icon_licai"];
                 cell.textLabel.text = @"我的理财";
                 break;
-            case 1:
+            case 1:{
                 cell.imageView.image = [UIImage imageNamed:@"icon_wdhb"];
                 cell.textLabel.text = @"我的红包";
+                NSString *ballNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"redBallNumber"];
+                NSInteger redBall = [ballNumber integerValue];
+                _numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, RESIZE_UI(20), RESIZE_UI(20))];
+                _numberLabel.text = [NSString stringWithFormat:@"%ld",redBall];
+                _numberLabel.textColor = [UIColor whiteColor];
+                _numberLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+                _numberLabel.textAlignment = NSTextAlignmentCenter;
+                _numberLabel.backgroundColor = RGBA(255, 60, 8, 1.0);
+                _numberLabel.layer.masksToBounds = YES;
+                _numberLabel.layer.cornerRadius = RESIZE_UI(10);
+                cell.accessoryView = _numberLabel;
+            }
                 break;
             case 2:
                 cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];

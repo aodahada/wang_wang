@@ -25,6 +25,9 @@
 #import "SafeEnsureViewController.h"
 #import "HomeTableViewCellThirdFirst.h"
 #import "LongProductDetailViewController.h"
+#import "RedPackageModel.h"
+#import "MainRedBallView.h"
+#import "MyRedPackageViewController.h"
 
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -53,6 +56,13 @@
 @property (nonatomic, strong) NSMutableArray *arrayForNewBuy;//新人购数组
 
 @property (nonatomic, assign) NSInteger currentPage;//当前页
+
+@property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, strong) UIView *blackView;
+@property (nonatomic, strong) MainRedBallView *redBallView;
+@property (nonatomic, strong) UIButton *closeButton;
+@property (nonatomic, strong) NSMutableArray *redPackageArray;
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
 
 @end
 
@@ -106,6 +116,7 @@
 //        }
 //    }
     
+    
 }
 
 - (void)logoutMethod{
@@ -117,6 +128,111 @@
 - (void)loginSuccessMethod {
     _buttonSinaCenter.hidden = NO;
     _labelForLine.hidden = NO;
+}
+
+#pragma mark - 获取红包信息
+- (void)getRedBallMethod {
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"加载中"];
+    [manager postDataWithUrlActionStr:@"Redpacket/my" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"status":@"2",@"is_new":@"1"} withBlock:^(id obj) {
+        _redPackageArray = [[NSMutableArray alloc]init];
+        if (obj) {
+            if ([obj[@"result"] isEqualToString:@"1"]) {
+                NSArray *dataArray = obj[@"data"];
+                _redPackageArray = [[NSMutableArray alloc]init];
+                for (int i=0; i<dataArray.count; i++) {
+                    NSDictionary *dict = dataArray[i];
+                    RedPackageModel *redPackageModel = [RedPackageModel mj_objectWithKeyValues:dict];
+                    [_redPackageArray addObject:redPackageModel];
+                }
+                NSInteger row = _redPackageArray.count;
+                [[NSUserDefaults standardUserDefaults] setObject:@(row) forKey:@"redBallNumber"];
+                //红包弹出框
+                if (_redPackageArray.count>0) {
+                    [self showRedBallView:_redPackageArray.count];
+                }
+                
+                [SVProgressHUD dismiss];
+                return ;
+            } else {
+                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+                alertConfig.defaultTextOK = @"确定";
+                [SVProgressHUD dismiss];
+                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+                [alertView show];
+            }
+        }
+    }];
+}
+
+#pragma mark - 弹出红包窗口
+- (void)showRedBallView:(NSInteger)row {
+    
+    self.window = [[UIApplication sharedApplication].delegate window];
+    
+    _blackView = [[UIView alloc]init];
+    _blackView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.55];
+    [self.window addSubview:_blackView];
+    [_blackView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.window);
+    }];
+    
+    _tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeBlackView)];
+    
+    NSInteger viewHeight;
+    if (row == 1) {
+        viewHeight = RESIZE_UI(322);
+    } else if (row == 2) {
+        viewHeight = RESIZE_UI(443);
+    } else {
+        viewHeight = RESIZE_UI(468);
+    }
+    
+    _redBallView = [[MainRedBallView alloc]initWithRow:_redPackageArray];
+    _redBallView.backgroundColor = RGBA(255, 84, 34, 1.0);
+    _redBallView.layer.masksToBounds = YES;
+    _redBallView.layer.cornerRadius = 20.0f;
+    @weakify(self);
+    _redBallView.jumpToMyRed = ^(){
+        @strongify(self);
+        [self jumpToMyRed];
+    };
+    [_blackView addSubview:_redBallView];
+    [_redBallView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.window.mas_centerX);
+        make.centerY.equalTo(self.window.mas_centerY);
+        make.height.mas_offset(RESIZE_UI(viewHeight));
+        make.width.mas_offset(RESIZE_UI(334));
+    }];
+    
+    _closeButton = [[UIButton alloc]init];
+    [_closeButton setBackgroundImage:[UIImage imageNamed:@"icon_guanbi"] forState:UIControlStateNormal];
+    [_closeButton addTarget:self action:@selector(closeBlackView) forControlEvents:UIControlEventTouchUpInside];
+    [_blackView addSubview:_closeButton];
+    [_closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_redBallView.mas_bottom).with.offset(RESIZE_UI(19));
+        make.centerX.equalTo(self.window.mas_centerX);
+        make.width.height.mas_offset(RESIZE_UI(34));
+    }];
+}
+
+- (void)closeBlackView {
+    [_closeButton removeFromSuperview];
+    _closeButton = nil;
+    [_redBallView removeFromSuperview];
+    _redBallView = nil;
+    [_blackView removeFromSuperview];
+    _blackView = nil;
+    [_blackView removeGestureRecognizer:_tap];
+    _tap = nil;
+}
+
+#pragma mark - 跳转到我的红包
+- (void)jumpToMyRed {
+    [self closeBlackView];
+    MyRedPackageViewController *myRedPackageVC = [[MyRedPackageViewController alloc]init];
+    [self.navigationController pushViewController:myRedPackageVC animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -135,6 +251,7 @@
     }
     /* 获取数据 */
     [self getDataWithNetManager];
+    [self getRedBallMethod];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

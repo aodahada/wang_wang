@@ -32,10 +32,10 @@
 #define PI 3.14159265358979323846
 
 //内网
-//#define WMJRAPI @"http://test.wmjr888.com/api/"
+#define WMJRAPI @"http://test.wmjr888.com/api/"
 //外网
 //#define WMJRAPI @"http://api.wmjr888.com/api/"
-#define WMJRAPI @"https://api.wmjr888.com/api/"
+//#define WMJRAPI @"https://api.wmjr888.com/api/"
 
 #define GESTURESTOLOCKNOTIFITION @"GESTURESTOLOCKNOTIFITION"  //手势锁
 
