@@ -49,7 +49,7 @@
         moneyLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(32)];
         [self addSubview:moneyLabel];
         [moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15.8));
+            make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(8));
             make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(15));
         }];
         
@@ -75,7 +75,7 @@
         [self addSubview:moneySatisfy];
         [moneySatisfy mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(moneyTitle.mas_bottom).with.offset(5);
-            make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15));
+            make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(8));
         }];
         
         UILabel *newRedPackage = [[UILabel alloc]init];
@@ -89,7 +89,7 @@
         }
         [self addSubview:newRedPackage];
         [newRedPackage mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.mas_left).with.offset(RESIZE_UI(15));
+            make.left.equalTo(self.mas_left).with.offset(RESIZE_UI(10));
             make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(15));
         }];
         
@@ -113,6 +113,8 @@
         
         UILabel *useableDay = [[UILabel alloc]init];
         useableDay.textColor = RGBA(153, 153, 153, 1.0);
+        model.start_date = [model.start_date stringByReplacingOccurrencesOfString:@"-"withString:@"/"];
+        model.end_date = [model.end_date stringByReplacingOccurrencesOfString:@"-"withString:@"/"];
         useableDay.text = [NSString stringWithFormat:@"有效期:%@-%@",model.start_date,model.end_date];
         useableDay.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         [self addSubview:useableDay];

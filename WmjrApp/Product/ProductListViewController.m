@@ -21,6 +21,8 @@
 #import "HRBuyViewController.h"
 #import "HomeProductCatModel.h"
 #import "ProductLongClassViewController.h"
+#import "RedPackageModel.h"
+#import "AppDelegate.h"
 
 @interface ProductListViewController ()
 
@@ -64,6 +66,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
 //    self.navigationController.navigationBar.hidden = NO;
     [super viewWillDisappear:animated];
+    [[[AppDelegate sharedInstance] redView] removeFromSuperview];
+    [AppDelegate sharedInstance].redView = nil;
     [MobClick endLogPageView:@"ProductListViewController"];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
@@ -81,9 +85,48 @@
             [SingletonManager sharedManager].isJumpGun = 0;
         }
     }
+    
+    [self getRedBallMethod2];
     self.tabBarController.tabBar.hidden = NO;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
+
+#pragma mark - 获取红包2
+- (void)getRedBallMethod2 {
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"加载中"];
+    [manager postDataWithUrlActionStr:@"Redpacket/my" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"status":@"2",@"is_new":@"2"} withBlock:^(id obj) {
+        NSMutableArray *redPackageArray = [[NSMutableArray alloc]init];
+        if (obj) {
+            if ([obj[@"result"] isEqualToString:@"1"]) {
+                NSArray *dataArray = obj[@"data"];
+                for (int i=0; i<dataArray.count; i++) {
+                    NSDictionary *dict = dataArray[i];
+                    RedPackageModel *redPackageModel = [RedPackageModel mj_objectWithKeyValues:dict];
+                    [redPackageArray addObject:redPackageModel];
+                }
+                NSInteger row = redPackageArray.count;
+                if (row>0) {
+                    [[AppDelegate sharedInstance] redView];
+                } else {
+                    [[[AppDelegate sharedInstance] redView] removeFromSuperview];
+                    [AppDelegate sharedInstance].redView = nil;
+                }
+                
+                [SVProgressHUD dismiss];
+                return ;
+            } else {
+                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+                alertConfig.defaultTextOK = @"确定";
+                [SVProgressHUD dismiss];
+                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+                [alertView show];
+            }
+        }
+    }];
+}
+
 
 #pragma mark - 获取分类
 - (void)getProductTypeClass {

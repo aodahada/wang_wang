@@ -28,6 +28,7 @@
 #import "RedPackageModel.h"
 #import "MainRedBallView.h"
 #import "MyRedPackageViewController.h"
+#import "AppDelegate.h"
 
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -73,6 +74,7 @@
     // Do any additional setup after loading the view.
     self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
     
+    self.window = [[UIApplication sharedApplication].delegate window];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     BOOL isNull = [self isNullString:uid];
     if (!isNull) {
@@ -146,7 +148,7 @@
                     [_redPackageArray addObject:redPackageModel];
                 }
                 NSInteger row = _redPackageArray.count;
-                [[NSUserDefaults standardUserDefaults] setObject:@(row) forKey:@"redBallNumber"];
+//                [[NSUserDefaults standardUserDefaults] setObject:@(row) forKey:@"redBallNumber"];
                 //红包弹出框
                 if (_redPackageArray.count>0) {
                     [self showRedBallView:_redPackageArray.count];
@@ -166,10 +168,48 @@
     }];
 }
 
+#pragma mark - 获取红包2
+- (void)getRedBallMethod2 {
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"加载中"];
+    [manager postDataWithUrlActionStr:@"Redpacket/my" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"status":@"2",@"is_new":@"2"} withBlock:^(id obj) {
+        _redPackageArray = [[NSMutableArray alloc]init];
+        if (obj) {
+            if ([obj[@"result"] isEqualToString:@"1"]) {
+                NSArray *dataArray = obj[@"data"];
+                _redPackageArray = [[NSMutableArray alloc]init];
+                for (int i=0; i<dataArray.count; i++) {
+                    NSDictionary *dict = dataArray[i];
+                    RedPackageModel *redPackageModel = [RedPackageModel mj_objectWithKeyValues:dict];
+                    [_redPackageArray addObject:redPackageModel];
+                }
+                NSInteger row = _redPackageArray.count;
+                if (row>0) {
+                    [[AppDelegate sharedInstance] redView];
+                } else {
+                    [[[AppDelegate sharedInstance] redView] removeFromSuperview];
+                    [AppDelegate sharedInstance].redView = nil;
+                }
+                //获取红包
+                [self getRedBallMethod];
+                
+                [SVProgressHUD dismiss];
+                return ;
+            } else {
+                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+                alertConfig.defaultTextOK = @"确定";
+                [SVProgressHUD dismiss];
+                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+                [alertView show];
+            }
+        }
+    }];
+}
+
+
 #pragma mark - 弹出红包窗口
 - (void)showRedBallView:(NSInteger)row {
-    
-    self.window = [[UIApplication sharedApplication].delegate window];
     
     _blackView = [[UIView alloc]init];
     _blackView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.55];
@@ -181,12 +221,23 @@
     _tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeBlackView)];
     
     NSInteger viewHeight;
-    if (row == 1) {
-        viewHeight = RESIZE_UI(322);
-    } else if (row == 2) {
-        viewHeight = RESIZE_UI(443);
+    
+    CGFloat width = SCREEN_WIDTH;//5s 320    6  375    6p 414
+    NSInteger guessHeight;
+    if (width == 320) {
+        guessHeight = RESIZE_UI(130);
+    } else if (width == 375) {
+        guessHeight = RESIZE_UI(90);
     } else {
-        viewHeight = RESIZE_UI(468);
+        guessHeight = RESIZE_UI(40);
+    }
+    
+    if (row == 1) {
+        viewHeight = RESIZE_UI(78+131)+guessHeight;
+    } else if (row == 2) {
+        viewHeight = RESIZE_UI(78+252)+guessHeight;
+    } else {
+        viewHeight = RESIZE_UI(78+300)+guessHeight;
     }
     
     _redBallView = [[MainRedBallView alloc]initWithRow:_redPackageArray];
@@ -251,13 +302,17 @@
     }
     /* 获取数据 */
     [self getDataWithNetManager];
-    [self getRedBallMethod];
+    if (![[self convertNullString:[SingletonManager sharedManager].uid] isEqualToString:@""]) {
+        [self getRedBallMethod2];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 //    self.navigationController.navigationBar.hidden = NO;
     
+    [[[AppDelegate sharedInstance] redView] removeFromSuperview];
+    [AppDelegate sharedInstance].redView = nil;
     [MobClick endLogPageView:@"HomePageViewController"];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
@@ -677,6 +732,7 @@
         make.right.equalTo(self.view.mas_right);
         make.bottom.equalTo(self.view.mas_bottom).with.offset(0);
     }];
+    
     
     _homeTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         self.currentPage ++;

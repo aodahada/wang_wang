@@ -29,6 +29,8 @@
 #import "StoreClassCollectionReusableView.h"
 #import "AccountAndPasswordViewController.h"
 #import "MyRedPackageViewController.h"
+#import "RedPackageModel.h"
+#import "AppDelegate.h"
 
 @interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -50,6 +52,8 @@
 @property (nonatomic, strong)UIView *naviView;
 
 @property (nonatomic, strong)UILabel *numberLabel;//我的红包数字label
+
+@property (nonatomic, strong)NSMutableArray *redPackageArray;
 
 @end
 
@@ -676,15 +680,56 @@
         _numberLabel.hidden = NO;
     }
     
+    [self getRedBallMethod];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 //    self.navigationController.navigationBarHidden = NO;
+    
+    [[[AppDelegate sharedInstance] redView] removeFromSuperview];
+    [AppDelegate sharedInstance].redView = nil;
     [MobClick endLogPageView:@"ProfileViewController"];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
+
+#pragma mark - 获取红包信息
+- (void)getRedBallMethod {
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"加载中"];
+    [manager postDataWithUrlActionStr:@"Redpacket/my" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"status":@"2",@"is_new":@"2"} withBlock:^(id obj) {
+        _redPackageArray = [[NSMutableArray alloc]init];
+        if (obj) {
+            if ([obj[@"result"] isEqualToString:@"1"]) {
+                NSArray *dataArray = obj[@"data"];
+                _redPackageArray = [[NSMutableArray alloc]init];
+                for (int i=0; i<dataArray.count; i++) {
+                    NSDictionary *dict = dataArray[i];
+                    RedPackageModel *redPackageModel = [RedPackageModel mj_objectWithKeyValues:dict];
+                    [_redPackageArray addObject:redPackageModel];
+                }
+                [self.tableView reloadData];
+                if (_redPackageArray.count>0) {
+                    [[AppDelegate sharedInstance] redView];
+                } else {
+                    [[[AppDelegate sharedInstance] redView] removeFromSuperview];
+                    [AppDelegate sharedInstance].redView = nil;
+                }
+                [SVProgressHUD dismiss];
+                return ;
+            } else {
+                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+                alertConfig.defaultTextOK = @"确定";
+                [SVProgressHUD dismiss];
+                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+                [alertView show];
+            }
+        }
+    }];
+}
 
 
 #pragma mark - UITableView dataSource delegate -
@@ -751,17 +796,26 @@
             case 1:{
                 cell.imageView.image = [UIImage imageNamed:@"icon_wdhb"];
                 cell.textLabel.text = @"我的红包";
-                NSString *ballNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"redBallNumber"];
-                NSInteger redBall = [ballNumber integerValue];
-                _numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, RESIZE_UI(20), RESIZE_UI(20))];
-                _numberLabel.text = [NSString stringWithFormat:@"%ld",redBall];
-                _numberLabel.textColor = [UIColor whiteColor];
-                _numberLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
-                _numberLabel.textAlignment = NSTextAlignmentCenter;
-                _numberLabel.backgroundColor = RGBA(255, 60, 8, 1.0);
-                _numberLabel.layer.masksToBounds = YES;
-                _numberLabel.layer.cornerRadius = RESIZE_UI(10);
-                cell.accessoryView = _numberLabel;
+                NSInteger redBall = _redPackageArray.count;
+                if (redBall == 0) {
+                    [_numberLabel removeFromSuperview];
+                    _numberLabel = nil;
+                } else {
+                    _numberLabel = [[UILabel alloc]init];
+                    _numberLabel.text = [NSString stringWithFormat:@"%ld",redBall];
+                    _numberLabel.textColor = [UIColor whiteColor];
+                    _numberLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+                    _numberLabel.textAlignment = NSTextAlignmentCenter;
+                    _numberLabel.backgroundColor = RGBA(255, 60, 8, 1.0);
+                    _numberLabel.layer.masksToBounds = YES;
+                    _numberLabel.layer.cornerRadius = RESIZE_UI(10);
+                    [cell addSubview:_numberLabel];
+                    [_numberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.right.equalTo(cell.mas_right).with.offset(-RESIZE_UI(38));
+                        make.centerY.equalTo(cell.mas_centerY);
+                        make.width.height.mas_offset(RESIZE_UI(20));
+                    }];
+                }
             }
                 break;
             case 2:

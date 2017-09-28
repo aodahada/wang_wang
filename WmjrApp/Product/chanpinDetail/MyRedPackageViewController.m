@@ -41,7 +41,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[NSUserDefaults standardUserDefaults] setObject:@(0) forKey:@"redBallNumber"];
+//    [[NSUserDefaults standardUserDefaults] setObject:@(0) forKey:@"redBallNumber"];
     [MobClick beginLogPageView:@"MyRedPackageViewController"];
     self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBar.hidden = NO;

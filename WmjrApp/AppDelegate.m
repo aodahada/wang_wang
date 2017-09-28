@@ -76,6 +76,22 @@
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
+- (UIView *)redView {
+    if (!_redView) {
+        _redView = [[UIView alloc]init];
+        _redView.backgroundColor = RGBA(255, 60, 8, 1.0);
+        _redView.layer.masksToBounds = YES;
+        _redView.layer.cornerRadius = RESIZE_UI(4.5);
+        [self.tabbarC.view addSubview:_redView];
+        [_redView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.tabbarC.view.mas_bottom).with.offset(-32);
+            make.right.equalTo(self.tabbarC.view.mas_right).with.offset(-RESIZE_UI(47));
+            make.height.width.mas_offset(RESIZE_UI(9));
+        }];
+    }
+    return _redView;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

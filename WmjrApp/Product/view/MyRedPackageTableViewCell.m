@@ -113,6 +113,8 @@
         
         UILabel *useableDay = [[UILabel alloc]init];
         useableDay.textColor = RGBA(153, 153, 153, 1.0);
+        model.start_date = [model.start_date stringByReplacingOccurrencesOfString:@"-"withString:@"/"];
+        model.end_date = [model.end_date stringByReplacingOccurrencesOfString:@"-"withString:@"/"];
         useableDay.text = [NSString stringWithFormat:@"有效期:%@-%@",model.start_date,model.end_date];
         useableDay.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         [self addSubview:useableDay];
