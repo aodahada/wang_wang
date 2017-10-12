@@ -92,6 +92,7 @@
             _categoryTableView.delegate = self;
             _categoryTableView.dataSource = self;
             [self.view addSubview:_categoryTableView];
+
             [SVProgressHUD dismiss];
             
         } else {

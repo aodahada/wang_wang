@@ -47,7 +47,7 @@
     // 设置自动切换透明度(在导航栏下面自动隐藏)
     _messTbale.mj_header.automaticallyChangeAlpha = YES;
     
-    _messTbale.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+    _messTbale.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         self.currentPage ++;
         [self getDataWithNetManager:self.currentPage];
     }];
@@ -90,10 +90,14 @@
                 _tipLable = nil;
             }
             [_messTbale.mj_header endRefreshing];
-            [_messTbale.mj_footer endRefreshing];
+            if (array.count == 0) {
+                [_messTbale.mj_footer endRefreshingWithNoMoreData];
+            } else {
+                [_messTbale.mj_footer endRefreshing];
+            }
         } else {
             [_messTbale.mj_header endRefreshing];
-            [_messTbale.mj_footer endRefreshing];
+            [_messTbale.mj_footer endRefreshingWithNoMoreData];
             [SVProgressHUD showErrorWithStatus:@"请求失败"];
         }
     }];

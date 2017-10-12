@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     if ([_isNotification isEqualToString:@"yes"]) {
         UIImage *image = [[UIImage imageNamed:@"arrow_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
@@ -27,6 +27,8 @@
     
     _agWeb.delegate = self;
     [_agWeb setScalesPageToFit:YES];
+    _agWeb.backgroundColor = [UIColor clearColor];
+    [_agWeb setOpaque:YES];
     if (![[self convertNullString:_htmlContent] isEqualToString:@""]) {
         [_agWeb loadHTMLString:_htmlContent baseURL:nil];
     }else {

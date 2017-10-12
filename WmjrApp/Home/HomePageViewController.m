@@ -65,6 +65,8 @@
 @property (nonatomic, strong) NSMutableArray *redPackageArray;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 
+@property (nonatomic, assign) NSInteger enterViewNumber;//第几次进入界面
+
 @end
 
 @implementation HomePageViewController
@@ -82,7 +84,7 @@
         [self getDataWithLogin];
     }
     
-    self.currentPage = 0;
+    self.currentPage = 1;
     
     //如果有手势密码让他验证手势密码
     //    BOOL isSave = [KeychainData isSave]; //是否有保存
@@ -150,9 +152,16 @@
                 NSInteger row = _redPackageArray.count;
 //                [[NSUserDefaults standardUserDefaults] setObject:@(row) forKey:@"redBallNumber"];
                 //红包弹出框
+                _isSave = [[SingletonManager sharedManager] isSave]; //是否有保存
                 if (_redPackageArray.count>0) {
                     [self showRedBallView:_redPackageArray.count];
                 }
+                if (_enterViewNumber  == 1 && _isSave) {
+                    if (_blackView) {
+                        [self closeBlackView];
+                    }
+                }
+                
                 
                 [SVProgressHUD dismiss];
                 return ;
@@ -300,6 +309,9 @@
     if (!isNull) {
         [self getPersonalMessage];
     }
+    
+    _enterViewNumber++;
+    
     /* 获取数据 */
     [self getDataWithNetManager];
     if (![[self convertNullString:[SingletonManager sharedManager].uid] isEqualToString:@""]) {
@@ -501,6 +513,7 @@
 #pragma mark - 获取新闻列表2
 - (void)getNewsListMethodTwo:(NSInteger)page {
     
+//    NSLog(@"当前页数:%ld",page);
     NetManager *manager = [[NetManager alloc] init];
     [manager postDataWithUrlActionStr:@"Page/news" withParamDictionary:@{@"page":@(page),@"size":@""} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
@@ -515,8 +528,11 @@
             }
             
             [_homeTableView reloadData];
-            
-            [_homeTableView.mj_footer endRefreshing];
+            if (newArray.count == 0) {
+                [_homeTableView.mj_footer endRefreshingWithNoMoreData];
+            } else {
+                [_homeTableView.mj_footer endRefreshing];
+            }
             
             
         } else {
@@ -724,7 +740,6 @@
     [_homeTableView registerClass:[HomeTableViewCellThird class] forCellReuseIdentifier:@"HomeTableViewCellThird"];
     [_homeTableView registerClass:[HomeTableViewCellThirdFirst class] forCellReuseIdentifier:@"HomeTableViewCellThirdFirst"];
     [_homeTableView registerNib:[UINib nibWithNibName:@"HomeTableViewCellForth" bundle:nil] forCellReuseIdentifier:@"forthcell"];
-    
     [self.view addSubview:_homeTableView];
     [_homeTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).with.offset(-20);
@@ -734,11 +749,10 @@
     }];
     
     
-    _homeTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+    _homeTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         self.currentPage ++;
         [self getNewsListMethodTwo:self.currentPage];
     }];
-
     
 }
 

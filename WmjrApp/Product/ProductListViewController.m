@@ -86,9 +86,28 @@
         }
     }
     
-    [self getRedBallMethod2];
+    if (![[self convertNullString:[SingletonManager sharedManager].uid] isEqualToString:@""]) {
+        [self getRedBallMethod2];
+    }
     self.tabBarController.tabBar.hidden = NO;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+#pragma mark - 判断字符串是否为空
+- (NSString*)convertNullString:(NSString*)oldString{
+    if (oldString!=nil && (NSNull *)oldString != [NSNull null]) {
+        if ([oldString length]!=0) {
+            if ([oldString isEqualToString:@"(null)"]) {
+                return @"";
+            }
+            return  oldString;
+        }else{
+            return @"";
+        }
+    }
+    else{
+        return @"";
+    }
 }
 
 #pragma mark - 获取红包2
@@ -209,7 +228,7 @@
     _scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_scrollView];
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).with.offset(RESIZE_UI(44));
+        make.top.equalTo(self.view.mas_top).with.offset(RESIZE_UI(62));
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.bottom.equalTo(self.view.mas_bottom);

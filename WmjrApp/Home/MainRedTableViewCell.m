@@ -69,7 +69,8 @@
         }];
         
         UILabel *moneySatisfy = [[UILabel alloc]init];
-        moneySatisfy.text = [NSString stringWithFormat:@"单笔满%@可用",model.low_use];
+//        moneySatisfy.text = [NSString stringWithFormat:@"单笔满%@可用",model.low_use];
+        moneySatisfy.text = [NSString stringWithFormat:@"单笔满%@可用",@"10000"];
         moneySatisfy.textColor = RGBA(153, 153, 153, 1.0);
         moneySatisfy.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         [self addSubview:moneySatisfy];

@@ -26,13 +26,13 @@
         labelForTitle.text = @"修改手势密码";
         labelForTitle.textAlignment = NSTextAlignmentCenter;
         labelForTitle.textColor = RGBA(173, 173, 173, 1.0);
-        labelForTitle.font = [UIFont systemFontOfSize:16];
+        labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
         [self addSubview:labelForTitle];
         [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.mas_top);
-            make.left.equalTo(self.mas_left).with.offset(50);
-            make.right.equalTo(self.mas_right).with.offset(-50);
-            make.height.mas_offset(44);
+            make.left.equalTo(self.mas_left).with.offset(RESIZE_UI(50));
+            make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(50));
+            make.height.mas_offset(RESIZE_UI(44));
         }];
         
         UIButton *buttonForCancel = [[UIButton alloc]init];
@@ -41,8 +41,8 @@
         [self addSubview:buttonForCancel];
         [buttonForCancel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(labelForTitle.mas_centerY);
-            make.height.width.mas_offset(20);
-            make.right.equalTo(self.mas_right).with.offset(-5);
+            make.height.width.mas_offset(RESIZE_UI(20));
+            make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(5));
         }];
         
         //分割线
@@ -66,7 +66,7 @@
             make.top.equalTo(labelForLine.mas_bottom);
             make.left.equalTo(self.mas_left);
             make.right.equalTo(self.mas_right);
-            make.height.mas_offset(50);
+            make.height.mas_offset(RESIZE_UI(50));
         }];
         
         //输入框
@@ -80,7 +80,7 @@
         [_textField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.mas_left).with.offset(30);
             make.right.equalTo(self.mas_right).with.offset(-30);
-            make.height.mas_offset(44);
+            make.height.mas_offset(RESIZE_UI(44));
             make.top.equalTo(labelForUnderTitle.mas_bottom);
         }];
         
@@ -90,15 +90,15 @@
         buttonForDelete.layer.borderColor = RGBA(234, 234, 234, 1.0).CGColor;
         [buttonForDelete setTitleColor:RGBA(51, 51, 51, 1.0) forState:UIControlStateNormal];
         [buttonForDelete setTitle:@"取消" forState:UIControlStateNormal];
-        buttonForDelete.titleLabel.font = [UIFont systemFontOfSize:17];
+        buttonForDelete.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
         [buttonForDelete addTarget:self action:@selector(buttonForCancelMethod) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:buttonForDelete];
         [buttonForDelete mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.mas_bottom);
             make.left.equalTo(self.mas_left);
-            make.width.mas_offset(150);
-            make.height.mas_offset(50);
+            make.width.mas_offset(RESIZE_UI(150));
+            make.height.mas_offset(RESIZE_UI(50));
         }];
         
         //确定按钮
@@ -113,8 +113,8 @@
         [buttonForConfirm mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.mas_bottom);
             make.right.equalTo(self.mas_right);
-            make.width.mas_offset(150);
-            make.height.mas_offset(50);
+            make.width.mas_offset(RESIZE_UI(150));
+            make.height.mas_offset(RESIZE_UI(50));
         }];
         
     }
