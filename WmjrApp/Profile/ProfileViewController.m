@@ -31,6 +31,7 @@
 #import "MyRedPackageViewController.h"
 #import "RedPackageModel.h"
 #import "AppDelegate.h"
+#import "IntegralShopViewController.h"
 
 @interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -55,15 +56,17 @@
 
 @property (nonatomic, strong)NSMutableArray *redPackageArray;
 
+@property (nonatomic, strong)UILabel *integraLabel;//积分label
+
 @end
 
 @implementation ProfileViewController
 
 //头视图
 - (UIView *)setUpProfileHeadView {
-    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,RESIZE_UI(187+49))];
-//    headView.backgroundColor = RGBA(220, 223, 225, 1.0);
-    headView.backgroundColor = [UIColor redColor];
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,RESIZE_UI(187+49+12))];
+    headView.backgroundColor = RGBA(237, 240, 242, 1.0);
+//    headView.backgroundColor = [UIColor redColor];
     UIImageView *imageViewForBackground = [[UIImageView alloc]init];
     imageViewForBackground.image = [UIImage imageNamed:@"image_me_bg-2"];
     [headView addSubview:imageViewForBackground];
@@ -738,12 +741,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 7;
+    return 8;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return RESIZE_UI(12);
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    return RESIZE_UI(12);
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -818,23 +821,37 @@
                 }
             }
                 break;
-            case 2:
+            case 2:{
+                cell.imageView.image = [UIImage imageNamed:@"icon_jfsc"];
+                cell.textLabel.text = @"积分商城";
+                _integraLabel = [[UILabel alloc]init];
+                _integraLabel.text = @"1800积分";
+                _integraLabel.textColor = RGBA(255, 88, 26, 1.0);
+                _integraLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                [cell addSubview:_integraLabel];
+                [_integraLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.right.equalTo(cell.mas_right).with.offset(-RESIZE_UI(38));
+                    make.centerY.equalTo(cell.mas_centerY);
+                }];
+            }
+                break;
+            case 3:
                 cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
                 cell.textLabel.text = @"好友推荐";
                 break;
-            case 3:
+            case 4:
                 cell.imageView.image = [UIImage imageNamed:@"icon_yhk"];
                 cell.textLabel.text = @"我的银行卡";
                 break;
-            case 4:
+            case 5:
                 cell.imageView.image = [UIImage imageNamed:@"icon_zhmm"];
                 cell.textLabel.text = @"账号和密码";
                 break;
-            case 5:
+            case 6:
                 cell.imageView.image = [UIImage imageNamed:@"icon_jyjl"];
                 cell.textLabel.text = @"交易记录";
                 break;
-            case 6:
+            case 7:
             {
                 cell.imageView.image = [UIImage imageNamed:@"icon_lxkf"];
                 cell.textLabel.text = @"联系客服";
@@ -876,12 +893,18 @@
             break;
         }
         case 2: {
+            /* 积分商城 */
+            IntegralShopViewController *integralShopVC = [[IntegralShopViewController alloc]init];
+            [self.navigationController pushViewController:integralShopVC animated:YES];
+            break;
+        }
+        case 3: {
             /* 我的推荐 */
             MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]init];
             [self.navigationController pushViewController:myrecommendVC animated:YES];
             break;
         }
-        case 3: {
+        case 4: {
             /* 我的银行卡 */
             if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
                 /*  我的银行卡 */
@@ -896,19 +919,19 @@
             }
             break;
         }
-        case 4: {
+        case 5: {
             /* 账号和密码 */
             AccountAndPasswordViewController *accountAndPassVC = [[AccountAndPasswordViewController alloc]init];
             [self.navigationController pushViewController:accountAndPassVC animated:YES];
             break;
         }
-        case 5: {
+        case 6: {
             /** 交易记录*/
             MyselfTransactionController *mySelfTrans = [[MyselfTransactionController alloc]init];
             [self.navigationController pushViewController:mySelfTrans animated:YES];
             break;
         }
-        case 6:{
+        case 7:{
             //联系客服
             NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",[SingletonManager sharedManager].companyTel];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];

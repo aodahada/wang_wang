@@ -15,6 +15,7 @@
 		645889AD1F4C04BE00E69574 /* MyRedPackageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889AC1F4C04BE00E69574 /* MyRedPackageTableViewCell.m */; };
 		645889B01F4C0D4E00E69574 /* RedPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889AF1F4C0D4E00E69574 /* RedPackageModel.m */; };
 		645889B31F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */; };
+		649982271F91AFCE008511AB /* IntegralShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982261F91AFCE008511AB /* IntegralShopViewController.m */; };
 		64A6BA381F31E5CE00057903 /* AccountAndPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */; };
 		64BB6A601F6B66C300AAD9EE /* GuideScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BB6A5F1F6B66C300AAD9EE /* GuideScrollViewController.m */; };
 		64CC8EFF1F7A70E500665BFE /* MainRedBallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CC8EFE1F7A70E500665BFE /* MainRedBallView.m */; };
@@ -523,6 +524,8 @@
 		645889AF1F4C0D4E00E69574 /* RedPackageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPackageModel.m; sourceTree = "<group>"; };
 		645889B11F4C2EDF00E69574 /* MyUnuseRedPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyUnuseRedPackageViewController.h; sourceTree = "<group>"; };
 		645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUnuseRedPackageViewController.m; sourceTree = "<group>"; };
+		649982251F91AFCE008511AB /* IntegralShopViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralShopViewController.h; sourceTree = "<group>"; };
+		649982261F91AFCE008511AB /* IntegralShopViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralShopViewController.m; sourceTree = "<group>"; };
 		64A6BA361F31E5CE00057903 /* AccountAndPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountAndPasswordViewController.h; sourceTree = "<group>"; };
 		64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountAndPasswordViewController.m; sourceTree = "<group>"; };
 		64BB6A5E1F6B66C300AAD9EE /* GuideScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideScrollViewController.h; sourceTree = "<group>"; };
@@ -1447,6 +1450,8 @@
 				C5F15EDC1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.xib */,
 				64A6BA361F31E5CE00057903 /* AccountAndPasswordViewController.h */,
 				64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */,
+				649982251F91AFCE008511AB /* IntegralShopViewController.h */,
+				649982261F91AFCE008511AB /* IntegralShopViewController.m */,
 				C51B42A41C785306001679B5 /* zijinliushui */,
 				C51B42A11C7852DC001679B5 /* mytuijian */,
 				C51B42A01C7852C8001679B5 /* mylicai */,
@@ -3038,6 +3043,7 @@
 				C5A9922F1ECC37B000C2F5AE /* BankModel.m in Sources */,
 				C51B438B1C78566B001679B5 /* SDCollectionViewCell.m in Sources */,
 				C51B43891C78566B001679B5 /* TADotView.m in Sources */,
+				649982271F91AFCE008511AB /* IntegralShopViewController.m in Sources */,
 				C51B43301C78555A001679B5 /* JoinUsViewController.m in Sources */,
 				8B76662C1E53EA66002FC5F2 /* LongProductDetailViewController.m in Sources */,
 				C51B438C1C78566B001679B5 /* SDCycleScrollView.m in Sources */,
