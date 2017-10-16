@@ -10,6 +10,6 @@
 
 @interface StoreClassCollectionReusableView : UICollectionReusableView
 
-//@property (nonatomic, weak)UILabel *headerLabel;//类别的名称
+@property (nonatomic, weak)UILabel *headerLabel;//类别的名称
 
 @end

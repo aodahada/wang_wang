@@ -16,6 +16,8 @@
 		645889B01F4C0D4E00E69574 /* RedPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889AF1F4C0D4E00E69574 /* RedPackageModel.m */; };
 		645889B31F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */; };
 		649982271F91AFCE008511AB /* IntegralShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982261F91AFCE008511AB /* IntegralShopViewController.m */; };
+		649982331F94D241008511AB /* IntegralProductCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982311F94D241008511AB /* IntegralProductCollectionViewCell.m */; };
+		649982341F94D241008511AB /* IntegralProductCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 649982321F94D241008511AB /* IntegralProductCollectionViewCell.xib */; };
 		64A6BA381F31E5CE00057903 /* AccountAndPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */; };
 		64BB6A601F6B66C300AAD9EE /* GuideScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BB6A5F1F6B66C300AAD9EE /* GuideScrollViewController.m */; };
 		64CC8EFF1F7A70E500665BFE /* MainRedBallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CC8EFE1F7A70E500665BFE /* MainRedBallView.m */; };
@@ -526,6 +528,9 @@
 		645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUnuseRedPackageViewController.m; sourceTree = "<group>"; };
 		649982251F91AFCE008511AB /* IntegralShopViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralShopViewController.h; sourceTree = "<group>"; };
 		649982261F91AFCE008511AB /* IntegralShopViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralShopViewController.m; sourceTree = "<group>"; };
+		649982301F94D241008511AB /* IntegralProductCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralProductCollectionViewCell.h; sourceTree = "<group>"; };
+		649982311F94D241008511AB /* IntegralProductCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralProductCollectionViewCell.m; sourceTree = "<group>"; };
+		649982321F94D241008511AB /* IntegralProductCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntegralProductCollectionViewCell.xib; sourceTree = "<group>"; };
 		64A6BA361F31E5CE00057903 /* AccountAndPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountAndPasswordViewController.h; sourceTree = "<group>"; };
 		64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountAndPasswordViewController.m; sourceTree = "<group>"; };
 		64BB6A5E1F6B66C300AAD9EE /* GuideScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideScrollViewController.h; sourceTree = "<group>"; };
@@ -1452,6 +1457,9 @@
 				64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */,
 				649982251F91AFCE008511AB /* IntegralShopViewController.h */,
 				649982261F91AFCE008511AB /* IntegralShopViewController.m */,
+				649982301F94D241008511AB /* IntegralProductCollectionViewCell.h */,
+				649982311F94D241008511AB /* IntegralProductCollectionViewCell.m */,
+				649982321F94D241008511AB /* IntegralProductCollectionViewCell.xib */,
 				C51B42A41C785306001679B5 /* zijinliushui */,
 				C51B42A11C7852DC001679B5 /* mytuijian */,
 				C51B42A01C7852C8001679B5 /* mylicai */,
@@ -2644,6 +2652,7 @@
 				C51B423F1C784FE3001679B5 /* TodayEarnViewController.xib in Resources */,
 				8B0168971DD00ED7000FA3DE /* icon_yanzhengma@3x.png in Resources */,
 				8B0168B41DD00ED7000FA3DE /* NJCB.png in Resources */,
+				649982341F94D241008511AB /* IntegralProductCollectionViewCell.xib in Resources */,
 				8B0168D71DD00ED7000FA3DE /* SNXS.png in Resources */,
 				8B0168161DD00ED6000FA3DE /* BOS.png in Resources */,
 				8B01686B1DD00ED7000FA3DE /* handle_btn@2x.png in Resources */,
@@ -3028,6 +3037,7 @@
 				C51B43011C7854BA001679B5 /* AvatorSettingCell.m in Sources */,
 				C51B43461C7855AD001679B5 /* RegisterAgreeViewController.m in Sources */,
 				C507C9501ECD84F500875459 /* StoreClassCollectionReusableView.m in Sources */,
+				649982331F94D241008511AB /* IntegralProductCollectionViewCell.m in Sources */,
 				8B1D23231E5D24040035FD5E /* ProductCategoryTopCell.m in Sources */,
 				C51B43A21C78570B001679B5 /* ResetLoginPasswordViewController.m in Sources */,
 				C51B42E11C7853CE001679B5 /* MyselfTransCell.m in Sources */,
@@ -3238,7 +3248,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WmjrApp/wangmajinrong.pch";
 				INFOPLIST_FILE = WmjrApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3273,7 +3283,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WmjrApp/wangmajinrong.pch";
 				INFOPLIST_FILE = WmjrApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
