@@ -32,10 +32,10 @@
 #define PI 3.14159265358979323846
 
 //内网
-//#define WMJRAPI @"http://test.wmjr888.com/api/"
+#define WMJRAPI @"http://test.wmjr888.com/api/"
 //外网
 //#define WMJRAPI @"http://api.wmjr888.com/api/"
-#define WMJRAPI @"https://api.wmjr888.com/api/"
+//#define WMJRAPI @"https://api.wmjr888.com/api/"
 
 #define GESTURESTOLOCKNOTIFITION @"GESTURESTOLOCKNOTIFITION"  //手势锁
 
@@ -97,6 +97,25 @@ typedef enum {
 #endif
 #endif
 #endif
+
+/**
+ 归档的实现
+ */
+#define MJCodingImplementation \
+- (id)initWithCoder:(NSCoder *)decoder \
+{ \
+if (self = [super init]) { \
+[self mj_decode:decoder]; \
+} \
+return self; \
+} \
+\
+- (void)encodeWithCoder:(NSCoder *)encoder \
+{ \
+[self mj_encode:encoder]; \
+}
+
+#define MJExtensionCodingImplementation MJCodingImplementation
 
 #pragma mark - 产品专用
 

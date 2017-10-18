@@ -825,7 +825,7 @@
                 cell.imageView.image = [UIImage imageNamed:@"icon_jfsc"];
                 cell.textLabel.text = @"积分商城";
                 _integraLabel = [[UILabel alloc]init];
-                _integraLabel.text = @"1800积分";
+                _integraLabel.text = [NSString stringWithFormat:@"%@积分",[SingletonManager sharedManager].userModel.score];
                 _integraLabel.textColor = RGBA(255, 88, 26, 1.0);
                 _integraLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
                 [cell addSubview:_integraLabel];

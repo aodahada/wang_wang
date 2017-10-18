@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class IntegralProductModel;
 @interface IntegralProductCollectionViewCell : UICollectionViewCell
+
+@property (nonatomic, strong)IntegralProductModel *integralProductModel;
 
 @end

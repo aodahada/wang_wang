@@ -209,6 +209,22 @@
     return NO;
 }
 
+- (NSString *)convertNullString:(NSString*)oldString{
+    if (oldString!=nil && (NSNull *)oldString != [NSNull null]) {
+        if ([oldString length]!=0) {
+            if ([oldString isEqualToString:@"(null)"]) {
+                return @"";
+            }
+            return  oldString;
+        }else{
+            return @"";
+        }
+    }
+    else{
+        return @"";
+    }
+}
+
 - (NSString *)getQianWeiFenGeFuString:(NSString *)stringValue {
     
     NSArray *hahaArray = [stringValue componentsSeparatedByString:@"."];

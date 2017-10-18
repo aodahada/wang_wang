@@ -52,6 +52,8 @@
 
 #import "SharedManager.h"
 #import "Masonry.h"
+#import "UIButton+Block.h"
+#import "UIAlertView+Block.h"
 
 #import "UIButton+Extension.h"
 #import <SVProgressHUD/SVProgressHUD.h>

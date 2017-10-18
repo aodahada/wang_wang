@@ -195,7 +195,9 @@
 //}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+
     return RESIZE_UI(12);
+    
 }
 
 - (void)didReceiveMemoryWarning {

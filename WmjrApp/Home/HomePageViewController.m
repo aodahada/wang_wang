@@ -336,6 +336,7 @@
     [SVProgressHUD showWithStatus:@"加载中"];
     [manager postDataWithUrlActionStr:@"User/income" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
+//            NSDictionary *dic = obj[@"data"];
             _personInvestModel = [PersonInvestModel mj_objectWithKeyValues:obj[@"data"]];
             [self getAccountRest];
         } else {

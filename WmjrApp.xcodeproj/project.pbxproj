@@ -18,10 +18,22 @@
 		649982271F91AFCE008511AB /* IntegralShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982261F91AFCE008511AB /* IntegralShopViewController.m */; };
 		649982331F94D241008511AB /* IntegralProductCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982311F94D241008511AB /* IntegralProductCollectionViewCell.m */; };
 		649982341F94D241008511AB /* IntegralProductCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 649982321F94D241008511AB /* IntegralProductCollectionViewCell.xib */; };
+		649982371F95A422008511AB /* IntegralProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982361F95A422008511AB /* IntegralProductDetailViewController.m */; };
 		64A6BA381F31E5CE00057903 /* AccountAndPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */; };
 		64BB6A601F6B66C300AAD9EE /* GuideScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BB6A5F1F6B66C300AAD9EE /* GuideScrollViewController.m */; };
 		64CC8EFF1F7A70E500665BFE /* MainRedBallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CC8EFE1F7A70E500665BFE /* MainRedBallView.m */; };
 		64CC8F021F7A76CA00665BFE /* MainRedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CC8F011F7A76CA00665BFE /* MainRedTableViewCell.m */; };
+		64CDE0BC1F961BDB007F9449 /* IntegralConfirmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE0BB1F961BDB007F9449 /* IntegralConfirmViewController.m */; };
+		64CDE0BF1F9623DF007F9449 /* IntegralOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE0BE1F9623DF007F9449 /* IntegralOrderTableViewCell.m */; };
+		64CDE0C71F9634C8007F9449 /* AddAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE0C61F9634C8007F9449 /* AddAddressViewController.m */; };
+		64CDE0CA1F963554007F9449 /* AddressListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE0C91F963554007F9449 /* AddressListViewController.m */; };
+		64CDE0CD1F963660007F9449 /* AddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE0CC1F963660007F9449 /* AddressTableViewCell.m */; };
+		64CDE0D31F96FC9F007F9449 /* IntegralProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE0D21F96FC9F007F9449 /* IntegralProductModel.m */; };
+		64CDE0D61F96FCB5007F9449 /* IntegralAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE0D51F96FCB5007F9449 /* IntegralAddressModel.m */; };
+		64CDE0D91F9744BC007F9449 /* AreaSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE0D71F9744BB007F9449 /* AreaSelectView.m */; };
+		64CDE0DE1F974D6E007F9449 /* UIView+BlockGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE0DA1F974D6C007F9449 /* UIView+BlockGesture.m */; };
+		64CDE0DF1F974D6E007F9449 /* UIButton+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE0DB1F974D6D007F9449 /* UIButton+Block.m */; };
+		64CDE0E51F9788F5007F9449 /* IntegralProductDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE0E41F9788F5007F9449 /* IntegralProductDetailModel.m */; };
 		64DA5F511EFFFD5200CB10B1 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 64DA5F501EFFFD5200CB10B1 /* libc++.tbd */; };
 		8025C340AF3BC04829866A39 /* libPods-WmjrApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D8A6E41F0CB7D2794DFD556 /* libPods-WmjrApp.a */; };
 		8B0167FE1DD00ED6000FA3DE /* 7day_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B0166F41DD00ED6000FA3DE /* 7day_btn.png */; };
@@ -531,6 +543,8 @@
 		649982301F94D241008511AB /* IntegralProductCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralProductCollectionViewCell.h; sourceTree = "<group>"; };
 		649982311F94D241008511AB /* IntegralProductCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralProductCollectionViewCell.m; sourceTree = "<group>"; };
 		649982321F94D241008511AB /* IntegralProductCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntegralProductCollectionViewCell.xib; sourceTree = "<group>"; };
+		649982351F95A422008511AB /* IntegralProductDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralProductDetailViewController.h; sourceTree = "<group>"; };
+		649982361F95A422008511AB /* IntegralProductDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralProductDetailViewController.m; sourceTree = "<group>"; };
 		64A6BA361F31E5CE00057903 /* AccountAndPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountAndPasswordViewController.h; sourceTree = "<group>"; };
 		64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountAndPasswordViewController.m; sourceTree = "<group>"; };
 		64BB6A5E1F6B66C300AAD9EE /* GuideScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideScrollViewController.h; sourceTree = "<group>"; };
@@ -539,6 +553,28 @@
 		64CC8EFE1F7A70E500665BFE /* MainRedBallView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainRedBallView.m; sourceTree = "<group>"; };
 		64CC8F001F7A76CA00665BFE /* MainRedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainRedTableViewCell.h; sourceTree = "<group>"; };
 		64CC8F011F7A76CA00665BFE /* MainRedTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainRedTableViewCell.m; sourceTree = "<group>"; };
+		64CDE0BA1F961BDB007F9449 /* IntegralConfirmViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralConfirmViewController.h; sourceTree = "<group>"; };
+		64CDE0BB1F961BDB007F9449 /* IntegralConfirmViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralConfirmViewController.m; sourceTree = "<group>"; };
+		64CDE0BD1F9623DF007F9449 /* IntegralOrderTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralOrderTableViewCell.h; sourceTree = "<group>"; };
+		64CDE0BE1F9623DF007F9449 /* IntegralOrderTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralOrderTableViewCell.m; sourceTree = "<group>"; };
+		64CDE0C51F9634C8007F9449 /* AddAddressViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddAddressViewController.h; sourceTree = "<group>"; };
+		64CDE0C61F9634C8007F9449 /* AddAddressViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddAddressViewController.m; sourceTree = "<group>"; };
+		64CDE0C81F963554007F9449 /* AddressListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressListViewController.h; sourceTree = "<group>"; };
+		64CDE0C91F963554007F9449 /* AddressListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressListViewController.m; sourceTree = "<group>"; };
+		64CDE0CB1F963660007F9449 /* AddressTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressTableViewCell.h; sourceTree = "<group>"; };
+		64CDE0CC1F963660007F9449 /* AddressTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressTableViewCell.m; sourceTree = "<group>"; };
+		64CDE0D11F96FC9F007F9449 /* IntegralProductModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralProductModel.h; sourceTree = "<group>"; };
+		64CDE0D21F96FC9F007F9449 /* IntegralProductModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralProductModel.m; sourceTree = "<group>"; };
+		64CDE0D41F96FCB5007F9449 /* IntegralAddressModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralAddressModel.h; sourceTree = "<group>"; };
+		64CDE0D51F96FCB5007F9449 /* IntegralAddressModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralAddressModel.m; sourceTree = "<group>"; };
+		64CDE0D71F9744BB007F9449 /* AreaSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaSelectView.m; sourceTree = "<group>"; };
+		64CDE0D81F9744BC007F9449 /* AreaSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaSelectView.h; sourceTree = "<group>"; };
+		64CDE0DA1F974D6C007F9449 /* UIView+BlockGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+BlockGesture.m"; sourceTree = "<group>"; };
+		64CDE0DB1F974D6D007F9449 /* UIButton+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Block.m"; sourceTree = "<group>"; };
+		64CDE0DC1F974D6D007F9449 /* UIView+BlockGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+BlockGesture.h"; sourceTree = "<group>"; };
+		64CDE0DD1F974D6D007F9449 /* UIButton+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Block.h"; sourceTree = "<group>"; };
+		64CDE0E31F9788F5007F9449 /* IntegralProductDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralProductDetailModel.h; sourceTree = "<group>"; };
+		64CDE0E41F9788F5007F9449 /* IntegralProductDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralProductDetailModel.m; sourceTree = "<group>"; };
 		64DA5F501EFFFD5200CB10B1 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		8B0166F41DD00ED6000FA3DE /* 7day_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 7day_btn.png; path = images/7day_btn.png; sourceTree = "<group>"; };
 		8B0166F51DD00ED6000FA3DE /* 7day_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "7day_btn@2x.png"; path = "images/7day_btn@2x.png"; sourceTree = "<group>"; };
@@ -1239,6 +1275,62 @@
 			name = Category;
 			sourceTree = "<group>";
 		};
+		64CDE0C11F9627B0007F9449 /* 积分商城 */ = {
+			isa = PBXGroup;
+			children = (
+				64CDE0C21F9627B0007F9449 /* Controller */,
+				64CDE0C31F9627B0007F9449 /* Model */,
+				64CDE0C41F9627B0007F9449 /* View */,
+			);
+			path = "积分商城";
+			sourceTree = "<group>";
+		};
+		64CDE0C21F9627B0007F9449 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				649982251F91AFCE008511AB /* IntegralShopViewController.h */,
+				649982261F91AFCE008511AB /* IntegralShopViewController.m */,
+				649982351F95A422008511AB /* IntegralProductDetailViewController.h */,
+				649982361F95A422008511AB /* IntegralProductDetailViewController.m */,
+				64CDE0BA1F961BDB007F9449 /* IntegralConfirmViewController.h */,
+				64CDE0BB1F961BDB007F9449 /* IntegralConfirmViewController.m */,
+				64CDE0C51F9634C8007F9449 /* AddAddressViewController.h */,
+				64CDE0C61F9634C8007F9449 /* AddAddressViewController.m */,
+				64CDE0C81F963554007F9449 /* AddressListViewController.h */,
+				64CDE0C91F963554007F9449 /* AddressListViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		64CDE0C31F9627B0007F9449 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				64CDE0D11F96FC9F007F9449 /* IntegralProductModel.h */,
+				64CDE0D21F96FC9F007F9449 /* IntegralProductModel.m */,
+				64CDE0D41F96FCB5007F9449 /* IntegralAddressModel.h */,
+				64CDE0D51F96FCB5007F9449 /* IntegralAddressModel.m */,
+				64CDE0E31F9788F5007F9449 /* IntegralProductDetailModel.h */,
+				64CDE0E41F9788F5007F9449 /* IntegralProductDetailModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		64CDE0C41F9627B0007F9449 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				64CDE0D81F9744BC007F9449 /* AreaSelectView.h */,
+				64CDE0D71F9744BB007F9449 /* AreaSelectView.m */,
+				64CDE0BD1F9623DF007F9449 /* IntegralOrderTableViewCell.h */,
+				64CDE0BE1F9623DF007F9449 /* IntegralOrderTableViewCell.m */,
+				649982301F94D241008511AB /* IntegralProductCollectionViewCell.h */,
+				649982311F94D241008511AB /* IntegralProductCollectionViewCell.m */,
+				649982321F94D241008511AB /* IntegralProductCollectionViewCell.xib */,
+				64CDE0CB1F963660007F9449 /* AddressTableViewCell.h */,
+				64CDE0CC1F963660007F9449 /* AddressTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		8B3401FB1D7E52D400320072 /* AliSdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -1343,6 +1435,7 @@
 		C51B41AF1C784B02001679B5 /* WmjrApp */ = {
 			isa = PBXGroup;
 			children = (
+				64CDE0C11F9627B0007F9449 /* 积分商城 */,
 				6425D3C81F163FD000D61F87 /* Category */,
 				8B878B181E2B1551007646C5 /* NewProduct */,
 				8B16EA4D1D9A4857002FAA42 /* WmjrApp.entitlements */,
@@ -1455,11 +1548,6 @@
 				C5F15EDC1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.xib */,
 				64A6BA361F31E5CE00057903 /* AccountAndPasswordViewController.h */,
 				64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */,
-				649982251F91AFCE008511AB /* IntegralShopViewController.h */,
-				649982261F91AFCE008511AB /* IntegralShopViewController.m */,
-				649982301F94D241008511AB /* IntegralProductCollectionViewCell.h */,
-				649982311F94D241008511AB /* IntegralProductCollectionViewCell.m */,
-				649982321F94D241008511AB /* IntegralProductCollectionViewCell.xib */,
 				C51B42A41C785306001679B5 /* zijinliushui */,
 				C51B42A11C7852DC001679B5 /* mytuijian */,
 				C51B42A01C7852C8001679B5 /* mylicai */,
@@ -1525,6 +1613,10 @@
 		C51B42271C784F29001679B5 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				64CDE0DD1F974D6D007F9449 /* UIButton+Block.h */,
+				64CDE0DB1F974D6D007F9449 /* UIButton+Block.m */,
+				64CDE0DC1F974D6D007F9449 /* UIView+BlockGesture.h */,
+				64CDE0DA1F974D6C007F9449 /* UIView+BlockGesture.m */,
 				645889291F457A8000E69574 /* UIAlertView+Block.h */,
 				6458892A1F457A8000E69574 /* UIAlertView+Block.m */,
 				C5D3CE371C9808DF00C8B919 /* ShowImage */,
@@ -2951,6 +3043,7 @@
 			files = (
 				C51B434B1C7855AD001679B5 /* LoginViewController.m in Sources */,
 				C51B43041C7854C0001679B5 /* AvatorChangeView.m in Sources */,
+				64CDE0CA1F963554007F9449 /* AddressListViewController.m in Sources */,
 				C51B42AB1C78531F001679B5 /* TrandDetailViewController.m in Sources */,
 				C51B43761C78564E001679B5 /* BaseNavigationController.m in Sources */,
 				C51B429F1C7852B4001679B5 /* SmartModel.m in Sources */,
@@ -2966,7 +3059,9 @@
 				8B1D23321E5DB5490035FD5E /* ShortListTopCell.m in Sources */,
 				C51B42391C784FD9001679B5 /* AdModel.m in Sources */,
 				6425D3D61F16450900D61F87 /* NSArray+HRUtil.m in Sources */,
+				64CDE0E51F9788F5007F9449 /* IntegralProductDetailModel.m in Sources */,
 				C51B42BA1C78533E001679B5 /* FRuleViewController.m in Sources */,
+				64CDE0BF1F9623DF007F9449 /* IntegralOrderTableViewCell.m in Sources */,
 				8B1611501D81384E00C9B954 /* HomeProductCatModel.m in Sources */,
 				8B4446861D990EC500EDCDBC /* MyReCommandModel.m in Sources */,
 				C5A9922C1ECC370100C2F5AE /* ListBankTableViewCell.m in Sources */,
@@ -2977,9 +3072,11 @@
 				C51B43261C785535001679B5 /* CapitalAccountViewCell.m in Sources */,
 				C51B42591C7850A3001679B5 /* proIntroModel.m in Sources */,
 				C51B42FD1C7854B3001679B5 /* AddBankViewController.m in Sources */,
+				64CDE0D61F96FCB5007F9449 /* IntegralAddressModel.m in Sources */,
 				C51B43C01C78572F001679B5 /* ComfirmFastPayView.m in Sources */,
 				8B34020B1D7E52E100320072 /* KeychainItemWrapper.m in Sources */,
 				8BF3F84A1D8248BD00E669B2 /* AliPayItem.m in Sources */,
+				64CDE0DE1F974D6E007F9449 /* UIView+BlockGesture.m in Sources */,
 				C51B432A1C785549001679B5 /* InviteFriendsViewController.m in Sources */,
 				8B8018791DC8D6D600F7D65B /* PersonalMessageViewController.m in Sources */,
 				8B1D23291E5D55BB0035FD5E /* FixLongAdCell.m in Sources */,
@@ -2996,6 +3093,7 @@
 				8B1D232C1E5D5AC90035FD5E /* ProductLongTopCell.m in Sources */,
 				C51B435B1C785600001679B5 /* Base64Secret.m in Sources */,
 				C5F15EDD1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.m in Sources */,
+				64CDE0D31F96FC9F007F9449 /* IntegralProductModel.m in Sources */,
 				8B592F461DF96553001AD4B4 /* ModifyPhoneView.m in Sources */,
 				C51B42951C78528A001679B5 /* ResultShowView.m in Sources */,
 				8B34021B1D7EAC1000320072 /* BGTopSilderBar.m in Sources */,
@@ -3015,6 +3113,7 @@
 				64A6BA381F31E5CE00057903 /* AccountAndPasswordViewController.m in Sources */,
 				C5A992291ECBF7AF00C2F5AE /* BankDetailViewController.m in Sources */,
 				8B44C4521DC6DA4100DE0EA5 /* HomeTableViewCellForth.m in Sources */,
+				649982371F95A422008511AB /* IntegralProductDetailViewController.m in Sources */,
 				C51B43621C785620001679B5 /* UIView+Extension.m in Sources */,
 				8B3402211D7EAE2000320072 /* ProductClassViewController.m in Sources */,
 				8B44C4591DC7495400DE0EA5 /* NewsModel.m in Sources */,
@@ -3022,6 +3121,7 @@
 				C51B431A1C785528001679B5 /* NounExplanViewCell.m in Sources */,
 				C51B430A1C7854CB001679B5 /* UserInfoModel.m in Sources */,
 				C51B43481C7855AD001679B5 /* RegisterModel.m in Sources */,
+				64CDE0C71F9634C8007F9449 /* AddAddressViewController.m in Sources */,
 				C51B43511C7855D6001679B5 /* SingletonManager.m in Sources */,
 				C51B42F81C7854AC001679B5 /* MyselfBankViewController.m in Sources */,
 				C51B43231C785535001679B5 /* CapitalAccountViewController.m in Sources */,
@@ -3050,9 +3150,12 @@
 				8BBF1F231DAF0F79009682D9 /* InvestConfirmView.m in Sources */,
 				C51B41B51C784B02001679B5 /* AppDelegate.m in Sources */,
 				8B6E2B941DC98D77004E5C74 /* PasswordManageViewController.m in Sources */,
+				64CDE0DF1F974D6E007F9449 /* UIButton+Block.m in Sources */,
+				64CDE0D91F9744BC007F9449 /* AreaSelectView.m in Sources */,
 				C5A9922F1ECC37B000C2F5AE /* BankModel.m in Sources */,
 				C51B438B1C78566B001679B5 /* SDCollectionViewCell.m in Sources */,
 				C51B43891C78566B001679B5 /* TADotView.m in Sources */,
+				64CDE0BC1F961BDB007F9449 /* IntegralConfirmViewController.m in Sources */,
 				649982271F91AFCE008511AB /* IntegralShopViewController.m in Sources */,
 				C51B43301C78555A001679B5 /* JoinUsViewController.m in Sources */,
 				8B76662C1E53EA66002FC5F2 /* LongProductDetailViewController.m in Sources */,
@@ -3068,6 +3171,7 @@
 				8B44467D1D98F60F00EDCDBC /* MyRecommendatViewController.m in Sources */,
 				8B3343071D80169A004DB390 /* ViewForShuoMing.m in Sources */,
 				8B44C4461DC6D9FF00DE0EA5 /* HomeTableViewCellFirst.m in Sources */,
+				64CDE0CD1F963660007F9449 /* AddressTableViewCell.m in Sources */,
 				8B592F431DF8F2E9001AD4B4 /* AFAppDotNetAPIClient.m in Sources */,
 				8B266FB71DDC5296000DCE69 /* SafeEnsureViewController.m in Sources */,
 				C51B41B21C784B02001679B5 /* main.m in Sources */,

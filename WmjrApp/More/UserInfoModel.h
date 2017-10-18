@@ -21,5 +21,6 @@
 @property (nonatomic, copy) NSString *card_id;  /* 是否绑卡 */
 @property (nonatomic, copy) NSString *mobile_bind; /* 绑定银行卡时的手机号 */
 @property (nonatomic, copy) NSString *is_newer;/* 是否是新人 1是新人，0不是新人*/
+@property (nonatomic, copy) NSString *score;//积分
 
 @end

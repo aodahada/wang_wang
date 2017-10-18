@@ -9,12 +9,16 @@
 #import "IntegralShopViewController.h"
 #import "StoreClassCollectionReusableView.h"
 #import "IntegralProductCollectionViewCell.h"
+#import "IntegralProductDetailViewController.h"
+#import "IntegralProductModel.h"
 
 @interface IntegralShopViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic, strong) UICollectionView *classCollectionView;
 @property (nonatomic, strong) UIScrollView *scrollViewForCollect;
 @property (nonatomic, strong) UIView *viewForScroll;
+@property (nonatomic, strong) NSMutableArray *trueProductListArray;//实物array
+@property (nonatomic, strong) NSMutableArray *falseProductListArray;//非实物array
 
 @end
 
@@ -26,6 +30,16 @@
     self.title = @"积分商城";
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [self getProductListMethod];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
+
+- (void)setUpViewSign {
     _scrollViewForCollect = [[UIScrollView alloc]init];
     _scrollViewForCollect.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_scrollViewForCollect];
@@ -39,8 +53,8 @@
     [_viewForScroll mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(_scrollViewForCollect);
         make.width.equalTo(self.view.mas_width);
-//        make.bottom.equalTo(self.classCollectionView.mas_bottom);
-//        make.height.mas_offset(2000);
+        //        make.bottom.equalTo(self.classCollectionView.mas_bottom);
+        //        make.height.mas_offset(2000);
     }];
     
     UIView *topView1 = [[UIView alloc]init];
@@ -86,7 +100,7 @@
     }];
     
     UILabel *intergralNumber = [[UILabel alloc]init];
-    intergralNumber.text = @"365";
+    intergralNumber.text = [SingletonManager sharedManager].userModel.score;
     intergralNumber.textColor = RGBA(255, 88, 26, 1.0);
     intergralNumber.font = [UIFont systemFontOfSize:RESIZE_UI(22)];
     [topView1 addSubview:intergralNumber];
@@ -182,9 +196,9 @@
     self.classCollectionView.scrollEnabled = NO;
     [self.classCollectionView registerClass:[IntegralProductCollectionViewCell class] forCellWithReuseIdentifier:@"IntegralProductCollectionViewCell"];
     [self.classCollectionView registerNib:[UINib nibWithNibName:@"IntegralProductCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"IntegralProductCollectionViewCell"];
-//    [self.classCollectionView registerNib:[UINib nibWithNibName:@"StoreClassCollectionReusableView" bundle:nil]
-//               forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-//                      withReuseIdentifier:@"StoreClassCollectionReusableView"];//header注册
+    //    [self.classCollectionView registerNib:[UINib nibWithNibName:@"StoreClassCollectionReusableView" bundle:nil]
+    //               forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+    //                      withReuseIdentifier:@"StoreClassCollectionReusableView"];//header注册
     [self.classCollectionView registerClass:[StoreClassCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"StoreClassCollectionReusableView"];
     self.classCollectionView.delegate = self;
     self.classCollectionView.dataSource = self;
@@ -193,25 +207,62 @@
     self.classCollectionView.showsHorizontalScrollIndicator = NO;
     self.classCollectionView.scrollEnabled = NO;
     [self.viewForScroll addSubview:self.classCollectionView];
+    NSInteger count1 = _trueProductListArray.count/2;
+    NSInteger count2 = _falseProductListArray.count/2;
+    NSInteger count = count1+count2;
     [self.classCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(top2LeftView.mas_bottom).with.offset(RESIZE_UI(13));
+        make.top.equalTo(top2LeftView.mas_bottom);
         make.left.equalTo(self.viewForScroll.mas_left);
         make.right.equalTo(self.viewForScroll.mas_right);
-//        make.bottom.equalTo(self.viewForScroll.mas_bottom);
-        make.height.mas_offset(1000);
+        //        make.bottom.equalTo(self.viewForScroll.mas_bottom);
+        make.height.mas_offset(43*2+205*count);
     }];
     
     [_viewForScroll mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.classCollectionView.mas_bottom);
     }];
-    
-    
-    
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = YES;
+#pragma mark - 获取商品列表
+- (void)getProductListMethod {
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"加载中"];
+    [manager postDataWithUrlActionStr:@"Goods/lists" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            NSArray *twoArray = obj[@"data"];
+            _trueProductListArray = [[NSMutableArray alloc]init];
+            _falseProductListArray = [[NSMutableArray alloc]init];
+            if (twoArray.count == 2) {
+                for (int j=0; j<twoArray.count; j++) {
+                    NSDictionary *dic = twoArray[j];
+                    if ([dic[@"type_id"] isEqualToString:@"1"]) {
+                        NSArray *trueArray = dic[@"goods"];
+                        for (int i=0; i<trueArray.count; i++) {
+                            NSDictionary *productDic = trueArray[i];
+                            IntegralProductModel *integralProductModel = [IntegralProductModel mj_objectWithKeyValues:productDic];
+                            [_trueProductListArray addObject:integralProductModel];
+                        }
+                    } else {
+                        NSArray *falseArray = dic[@"goods"];
+                        for (int i=0; i<falseArray.count; i++) {
+                            NSDictionary *productDic = falseArray[i];
+                            IntegralProductModel *integralProductModel = [IntegralProductModel mj_objectWithKeyValues:productDic];
+                            [_falseProductListArray addObject:integralProductModel];
+                        }
+                    }
+                }
+            }
+            [self setUpViewSign];
+            [SVProgressHUD dismiss];
+        } else {
+            NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+            alertConfig.defaultTextOK = @"确定";
+            [SVProgressHUD dismiss];
+            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+            [alertView show];
+        }
+    }];
 }
 
 #pragma mark - collectionview - delegate
@@ -221,9 +272,14 @@
     
 }
 
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return 4;
+    if (section == 0) {
+        return _falseProductListArray.count;
+    } else {
+        return _trueProductListArray.count;
+    }
     
 }
 
@@ -231,6 +287,11 @@
     
     static NSString *CellIdentifier = @"IntegralProductCollectionViewCell";
     IntegralProductCollectionViewCell *cell = (IntegralProductCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+    if (indexPath.section == 0) {
+        cell.integralProductModel = _falseProductListArray[indexPath.row];
+    } else {
+        cell.integralProductModel = _trueProductListArray[indexPath.row];
+    }
     cell.backgroundColor = [UIColor whiteColor];
     
     return cell;
@@ -246,7 +307,7 @@
 
 //定义每个UICollectionView 的 margin
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(1,0,0,0);
+    return UIEdgeInsetsMake(1,0,1,0);
 }
 
 // 定义上下cell的最小间距
@@ -261,24 +322,36 @@
 
 //Header 方法
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(self.classCollectionView.frame.size.width, 30);
+    return CGSizeMake(self.classCollectionView.frame.size.width, RESIZE_UI(43));
 }
 
 //Header布局
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if ([kind isEqual:UICollectionElementKindSectionHeader]) {
         StoreClassCollectionReusableView *headerView = (StoreClassCollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"StoreClassCollectionReusableView" forIndexPath:indexPath];
-        headerView.headerLabel.text = @"实物兑换区";
+        if (indexPath.section == 0) {
+            headerView.headerLabel.text = @"非实物兑换区";
+        } else {
+            headerView.headerLabel.text = @"实物兑换区";
+        }
         return headerView;
     }
     return nil;
 }
 
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    
-//    
-//}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    IntegralProductDetailViewController *integralProductDetailVC = [[IntegralProductDetailViewController alloc]init];
+    IntegralProductModel *integralProductModel;
+    if (indexPath.section == 0) {
+        integralProductModel = _falseProductListArray[indexPath.row];
+    } else {
+        integralProductModel = _trueProductListArray[indexPath.row];
+    }
+    integralProductDetailVC.integralProductModel = integralProductModel;
+    [self.navigationController pushViewController:integralProductDetailVC animated:YES];
+    
+}
 
 //返回这个UICollectionView是否可以被选择
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {

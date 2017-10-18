@@ -94,5 +94,21 @@
     return self.frame.size;
 }
 
+-(void)setRadius:(CGFloat)radius
+{
+    
+    if(radius <= 0) radius=self.bounds.size.width * .5f;
+    
+    //圆角半径
+    self.layer.cornerRadius=radius;
+    
+    //强制
+    self.layer.masksToBounds=YES;
+}
+
+- (CGFloat)radius
+{
+    return 0;
+}
 
 @end
