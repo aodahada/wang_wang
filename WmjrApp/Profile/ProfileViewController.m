@@ -68,7 +68,7 @@
     headView.backgroundColor = RGBA(237, 240, 242, 1.0);
 //    headView.backgroundColor = [UIColor redColor];
     UIImageView *imageViewForBackground = [[UIImageView alloc]init];
-    imageViewForBackground.image = [UIImage imageNamed:@"image_me_bg-2"];
+    imageViewForBackground.image = [UIImage imageNamed:@"image_me_bg"];
     [headView addSubview:imageViewForBackground];
     [imageViewForBackground mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(headView.mas_top);

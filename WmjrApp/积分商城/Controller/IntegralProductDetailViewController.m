@@ -32,6 +32,11 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+}
+
 - (void)getProductDetailMethod {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
@@ -78,15 +83,20 @@
     }];
     
     self.mainView = [[UIView alloc]init];
-    self.mainView.backgroundColor = [UIColor whiteColor];
+    self.mainView.backgroundColor = RGBA(238, 240, 242, 1.0);
     [self.mainScrollView addSubview:self.mainView];
     [self.mainView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.mainScrollView);
         make.width.mas_equalTo(self.view.mas_width);
     }];
     
-    NSMutableArray *imagesURLStrings = [[NSMutableArray alloc]initWithArray:@[_integralProductDetailModel.pic]];
-    
+    NSMutableArray *imagesURLStrings = [[NSMutableArray alloc]init];
+    NSArray *slideArray = _integralProductDetailModel.slide;
+    for (int i=0; i<slideArray.count; i++) {
+        NSDictionary *dic = slideArray[i];
+        [imagesURLStrings addObject:dic[@"pic"]];
+    }
+//    NSLog(@"我的图片:%@",_integralProductDetailModel.slide);
     SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, RESIZE_UI(280)) imageURLStringsGroup:nil]; // 模拟网络延时情景
     cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
     cycleScrollView.delegate = self;
@@ -106,10 +116,10 @@
     
     //轮播图下方内容
     UIView *contentView = [[UIView alloc]init];
-    contentView.backgroundColor = RGBA(238, 240, 242, 1.0);
+    contentView.backgroundColor = [UIColor whiteColor];
     [self.mainView addSubview:contentView];
     [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(cycleScrollView.mas_bottom);
+        make.top.equalTo(cycleScrollView.mas_bottom).with.offset(1);
         make.left.equalTo(self.mainView.mas_left);
         make.right.equalTo(self.mainView.mas_right);
         make.height.mas_offset(RESIZE_UI(107));
@@ -166,6 +176,8 @@
     [proDetailView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(contentView.mas_bottom).with.offset(RESIZE_UI(12));
         make.height.mas_offset(RESIZE_UI(46));
+        make.left.equalTo(self.mainView.mas_left);
+        make.right.equalTo(self.mainView.mas_right);
     }];
     
     UILabel *redLine = [[UILabel alloc]init];

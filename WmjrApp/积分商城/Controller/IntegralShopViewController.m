@@ -11,6 +11,9 @@
 #import "IntegralProductCollectionViewCell.h"
 #import "IntegralProductDetailViewController.h"
 #import "IntegralProductModel.h"
+#import "ExchangeRecordViewController.h"
+#import "ScordRecordViewController.h"
+#import "AgViewController.h"
 
 @interface IntegralShopViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -30,6 +33,9 @@
     self.title = @"积分商城";
     self.view.backgroundColor = [UIColor whiteColor];
     
+    UIImage *imageHelp = [[UIImage imageNamed:@"icon_guize"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:imageHelp style:UIBarButtonItemStylePlain target:self action:@selector(watchRuleMethod)];
+    
     [self getProductListMethod];
     
 }
@@ -37,6 +43,18 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+}
+
+- (void)watchRuleMethod {
+    AgViewController *agVC =[[AgViewController alloc] init];
+    agVC.title = @"积分规则";
+    agVC.webUrl = @"http://api.wmjr888.com/home/page/app/id/15";
+    [self.navigationController pushViewController:agVC animated:YES];
 }
 
 - (void)setUpViewSign {
@@ -102,7 +120,8 @@
     UILabel *intergralNumber = [[UILabel alloc]init];
     intergralNumber.text = [SingletonManager sharedManager].userModel.score;
     intergralNumber.textColor = RGBA(255, 88, 26, 1.0);
-    intergralNumber.font = [UIFont systemFontOfSize:RESIZE_UI(22)];
+//    intergralNumber.font = [UIFont systemFontOfSize:RESIZE_UI(22)];
+    intergralNumber.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(22)];
     [topView1 addSubview:intergralNumber];
     [intergralNumber mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(topView1.mas_centerY);
@@ -116,7 +135,7 @@
         make.top.equalTo(topView1.mas_bottom).with.offset(1);
         make.left.mas_equalTo(_viewForScroll.mas_left);
         make.height.mas_offset(RESIZE_UI(74));
-        make.width.mas_offset(RESIZE_UI(SCREEN_WIDTH/2)-0.5);
+        make.width.mas_offset((SCREEN_WIDTH/2)-0.5);
     }];
     
     UILabel *integralRecordLabel = [[UILabel alloc]init];
@@ -149,6 +168,14 @@
         make.left.mas_equalTo(integralRecordLabel.mas_left);
     }];
     
+    UIButton *watchScoreRecordButton = [[UIButton alloc]init];
+    [watchScoreRecordButton setBackgroundColor:[UIColor clearColor]];
+    [watchScoreRecordButton addTarget:self action:@selector(watchScoreRecordMethod) forControlEvents:UIControlEventTouchUpInside];
+    [top2LeftView addSubview:watchScoreRecordButton];
+    [watchScoreRecordButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(top2LeftView);
+    }];
+    
     UIView *top2RightView = [[UIView alloc]init];
     top2RightView.backgroundColor = [UIColor whiteColor];
     [_viewForScroll addSubview:top2RightView];
@@ -156,7 +183,7 @@
         make.top.equalTo(top2LeftView.mas_top);
         make.right.equalTo(_viewForScroll.mas_right);
         make.height.mas_equalTo(top2LeftView.mas_height);
-        make.width.mas_offset(RESIZE_UI(SCREEN_WIDTH/2)-0.5);
+        make.width.mas_offset((SCREEN_WIDTH/2)-0.5);
     }];
     
     UILabel *exchangeRecordLabel = [[UILabel alloc]init];
@@ -187,6 +214,14 @@
     [watchExchangeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(exchangeRecordLabel.mas_bottom).with.offset(RESIZE_UI(4));
         make.left.equalTo(exchangeRecordLabel.mas_left);
+    }];
+    
+    UIButton *watchExchangeRecordButton = [[UIButton alloc]init];
+    [watchExchangeRecordButton setBackgroundColor:[UIColor clearColor]];
+    [watchExchangeRecordButton addTarget:self action:@selector(watchExchangeRecordMethod) forControlEvents:UIControlEventTouchUpInside];
+    [top2RightView addSubview:watchExchangeRecordButton];
+    [watchExchangeRecordButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(top2RightView);
     }];
     
     UICollectionViewFlowLayout *flowLayout= [[UICollectionViewFlowLayout alloc]init];
@@ -265,6 +300,18 @@
     }];
 }
 
+#pragma mark - 查看积分记录
+- (void)watchScoreRecordMethod {
+    ScordRecordViewController *scoreRecordVC = [[ScordRecordViewController alloc]init];
+    [self.navigationController pushViewController:scoreRecordVC animated:YES];
+}
+
+#pragma mark - 查看兑换记录
+- (void)watchExchangeRecordMethod {
+    ExchangeRecordViewController *exchangeRecordVC = [[ExchangeRecordViewController alloc]init];
+    [self.navigationController pushViewController:exchangeRecordVC animated:YES];
+}
+
 #pragma mark - collectionview - delegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     
@@ -330,7 +377,7 @@
     if ([kind isEqual:UICollectionElementKindSectionHeader]) {
         StoreClassCollectionReusableView *headerView = (StoreClassCollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"StoreClassCollectionReusableView" forIndexPath:indexPath];
         if (indexPath.section == 0) {
-            headerView.headerLabel.text = @"非实物兑换区";
+            headerView.headerLabel.text = @"虚拟兑换区";
         } else {
             headerView.headerLabel.text = @"实物兑换区";
         }

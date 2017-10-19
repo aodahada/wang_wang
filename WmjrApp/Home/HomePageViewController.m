@@ -367,6 +367,21 @@
     }];
 }
 
+//#pragma mark - 签到
+//- (void)signMethod {
+//    NetManager *manager = [[NetManager alloc] init];
+//    [manager postDataWithUrlActionStr:@"Score/signin" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"} withBlock:^(id obj) {
+//        if ([obj[@"result"] isEqualToString:@"1"]) {
+//            NSString *balanceValue = [obj[@"data"] objectForKey:@"available_balance"];
+//            _personInvestModel.account_rest = balanceValue;
+//            [_homeTableView reloadData];
+//            [SVProgressHUD dismiss];
+//        } else {
+//            [SVProgressHUD showErrorWithStatus:@"请求失败"];
+//        }
+//    }];
+//}
+
 #pragma mark - 数据处理
 - (void)getDataWithNetManager {
     NetManager *manager = [[NetManager alloc] init];

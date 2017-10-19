@@ -128,19 +128,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.isSelect isEqualToString:@"yes"]) {
-        IntegralAddressModel *integralAddrss = _addressListArray[indexPath.section];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"selectAddress" object:integralAddrss];
-        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-        NSData *encodeInfo = [NSKeyedArchiver archivedDataWithRootObject:integralAddrss];
-        [userDefault setObject:encodeInfo forKey:@"integralAddrss"];
-        [userDefault synchronize];
-        [self.navigationController popViewControllerAnimated:YES];
-    } else {
+//    if ([self.isSelect isEqualToString:@"yes"]) {
+//        IntegralAddressModel *integralAddrss = _addressListArray[indexPath.section];
+//        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+//        NSData *encodeInfo = [NSKeyedArchiver archivedDataWithRootObject:integralAddrss];
+//        [userDefault setObject:encodeInfo forKey:@"integralAddrss"];
+//        [userDefault synchronize];
+//        [self.navigationController popViewControllerAnimated:YES];
+//    } else {
         AddAddressViewController *addAddressVC = [[AddAddressViewController alloc]init];
         addAddressVC.integralAddressModel = _addressListArray[indexPath.section];
         [self.navigationController pushViewController:addAddressVC animated:YES];
-    }
+//    }
     
 }
 

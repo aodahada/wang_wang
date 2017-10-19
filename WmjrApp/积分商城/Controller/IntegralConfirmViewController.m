@@ -13,6 +13,7 @@
 #import "IntegralProductDetailModel.h"
 #import "IntegralAddressModel.h"
 #import "AddressTableViewCell.h"
+#import "ExchangeRecordViewController.h"
 
 @interface IntegralConfirmViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -98,20 +99,29 @@
         make.bottom.equalTo(congfirmButton.mas_top);
     }];
     
+    CGFloat height;
+    if ([_integralProductDetailModel.type_id isEqualToString:@"1"] && _addressArray.count == 1) {
+        height = RESIZE_UI(105)+1+RESIZE_UI(111.5);
+    } else if ([_integralProductDetailModel.type_id isEqualToString:@"1"] && _addressArray.count != 1) {
+        height = RESIZE_UI(105)+1+RESIZE_UI(59);
+    } else {
+        height = RESIZE_UI(105);
+    }
+    
     UIView *mainView = [[UIView alloc]init];
     mainView.backgroundColor = RGBA(238, 240, 242, 1.0);
     [mainScrollView addSubview:mainView];
     [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(mainScrollView);
         make.width.equalTo(self.view.mas_width);
-        make.height.mas_offset(1000);
+        make.height.mas_offset(height);
     }];
     
-    CGFloat height;
+    CGFloat tableHeight;
     if ([_integralProductDetailModel.type_id isEqualToString:@"1"] && _addressArray.count == 1) {
-        height = RESIZE_UI(105)+1+RESIZE_UI(111.5);
+        tableHeight = RESIZE_UI(105)+1+RESIZE_UI(111.5);
     } else {
-        height = RESIZE_UI(105);
+        tableHeight = RESIZE_UI(105);
     }
     
     self.tableView = [[UITableView alloc]init];
@@ -124,7 +134,7 @@
         make.top.equalTo(self.view.mas_top);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.height.mas_offset(height);
+        make.height.mas_offset(tableHeight);
     }];
     
     if ([_integralProductDetailModel.type_id isEqualToString:@"1"] && _addressArray.count == 0) {
@@ -156,13 +166,13 @@
         
     }
     //点击选择地址保存在本地
-    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    NSData *data = [userDefault objectForKey:@"integralAddrss"];
-    if (data) {
-        _defaultAddressModel = (IntegralAddressModel *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
-        [self.tableView reloadData];
-        [userDefault setObject:nil forKey:@"integralAddrss"];
-    }
+//    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+//    NSData *data = [userDefault objectForKey:@"integralAddrss"];
+//    if (data) {
+//        _defaultAddressModel = (IntegralAddressModel *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+//        [self.tableView reloadData];
+//        [userDefault setObject:nil forKey:@"integralAddrss"];
+//    }
     
 }
 
@@ -208,9 +218,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         IntegralOrderTableViewCell *cell = [[IntegralOrderTableViewCell alloc]initWithIntegralProductDetailModel:_integralProductDetailModel];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {
         AddressTableViewCell *cell = [[AddressTableViewCell alloc] initWithIntegralAddressModel:_defaultAddressModel];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     
@@ -219,14 +231,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
         AddressListViewController *addAdressListVC = [[AddressListViewController alloc]init];
-        addAdressListVC.isSelect = @"yes";
+//        addAdressListVC.isSelect = @"yes";
         [self.navigationController pushViewController:addAdressListVC animated:YES];
     }
 }
 
 - (void)selectAddressMethod {
     AddressListViewController *addAdressListVC = [[AddressListViewController alloc]init];
-    addAdressListVC.isSelect = @"yes";
+//    addAdressListVC.isSelect = @"yes";
     [self.navigationController pushViewController:addAdressListVC animated:YES];
 }
 
@@ -234,9 +246,14 @@
 - (void)confirmOrderMethod {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"User/income" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
+    NSString *addressId = [[SingletonManager sharedManager] convertNullString:_defaultAddressModel.id];
+    [manager postDataWithUrlActionStr:@"Score/exchange" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"goods_id":_integralProductDetailModel.id,@"address_id":addressId} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
-            //            NSDictionary *dic = obj[@"data"];
+            [SVProgressHUD dismiss];
+            [[SingletonManager sharedManager] showHUDView:self.view title:@"兑换成功" content:@"" time:1.0 andCodes:^{
+                ExchangeRecordViewController *exchangeRecordVC = [[ExchangeRecordViewController alloc] init];
+                [self.navigationController pushViewController:exchangeRecordVC animated:YES];
+            }];
             
         } else {
             NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];

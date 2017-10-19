@@ -30,45 +30,46 @@
         }];
         
         UILabel *integralLabel = [[UILabel alloc]init];
-        integralLabel.text = @"500积分";
+        integralLabel.text = [NSString stringWithFormat:@"%@积分",integralProductDetailModel.need_score];
         integralLabel.textColor = RGBA(255, 84, 34, 1.0);
+//        integralLabel.backgroundColor = [UIColor redColor];
         integralLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
         [self addSubview:integralLabel];
         [integralLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(19));
+            make.top.equalTo(imageView.mas_top).with.offset(0);
             make.right.equalTo(self.mas_right).with.offset(RESIZE_UI(-12));
         }];
         
         UILabel *titleLabel = [[UILabel alloc]init];
-        titleLabel.text = @"小米移动充电宝-银色12000Ml版";
+        titleLabel.text = integralProductDetailModel.name;
         titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
         titleLabel.numberOfLines = 2;
         titleLabel.textColor = RGBA(20, 20, 23, 1.0);
         [self addSubview:titleLabel];
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(16));
+            make.top.equalTo(imageView.mas_top);
             make.left.equalTo(imageView.mas_right).with.offset(RESIZE_UI(19));
             make.right.equalTo(integralLabel.mas_left).with.offset(-RESIZE_UI(46));
-            make.height.mas_offset(RESIZE_UI(48));
         }];
         
         UILabel *timeLabel = [[UILabel alloc]init];
-        timeLabel.text = @"2017-08-09";
+        timeLabel.text = integralProductDetailModel.created_at;
         timeLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         timeLabel.textColor = RGBA(153, 153, 153, 1.0);
         [self addSubview:timeLabel];
         [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(16));
+            make.bottom.equalTo(imageView.mas_bottom);
             make.left.equalTo(titleLabel.mas_left);
         }];
         
         UILabel *numberLabel = [[UILabel alloc]init];
+//        numberLabel.text = [NSString stringWithFormat:@"x%@",integralProductDetailModel.sort];
         numberLabel.text = @"x1";
         numberLabel.textColor = RGBA(20, 20, 23, 1.0);
         numberLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
         [self addSubview:numberLabel];
         [numberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(15));
+            make.bottom.equalTo(imageView.mas_bottom);
             make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(12));
         }];
     }

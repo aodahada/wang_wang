@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UIImageView *productImage;
 @property (nonatomic, strong) UILabel *productNameLabel;
 @property (nonatomic, strong) UILabel *integralLabel;
+//@property (nonatomic, strong) UIImageView *xiajiaImageView;
 
 @end
 
@@ -32,8 +33,18 @@
         make.height.mas_offset(RESIZE_UI(140));
     }];
     
+//    UIImageView *xiajiaImageView = [[UIImageView alloc]init];
+//    xiajiaImageView.image = [UIImage imageNamed:@"icon_yxj"];
+//    [_productImage addSubview:xiajiaImageView];
+//    [xiajiaImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(_productImage.mas_top);
+//        make.right.equalTo(_productImage.mas_right);
+//        make.width.height.mas_offset(RESIZE_UI(60));
+//    }];
+    
     _productNameLabel = [[UILabel alloc]init];
-    _productNameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(14)];
+//    _productNameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(14)];
+    _productNameLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
 //    _productNameLabel.text = @"大疆无人机";
     [self addSubview:_productNameLabel];
     [_productNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -47,9 +58,10 @@
     _integralLabel.textAlignment = NSTextAlignmentCenter;
     _integralLabel.layer.masksToBounds = YES;
     _integralLabel.layer.cornerRadius = 10.0f;
-    _integralLabel.layer.borderWidth = 2.0f;
+    _integralLabel.layer.borderWidth = 1.0f;
     _integralLabel.layer.borderColor = RGBA(252, 85, 30, 1.0).CGColor;
-    _integralLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(14)];
+//    _integralLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(14)];
+    _integralLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     [self addSubview:_integralLabel];
     [_integralLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_productNameLabel.mas_bottom).with.offset(RESIZE_UI(5));
