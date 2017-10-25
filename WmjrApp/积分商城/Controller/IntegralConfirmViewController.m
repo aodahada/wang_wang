@@ -35,8 +35,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"IntegralConfirmViewController"];
     [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self getAddressList];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"IntegralConfirmViewController"];
 }
 
 #pragma mark - 获取地址列表

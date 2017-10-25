@@ -58,6 +58,8 @@
 
 @property (nonatomic, strong)UILabel *integraLabel;//积分label
 
+@property (nonatomic, strong)UILabel *labelForPhone;//电话
+
 @end
 
 @implementation ProfileViewController
@@ -824,15 +826,17 @@
             case 2:{
                 cell.imageView.image = [UIImage imageNamed:@"icon_jfsc"];
                 cell.textLabel.text = @"积分商城";
-                _integraLabel = [[UILabel alloc]init];
-                _integraLabel.text = [NSString stringWithFormat:@"%@积分",[SingletonManager sharedManager].userModel.score];
-                _integraLabel.textColor = RGBA(255, 88, 26, 1.0);
-                _integraLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-                [cell addSubview:_integraLabel];
-                [_integraLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.right.equalTo(cell.mas_right).with.offset(-RESIZE_UI(38));
-                    make.centerY.equalTo(cell.mas_centerY);
-                }];
+                if (!_integraLabel) {
+                    _integraLabel = [[UILabel alloc]init];
+                    _integraLabel.text = [NSString stringWithFormat:@"%@积分",[SingletonManager sharedManager].userModel.score];
+                    _integraLabel.textColor = RGBA(255, 88, 26, 1.0);
+                    _integraLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                    [cell addSubview:_integraLabel];
+                    [_integraLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.right.equalTo(cell.mas_right).with.offset(-RESIZE_UI(38));
+                        make.centerY.equalTo(cell.mas_centerY);
+                    }];
+                }
             }
                 break;
             case 3:
@@ -856,15 +860,17 @@
                 cell.imageView.image = [UIImage imageNamed:@"icon_lxkf"];
                 cell.textLabel.text = @"联系客服";
                 cell.accessoryType = UITableViewCellAccessoryNone;
-                UILabel *labelForPhone = [[UILabel alloc]init];
-                labelForPhone.text = [SingletonManager sharedManager].companyTel;
-                labelForPhone.textColor = RGBA(255, 88, 26, 1.0);
-                labelForPhone.font = [UIFont systemFontOfSize:15];
-                [cell addSubview:labelForPhone];
-                [labelForPhone mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.right.equalTo(cell.mas_right).with.offset(-12);
-                    make.centerY.equalTo(cell.mas_centerY);
-                }];
+                if (!_labelForPhone) {
+                    _labelForPhone = [[UILabel alloc]init];
+                    _labelForPhone.text = [SingletonManager sharedManager].companyTel;
+                    _labelForPhone.textColor = RGBA(255, 88, 26, 1.0);
+                    _labelForPhone.font = [UIFont systemFontOfSize:15];
+                    [cell addSubview:_labelForPhone];
+                    [_labelForPhone mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.right.equalTo(cell.mas_right).with.offset(-12);
+                        make.centerY.equalTo(cell.mas_centerY);
+                    }];
+                }
             }
             default:
                 break;

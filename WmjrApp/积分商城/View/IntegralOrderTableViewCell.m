@@ -52,15 +52,15 @@
             make.right.equalTo(integralLabel.mas_left).with.offset(-RESIZE_UI(46));
         }];
         
-        UILabel *timeLabel = [[UILabel alloc]init];
-        timeLabel.text = integralProductDetailModel.created_at;
-        timeLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
-        timeLabel.textColor = RGBA(153, 153, 153, 1.0);
-        [self addSubview:timeLabel];
-        [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(imageView.mas_bottom);
-            make.left.equalTo(titleLabel.mas_left);
-        }];
+//        UILabel *timeLabel = [[UILabel alloc]init];
+//        timeLabel.text = integralProductDetailModel.created_at;
+//        timeLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+//        timeLabel.textColor = RGBA(153, 153, 153, 1.0);
+//        [self addSubview:timeLabel];
+//        [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.bottom.equalTo(imageView.mas_bottom);
+//            make.left.equalTo(titleLabel.mas_left);
+//        }];
         
         UILabel *numberLabel = [[UILabel alloc]init];
 //        numberLabel.text = [NSString stringWithFormat:@"x%@",integralProductDetailModel.sort];

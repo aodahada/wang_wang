@@ -29,6 +29,7 @@
 #import "MainRedBallView.h"
 #import "MyRedPackageViewController.h"
 #import "AppDelegate.h"
+#import "ScordRecordViewController.h"
 
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -64,12 +65,61 @@
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) NSMutableArray *redPackageArray;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
+@property (nonatomic, strong) UIImageView *signWindowImageView;//签到弹框
+@property (nonatomic, strong) UILabel *signLabelOne;
+@property (nonatomic, strong) UILabel *signLabelTwo;
+@property (nonatomic, strong) UILabel *signLabelThree;
+@property (nonatomic, strong) UIButton *watchScroeButton;
 
 @property (nonatomic, assign) NSInteger enterViewNumber;//第几次进入界面
 
 @end
 
 @implementation HomePageViewController
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"HomePageViewController"];
+    //程序复活了
+    [[NSUserDefaults standardUserDefaults] setObject:@"alive" forKey:@"death"];
+    
+    self.tabBarController.tabBar.hidden = NO;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+    BOOL isNull = [self isNullString:uid];
+    if (!isNull) {
+        [self getPersonalMessage];
+        
+        _enterViewNumber++;
+        
+        _isSave = [[SingletonManager sharedManager] isSave]; //是否有保存
+        //签到
+        if (_enterViewNumber == 1 && !_isSave) {
+            [self signMethod];
+        }
+        if (_enterViewNumber == 2 && _isSave) {
+            [self signMethod];
+        }
+    }
+    
+    /* 获取数据 */
+    [self getDataWithNetManager];
+    if (![[self convertNullString:[SingletonManager sharedManager].uid] isEqualToString:@""]) {
+        [self getRedBallMethod2];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    //    self.navigationController.navigationBar.hidden = NO;
+    
+    [[[AppDelegate sharedInstance] redView] removeFromSuperview];
+    [AppDelegate sharedInstance].redView = nil;
+    [MobClick endLogPageView:@"HomePageViewController"];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -83,6 +133,8 @@
         [SingletonManager sharedManager].uid = uid;
         [self getDataWithLogin];
     }
+    
+    
     
     self.currentPage = 1;
     
@@ -105,9 +157,13 @@
 //    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(homeGuideLayout) name:@"addHomeGudie" object:nil];
     //登录成功广播
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginSuccessMethod) name:@"loginSuccess" object:nil];
+
     
     [self setUpTableViewMethod];
     [self setReplaceNavMethod];
+    
+//    //签到
+//    [self signMethod];
     
     //检查是否开启推送
 //    if (IOS8) { //iOS8以上包含iOS8
@@ -154,14 +210,14 @@
                 //红包弹出框
                 _isSave = [[SingletonManager sharedManager] isSave]; //是否有保存
                 if (_redPackageArray.count>0) {
-                    [self showRedBallView:_redPackageArray.count];
+//                    [self showRedBallView:_redPackageArray.count];
                 }
-                if (_enterViewNumber  == 1 && _isSave) {
-                    if (_blackView) {
-                        [self closeBlackView];
-                    }
-                }
-                
+//                if (_enterViewNumber  == 1 && _isSave) {
+//                    if (_blackView) {
+//                        [self closeBlackView];
+//                    }
+//                }
+//
                 
                 [SVProgressHUD dismiss];
                 return ;
@@ -280,8 +336,17 @@
 - (void)closeBlackView {
     [_closeButton removeFromSuperview];
     _closeButton = nil;
-    [_redBallView removeFromSuperview];
-    _redBallView = nil;
+//    [_redBallView removeFromSuperview];
+//    _redBallView = nil;
+    
+    [_signLabelOne removeFromSuperview];
+    _signLabelOne = nil;
+    [_signLabelTwo removeFromSuperview];
+    _signLabelTwo = nil;
+    [_signLabelThree removeFromSuperview];
+    _signLabelThree = nil;
+    [_watchScroeButton removeFromSuperview];
+    _watchScroeButton = nil;
     [_blackView removeFromSuperview];
     _blackView = nil;
     [_blackView removeGestureRecognizer:_tap];
@@ -293,40 +358,6 @@
     [self closeBlackView];
     MyRedPackageViewController *myRedPackageVC = [[MyRedPackageViewController alloc]init];
     [self.navigationController pushViewController:myRedPackageVC animated:YES];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"HomePageViewController"];
-    //程序复活了
-    [[NSUserDefaults standardUserDefaults] setObject:@"alive" forKey:@"death"];
-    
-    self.tabBarController.tabBar.hidden = NO;
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-    BOOL isNull = [self isNullString:uid];
-    if (!isNull) {
-        [self getPersonalMessage];
-    }
-    
-    _enterViewNumber++;
-    
-    /* 获取数据 */
-    [self getDataWithNetManager];
-    if (![[self convertNullString:[SingletonManager sharedManager].uid] isEqualToString:@""]) {
-        [self getRedBallMethod2];
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-//    self.navigationController.navigationBar.hidden = NO;
-    
-    [[[AppDelegate sharedInstance] redView] removeFromSuperview];
-    [AppDelegate sharedInstance].redView = nil;
-    [MobClick endLogPageView:@"HomePageViewController"];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 #pragma mark - 获取个人信息
@@ -367,20 +398,132 @@
     }];
 }
 
-//#pragma mark - 签到
-//- (void)signMethod {
-//    NetManager *manager = [[NetManager alloc] init];
-//    [manager postDataWithUrlActionStr:@"Score/signin" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"} withBlock:^(id obj) {
-//        if ([obj[@"result"] isEqualToString:@"1"]) {
-//            NSString *balanceValue = [obj[@"data"] objectForKey:@"available_balance"];
-//            _personInvestModel.account_rest = balanceValue;
-//            [_homeTableView reloadData];
-//            [SVProgressHUD dismiss];
-//        } else {
-//            [SVProgressHUD showErrorWithStatus:@"请求失败"];
-//        }
-//    }];
-//}
+#pragma mark - 签到接口
+- (void)signMethod {
+    NetManager *manager = [[NetManager alloc] init];
+    [manager postDataWithUrlActionStr:@"Score/signin" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            NSDictionary *dic = obj[@"data"];
+            /**
+             today_signin今日已签到次数，不含本次，为0表示今日首次签到
+             score本次签到获得的积分
+             week_count本周签到的次数，含本次,为7时，app主要修改文案：本周连续签到7次，共赚17积分
+             next=> count再签到几次
+             next=> score可额外获得的积分
+             **/
+            
+            [self showSignWindowMethod:dic];
+            [SVProgressHUD dismiss];
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"请求失败"];
+        }
+    }];
+}
+
+#pragma mark - 签到提示框
+- (void)showSignWindowMethod:(NSDictionary *)dict {
+    _blackView = [[UIView alloc]init];
+    _blackView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.55];
+    [self.window addSubview:_blackView];
+    [_blackView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.window);
+    }];
+    
+    _tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeBlackView)];
+
+    _signWindowImageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-RESIZE_UI(325)/2, SCREEN_HEIGHT, RESIZE_UI(325), RESIZE_UI(414))];
+    _signWindowImageView.image = [UIImage imageNamed:@"image_tanchuang"];
+    [_signWindowImageView setUserInteractionEnabled:YES];
+    [_blackView addSubview:_signWindowImageView];
+
+    NSString *oneString = [NSString stringWithFormat:@"恭喜您获得%@积分!",dict[@"score"]];
+    _signLabelOne = [[UILabel alloc]init];
+    _signLabelOne.attributedText = [self changeStringWithString:oneString withFrontColor:RGBA(38, 38, 38, 1.0) WithBehindColor:RGBA(252, 60, 27, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(18)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(22)]];
+    [_signWindowImageView addSubview:_signLabelOne];
+    [_signLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_signWindowImageView.mas_bottom).with.offset(-RESIZE_UI(152));
+        make.centerX.equalTo(_signWindowImageView.mas_centerX);
+    }];
+
+    NSString *twoString = [NSString stringWithFormat:@"Ps:本周再签到%@次，额外送您%@积分",dict[@"next"][@"count"],dict[@"next"][@"score"]];
+    _signLabelTwo = [[UILabel alloc]init];
+    _signLabelTwo.attributedText = [self changeStringWithString2:twoString withFrontColor:RGBA(103, 103, 103, 1.0) WithBehindColor:RGBA(252, 62, 25, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(14)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(17)]];
+    [_signWindowImageView addSubview:_signLabelTwo];
+    [_signLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_signLabelOne.mas_bottom).with.offset(RESIZE_UI(25));
+        make.centerX.equalTo(_signWindowImageView.mas_centerX);
+    }];
+
+    _signLabelThree = [[UILabel alloc]init];
+    _signLabelThree.text = @"签到越多,赠送越多";
+    _signLabelThree.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    _signLabelThree.textColor = RGBA(103, 103, 103, 1.0);
+    [_signWindowImageView addSubview:_signLabelThree];
+    [_signLabelThree mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_signLabelTwo.mas_bottom);
+        make.centerX.equalTo(_signWindowImageView.mas_centerX);
+    }];
+
+    _watchScroeButton = [[UIButton alloc]init];
+    [_watchScroeButton setTitle:@"查看我的积分" forState:UIControlStateNormal];
+    _watchScroeButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+    [_watchScroeButton setBackgroundColor:RGBA(255, 86, 30, 1.0)];
+    [_watchScroeButton addTarget:self action:@selector(watchMyScoreMethod) forControlEvents:UIControlEventTouchUpInside];
+    [_signWindowImageView addSubview:_watchScroeButton];
+    [_watchScroeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_signLabelThree.mas_bottom).with.offset(RESIZE_UI(16));
+        make.left.equalTo(_signWindowImageView.mas_left).with.offset(RESIZE_UI(22));
+        make.right.equalTo(_signWindowImageView.mas_right).with.offset(-RESIZE_UI(22));
+        make.height.mas_offset(RESIZE_UI(49));
+    }];
+
+    [UIView animateWithDuration:1.0 animations:^{
+        _signWindowImageView.frame = CGRectMake(SCREEN_WIDTH/2-RESIZE_UI(325)/2, RESIZE_UI(110), RESIZE_UI(325), RESIZE_UI(414));
+    } completion:^(BOOL finished) {
+
+    }];
+
+    _closeButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-RESIZE_UI(34)/2, SCREEN_HEIGHT+RESIZE_UI(414)+RESIZE_UI(66), RESIZE_UI(34), RESIZE_UI(34))];
+    [_closeButton setBackgroundImage:[UIImage imageNamed:@"icon_guanbi"] forState:UIControlStateNormal];
+    [_closeButton addTarget:self action:@selector(closeBlackView) forControlEvents:UIControlEventTouchUpInside];
+    [_blackView addSubview:_closeButton];
+
+    [UIView animateWithDuration:1.0 animations:^{
+        _closeButton.frame = CGRectMake(SCREEN_WIDTH/2-RESIZE_UI(34)/2, SCREEN_HEIGHT-RESIZE_UI(51)-RESIZE_UI(34), RESIZE_UI(34), RESIZE_UI(34));
+    } completion:^(BOOL finished) {
+
+    }];
+    
+}
+
+#pragma mark - 积分弹出框字体处理
+- (NSAttributedString *)changeStringWithString:(NSString *)string withFrontColor:(UIColor *)frontColor WithBehindColor:(UIColor *)behindColor withFrontFont:(UIFont *)frontFont WithBehindFont:(UIFont *)behindFont {
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
+    [str addAttribute:NSForegroundColorAttributeName value:frontColor range:NSMakeRange(0, [string length])];
+    [str addAttribute:NSForegroundColorAttributeName value:behindColor range:NSMakeRange([string length] - 4, 1)];
+    [str addAttribute:NSFontAttributeName value:frontFont range:NSMakeRange(0, [string length])];
+    [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange([string length] - 4,1)];
+    return str;
+}
+
+- (NSAttributedString *)changeStringWithString2:(NSString *)string withFrontColor:(UIColor *)frontColor WithBehindColor:(UIColor *)behindColor withFrontFont:(UIFont *)frontFont WithBehindFont:(UIFont *)behindFont {
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
+    [str addAttribute:NSForegroundColorAttributeName value:frontColor range:NSMakeRange(0, [string length])];
+    [str addAttribute:NSForegroundColorAttributeName value:behindColor range:NSMakeRange(8, 1)];
+    [str addAttribute:NSForegroundColorAttributeName value:behindColor range:NSMakeRange([string length]-3, 1)];
+    [str addAttribute:NSFontAttributeName value:frontFont range:NSMakeRange(0, [string length])];
+    [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange(8,1)];
+    [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange([string length]-3, 1)];
+    return str;
+}
+
+#pragma mark - 查看我的积分
+- (void)watchMyScoreMethod {
+    [self closeBlackView];
+    self.tabBarController.tabBar.hidden = YES;
+    ScordRecordViewController *scordRecordVC  = [[ScordRecordViewController alloc]init];
+    [self.navigationController pushViewController:scordRecordVC animated:YES];
+}
 
 #pragma mark - 数据处理
 - (void)getDataWithNetManager {

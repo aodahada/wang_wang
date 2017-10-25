@@ -43,10 +43,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
+    [MobClick beginLogPageView:@"IntegralShopViewController"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"IntegralShopViewController"];
     
 }
 
@@ -243,7 +245,13 @@
     self.classCollectionView.scrollEnabled = NO;
     [self.viewForScroll addSubview:self.classCollectionView];
     NSInteger count1 = _trueProductListArray.count/2;
+    if (_trueProductListArray.count%2>0) {
+        count1++;
+    }
     NSInteger count2 = _falseProductListArray.count/2;
+    if (_falseProductListArray.count%2>0) {
+        count2++;
+    }
     NSInteger count = count1+count2;
     [self.classCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(top2LeftView.mas_bottom);

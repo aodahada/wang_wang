@@ -32,8 +32,14 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"IntegralProductDetailViewController"];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"IntegralProductDetailViewController"];
     [SVProgressHUD dismiss];
 }
 

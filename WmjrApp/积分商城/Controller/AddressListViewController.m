@@ -23,8 +23,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"AddressListViewController"];
     [self getAddressList];
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"AddressListViewController"];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

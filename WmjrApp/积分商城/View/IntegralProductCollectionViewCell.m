@@ -45,11 +45,14 @@
     _productNameLabel = [[UILabel alloc]init];
 //    _productNameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(14)];
     _productNameLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    _productNameLabel.textAlignment = NSTextAlignmentCenter;
 //    _productNameLabel.text = @"大疆无人机";
     [self addSubview:_productNameLabel];
     [_productNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_productImage.mas_bottom).with.offset(RESIZE_UI(2));
         make.centerX.equalTo(_productImage.mas_centerX);
+        make.left.equalTo(self.mas_left).with.offset(RESIZE_UI(5));
+        make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(5));
     }];
     
     _integralLabel = [[UILabel alloc]init];
