@@ -92,6 +92,12 @@
             _categoryTableView.delegate = self;
             _categoryTableView.dataSource = self;
             [self.view addSubview:_categoryTableView];
+            [_categoryTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self.view.mas_top);
+                make.left.equalTo(self.view.mas_left);
+                make.bottom.equalTo(self.view.mas_bottom);
+                make.width.mas_offset(SCREEN_WIDTH);
+            }];
 
             [SVProgressHUD dismiss];
             
@@ -206,7 +212,7 @@
 
 #pragma mark - 去黏性
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat sectionHeaderHeight = 11;
+    CGFloat sectionHeaderHeight = RESIZE_UI(12);
     if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
         scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
     } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {

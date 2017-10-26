@@ -436,19 +436,27 @@
     _signWindowImageView.image = [UIImage imageNamed:@"image_tanchuang"];
     [_signWindowImageView setUserInteractionEnabled:YES];
     [_blackView addSubview:_signWindowImageView];
-
-    NSString *oneString = [NSString stringWithFormat:@"恭喜您获得%@积分!",dict[@"score"]];
+    
+    NSString *score1 = dict[@"score"];
+    NSString *oneString = [NSString stringWithFormat:@"恭喜您获得%@积分!",score1];
     _signLabelOne = [[UILabel alloc]init];
-    _signLabelOne.attributedText = [self changeStringWithString:oneString withFrontColor:RGBA(38, 38, 38, 1.0) WithBehindColor:RGBA(252, 60, 27, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(18)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(22)]];
+    _signLabelOne.attributedText = [self changeStringWithString:oneString withFrontColor:RGBA(38, 38, 38, 1.0) WithBehindColor:RGBA(252, 60, 27, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(18)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(22)] WithFontLength:score1.length];
     [_signWindowImageView addSubview:_signLabelOne];
     [_signLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_signWindowImageView.mas_bottom).with.offset(-RESIZE_UI(152));
         make.centerX.equalTo(_signWindowImageView.mas_centerX);
     }];
 
-    NSString *twoString = [NSString stringWithFormat:@"Ps:本周再签到%@次，额外送您%@积分",dict[@"next"][@"count"],dict[@"next"][@"score"]];
+    NSString *score2 = dict[@"next"][@"count"];
+    NSString *score3 = dict[@"next"][@"score"];
+    NSString *twoString = [NSString stringWithFormat:@"Ps:本周再签到%@次，额外送您%@积分",score2,score3];
+    NSString *threeString = [NSString stringWithFormat:@"Ps:本周连续签到%@次，共赚%@积分",score2,score3];
     _signLabelTwo = [[UILabel alloc]init];
-    _signLabelTwo.attributedText = [self changeStringWithString2:twoString withFrontColor:RGBA(103, 103, 103, 1.0) WithBehindColor:RGBA(252, 62, 25, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(14)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(17)]];
+    if ([dict[@"week_count"] isEqualToString:@"7"]) {
+        _signLabelTwo.attributedText = [self changeStringWithString3:threeString withFrontColor:RGBA(103, 103, 103, 1.0) WithBehindColor:RGBA(252, 62, 25, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(14)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(17)] WithFontLengthOne:score2.length WithFontLengthTwo:score3.length];
+    } else {
+        _signLabelTwo.attributedText = [self changeStringWithString2:twoString withFrontColor:RGBA(103, 103, 103, 1.0) WithBehindColor:RGBA(252, 62, 25, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(14)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(17)] WithFontLengthOne:score2.length WithFontLengthTwo:score3.length];
+    }
     [_signWindowImageView addSubview:_signLabelTwo];
     [_signLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_signLabelOne.mas_bottom).with.offset(RESIZE_UI(25));
@@ -498,23 +506,34 @@
 }
 
 #pragma mark - 积分弹出框字体处理
-- (NSAttributedString *)changeStringWithString:(NSString *)string withFrontColor:(UIColor *)frontColor WithBehindColor:(UIColor *)behindColor withFrontFont:(UIFont *)frontFont WithBehindFont:(UIFont *)behindFont {
+- (NSAttributedString *)changeStringWithString:(NSString *)string withFrontColor:(UIColor *)frontColor WithBehindColor:(UIColor *)behindColor withFrontFont:(UIFont *)frontFont WithBehindFont:(UIFont *)behindFont WithFontLength:(NSInteger)fontLength{
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
     [str addAttribute:NSForegroundColorAttributeName value:frontColor range:NSMakeRange(0, [string length])];
-    [str addAttribute:NSForegroundColorAttributeName value:behindColor range:NSMakeRange([string length] - 4, 1)];
+    [str addAttribute:NSForegroundColorAttributeName value:behindColor range:NSMakeRange([string length] - 4, fontLength)];
     [str addAttribute:NSFontAttributeName value:frontFont range:NSMakeRange(0, [string length])];
-    [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange([string length] - 4,1)];
+    [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange([string length] - 4,fontLength)];
     return str;
 }
 
-- (NSAttributedString *)changeStringWithString2:(NSString *)string withFrontColor:(UIColor *)frontColor WithBehindColor:(UIColor *)behindColor withFrontFont:(UIFont *)frontFont WithBehindFont:(UIFont *)behindFont {
+- (NSAttributedString *)changeStringWithString2:(NSString *)string withFrontColor:(UIColor *)frontColor WithBehindColor:(UIColor *)behindColor withFrontFont:(UIFont *)frontFont WithBehindFont:(UIFont *)behindFont WithFontLengthOne:(NSInteger)fontLengthOne WithFontLengthTwo:(NSInteger)fontLengthTwo{
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
     [str addAttribute:NSForegroundColorAttributeName value:frontColor range:NSMakeRange(0, [string length])];
-    [str addAttribute:NSForegroundColorAttributeName value:behindColor range:NSMakeRange(8, 1)];
-    [str addAttribute:NSForegroundColorAttributeName value:behindColor range:NSMakeRange([string length]-3, 1)];
+    [str addAttribute:NSForegroundColorAttributeName value:behindColor range:NSMakeRange(8, fontLengthOne)];
+    [str addAttribute:NSForegroundColorAttributeName value:behindColor range:NSMakeRange([string length]-3, fontLengthTwo)];
     [str addAttribute:NSFontAttributeName value:frontFont range:NSMakeRange(0, [string length])];
-    [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange(8,1)];
-    [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange([string length]-3, 1)];
+    [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange(8,fontLengthOne)];
+    [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange([string length]-3, fontLengthTwo)];
+    return str;
+}
+
+- (NSAttributedString *)changeStringWithString3:(NSString *)string withFrontColor:(UIColor *)frontColor WithBehindColor:(UIColor *)behindColor withFrontFont:(UIFont *)frontFont WithBehindFont:(UIFont *)behindFont WithFontLengthOne:(NSInteger)fontLengthOne WithFontLengthTwo:(NSInteger)fontLengthTwo{
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
+    [str addAttribute:NSForegroundColorAttributeName value:frontColor range:NSMakeRange(0, [string length])];
+    [str addAttribute:NSForegroundColorAttributeName value:behindColor range:NSMakeRange(9, fontLengthOne)];
+    [str addAttribute:NSForegroundColorAttributeName value:behindColor range:NSMakeRange([string length]-3, fontLengthTwo)];
+    [str addAttribute:NSFontAttributeName value:frontFont range:NSMakeRange(0, [string length])];
+    [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange(9,fontLengthOne)];
+    [str addAttribute:NSFontAttributeName value:behindFont range:NSMakeRange([string length]-3, fontLengthTwo)];
     return str;
 }
 

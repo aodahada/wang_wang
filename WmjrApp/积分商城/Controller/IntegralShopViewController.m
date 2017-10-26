@@ -105,8 +105,38 @@
     nickLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [topView1 addSubview:nickLabel];
     [nickLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(topView1.mas_centerY);
+        make.top.equalTo(headImage.mas_top);
         make.left.equalTo(headImage.mas_right).with.offset(RESIZE_UI(15));
+    }];
+    
+    UILabel *tip1Label = [[UILabel alloc]init];
+    tip1Label.text = @"您有";
+    tip1Label.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+    tip1Label.textColor = RGBA(153, 153, 153, 1.0);
+    [topView1 addSubview:tip1Label];
+    [tip1Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(nickLabel.mas_left);
+        make.bottom.equalTo(headImage.mas_bottom);
+    }];
+    
+    UILabel *tip2Label = [[UILabel alloc]init];
+    tip2Label.text = @"280";
+    tip2Label.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+    tip2Label.textColor = RGBA(252, 64, 22, 1.0);
+    [topView1 addSubview:tip2Label];
+    [tip2Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(tip1Label.mas_right);
+        make.bottom.equalTo(tip1Label.mas_bottom);
+    }];
+    
+    UILabel *tip3Label = [[UILabel alloc]init];
+    tip3Label.text = @"个积分即将在年底清空";
+    tip3Label.textColor = RGBA(153, 153, 153, 1.0);
+    tip3Label.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+    [topView1 addSubview:tip3Label];
+    [tip3Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(tip2Label.mas_right);
+        make.bottom.equalTo(tip1Label.mas_bottom);
     }];
     
     UILabel *intergralTitle = [[UILabel alloc]init];

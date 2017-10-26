@@ -73,7 +73,6 @@
     
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-//    NSLog(@"我的id:%@",_type_id);
     NSDictionary *paramDic = @{@"type_id":_type_id, @"page":@(_pageNum),@"is_long":@"0"};
     [manager postDataWithUrlActionStr:@"Finance/index" withParamDictionary:paramDic withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {

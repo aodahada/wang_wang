@@ -186,6 +186,19 @@
                     make.width.mas_offset(RESIZE_UI(61));
                     make.height.mas_offset(RESIZE_UI(53));
                 }];
+                
+                UILabel *tipLabel = [[UILabel alloc]init];
+                tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
+                tipLabel.textColor = RGBA(255, 117, 65, 1.0);
+                tipLabel.text = @"(邀请红包需在邀请好友注册并首投后，即可激活使用)";
+                tipLabel.numberOfLines = 2;
+                [self addSubview:tipLabel];
+                [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(suitableLabel.mas_bottom).with.offset(RESIZE_UI(2));
+                    make.left.equalTo(suitableLabel.mas_left);
+                    make.width.mas_offset(RESIZE_UI(192));
+                }];
+                
             } else {
                 if (_imageViewForStatus) {
                     [_imageViewForStatus removeFromSuperview];

@@ -154,12 +154,22 @@
     _imageViewForHead = [[UIImageView alloc]init];
     [_imageViewForHead sd_setImageWithURL:[NSURL URLWithString:[SingletonManager sharedManager].userModel.photourl] placeholderImage:[UIImage imageNamed:@"image_head"]];
     _imageViewForHead.layer.masksToBounds = YES;
-    _imageViewForHead.layer.cornerRadius = RESIZE_UI(52)/2;
+    _imageViewForHead.layer.cornerRadius = RESIZE_UI(44)/2;
     [headView addSubview:_imageViewForHead];
     [_imageViewForHead mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(82));
-        make.centerX.equalTo(headView.mas_centerX);
-        make.width.height.mas_offset(RESIZE_UI(52));
+        make.left.equalTo(headView.mas_left).with.offset(RESIZE_UI(15));
+        make.centerY.equalTo(headView.mas_centerY);
+        make.width.height.mas_offset(RESIZE_UI(44));
+    }];
+    
+    UILabel *labelForPhone = [[UILabel alloc]init];
+    labelForPhone.text = [SingletonManager sharedManager].userModel.mobile;
+    labelForPhone.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+    labelForPhone.textColor = [UIColor whiteColor];
+    [headView addSubview:labelForPhone];
+    [labelForPhone mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_imageViewForHead.mas_top);
+        make.left.equalTo(_imageViewForHead.mas_right).with.offset(RESIZE_UI(15));
     }];
     
     _labelForName = [[UILabel alloc]init];
@@ -168,9 +178,18 @@
     _labelForName.textColor = [UIColor whiteColor];
     [headView addSubview:_labelForName];
     [_labelForName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_imageViewForHead.mas_bottom).with.offset(RESIZE_UI(6));
+        make.bottom.equalTo(_imageViewForHead.mas_bottom).with.offset(RESIZE_UI(6));
         make.centerX.equalTo(headView.mas_centerX);
-        make.height.mas_offset(RESIZE_UI(14));
+        make.left.equalTo(labelForPhone.mas_left);
+    }];
+    
+    UIImageView *jianImageView = [[UIImageView alloc]init];
+    jianImageView.image = [UIImage imageNamed:@"icon_arrow_white"];
+    [headView addSubview:jianImageView];
+    [jianImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(headView.mas_centerY);
+        make.right.equalTo(headView.mas_right).with.offset(-RESIZE_UI(12));
+        make.width.height.mas_offset(RESIZE_UI(22));
     }];
     
     UIButton *buttonForPersonal = [[UIButton alloc]init];
@@ -178,10 +197,10 @@
     [buttonForPersonal addTarget:self action:@selector(jumpToPersonalViewMethod) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:buttonForPersonal];
     [buttonForPersonal mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_imageViewForHead.mas_top);
-        make.left.equalTo(_imageViewForHead.mas_left);
-        make.right.equalTo(_imageViewForHead.mas_right);
-        make.bottom.equalTo(_labelForName.mas_bottom);
+        make.top.equalTo(_imageViewForHead.mas_top).with.offset(-RESIZE_UI(10));
+        make.left.equalTo(headView.mas_left);
+        make.right.equalTo(headView.mas_right);
+        make.bottom.equalTo(_imageViewForHead.mas_bottom).with.offset(RESIZE_UI(10));
     }];
     
     UIView *viewForHeadButtom = [[UIView alloc]init];
