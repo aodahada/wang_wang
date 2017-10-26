@@ -27,6 +27,7 @@
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(22));
             make.left.equalTo(self.mas_left).with.offset(RESIZE_UI(12));
+            make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(30));
         }];
         
         UILabel *timeLabel = [[UILabel alloc]init];

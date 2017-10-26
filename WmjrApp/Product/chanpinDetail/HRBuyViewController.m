@@ -38,6 +38,7 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapGes;
 @property (nonatomic, strong) InvestConfirmView *investConfirmView;
 @property (nonatomic, copy) NSString *redPackageId;//红包id
+@property (weak, nonatomic) IBOutlet UILabel *canGetScore;//可获得积分
 @property (nonatomic, copy)NSString *red_low_buy;//红包最低购买值
 
 @end
@@ -144,6 +145,9 @@
     CGFloat buyMoney = [_textFieldForBuy.text floatValue];
     CGFloat sumRaise = buyMoney*returnRate*day/365;
     _labelForMoney.text = [NSString stringWithFormat:@"%.2f",sumRaise];
+    
+    _canGetScore.text = [NSString stringWithFormat:@"%ld",(long)buyMoney/100];
+    
 }
 
 #pragma mark - 获取当前余额

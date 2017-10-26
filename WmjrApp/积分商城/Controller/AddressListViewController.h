@@ -10,6 +10,6 @@
 
 @interface AddressListViewController : UIViewController
 
-//@property (nonatomic, copy)NSString *isSelect;
+@property (nonatomic, copy)NSString *isSelect;
 
 @end

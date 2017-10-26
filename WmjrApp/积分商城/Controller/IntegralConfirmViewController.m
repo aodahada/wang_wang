@@ -21,6 +21,12 @@
 @property (nonatomic, strong)UIView *selectAddressView;//选择地址
 @property (nonatomic, strong)NSMutableArray *addressArray;
 @property (nonatomic, strong)IntegralAddressModel *defaultAddressModel;
+@property (nonatomic, strong) UIView *blackView;
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
+@property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, strong) UIView *whiteView;
+@property (nonatomic, strong) UIImageView *rightImage;
+@property (nonatomic, strong) UILabel *tipLabel;
 
 @end
 
@@ -31,6 +37,7 @@
     // Do any additional setup after loading the view.
     self.title = @"兑换确认";
     self.view.backgroundColor = RGBA(238, 240, 242, 1.0);
+    self.window = [[UIApplication sharedApplication].delegate window];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -172,13 +179,13 @@
         
     }
     //点击选择地址保存在本地
-//    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-//    NSData *data = [userDefault objectForKey:@"integralAddrss"];
-//    if (data) {
-//        _defaultAddressModel = (IntegralAddressModel *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
-//        [self.tableView reloadData];
-//        [userDefault setObject:nil forKey:@"integralAddrss"];
-//    }
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSData *data = [userDefault objectForKey:@"integralAddrss"];
+    if (data) {
+        _defaultAddressModel = (IntegralAddressModel *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+        [self.tableView reloadData];
+        [userDefault setObject:nil forKey:@"integralAddrss"];
+    }
     
 }
 
@@ -237,14 +244,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
         AddressListViewController *addAdressListVC = [[AddressListViewController alloc]init];
-//        addAdressListVC.isSelect = @"yes";
+        addAdressListVC.isSelect = @"yes";
         [self.navigationController pushViewController:addAdressListVC animated:YES];
     }
 }
 
 - (void)selectAddressMethod {
     AddressListViewController *addAdressListVC = [[AddressListViewController alloc]init];
-//    addAdressListVC.isSelect = @"yes";
+    addAdressListVC.isSelect = @"yes";
     [self.navigationController pushViewController:addAdressListVC animated:YES];
 }
 
@@ -256,10 +263,13 @@
     [manager postDataWithUrlActionStr:@"Score/exchange" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"goods_id":_integralProductDetailModel.id,@"address_id":addressId} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];
-            [[SingletonManager sharedManager] showHUDView:self.view title:@"兑换成功" content:@"" time:1.0 andCodes:^{
-                ExchangeRecordViewController *exchangeRecordVC = [[ExchangeRecordViewController alloc] init];
-                [self.navigationController pushViewController:exchangeRecordVC animated:YES];
-            }];
+//            [[SingletonManager sharedManager] showHUDView:self.view title:@"兑换成功" content:@"" time:1.0 andCodes:^{
+//                ExchangeRecordViewController *exchangeRecordVC = [[ExchangeRecordViewController alloc] init];
+//                [self.navigationController pushViewController:exchangeRecordVC animated:YES];
+//            }];
+            
+            [self successTipWindow];
+            
             
         } else {
             NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
@@ -270,6 +280,68 @@
             [alertView show];
         }
     }];
+}
+
+- (void)successTipWindow {
+    _blackView = [[UIView alloc]init];
+    _blackView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.55];
+    [self.window addSubview:_blackView];
+    [_blackView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.window);
+    }];
+    
+    _whiteView = [[UIView alloc]init];
+    _whiteView.backgroundColor = [UIColor whiteColor];
+    _whiteView.layer.masksToBounds = YES;
+    _whiteView.layer.cornerRadius = RESIZE_UI(10);
+    [_blackView addSubview:_whiteView];
+    [_whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_blackView.mas_centerX);
+        make.centerY.equalTo(_blackView.mas_centerY);
+        make.height.mas_offset(RESIZE_UI(160));
+        make.width.mas_offset(RESIZE_UI(258));
+    }];
+    
+    _rightImage = [[UIImageView alloc]init];
+    _rightImage.image = [UIImage imageNamed:@"icon_done"];
+    [_whiteView addSubview:_rightImage];
+    [_rightImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_whiteView.mas_top).with.offset(RESIZE_UI(30));
+        make.centerX.equalTo(_whiteView.mas_centerX);
+        make.height.width.mas_offset(RESIZE_UI(60));
+    }];
+    
+    _tipLabel = [[UILabel alloc]init];
+    _tipLabel.text = @"恭喜您，兑换成功!";
+    _tipLabel.textColor = RGBA(102, 102, 102, 1.0);
+    _tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+    [_whiteView addSubview:_tipLabel];
+    [_tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_rightImage.mas_bottom).with.offset(RESIZE_UI(18));
+        make.centerX.equalTo(_whiteView.mas_centerX);
+    }];
+    
+//    _tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeBlackView)];
+//    [_blackView addGestureRecognizer:_tap];
+    [self performSelector:@selector(closeBlackView) withObject:nil afterDelay:1.0];
+    
+}
+
+- (void)closeBlackView {
+    [_blackView removeFromSuperview];
+    _blackView = nil;
+//    _tap = nil;
+//    [_blackView removeGestureRecognizer:_tap];
+    [_whiteView removeFromSuperview];
+    _whiteView = nil;
+    [_rightImage removeFromSuperview];
+    _rightImage = nil;
+    [_tipLabel removeFromSuperview];
+    _tipLabel = nil;
+    
+    ExchangeRecordViewController *exchangeRecordVC = [[ExchangeRecordViewController alloc] init];
+    [self.navigationController pushViewController:exchangeRecordVC animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {

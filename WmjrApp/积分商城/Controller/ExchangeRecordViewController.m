@@ -41,6 +41,23 @@
     self.view.backgroundColor = RGBA(238, 240, 242, 1.0);
     self.currentPage = 1;
     
+    self.tableView = [[UITableView alloc]init];
+    self.tableView.backgroundColor = RGBA(238, 240, 242, 1.0);
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
+    self.tableView.tableFooterView = [[UIView alloc]init];
+    [self.view addSubview:self.tableView];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        self.currentPage ++;
+        [self getExchangeRecordMethod];
+    }];
+    
     _exchangeOrderArray = [[NSMutableArray alloc]init];
     [self getExchangeRecordMethod];
     
@@ -50,6 +67,7 @@
 - (void)getExchangeRecordMethod {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
+    NSLog(@"我的id：%@",[SingletonManager sharedManager].uid);
     [manager postDataWithUrlActionStr:@"Goods/my" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"page":@(self.currentPage)} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             NSArray *orderList = obj[@"data"];
@@ -62,22 +80,8 @@
                 IntegralOrderModel *integralOrderModel = [IntegralOrderModel mj_objectWithKeyValues:dic];
                 [_exchangeOrderArray addObject:integralOrderModel];
             }
-            self.tableView = [[UITableView alloc]init];
-            self.tableView.backgroundColor = RGBA(238, 240, 242, 1.0);
-            self.tableView.delegate = self;
-            self.tableView.dataSource = self;
-            self.tableView.emptyDataSetSource = self;
-            self.tableView.emptyDataSetDelegate = self;
-            self.tableView.tableFooterView = [[UIView alloc]init];
-            [self.view addSubview:self.tableView];
-            [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(self.view);
-            }];
             
-            self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-                self.currentPage ++;
-                [self getExchangeRecordMethod];
-            }];
+            [self.tableView reloadData];
             
             if (orderList.count == 0) {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];

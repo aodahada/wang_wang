@@ -61,10 +61,10 @@
 
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) UIView *blackView;
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) MainRedBallView *redBallView;
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) NSMutableArray *redPackageArray;
-@property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) UIImageView *signWindowImageView;//签到弹框
 @property (nonatomic, strong) UILabel *signLabelOne;
 @property (nonatomic, strong) UILabel *signLabelTwo;
@@ -411,8 +411,9 @@
              next=> count再签到几次
              next=> score可额外获得的积分
              **/
-            
-            [self showSignWindowMethod:dic];
+            if ([dic[@"today_signin"] isEqualToString:@"0"]) {
+                [self showSignWindowMethod:dic];
+            }
             [SVProgressHUD dismiss];
         } else {
             [SVProgressHUD showErrorWithStatus:@"请求失败"];

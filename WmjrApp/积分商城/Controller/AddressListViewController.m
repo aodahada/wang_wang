@@ -135,18 +135,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if ([self.isSelect isEqualToString:@"yes"]) {
-//        IntegralAddressModel *integralAddrss = _addressListArray[indexPath.section];
-//        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-//        NSData *encodeInfo = [NSKeyedArchiver archivedDataWithRootObject:integralAddrss];
-//        [userDefault setObject:encodeInfo forKey:@"integralAddrss"];
-//        [userDefault synchronize];
-//        [self.navigationController popViewControllerAnimated:YES];
-//    } else {
-        AddAddressViewController *addAddressVC = [[AddAddressViewController alloc]init];
-        addAddressVC.integralAddressModel = _addressListArray[indexPath.section];
-        [self.navigationController pushViewController:addAddressVC animated:YES];
-//    }
+    if ([self.isSelect isEqualToString:@"yes"]) {
+        IntegralAddressModel *integralAddrss = _addressListArray[indexPath.section];
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        NSData *encodeInfo = [NSKeyedArchiver archivedDataWithRootObject:integralAddrss];
+        [userDefault setObject:encodeInfo forKey:@"integralAddrss"];
+        [userDefault synchronize];
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        NSLog(@"da");
+    }
     
 }
 
@@ -196,10 +194,11 @@
         if (buttonIndex == 1) {
             NetManager *manager = [[NetManager alloc] init];
             [SVProgressHUD showWithStatus:@"加载中"];
-            [manager postDataWithUrlActionStr:@"Address/del" withParamDictionary:@{@"member_id":@"90222",@"address_id":integralAddressModel.id} withBlock:^(id obj) {
+            [manager postDataWithUrlActionStr:@"Address/del" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"address_id":integralAddressModel.id} withBlock:^(id obj) {
                 if ([obj[@"result"] isEqualToString:@"1"]) {
                     [_addressListArray removeObject:integralAddressModel];
-                    [self.tableView reloadData];
+//                    [self.tableView reloadData];
+                    [self getAddressList];
                     [SVProgressHUD dismiss];
                 } else {
                     NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
@@ -213,6 +212,13 @@
         }
     } title:@"确定要删除该地址吗？" message:@"" cancelButtonName:@"取消" otherButtonTitles:@"确认", nil];
     
+}
+
+#pragma mark - 编辑地址
+- (void)editAddress:(IntegralAddressModel *)integralAddressModel {
+    AddAddressViewController *addAddressVC = [[AddAddressViewController alloc]init];
+    addAddressVC.integralAddressModel = integralAddressModel;
+    [self.navigationController pushViewController:addAddressVC animated:YES];
 }
 
 #pragma mark - 设置默认地址

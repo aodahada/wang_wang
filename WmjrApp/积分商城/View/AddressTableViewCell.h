@@ -15,6 +15,8 @@
 - (void)deleteAddress:(IntegralAddressModel *)integralAddressModel;
 //设置默认地址
 - (void)setNormalAddress:(IntegralAddressModel *)integralAddressModel;
+//编辑地址
+- (void)editAddress:(IntegralAddressModel *)integralAddressModel;
 
 @end
 

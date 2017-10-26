@@ -17,7 +17,7 @@
 /**
  发货信息
  */
-@property (nonatomic, copy) DeliverInfoObject *deliver_info;
+@property (nonatomic, strong) DeliverInfoObject *deliver_info;
 @property (nonatomic, copy) NSString *goods_name;
 /**
  订单号

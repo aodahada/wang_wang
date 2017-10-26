@@ -156,6 +156,37 @@
             make.left.equalTo(deleteImage.mas_left).with.offset(-RESIZE_UI(10));
         }];
         
+        UILabel *editLabel = [[UILabel alloc]init];
+        editLabel.text = @"编辑";
+        editLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        editLabel.textColor = RGBA(102, 102, 102, 1.0);
+        [bottomView addSubview:editLabel];
+        [editLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(deleteButton.mas_left).with.offset(-RESIZE_UI(20));
+            make.centerY.equalTo(bottomView.mas_centerY);
+        }];
+        
+        UIImageView *editImageView = [[UIImageView alloc]init];
+        editImageView.image = [UIImage imageNamed:@"icon_bji"];
+        [bottomView addSubview:editImageView];
+        [editImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(editLabel.mas_left).with.offset(RESIZE_UI(-6));
+            make.centerY.equalTo(bottomView.mas_centerY);
+            make.width.height.mas_offset(RESIZE_UI(18));
+        }];
+        
+        //编辑按钮
+        UIButton *editButton = [[UIButton alloc]init];
+        [editButton setBackgroundColor:[UIColor clearColor]];
+        [editButton addTarget:self action:@selector(editAddressMethod) forControlEvents:UIControlEventTouchUpInside];
+        [bottomView addSubview:editButton];
+        [editButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(bottomView.mas_top);
+            make.bottom.equalTo(bottomView.mas_bottom);
+            make.left.equalTo(editImageView.mas_left);
+            make.right.equalTo(editLabel.mas_right);
+        }];
+        
     }
     return self;
     
@@ -168,6 +199,12 @@
         [self.delegate setNormalAddress:_integralAddressModel];
     }
     
+}
+
+- (void)editAddressMethod {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(editAddress:)]) {
+        [self.delegate editAddress:_integralAddressModel];
+    }
 }
 
 - (void)deleteAddressMethod {
