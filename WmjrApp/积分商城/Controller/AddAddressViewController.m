@@ -106,6 +106,7 @@
     [oneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(oneView.mas_centerY);
         make.left.equalTo(oneView.mas_left).with.offset(RESIZE_UI(12));
+        make.width.mas_offset(RESIZE_UI(71));
     }];
     
     _oneTextField = [[UITextField alloc]init];
@@ -119,6 +120,7 @@
     [_oneTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(oneView.mas_centerY);
         make.left.equalTo(oneLabel.mas_right).with.offset(RESIZE_UI(20));
+        make.right.equalTo(oneView.mas_right).with.offset(-RESIZE_UI(5));
         make.height.mas_offset(RESIZE_UI(14));
     }];
     
@@ -139,6 +141,7 @@
     [twoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(twoView.mas_centerY);
         make.left.equalTo(oneLabel.mas_left);
+        make.width.mas_offset(RESIZE_UI(71));
     }];
     
     _twoTextField = [[UITextField alloc]init];
@@ -153,6 +156,7 @@
     [_twoTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(twoView.mas_centerY);
         make.left.equalTo(twoLabel.mas_right).with.offset(RESIZE_UI(20));
+        make.right.equalTo(twoView.mas_right).with.offset(-RESIZE_UI(5));
         make.height.mas_offset(RESIZE_UI(14));
     }];
     
@@ -187,6 +191,7 @@
     [_threeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(threeView.mas_centerY);
         make.left.equalTo(threeLabel.mas_right).with.offset(RESIZE_UI(20));
+        make.right.equalTo(threeView.mas_right).with.offset(-RESIZE_UI(10));
         make.height.mas_offset(RESIZE_UI(14));
     }];
     
@@ -197,7 +202,7 @@
     [selectButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(threeView.mas_centerY);
         make.left.equalTo(_threeTextField.mas_left);
-        make.right.equalTo(threeView.mas_right).with.offset(-RESIZE_UI(20));
+        make.right.equalTo(threeView.mas_right).with.offset(-RESIZE_UI(5));
         make.height.mas_offset(RESIZE_UI(30));
     }];
     
@@ -218,6 +223,7 @@
     [fourLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(fourView.mas_top).with.offset(RESIZE_UI(12));
         make.left.equalTo(oneLabel.mas_left);
+        make.width.mas_offset(RESIZE_UI(71));
     }];
     
     _fourTextView = [[UITextView alloc]init];
@@ -233,7 +239,7 @@
     [fourView addSubview:_fourTextView];
     [_fourTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(fourView.mas_top).with.offset(RESIZE_UI(3));
-        make.left.equalTo(fourLabel.mas_right).with.offset(RESIZE_UI(20));
+        make.left.equalTo(fourLabel.mas_right).with.offset(RESIZE_UI(16));
         make.bottom.equalTo(fourView.mas_bottom).with.offset(-RESIZE_UI(10));
         make.right.equalTo(fourView.mas_right).with.offset(-RESIZE_UI(10));
     }];
