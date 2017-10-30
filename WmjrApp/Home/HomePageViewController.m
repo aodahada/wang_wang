@@ -450,7 +450,7 @@
     NSString *score2 = dict[@"next"][@"count"];
     NSString *score3 = dict[@"next"][@"score"];
     NSString *twoString = [NSString stringWithFormat:@"Ps:本周再签到 %@ 次，额外送您 %@ 积分",score2,score3];
-    NSString *threeString = [NSString stringWithFormat:@"Ps:本周连续签到%@次，共赚 %@ 积分",score2,score3];
+    NSString *threeString = [NSString stringWithFormat:@"Ps:本周连续签到 %@ 次，共赚 %@ 积分",score2,score3];
     _signLabelTwo = [[UILabel alloc]init];
     if ([dict[@"week_count"] isEqualToString:@"7"]) {
         _signLabelTwo.attributedText = [self changeStringWithString3:threeString withFrontColor:RGBA(103, 103, 103, 1.0) WithBehindColor:RGBA(252, 62, 25, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(14)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(17)] WithFontLengthOne:score2.length WithFontLengthTwo:score3.length];

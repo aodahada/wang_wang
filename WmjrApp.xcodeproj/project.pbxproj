@@ -3420,10 +3420,10 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApppp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.bighuotalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "37f00304-7f9d-48be-860f-710a96510753";
-				PROVISIONING_PROFILE_SPECIFIER = wangmainhouse;
+				PROVISIONING_PROFILE = "58708e49-8ebf-43e4-896f-8015af2a3f8e";
+				PROVISIONING_PROFILE_SPECIFIER = bighuotalkinhouse;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Debug;
@@ -3455,10 +3455,10 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApppp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.bighuotalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "37f00304-7f9d-48be-860f-710a96510753";
-				PROVISIONING_PROFILE_SPECIFIER = wangmainhouse;
+				PROVISIONING_PROFILE = "58708e49-8ebf-43e4-896f-8015af2a3f8e";
+				PROVISIONING_PROFILE_SPECIFIER = bighuotalkinhouse;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Release;
