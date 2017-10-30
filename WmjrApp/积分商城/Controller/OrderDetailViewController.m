@@ -82,59 +82,61 @@
         make.height.mas_offset(tableHeight);
     }];
     
-    UIView *redView = [[UIView alloc]init];
-    redView.backgroundColor = [UIColor whiteColor];
-    [mainView addSubview:redView];
-    [redView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.tableView.mas_bottom).with.offset(1);
-        make.left.equalTo(mainView.mas_left);
-        make.right.equalTo(mainView.mas_right);
-        make.height.mas_offset(RESIZE_UI(49));
-    }];
-    
-    UILabel *redTip1 = [[UILabel alloc]init];
-    redTip1.text = @"请到“";
-    redTip1.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [redView addSubview:redTip1];
-    [redTip1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(redView.mas_centerY);
-        make.left.equalTo(redView.mas_left).with.offset(RESIZE_UI(12));
-    }];
-    
-    UILabel *redTip2 = [[UILabel alloc]init];
-    redTip2.text = @"我的红包";
-    redTip2.textColor = RGBA(252, 62, 25, 1.0);
-    redTip2.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [redView addSubview:redTip2];
-    [redTip2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(redView.mas_centerY);
-        make.left.equalTo(redTip1.mas_right);
-    }];
-    
-    UILabel *redTip3 = [[UILabel alloc]init];
-    redTip3.text = @"\"查看";
-    redTip3.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [redView addSubview:redTip3];
-    [redTip3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(redView.mas_centerY);
-        make.left.equalTo(redTip2.mas_right);
-    }];
-    
-    UIButton *watchRed = [[UIButton alloc]init];
-    [watchRed setTitle:@"立即查看" forState:UIControlStateNormal];
-    watchRed.layer.masksToBounds = YES;
-    watchRed.layer.cornerRadius = RESIZE_UI(5);
-    watchRed.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [watchRed setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [watchRed setBackgroundColor:RGBA(255, 86, 30, 1.0)];
-    [watchRed addTarget:self action:@selector(watchRedBallMethod) forControlEvents:UIControlEventTouchUpInside];
-    [redView addSubview:watchRed];
-    [watchRed mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(redView.mas_centerY);
-        make.right.equalTo(redView.mas_right).with.offset(-RESIZE_UI(15));
-        make.width.mas_offset(RESIZE_UI(77));
-        make.height.mas_offset(RESIZE_UI(33));
-    }];
+    if ([_integralOrderModel.type_id isEqualToString:@"3"]) {
+        UIView *redView = [[UIView alloc]init];
+        redView.backgroundColor = [UIColor whiteColor];
+        [mainView addSubview:redView];
+        [redView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.tableView.mas_bottom).with.offset(1);
+            make.left.equalTo(mainView.mas_left);
+            make.right.equalTo(mainView.mas_right);
+            make.height.mas_offset(RESIZE_UI(49));
+        }];
+        
+        UILabel *redTip1 = [[UILabel alloc]init];
+        redTip1.text = @"请到“";
+        redTip1.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [redView addSubview:redTip1];
+        [redTip1 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(redView.mas_centerY);
+            make.left.equalTo(redView.mas_left).with.offset(RESIZE_UI(12));
+        }];
+        
+        UILabel *redTip2 = [[UILabel alloc]init];
+        redTip2.text = @"我的红包";
+        redTip2.textColor = RGBA(252, 62, 25, 1.0);
+        redTip2.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [redView addSubview:redTip2];
+        [redTip2 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(redView.mas_centerY);
+            make.left.equalTo(redTip1.mas_right);
+        }];
+        
+        UILabel *redTip3 = [[UILabel alloc]init];
+        redTip3.text = @"\"查看";
+        redTip3.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [redView addSubview:redTip3];
+        [redTip3 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(redView.mas_centerY);
+            make.left.equalTo(redTip2.mas_right);
+        }];
+        
+        UIButton *watchRed = [[UIButton alloc]init];
+        [watchRed setTitle:@"立即查看" forState:UIControlStateNormal];
+        watchRed.layer.masksToBounds = YES;
+        watchRed.layer.cornerRadius = RESIZE_UI(5);
+        watchRed.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [watchRed setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [watchRed setBackgroundColor:RGBA(255, 86, 30, 1.0)];
+        [watchRed addTarget:self action:@selector(watchRedBallMethod) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:watchRed];
+        [watchRed mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(redView.mas_centerY);
+            make.right.equalTo(redView.mas_right).with.offset(-RESIZE_UI(15));
+            make.width.mas_offset(RESIZE_UI(77));
+            make.height.mas_offset(RESIZE_UI(33));
+        }];
+    }
     
     if ([_integralOrderModel.type_id isEqualToString:@"1"]) {
         UIView *transportView = [[UIView alloc]init];

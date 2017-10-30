@@ -120,7 +120,7 @@
     }];
     
     UILabel *tip2Label = [[UILabel alloc]init];
-    tip2Label.text = @"280";
+    tip2Label.text = [SingletonManager sharedManager].userModel.score_clear;
     tip2Label.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     tip2Label.textColor = RGBA(252, 64, 22, 1.0);
     [topView1 addSubview:tip2Label];

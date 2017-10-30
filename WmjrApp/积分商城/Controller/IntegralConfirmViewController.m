@@ -38,18 +38,25 @@
     self.title = @"兑换确认";
     self.view.backgroundColor = RGBA(238, 240, 242, 1.0);
     self.window = [[UIApplication sharedApplication].delegate window];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateViewMethod) name:@"updateView" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSelectAddress) name:@"updateSelectAddress" object:nil];
+    [self getAddressList];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"IntegralConfirmViewController"];
-    [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self getAddressList];
+//    [self getAddressList];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"IntegralConfirmViewController"];
+}
+
+- (void)updateViewMethod {
+    [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self getAddressList];
 }
 
 #pragma mark - 获取地址列表
@@ -178,15 +185,19 @@
         }];
         
     }
+    
+}
+
+- (void)updateSelectAddress {
     //点击选择地址保存在本地
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     NSData *data = [userDefault objectForKey:@"integralAddrss"];
     if (data) {
         _defaultAddressModel = (IntegralAddressModel *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+        [userDefault removeObjectForKey:@"integralAddrss"];
+        [userDefault synchronize];
         [self.tableView reloadData];
-        [userDefault setObject:nil forKey:@"integralAddrss"];
     }
-    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

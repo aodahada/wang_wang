@@ -141,6 +141,11 @@
         NSData *encodeInfo = [NSKeyedArchiver archivedDataWithRootObject:integralAddrss];
         [userDefault setObject:encodeInfo forKey:@"integralAddrss"];
         [userDefault synchronize];
+        
+//        NSData *data = [userDefault objectForKey:@"integralAddrss"];
+//        IntegralAddressModel *defaultAddressModel = (IntegralAddressModel *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"updateSelectAddress" object:nil];
+        
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         NSLog(@"da");
@@ -199,6 +204,10 @@
                     [_addressListArray removeObject:integralAddressModel];
 //                    [self.tableView reloadData];
                     [self getAddressList];
+                    //执行删除操作时刷新确认订单界面
+                    if ([integralAddressModel.is_default isEqualToString:@"1"]) {
+                        [[NSNotificationCenter defaultCenter]postNotificationName:@"updateView" object:nil];
+                    }
                     [SVProgressHUD dismiss];
                 } else {
                     NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];

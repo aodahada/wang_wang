@@ -29,7 +29,7 @@
     }];
     
     UIImageView *imageView1 = [[UIImageView alloc] init];
-    imageView1.image = [UIImage imageNamed:@"银行1.jpg"];
+    imageView1.image = [UIImage imageNamed:@"引导1"];
     imageView1.userInteractionEnabled = YES;
     imageView1.exclusiveTouch = YES;
     [mainScrollView addSubview:imageView1];
@@ -41,7 +41,7 @@
     }];
     
     UIImageView *imageView2 = [[UIImageView alloc]init];
-    imageView2.image = [UIImage imageNamed:@"理财2.jpg"];
+    imageView2.image = [UIImage imageNamed:@"引导2"];
     imageView2.userInteractionEnabled = YES;
     imageView2.exclusiveTouch = YES;
     [mainScrollView addSubview:imageView2];
@@ -53,7 +53,7 @@
     }];
     
     UIImageView *imageView3 = [[UIImageView alloc]init];
-    imageView3.image = [UIImage imageNamed:@"好友3.jpg"];
+    imageView3.image = [UIImage imageNamed:@"引导3"];
     imageView3.userInteractionEnabled = YES;
     imageView3.exclusiveTouch = YES;
     [mainScrollView addSubview:imageView3];
@@ -65,7 +65,7 @@
     }];
     
     UIImageView *imageView4 = [[UIImageView alloc]init];
-    imageView4.image = [UIImage imageNamed:@"新手4.jpg"];
+    imageView4.image = [UIImage imageNamed:@"引导4"];
     imageView4.userInteractionEnabled = YES;
     imageView4.exclusiveTouch = YES;
     [mainScrollView addSubview:imageView4];
@@ -82,8 +82,8 @@
     [imageView4 addSubview:button];
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(imageView4.mas_bottom).with.offset(-RESIZE_UI(60));
-        make.width.mas_offset(RESIZE_UI(240));
-        make.height.mas_offset(RESIZE_UI(93));
+        make.width.mas_offset(RESIZE_UI(157));
+        make.height.mas_offset(RESIZE_UI(50));
         make.centerX.equalTo(imageView4.mas_centerX);
     }];
     
@@ -93,7 +93,7 @@
 }
 
 - (void)closeGuideMethod {
-    NSLog(@"你好");
+//    NSLog(@"你好");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"closeGuide" object:nil];
 }
 
