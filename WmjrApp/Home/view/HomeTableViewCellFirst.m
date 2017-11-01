@@ -27,11 +27,14 @@
     if (self) {
         _personalModel = personModel;
         UIImageView *imageView = [[UIImageView alloc]init];
-        imageView.image = [UIImage imageNamed:@"image_top"];
+//        imageView.image = [UIImage imageNamed:@"image_top"];
+        NSString *imageUrl = @"http://api.wmjr888.com/Uploads/app-banner.png";
+        [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"image_top"]];
         [self addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
+        UIImage *image = imageView.image;
         
         UIImageView *imageViewForLeft = [[UIImageView alloc]init];
         imageViewForLeft.image = [UIImage imageNamed:@"navi_bar"];

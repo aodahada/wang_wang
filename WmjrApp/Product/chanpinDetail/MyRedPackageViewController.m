@@ -12,6 +12,7 @@
 #import "MyUnuseRedPackageViewController.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "AgViewController.h"
+#import "MyRedUnactivePackageTableViewCell.h"
 
 @interface MyRedPackageViewController ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
@@ -122,7 +123,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return RESIZE_UI(130);
+    RedPackageModel *redModel = _redPackageArray[indexPath.section];
+    if ([redModel.status isEqualToString:@"4"]) {
+        return RESIZE_UI(162);
+    } else {
+        return RESIZE_UI(130);
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -137,9 +143,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     RedPackageModel *redPackageModel = _redPackageArray[indexPath.section];
-    MyRedPackageTableViewCell *cell = [[MyRedPackageTableViewCell alloc]initWithModel:redPackageModel andIsOut:NO];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
+    if ([redPackageModel.status isEqualToString:@"4"]) {
+        MyRedUnactivePackageTableViewCell *cell = [[MyRedUnactivePackageTableViewCell alloc]initWithModel:redPackageModel andIsOut:NO];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    } else {
+        MyRedPackageTableViewCell *cell = [[MyRedPackageTableViewCell alloc]initWithModel:redPackageModel andIsOut:NO];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }
+    
 }
 
 #pragma mark - 跳转到使用说明

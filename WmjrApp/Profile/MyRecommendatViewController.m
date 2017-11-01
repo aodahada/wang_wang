@@ -9,9 +9,9 @@
 #import "MyRecommendatViewController.h"
 #import "MyReCommandModel.h"
 #import "MyRecommandTableViewCell.h"
-#import "FRuleViewController.h"
 #import "PopMenu.h"
 #import "SharedView.h"
+#import "AgViewController.h"
 
 @interface MyRecommendatViewController ()<UITableViewDelegate,UITableViewDataSource>{
     PopMenu *_popMenu;
@@ -380,8 +380,10 @@
 
 #pragma mark - 查看推荐好友规则
 - (void)checkRecommendRule {
-    FRuleViewController *frule = [[FRuleViewController alloc] init];
-    [self.navigationController pushViewController:frule animated:YES];
+    AgViewController *agVC =[[AgViewController alloc] init];
+    agVC.title = @"奖励规则";
+    agVC.webUrl = @"http://api.wmjr888.com/home/page/index/page_id/16";
+    [self.navigationController pushViewController:agVC animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

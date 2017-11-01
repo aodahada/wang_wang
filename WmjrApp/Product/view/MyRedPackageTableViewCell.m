@@ -31,15 +31,19 @@
         lineImage.userInteractionEnabled = YES;
         [self addSubview:lineImage];
         [lineImage mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self);
+            make.top.equalTo(self.mas_top);
+            make.left.equalTo(self.mas_left);
+            make.right.equalTo(self.mas_right);
+            make.height.mas_offset(RESIZE_UI(130));
         }];
         
         UILabel *moneyLabel = [[UILabel alloc]init];
         if (isOut || [model.status isEqualToString:@"4"]) {
             moneyLabel.textColor = RGBA(197, 197, 197, 1.0);
-            NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@",model.money]
-                                                                                        attributes:@{NSStrikethroughStyleAttributeName : @(NSUnderlineStyleSingle)}];
-            moneyLabel.attributedText = attrStr;
+//            NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@",model.money]
+//                                                                                        attributes:@{NSStrikethroughStyleAttributeName : @(NSUnderlineStyleSingle)}];
+//            moneyLabel.attributedText = attrStr;
+            moneyLabel.text = model.money;
             
         } else {
             moneyLabel.textColor = RGBA(255, 88, 26, 1.0);
@@ -120,7 +124,7 @@
         [self addSubview:useableDay];
         [useableDay mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(newRedPackage.mas_left);
-            make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(10));
+            make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(103));
         }];
         
         NSString *status = model.status;
@@ -132,7 +136,7 @@
                 _imageViewForStatus.image = [UIImage imageNamed:@"icon_ysy"];
                 [self addSubview:_imageViewForStatus];
                 [_imageViewForStatus mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(15));
+                    make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(71));
                     make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15));
                     make.width.mas_offset(RESIZE_UI(61));
                     make.height.mas_offset(RESIZE_UI(53));
@@ -143,7 +147,7 @@
                 _imageViewForStatus.image = [UIImage imageNamed:@"icon_ygq"];
                 [self addSubview:_imageViewForStatus];
                 [_imageViewForStatus mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(15));
+                    make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(71));
                     make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15));
                     make.width.mas_offset(RESIZE_UI(61));
                     make.height.mas_offset(RESIZE_UI(53));
@@ -170,7 +174,7 @@
                 _imageViewForStatus.image = [UIImage imageNamed:@"icon_wks"];
                 [self addSubview:_imageViewForStatus];
                 [_imageViewForStatus mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(15));
+                    make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(71));
                     make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15));
                     make.width.mas_offset(RESIZE_UI(61));
                     make.height.mas_offset(RESIZE_UI(53));
@@ -181,22 +185,21 @@
                 _imageViewForStatus.image = [UIImage imageNamed:@"icon_wjh"];
                 [self addSubview:_imageViewForStatus];
                 [_imageViewForStatus mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.bottom.equalTo(self.mas_bottom).with.offset(-RESIZE_UI(15));
+                    make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(71));
                     make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(15));
                     make.width.mas_offset(RESIZE_UI(61));
                     make.height.mas_offset(RESIZE_UI(53));
                 }];
                 
                 UILabel *tipLabel = [[UILabel alloc]init];
-                tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
+                tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
                 tipLabel.textColor = RGBA(255, 117, 65, 1.0);
-                tipLabel.text = @"(邀请红包需在邀请好友注册并首投后，即可激活使用)";
+                tipLabel.text = @"邀请红包需在邀请好友注册并首投后，即可激活使用";
                 tipLabel.numberOfLines = 2;
                 [self addSubview:tipLabel];
                 [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(suitableLabel.mas_bottom).with.offset(RESIZE_UI(2));
+                    make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(138));
                     make.left.equalTo(suitableLabel.mas_left);
-                    make.width.mas_offset(RESIZE_UI(192));
                 }];
                 
             } else {

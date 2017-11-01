@@ -343,7 +343,7 @@
     NSString *app_version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     NSString *userId = [self convertNullString:[SingletonManager sharedManager].uid];
 //    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"appVersion"];
-    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]&&[userId isEqualToString:@""]) {
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"] isEqualToString:app_version]) {
         [[NSUserDefaults standardUserDefaults]setObject:app_version forKey:@"appVersion"];
         GuideScrollViewController *guideVC = [[GuideScrollViewController alloc]init];
         self.window.rootViewController = guideVC;

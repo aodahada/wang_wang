@@ -33,8 +33,15 @@
     self.title = @"积分商城";
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIImage *imageHelp = [[UIImage imageNamed:@"icon_guize"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:imageHelp style:UIBarButtonItemStylePlain target:self action:@selector(watchRuleMethod)];
+//    UIImage *imageHelp = [[UIImage imageNamed:@"icon_guize"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:imageHelp style:UIBarButtonItemStylePlain target:self action:@selector(watchRuleMethod)];
+    
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithTitle:@"积分说明" style:UIBarButtonItemStyleDone target:self action:@selector(watchRuleMethod)];
+//    [rightBarButton setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateNormal];
+    [rightBarButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:RESIZE_UI(15)], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = rightBarButton;
+    
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"积分说明" style:UIBarButtonItemStyleDone target:self action:@selector(watchRuleMethod)];
     
     [self getProductListMethod];
     

@@ -15,6 +15,7 @@
 		645889AD1F4C04BE00E69574 /* MyRedPackageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889AC1F4C04BE00E69574 /* MyRedPackageTableViewCell.m */; };
 		645889B01F4C0D4E00E69574 /* RedPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889AF1F4C0D4E00E69574 /* RedPackageModel.m */; };
 		645889B31F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */; };
+		64755F491FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64755F481FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m */; };
 		648CE9AC1F988E3E007E4F74 /* LunBoImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 648CE9AB1F988E3E007E4F74 /* LunBoImageModel.m */; };
 		649982271F91AFCE008511AB /* IntegralShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982261F91AFCE008511AB /* IntegralShopViewController.m */; };
 		649982331F94D241008511AB /* IntegralProductCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982311F94D241008511AB /* IntegralProductCollectionViewCell.m */; };
@@ -405,8 +406,6 @@
 		C51B42AC1C78531F001679B5 /* TrandDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C51B42A91C78531F001679B5 /* TrandDetailViewController.xib */; };
 		C51B42B21C78532E001679B5 /* MyselfManageFinanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42AF1C78532E001679B5 /* MyselfManageFinanceCell.m */; };
 		C51B42B31C78532E001679B5 /* FinancialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42B11C78532E001679B5 /* FinancialModel.m */; };
-		C51B42BA1C78533E001679B5 /* FRuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42B71C78533E001679B5 /* FRuleViewController.m */; };
-		C51B42BB1C78533E001679B5 /* FRuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C51B42B81C78533E001679B5 /* FRuleViewController.xib */; };
 		C51B42DC1C7853C5001679B5 /* MyselfTransactionController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42DB1C7853C5001679B5 /* MyselfTransactionController.m */; };
 		C51B42E11C7853CE001679B5 /* MyselfTransCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42DE1C7853CE001679B5 /* MyselfTransCell.m */; };
 		C51B42E21C7853CE001679B5 /* TradeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42E01C7853CE001679B5 /* TradeModel.m */; };
@@ -548,6 +547,8 @@
 		645889AF1F4C0D4E00E69574 /* RedPackageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPackageModel.m; sourceTree = "<group>"; };
 		645889B11F4C2EDF00E69574 /* MyUnuseRedPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyUnuseRedPackageViewController.h; sourceTree = "<group>"; };
 		645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUnuseRedPackageViewController.m; sourceTree = "<group>"; };
+		64755F471FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyRedUnactivePackageTableViewCell.h; sourceTree = "<group>"; };
+		64755F481FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyRedUnactivePackageTableViewCell.m; sourceTree = "<group>"; };
 		648CE9AA1F988E3E007E4F74 /* LunBoImageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunBoImageModel.h; sourceTree = "<group>"; };
 		648CE9AB1F988E3E007E4F74 /* LunBoImageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunBoImageModel.m; sourceTree = "<group>"; };
 		649982251F91AFCE008511AB /* IntegralShopViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralShopViewController.h; sourceTree = "<group>"; };
@@ -1059,9 +1060,6 @@
 		C51B42AF1C78532E001679B5 /* MyselfManageFinanceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyselfManageFinanceCell.m; sourceTree = "<group>"; };
 		C51B42B01C78532E001679B5 /* FinancialModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinancialModel.h; sourceTree = "<group>"; };
 		C51B42B11C78532E001679B5 /* FinancialModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinancialModel.m; sourceTree = "<group>"; };
-		C51B42B61C78533E001679B5 /* FRuleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRuleViewController.h; sourceTree = "<group>"; };
-		C51B42B71C78533E001679B5 /* FRuleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRuleViewController.m; sourceTree = "<group>"; };
-		C51B42B81C78533E001679B5 /* FRuleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FRuleViewController.xib; sourceTree = "<group>"; };
 		C51B42DA1C7853C5001679B5 /* MyselfTransactionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyselfTransactionController.h; sourceTree = "<group>"; };
 		C51B42DB1C7853C5001679B5 /* MyselfTransactionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyselfTransactionController.m; sourceTree = "<group>"; };
 		C51B42DD1C7853CE001679B5 /* MyselfTransCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyselfTransCell.h; sourceTree = "<group>"; };
@@ -1454,6 +1452,8 @@
 				8B1D23311E5DB5490035FD5E /* ShortListTopCell.m */,
 				645889AB1F4C04BE00E69574 /* MyRedPackageTableViewCell.h */,
 				645889AC1F4C04BE00E69574 /* MyRedPackageTableViewCell.m */,
+				64755F471FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.h */,
+				64755F481FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m */,
 				6431A4AA1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.h */,
 				6431A4AB1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m */,
 			);
@@ -1873,9 +1873,6 @@
 		C51B42A11C7852DC001679B5 /* mytuijian */ = {
 			isa = PBXGroup;
 			children = (
-				C51B42B61C78533E001679B5 /* FRuleViewController.h */,
-				C51B42B71C78533E001679B5 /* FRuleViewController.m */,
-				C51B42B81C78533E001679B5 /* FRuleViewController.xib */,
 				8B44467A1D98F60F00EDCDBC /* MyRecommendatViewController.h */,
 				8B44467B1D98F60F00EDCDBC /* MyRecommendatViewController.m */,
 				8B44467F1D990EB100EDCDBC /* MyRecommandTableViewCell.h */,
@@ -2647,7 +2644,7 @@
 				TargetAttributes = {
 					C51B41AC1C784B02001679B5 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = E9DZ9T2VGD;
+						DevelopmentTeam = 28Y6NMPTCR;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -2787,7 +2784,6 @@
 				8B01688C1DD00ED7000FA3DE /* icon_round_sel.png in Resources */,
 				8B0168381DD00ED7000FA3DE /* CITIC@2x.png in Resources */,
 				8B01688E1DD00ED7000FA3DE /* icon_round_sel@3x.png in Resources */,
-				C51B42BB1C78533E001679B5 /* FRuleViewController.xib in Resources */,
 				8B01683D1DD00ED7000FA3DE /* CMBC.png in Resources */,
 				8B4446831D990EB100EDCDBC /* MyRecommandTableViewCell.xib in Resources */,
 				8B0168DB1DD00ED7000FA3DE /* SPDB@2x.png in Resources */,
@@ -3111,7 +3107,6 @@
 				C51B42391C784FD9001679B5 /* AdModel.m in Sources */,
 				6425D3D61F16450900D61F87 /* NSArray+HRUtil.m in Sources */,
 				64CDE0E51F9788F5007F9449 /* IntegralProductDetailModel.m in Sources */,
-				C51B42BA1C78533E001679B5 /* FRuleViewController.m in Sources */,
 				64CDE0BF1F9623DF007F9449 /* IntegralOrderTableViewCell.m in Sources */,
 				8B1611501D81384E00C9B954 /* HomeProductCatModel.m in Sources */,
 				8B4446861D990EC500EDCDBC /* MyReCommandModel.m in Sources */,
@@ -3235,6 +3230,7 @@
 				C51B425C1C7850BF001679B5 /* SepcialModel.m in Sources */,
 				BDE0EF7F1D61BD8800729C15 /* WebViewForPayViewController.m in Sources */,
 				C51B42E21C7853CE001679B5 /* TradeModel.m in Sources */,
+				64755F491FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m in Sources */,
 				8BF3F84B1D8248BD00E669B2 /* AlipaySubItem.m in Sources */,
 				8B3343021D7FC33D004DB390 /* ProgressView.m in Sources */,
 				C51B42771C78519B001679B5 /* MyselfAccountController.m in Sources */,
@@ -3399,10 +3395,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = E9DZ9T2VGD;
+				DEVELOPMENT_TEAM = 28Y6NMPTCR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK",
@@ -3420,10 +3416,10 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.bighuotalk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "58708e49-8ebf-43e4-896f-8015af2a3f8e";
-				PROVISIONING_PROFILE_SPECIFIER = bighuotalkinhouse;
+				PROVISIONING_PROFILE = "37a7c057-02a0-4431-8542-641a46a93785";
+				PROVISIONING_PROFILE_SPECIFIER = wangmadevelop;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Debug;
@@ -3434,10 +3430,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = E9DZ9T2VGD;
+				DEVELOPMENT_TEAM = 28Y6NMPTCR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK",
@@ -3455,10 +3451,10 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.bighuotalk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "58708e49-8ebf-43e4-896f-8015af2a3f8e";
-				PROVISIONING_PROFILE_SPECIFIER = bighuotalkinhouse;
+				PROVISIONING_PROFILE = "37a7c057-02a0-4431-8542-641a46a93785";
+				PROVISIONING_PROFILE_SPECIFIER = wangmadevelop;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Release;
