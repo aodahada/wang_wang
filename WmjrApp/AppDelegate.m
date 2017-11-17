@@ -35,6 +35,7 @@
 #import "HomePageViewController.h"
 #import "GuideScrollViewController.h"
 #import "ProductListViewController.h"
+#import "MoneyOrderMainViewController.h"//我有汇票
 #import "ProfileViewController.h"
 #import "UserInfoModel.h"
 #import "LoginViewController.h"
@@ -329,13 +330,18 @@
     productVC.tabBarItem = productTab;
     
     
+    MoneyOrderMainViewController *moneyOrderMainVC = [[MoneyOrderMainViewController alloc]init];
+    BaseNavigationController *moneyOrderNav = [[BaseNavigationController alloc]initWithRootViewController:moneyOrderMainVC];
+    UITabBarItem *moneyOrderTab = [[UITabBarItem alloc] initWithTitle:@"我有汇票" image:[[UIImage imageNamed:@"tab_btn_wyjd_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_wyjd_sel"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
+    moneyOrderMainVC.tabBarItem = moneyOrderTab;
+    
     ProfileViewController *profileVC = [[ProfileViewController alloc] init];
     BaseNavigationController *profileNa = [[BaseNavigationController alloc] initWithRootViewController:profileVC];
     UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"账户中心" image:[[UIImage imageNamed:@"tab_btn_zhanghui_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_zhanghui_pre"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
     profileVC.tabBarItem = profileTab;
     
     self.tabbarC = [[UITabBarController alloc] init];
-    self.tabbarC.viewControllers = @[homeNa, productNa, profileNa];
+    self.tabbarC.viewControllers = @[homeNa, productNa, moneyOrderNav, profileNa];
     self.tabbarC.tabBar.tintColor = RGBA(0, 102, 177, 1.0);
     self.tabbarC.delegate = self;
     self.window.rootViewController = self.tabbarC;
