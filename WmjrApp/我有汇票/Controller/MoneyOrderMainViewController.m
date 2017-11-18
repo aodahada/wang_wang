@@ -7,6 +7,7 @@
 //
 
 #import "MoneyOrderMainViewController.h"
+#import "ImmediatelyMoneyOrderViewController.h"
 
 @interface MoneyOrderMainViewController ()
 
@@ -56,6 +57,7 @@
     
     UIButton *personalButton = [[UIButton alloc]init];
     [personalButton setBackgroundImage:[UIImage imageNamed:@"image_geren"] forState:UIControlStateNormal];
+    [personalButton addTarget:self action:@selector(jumpToImmediatelyApply) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:personalButton];
     [personalButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topImageView.mas_bottom).with.offset(RESIZE_UI(38));
@@ -66,6 +68,7 @@
     
     UIButton *enterpriseButton = [[UIButton alloc]init];
     [enterpriseButton setBackgroundImage:[UIImage imageNamed:@"image_qiye"] forState:UIControlStateNormal];
+    [personalButton addTarget:self action:@selector(jumpToImmediatelyApply) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:enterpriseButton];
     [enterpriseButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(personalButton.mas_bottom).with.offset(RESIZE_UI(10));
@@ -86,8 +89,12 @@
         make.right.equalTo(enterpriseButton.mas_right);
     }];
     
-    
-    
+}
+
+#pragma mark - 跳转立即申请
+- (void)jumpToImmediatelyApply {
+    ImmediatelyMoneyOrderViewController *immediatelyVC = [[ImmediatelyMoneyOrderViewController alloc]init];
+    [self.navigationController pushViewController:immediatelyVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

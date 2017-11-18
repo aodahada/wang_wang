@@ -104,7 +104,6 @@
             make.bottom.equalTo(labelForLine.mas_bottom);
         }];
         
-        
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
         BOOL isNull = [self isNullString:uid];
         if (isNull) {
