@@ -7,25 +7,39 @@
 //
 
 #import "ImmediatelyMoneyOrderViewController.h"
+#import "DateSelectView.h"
+#import "LoansContentFillViewController.h"
 
-@interface ImmediatelyMoneyOrderViewController ()
+@interface ImmediatelyMoneyOrderViewController ()<UITextViewDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,DateSelectViewDelegate,UITextViewDelegate>
 
 @property (nonatomic, strong)UIButton *nextStepButton;
 @property (nonatomic, strong)UIButton *shangpiaoButton;
 @property (nonatomic, strong)UIButton *yinpiaoButton;
+@property (nonatomic, assign)NSInteger typeTag;//选择银票按钮为1  选择商票按钮为2  没选为0
 @property (nonatomic, strong)UITextField *inputPiaojuMoney;
 @property (nonatomic, strong)UITextField *inputRate;
-@property (nonatomic, strong)UITextField *inputChengdui;
+@property (nonatomic, strong)UILabel *dateLabel;
+@property (nonatomic, strong)UITextView *inputChengdui;
+@property (nonatomic, strong)UIButton *addPic1;
+@property (nonatomic, strong)UIButton *addPic2;
+@property (nonatomic, assign)NSInteger selectTag;
+@property (nonatomic, strong)DateSelectView *dateSelectView;
 
 @end
 
 @implementation ImmediatelyMoneyOrderViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"立即申请";
     self.view.backgroundColor = RGBA(240, 241, 243, 1.0);
+    _typeTag = 0;
     [self setUpLayout];
 }
 
@@ -36,6 +50,7 @@
     [_nextStepButton setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextStepButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_nextStepButton setBackgroundColor:RGBA(232, 232, 232, 1.0)];
+    [_nextStepButton addTarget:self action:@selector(netStepButtonMethod) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_nextStepButton];
     [_nextStepButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.mas_bottom);
@@ -60,13 +75,12 @@
     [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(mainScrollView);
         make.width.mas_equalTo(self.view.mas_width);
-        make.height.mas_offset(2000);
     }];
     
     //第一行
     UIView *row1View = [[UIView alloc]init];
     row1View.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:row1View];
+    [mainView addSubview:row1View];
     [row1View mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mainView.mas_top);
         make.left.equalTo(mainView.mas_left);
@@ -92,6 +106,7 @@
     _shangpiaoButton.layer.cornerRadius = 5.0f;
     _shangpiaoButton.layer.borderWidth = 1.0f;
     _shangpiaoButton.layer.borderColor = RGBA(0, 104, 178, 1.0).CGColor;
+    [_shangpiaoButton addTarget:self action:@selector(selectShangPiaoMethod) forControlEvents:UIControlEventTouchUpInside];
     [row1View addSubview:_shangpiaoButton];
     [_shangpiaoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row1View);
@@ -108,6 +123,7 @@
     _yinpiaoButton.layer.cornerRadius = 5.0f;
     _yinpiaoButton.layer.borderWidth = 1.0f;
     _yinpiaoButton.layer.borderColor = RGBA(0, 104, 178, 1.0).CGColor;
+    [_yinpiaoButton addTarget:self action:@selector(selectYinPiaoMethod) forControlEvents:UIControlEventTouchUpInside];
     [row1View addSubview:_yinpiaoButton];
     [_yinpiaoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row1View);
@@ -119,7 +135,7 @@
     //第二行
     UIView *row2View = [[UIView alloc]init];
     row2View.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:row2View];
+    [mainView addSubview:row2View];
     [row2View mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row1View.mas_bottom).with.offset(1);
         make.left.equalTo(mainView.mas_left);
@@ -150,7 +166,7 @@
     //第三行
     UIView *row3View = [[UIView alloc]init];
     row3View.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:row3View];
+    [mainView addSubview:row3View];
     [row3View mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row2View.mas_bottom).with.offset(1);
         make.left.equalTo(mainView.mas_left);
@@ -181,7 +197,7 @@
     //第四行
     UIView *row4View = [[UIView alloc]init];
     row4View.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:row4View];
+    [mainView addSubview:row4View];
     [row4View mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row3View.mas_bottom).with.offset(1);
         make.left.equalTo(mainView.mas_left);
@@ -208,15 +224,31 @@
         make.width.height.mas_offset(RESIZE_UI(16));
     }];
     
+    _dateLabel = [[UILabel alloc]init];
+    _dateLabel.text = @"";
+    [row4View addSubview:_dateLabel];
+    [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(row4View);
+        make.right.equalTo(jiantouImageView.mas_left).with.offset(-RESIZE_UI(5));
+    }];
+    
+    UIButton *watchDatePiaojuButton = [[UIButton alloc]init];
+    [watchDatePiaojuButton setBackgroundColor:[UIColor clearColor]];
+    [watchDatePiaojuButton addTarget:self action:@selector(watchDateMethod) forControlEvents:UIControlEventTouchUpInside];
+    [row4View addSubview:watchDatePiaojuButton];
+    [watchDatePiaojuButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(row4View);
+    }];
+    
     //第五行
     UIView *row5View = [[UIView alloc]init];
     row5View.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:row5View];
+    [mainView addSubview:row5View];
     [row5View mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row4View.mas_bottom).with.offset(1);
         make.left.equalTo(mainView.mas_left);
         make.right.equalTo(mainView.mas_right);
-        make.height.mas_offset(RESIZE_UI(60));
+        make.height.mas_offset(RESIZE_UI(80));
     }];
     
     UILabel *label5 = [[UILabel alloc]init];
@@ -225,29 +257,33 @@
     label5.textColor = RGBA(102, 102, 102, 1.0);
     [row5View addSubview:label5];
     [label5 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(row5View);
+        make.top.equalTo(row5View.mas_top).with.offset(RESIZE_UI(20));
         make.left.equalTo(row5View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
-    _inputChengdui = [[UITextField alloc]init];
-    _inputChengdui.placeholder = @"请输入承兑对象";
+    _inputChengdui = [[UITextView alloc]init];
+    _inputChengdui.text = @"请输入承兑对象";
+    _inputChengdui.textColor = RGBA(199, 199, 204, 1.0);
+    _inputChengdui.delegate = self;
     _inputChengdui.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputChengdui.textAlignment = NSTextAlignmentRight;
     [row5View addSubview:_inputChengdui];
     [_inputChengdui mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(row5View);
+        make.top.equalTo(row5View.mas_top).with.offset(RESIZE_UI(12));
         make.right.equalTo(row5View.mas_right).with.offset(-RESIZE_UI(20));
+        make.width.mas_offset(RESIZE_UI(176));
+        make.height.mas_offset(RESIZE_UI(42));
     }];
     
     //第六行
     UIView *row6View = [[UIView alloc]init];
     row6View.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:row6View];
+    [mainView addSubview:row6View];
     [row6View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row4View.mas_bottom).with.offset(1);
+        make.top.equalTo(row5View.mas_bottom).with.offset(1);
         make.left.equalTo(mainView.mas_left);
         make.right.equalTo(mainView.mas_right);
-        make.height.mas_offset(RESIZE_UI(240));
+        make.height.mas_offset(RESIZE_UI(180));
     }];
     
     UILabel *label6 = [[UILabel alloc]init];
@@ -270,6 +306,212 @@
         make.left.equalTo(row6View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
+    _addPic1 = [[UIButton alloc]init];
+    _addPic1.tag = 1;
+    [_addPic1 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
+    [_addPic1 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
+    [row6View addSubview:_addPic1];
+    [_addPic1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(tip6Label.mas_bottom).with.offset(RESIZE_UI(5));
+        make.left.equalTo(row6View.mas_left).with.offset(RESIZE_UI(20));
+        make.width.height.mas_offset(RESIZE_UI(72));
+    }];
+    
+    //第七行
+    UIView *row7View = [[UIView alloc]init];
+    row7View.backgroundColor = [UIColor whiteColor];
+    [mainView addSubview:row7View];
+    [row7View mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(row6View.mas_bottom).with.offset(1);
+        make.left.equalTo(mainView.mas_left);
+        make.right.equalTo(mainView.mas_right);
+        make.height.mas_offset(RESIZE_UI(180));
+    }];
+    
+    UILabel *label7 = [[UILabel alloc]init];
+    label7.text = @"承兑银行/承兑人";
+    label7.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    label7.textColor = RGBA(102, 102, 102, 1.0);
+    [row7View addSubview:label7];
+    [label7 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(row7View.mas_top).with.offset(RESIZE_UI(20));
+        make.left.equalTo(row7View.mas_left).with.offset(RESIZE_UI(20));
+    }];
+    
+    UILabel *tip7Label = [[UILabel alloc]init];
+    tip7Label.text = @"(请保持照片信息清晰,勿进行修图软件处理)";
+    tip7Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
+    tip7Label.textColor = RGBA(0, 102, 177, 1.0);
+    [row7View addSubview:tip7Label];
+    [tip7Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(label7.mas_bottom).with.offset(RESIZE_UI(30));
+        make.left.equalTo(row7View.mas_left).with.offset(RESIZE_UI(20));
+    }];
+    
+    _addPic2 = [[UIButton alloc]init];
+    _addPic2.tag = 2;
+    [_addPic2 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
+    [_addPic2 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
+    [row7View addSubview:_addPic2];
+    [_addPic2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(tip7Label.mas_bottom).with.offset(RESIZE_UI(5));
+        make.left.equalTo(row7View.mas_left).with.offset(RESIZE_UI(20));
+        make.width.height.mas_offset(RESIZE_UI(72));
+    }];
+    
+    [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(row7View.mas_bottom);
+    }];
+    
+}
+
+#pragma mark - UITextViewDelegate
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    if ([textView.text isEqualToString:@"请输入承兑对象"]) {
+        textView.text = @"";
+    }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if(textView.text.length < 1){
+        textView.text = @"请输入承兑对象";
+        textView.textColor = RGBA(199, 199, 204, 1.0);
+    }
+    if (![textView.text isEqualToString:@"请输入承兑对象"]) {
+        textView.textColor = RGBA(60, 60, 60, 1.0);
+    } else {
+        textView.textColor = RGBA(199, 199, 204, 1.0);
+    }
+}
+
+#pragma mark - 选择商票
+- (void)selectShangPiaoMethod {
+    _typeTag = 1;
+    [_shangpiaoButton setBackgroundColor:RGBA(0, 104, 178, 1.0)];
+    [_shangpiaoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_yinpiaoButton setBackgroundColor:[UIColor whiteColor]];
+    [_yinpiaoButton setTitleColor:RGBA(0, 104, 178, 1.0) forState:UIControlStateNormal];
+}
+
+#pragma mark - 选择银票
+- (void)selectYinPiaoMethod {
+    _typeTag = 2;
+    [_yinpiaoButton setBackgroundColor:RGBA(0, 104, 178, 1.0)];
+    [_yinpiaoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_shangpiaoButton setBackgroundColor:[UIColor whiteColor]];
+    [_shangpiaoButton setTitleColor:RGBA(0, 104, 178, 1.0) forState:UIControlStateNormal];
+}
+
+#pragma mark - 查看日期选择器
+- (void)watchDateMethod {
+    
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    _dateSelectView = [[DateSelectView alloc]init];
+    _dateSelectView.delegate = self;
+    [window addSubview:_dateSelectView];
+    [_dateSelectView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(window);
+    }];
+    
+}
+
+#pragma mark - DateSelectViewDelegate
+- (void)cancelDatePickerView {
+    [_dateSelectView removeFromSuperview];
+    _dateSelectView = nil;
+}
+
+- (void)confirmDatePickerView:(NSString *)content {
+    [self cancelDatePickerView];
+    _dateLabel.text = content;
+}
+
+#pragma mark - 选择头像
+- (IBAction)selectHeadImageMethod:(UIButton *)sender {
+
+    switch (sender.tag) {
+        case 1:
+            _selectTag = 1;
+            break;
+        case 2:
+            _selectTag = 2;
+            break;
+            
+        default:
+            break;
+    }
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"选取图片",@"拍摄照片", nil];
+    [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
+    
+}
+
+#pragma mark - actionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    UIImagePickerController *picker= [[UIImagePickerController alloc]init];
+    picker.delegate = self;
+    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    if (buttonIndex == 0) {
+        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        
+    } else if (buttonIndex == 1) {
+        sourceType = UIImagePickerControllerSourceTypeCamera;
+    } else {
+        return;
+    }
+    // 没有拍照功能
+    if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
+        UIAlertView *cameraAlert = [[UIAlertView alloc] init];
+        cameraAlert.message = @"您的设备不支持拍照。";
+        [cameraAlert addButtonWithTitle:@"OK"];
+        [cameraAlert show];
+        return;
+    }
+    picker.sourceType = sourceType;
+    [self presentViewController:picker animated:YES completion:^{
+    }];
+    
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+    
+    UIImage *selectImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    if (_selectTag == 1) {
+        [_addPic1 setBackgroundImage:selectImage forState:UIControlStateNormal];
+    } else {
+        [_addPic2 setBackgroundImage:selectImage forState:UIControlStateNormal];
+    }
+    
+}
+
+#pragma mark - 下一步按钮
+- (void)netStepButtonMethod {
+//    if (_typeTag == 0) {
+//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请选择票据类型" content:@"" time:1.0 andCodes:^{
+//
+//        }];
+//    } else if ([_inputPiaojuMoney.text isEqualToString:@""]) {
+//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入票据金额" content:@"" time:1.0 andCodes:^{
+//
+//        }];
+//    } else if ([_inputRate.text isEqualToString:@""]) {
+//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入期望利率" content:@"" time:1.0 andCodes:^{
+//
+//        }];
+//    } else if ([_dateLabel.text isEqualToString:@""]) {
+//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请选择票据到期日" content:@"" time:1.0 andCodes:^{
+//
+//        }];
+//    } else {
+//
+//    }
+    LoansContentFillViewController *loansFillVC = [[LoansContentFillViewController alloc]init];
+    [self.navigationController pushViewController:loansFillVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

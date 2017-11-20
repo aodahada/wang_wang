@@ -18,6 +18,8 @@
 		64755F491FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64755F481FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m */; };
 		64880FCD1FBE92330011A1D3 /* MoneyOrderMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FCC1FBE92330011A1D3 /* MoneyOrderMainViewController.m */; };
 		64880FD01FBED6CE0011A1D3 /* ImmediatelyMoneyOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FCF1FBED6CE0011A1D3 /* ImmediatelyMoneyOrderViewController.m */; };
+		64880FD31FC29A9E0011A1D3 /* DateSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FD21FC29A9E0011A1D3 /* DateSelectView.m */; };
+		64880FD61FC2C21A0011A1D3 /* LoansContentFillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FD51FC2C21A0011A1D3 /* LoansContentFillViewController.m */; };
 		648CE9AC1F988E3E007E4F74 /* LunBoImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 648CE9AB1F988E3E007E4F74 /* LunBoImageModel.m */; };
 		649982271F91AFCE008511AB /* IntegralShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982261F91AFCE008511AB /* IntegralShopViewController.m */; };
 		649982331F94D241008511AB /* IntegralProductCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982311F94D241008511AB /* IntegralProductCollectionViewCell.m */; };
@@ -555,6 +557,10 @@
 		64880FCC1FBE92330011A1D3 /* MoneyOrderMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoneyOrderMainViewController.m; sourceTree = "<group>"; };
 		64880FCE1FBED6CE0011A1D3 /* ImmediatelyMoneyOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImmediatelyMoneyOrderViewController.h; sourceTree = "<group>"; };
 		64880FCF1FBED6CE0011A1D3 /* ImmediatelyMoneyOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImmediatelyMoneyOrderViewController.m; sourceTree = "<group>"; };
+		64880FD11FC29A9E0011A1D3 /* DateSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateSelectView.h; sourceTree = "<group>"; };
+		64880FD21FC29A9E0011A1D3 /* DateSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateSelectView.m; sourceTree = "<group>"; };
+		64880FD41FC2C21A0011A1D3 /* LoansContentFillViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoansContentFillViewController.h; sourceTree = "<group>"; };
+		64880FD51FC2C21A0011A1D3 /* LoansContentFillViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoansContentFillViewController.m; sourceTree = "<group>"; };
 		648CE9AA1F988E3E007E4F74 /* LunBoImageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunBoImageModel.h; sourceTree = "<group>"; };
 		648CE9AB1F988E3E007E4F74 /* LunBoImageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunBoImageModel.m; sourceTree = "<group>"; };
 		649982251F91AFCE008511AB /* IntegralShopViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralShopViewController.h; sourceTree = "<group>"; };
@@ -1326,6 +1332,8 @@
 				64880FCC1FBE92330011A1D3 /* MoneyOrderMainViewController.m */,
 				64880FCE1FBED6CE0011A1D3 /* ImmediatelyMoneyOrderViewController.h */,
 				64880FCF1FBED6CE0011A1D3 /* ImmediatelyMoneyOrderViewController.m */,
+				64880FD41FC2C21A0011A1D3 /* LoansContentFillViewController.h */,
+				64880FD51FC2C21A0011A1D3 /* LoansContentFillViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1340,6 +1348,8 @@
 		64880FCA1FBE920C0011A1D3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				64880FD11FC29A9E0011A1D3 /* DateSelectView.h */,
+				64880FD21FC29A9E0011A1D3 /* DateSelectView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3263,9 +3273,11 @@
 				8B3402121D7EABAC00320072 /* ProductListViewController.m in Sources */,
 				C51B42311C784FB3001679B5 /* HomeListViewCell.m in Sources */,
 				8B73F9841DC82E3200085BCD /* PersonInvestModel.m in Sources */,
+				64880FD31FC29A9E0011A1D3 /* DateSelectView.m in Sources */,
 				8B44467D1D98F60F00EDCDBC /* MyRecommendatViewController.m in Sources */,
 				8B3343071D80169A004DB390 /* ViewForShuoMing.m in Sources */,
 				8B44C4461DC6D9FF00DE0EA5 /* HomeTableViewCellFirst.m in Sources */,
+				64880FD61FC2C21A0011A1D3 /* LoansContentFillViewController.m in Sources */,
 				64CDE0CD1F963660007F9449 /* AddressTableViewCell.m in Sources */,
 				8B592F431DF8F2E9001AD4B4 /* AFAppDotNetAPIClient.m in Sources */,
 				8B266FB71DDC5296000DCE69 /* SafeEnsureViewController.m in Sources */,

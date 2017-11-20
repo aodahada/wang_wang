@@ -91,7 +91,6 @@
     [SVProgressHUD showWithStatus:@"加载中" maskType:(SVProgressHUDMaskTypeBlack)];
     [manager postDataWithUrlActionStr:@"Trade/new_withdraw" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"money":_drawMoneyLab.text} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
-            NSLog(@"我的体现L%@",obj);
             
             [SVProgressHUD dismiss];
 //            NSString *accountStr = [NSString stringWithFormat:@"%.2f", [_accountLab.text floatValue] - [_drawMoneyLab.text floatValue]];
