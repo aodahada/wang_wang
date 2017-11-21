@@ -8,6 +8,7 @@
 
 #import "MoneyOrderMainViewController.h"
 #import "ImmediatelyMoneyOrderViewController.h"
+#import "ApplyRecordViewController.h"
 
 @interface MoneyOrderMainViewController ()
 
@@ -40,7 +41,8 @@
 
 #pragma mark - 查看申请记录
 - (void)watchApplyRecord {
-    
+    ApplyRecordViewController *applyRecordVC = [[ApplyRecordViewController alloc]init];
+    [self.navigationController pushViewController:applyRecordVC animated:YES];
 }
 
 #pragma mark - 界面布局
@@ -57,7 +59,7 @@
     
     UIButton *personalButton = [[UIButton alloc]init];
     [personalButton setBackgroundImage:[UIImage imageNamed:@"image_geren"] forState:UIControlStateNormal];
-    [personalButton addTarget:self action:@selector(jumpToImmediatelyApply) forControlEvents:UIControlEventTouchUpInside];
+    [personalButton addTarget:self action:@selector(jumpToImmediatelyApplyPersonal) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:personalButton];
     [personalButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topImageView.mas_bottom).with.offset(RESIZE_UI(38));
@@ -68,7 +70,7 @@
     
     UIButton *enterpriseButton = [[UIButton alloc]init];
     [enterpriseButton setBackgroundImage:[UIImage imageNamed:@"image_qiye"] forState:UIControlStateNormal];
-    [personalButton addTarget:self action:@selector(jumpToImmediatelyApply) forControlEvents:UIControlEventTouchUpInside];
+    [enterpriseButton addTarget:self action:@selector(jumpToImmediatelyApplyEnterprise) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:enterpriseButton];
     [enterpriseButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(personalButton.mas_bottom).with.offset(RESIZE_UI(10));
@@ -91,9 +93,17 @@
     
 }
 
-#pragma mark - 跳转立即申请
-- (void)jumpToImmediatelyApply {
+#pragma mark - 跳转立即申请(个人)
+- (void)jumpToImmediatelyApplyPersonal {
     ImmediatelyMoneyOrderViewController *immediatelyVC = [[ImmediatelyMoneyOrderViewController alloc]init];
+    immediatelyVC.identifier = 1;
+    [self.navigationController pushViewController:immediatelyVC animated:YES];
+}
+
+#pragma mark - 跳转立即申请(企业)
+- (void)jumpToImmediatelyApplyEnterprise {
+    ImmediatelyMoneyOrderViewController *immediatelyVC = [[ImmediatelyMoneyOrderViewController alloc]init];
+    immediatelyVC.identifier = 2;
     [self.navigationController pushViewController:immediatelyVC animated:YES];
 }
 

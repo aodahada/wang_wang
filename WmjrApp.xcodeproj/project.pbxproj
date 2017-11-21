@@ -20,6 +20,12 @@
 		64880FD01FBED6CE0011A1D3 /* ImmediatelyMoneyOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FCF1FBED6CE0011A1D3 /* ImmediatelyMoneyOrderViewController.m */; };
 		64880FD31FC29A9E0011A1D3 /* DateSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FD21FC29A9E0011A1D3 /* DateSelectView.m */; };
 		64880FD61FC2C21A0011A1D3 /* LoansContentFillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FD51FC2C21A0011A1D3 /* LoansContentFillViewController.m */; };
+		64880FD91FC340D70011A1D3 /* LoansFilledSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FD81FC340D70011A1D3 /* LoansFilledSuccessViewController.m */; };
+		64880FDC1FC3C0440011A1D3 /* ApplyRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FDB1FC3C0440011A1D3 /* ApplyRecordViewController.m */; };
+		64880FDF1FC3F0E40011A1D3 /* ApplyRecordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FDE1FC3F0E40011A1D3 /* ApplyRecordTableViewCell.m */; };
+		64880FE21FC424460011A1D3 /* ApplyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FE11FC424460011A1D3 /* ApplyDetailViewController.m */; };
+		64880FE51FC42BC60011A1D3 /* ApplySmallMessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FE41FC42BC60011A1D3 /* ApplySmallMessView.m */; };
+		64880FE81FC4A7E50011A1D3 /* ApplyRocrdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FE71FC4A7E50011A1D3 /* ApplyRocrdModel.m */; };
 		648CE9AC1F988E3E007E4F74 /* LunBoImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 648CE9AB1F988E3E007E4F74 /* LunBoImageModel.m */; };
 		649982271F91AFCE008511AB /* IntegralShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982261F91AFCE008511AB /* IntegralShopViewController.m */; };
 		649982331F94D241008511AB /* IntegralProductCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982311F94D241008511AB /* IntegralProductCollectionViewCell.m */; };
@@ -561,6 +567,18 @@
 		64880FD21FC29A9E0011A1D3 /* DateSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateSelectView.m; sourceTree = "<group>"; };
 		64880FD41FC2C21A0011A1D3 /* LoansContentFillViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoansContentFillViewController.h; sourceTree = "<group>"; };
 		64880FD51FC2C21A0011A1D3 /* LoansContentFillViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoansContentFillViewController.m; sourceTree = "<group>"; };
+		64880FD71FC340D70011A1D3 /* LoansFilledSuccessViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoansFilledSuccessViewController.h; sourceTree = "<group>"; };
+		64880FD81FC340D70011A1D3 /* LoansFilledSuccessViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoansFilledSuccessViewController.m; sourceTree = "<group>"; };
+		64880FDA1FC3C0440011A1D3 /* ApplyRecordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplyRecordViewController.h; sourceTree = "<group>"; };
+		64880FDB1FC3C0440011A1D3 /* ApplyRecordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplyRecordViewController.m; sourceTree = "<group>"; };
+		64880FDD1FC3F0E40011A1D3 /* ApplyRecordTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplyRecordTableViewCell.h; sourceTree = "<group>"; };
+		64880FDE1FC3F0E40011A1D3 /* ApplyRecordTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplyRecordTableViewCell.m; sourceTree = "<group>"; };
+		64880FE01FC424460011A1D3 /* ApplyDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplyDetailViewController.h; sourceTree = "<group>"; };
+		64880FE11FC424460011A1D3 /* ApplyDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplyDetailViewController.m; sourceTree = "<group>"; };
+		64880FE31FC42BC60011A1D3 /* ApplySmallMessView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplySmallMessView.h; sourceTree = "<group>"; };
+		64880FE41FC42BC60011A1D3 /* ApplySmallMessView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplySmallMessView.m; sourceTree = "<group>"; };
+		64880FE61FC4A7E50011A1D3 /* ApplyRocrdModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplyRocrdModel.h; sourceTree = "<group>"; };
+		64880FE71FC4A7E50011A1D3 /* ApplyRocrdModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplyRocrdModel.m; sourceTree = "<group>"; };
 		648CE9AA1F988E3E007E4F74 /* LunBoImageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunBoImageModel.h; sourceTree = "<group>"; };
 		648CE9AB1F988E3E007E4F74 /* LunBoImageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunBoImageModel.m; sourceTree = "<group>"; };
 		649982251F91AFCE008511AB /* IntegralShopViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralShopViewController.h; sourceTree = "<group>"; };
@@ -1334,6 +1352,12 @@
 				64880FCF1FBED6CE0011A1D3 /* ImmediatelyMoneyOrderViewController.m */,
 				64880FD41FC2C21A0011A1D3 /* LoansContentFillViewController.h */,
 				64880FD51FC2C21A0011A1D3 /* LoansContentFillViewController.m */,
+				64880FD71FC340D70011A1D3 /* LoansFilledSuccessViewController.h */,
+				64880FD81FC340D70011A1D3 /* LoansFilledSuccessViewController.m */,
+				64880FDA1FC3C0440011A1D3 /* ApplyRecordViewController.h */,
+				64880FDB1FC3C0440011A1D3 /* ApplyRecordViewController.m */,
+				64880FE01FC424460011A1D3 /* ApplyDetailViewController.h */,
+				64880FE11FC424460011A1D3 /* ApplyDetailViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1341,6 +1365,8 @@
 		64880FC91FBE92050011A1D3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				64880FE61FC4A7E50011A1D3 /* ApplyRocrdModel.h */,
+				64880FE71FC4A7E50011A1D3 /* ApplyRocrdModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1350,6 +1376,10 @@
 			children = (
 				64880FD11FC29A9E0011A1D3 /* DateSelectView.h */,
 				64880FD21FC29A9E0011A1D3 /* DateSelectView.m */,
+				64880FDD1FC3F0E40011A1D3 /* ApplyRecordTableViewCell.h */,
+				64880FDE1FC3F0E40011A1D3 /* ApplyRecordTableViewCell.m */,
+				64880FE31FC42BC60011A1D3 /* ApplySmallMessView.h */,
+				64880FE41FC42BC60011A1D3 /* ApplySmallMessView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3145,11 +3175,13 @@
 				C51B42AB1C78531F001679B5 /* TrandDetailViewController.m in Sources */,
 				C51B43761C78564E001679B5 /* BaseNavigationController.m in Sources */,
 				64CDE0EB1F982B10007F9449 /* ScordRecordViewController.m in Sources */,
+				64880FD91FC340D70011A1D3 /* LoansFilledSuccessViewController.m in Sources */,
 				C51B429F1C7852B4001679B5 /* SmartModel.m in Sources */,
 				C51B435C1C785600001679B5 /* NSString+StringCode.m in Sources */,
 				645889AD1F4C04BE00E69574 /* MyRedPackageTableViewCell.m in Sources */,
 				6431A4AC1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m in Sources */,
 				8B44C4561DC7281A00DE0EA5 /* HomeTableViewCellThird.m in Sources */,
+				64880FE21FC424460011A1D3 /* ApplyDetailViewController.m in Sources */,
 				8B878B171E2B0A45007646C5 /* HomeTableViewCellThirdFirst.m in Sources */,
 				C51B43441C7855AD001679B5 /* RegisterViewController.m in Sources */,
 				C51B43881C78566B001679B5 /* TAAnimatedDotView.m in Sources */,
@@ -3158,6 +3190,7 @@
 				8B1D23321E5DB5490035FD5E /* ShortListTopCell.m in Sources */,
 				C51B42391C784FD9001679B5 /* AdModel.m in Sources */,
 				6425D3D61F16450900D61F87 /* NSArray+HRUtil.m in Sources */,
+				64880FE81FC4A7E50011A1D3 /* ApplyRocrdModel.m in Sources */,
 				64CDE0E51F9788F5007F9449 /* IntegralProductDetailModel.m in Sources */,
 				64CDE0BF1F9623DF007F9449 /* IntegralOrderTableViewCell.m in Sources */,
 				8B1611501D81384E00C9B954 /* HomeProductCatModel.m in Sources */,
@@ -3217,6 +3250,7 @@
 				C51B43621C785620001679B5 /* UIView+Extension.m in Sources */,
 				8B3402211D7EAE2000320072 /* ProductClassViewController.m in Sources */,
 				8B44C4591DC7495400DE0EA5 /* NewsModel.m in Sources */,
+				64880FE51FC42BC60011A1D3 /* ApplySmallMessView.m in Sources */,
 				C5DAE4921CDAEB8000184048 /* AgViewController.m in Sources */,
 				64880FD01FBED6CE0011A1D3 /* ImmediatelyMoneyOrderViewController.m in Sources */,
 				C51B431A1C785528001679B5 /* NounExplanViewCell.m in Sources */,
@@ -3244,6 +3278,7 @@
 				C51B43A21C78570B001679B5 /* ResetLoginPasswordViewController.m in Sources */,
 				C51B42E11C7853CE001679B5 /* MyselfTransCell.m in Sources */,
 				8B513A571E56C7E50079D49A /* RateTypeButton.m in Sources */,
+				64880FDC1FC3C0440011A1D3 /* ApplyRecordViewController.m in Sources */,
 				C51B427B1C7851F0001679B5 /* ProfileViewController.m in Sources */,
 				C51B43751C78564E001679B5 /* UIButton+Extension.m in Sources */,
 				C51B42B21C78532E001679B5 /* MyselfManageFinanceCell.m in Sources */,
@@ -3307,6 +3342,7 @@
 				C51B43171C785528001679B5 /* NounExplanViewController.m in Sources */,
 				8BF3F84C1D8248BD00E669B2 /* AliPayViews.m in Sources */,
 				C51B42801C785236001679B5 /* MessageWViewController.m in Sources */,
+				64880FDF1FC3F0E40011A1D3 /* ApplyRecordTableViewCell.m in Sources */,
 				648CE9AC1F988E3E007E4F74 /* LunBoImageModel.m in Sources */,
 				8B3401FA1D7E529100320072 /* AliGesturePasswordViewController.m in Sources */,
 				64CC8EFF1F7A70E500665BFE /* MainRedBallView.m in Sources */,

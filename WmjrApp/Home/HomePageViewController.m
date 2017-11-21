@@ -205,6 +205,7 @@
                     RedPackageModel *redPackageModel = [RedPackageModel mj_objectWithKeyValues:dict];
                     [_redPackageArray addObject:redPackageModel];
                 }
+                
                 NSInteger row = _redPackageArray.count;
 //                [[NSUserDefaults standardUserDefaults] setObject:@(row) forKey:@"redBallNumber"];
                 //红包弹出框

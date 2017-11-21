@@ -10,6 +10,6 @@
 
 @interface ImmediatelyMoneyOrderViewController : UIViewController
 
-
+@property (nonatomic, assign)NSInteger identifier;//1.个人 2.企业
 
 @end

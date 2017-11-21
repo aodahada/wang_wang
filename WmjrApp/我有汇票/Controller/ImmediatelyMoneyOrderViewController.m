@@ -20,10 +20,21 @@
 @property (nonatomic, strong)UITextField *inputRate;
 @property (nonatomic, strong)UILabel *dateLabel;
 @property (nonatomic, strong)UITextView *inputChengdui;
-@property (nonatomic, strong)UIButton *addPic1;
-@property (nonatomic, strong)UIButton *addPic2;
 @property (nonatomic, assign)NSInteger selectTag;
 @property (nonatomic, strong)DateSelectView *dateSelectView;
+
+@property (nonatomic, strong)UIView *row6View;
+@property (nonatomic, strong)UILabel *tip6Label;
+@property (nonatomic, strong)UIView *row7View;
+@property (nonatomic, strong)UILabel *tip7Label;
+
+@property (nonatomic, assign)CGFloat buttonwidth;
+@property (nonatomic, strong)NSMutableArray *buttonArray1;//第一组Button
+@property (nonatomic, strong)NSMutableArray *imageArray1;//第一组图片
+@property (nonatomic, strong)NSMutableArray *deleteArray1;//第一组删除按钮
+@property (nonatomic, strong)NSMutableArray *buttonArray2;//第二组Button
+@property (nonatomic, strong)NSMutableArray *imageArray2;//第二组图片
+@property (nonatomic, strong)NSMutableArray *deleteArray2;//第二组删除按钮
 
 @end
 
@@ -40,6 +51,11 @@
     self.title = @"立即申请";
     self.view.backgroundColor = RGBA(240, 241, 243, 1.0);
     _typeTag = 0;
+    _buttonArray1 = [[NSMutableArray alloc]init];
+    _imageArray1 = [[NSMutableArray alloc]init];
+    _buttonArray2 = [[NSMutableArray alloc]init];
+    _imageArray2 = [[NSMutableArray alloc]init];
+    _buttonwidth = (SCREEN_WIDTH-RESIZE_UI(100))/4;
     [self setUpLayout];
 }
 
@@ -49,7 +65,7 @@
     _nextStepButton = [[UIButton alloc]init];
     [_nextStepButton setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextStepButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_nextStepButton setBackgroundColor:RGBA(232, 232, 232, 1.0)];
+    [_nextStepButton setBackgroundColor:RGBA(255, 88, 26, 1.0)];
     [_nextStepButton addTarget:self action:@selector(netStepButtonMethod) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_nextStepButton];
     [_nextStepButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -155,6 +171,7 @@
     
     _inputPiaojuMoney = [[UITextField alloc]init];
     _inputPiaojuMoney.placeholder = @"请输入票据面额(元)";
+    _inputPiaojuMoney.keyboardType = UIKeyboardTypeDecimalPad;
     _inputPiaojuMoney.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputPiaojuMoney.textAlignment = NSTextAlignmentRight;
     [row2View addSubview:_inputPiaojuMoney];
@@ -184,13 +201,24 @@
         make.left.equalTo(row3View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
+//    UILabel *baifenhaoLabel = [[UILabel alloc]init];
+//    baifenhaoLabel.text = @"%";
+//    baifenhaoLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+//    [row3View addSubview:baifenhaoLabel];
+//    [baifenhaoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(row3View);
+//        make.right.equalTo(row3View.mas_right).with.offset(-RESIZE_UI(20));
+//    }];
+    
     _inputRate = [[UITextField alloc]init];
     _inputRate.placeholder = @"请输入期望利率(%)";
+    _inputRate.keyboardType = UIKeyboardTypeDecimalPad;
     _inputRate.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputRate.textAlignment = NSTextAlignmentRight;
     [row3View addSubview:_inputRate];
     [_inputRate mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row3View);
+//        make.right.equalTo(baifenhaoLabel.mas_left);
         make.right.equalTo(row3View.mas_right).with.offset(-RESIZE_UI(20));
     }];
     
@@ -276,10 +304,10 @@
     }];
     
     //第六行
-    UIView *row6View = [[UIView alloc]init];
-    row6View.backgroundColor = [UIColor whiteColor];
-    [mainView addSubview:row6View];
-    [row6View mas_makeConstraints:^(MASConstraintMaker *make) {
+    _row6View = [[UIView alloc]init];
+    _row6View.backgroundColor = [UIColor whiteColor];
+    [mainView addSubview:_row6View];
+    [_row6View mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row5View.mas_bottom).with.offset(1);
         make.left.equalTo(mainView.mas_left);
         make.right.equalTo(mainView.mas_right);
@@ -287,80 +315,96 @@
     }];
     
     UILabel *label6 = [[UILabel alloc]init];
-    label6.text = @"承兑银行/承兑人";
+    label6.text = @"票面图片";
     label6.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     label6.textColor = RGBA(102, 102, 102, 1.0);
-    [row6View addSubview:label6];
+    [_row6View addSubview:label6];
     [label6 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row6View.mas_top).with.offset(RESIZE_UI(20));
-        make.left.equalTo(row6View.mas_left).with.offset(RESIZE_UI(20));
+        make.top.equalTo(_row6View.mas_top).with.offset(RESIZE_UI(20));
+        make.left.equalTo(_row6View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
-    UILabel *tip6Label = [[UILabel alloc]init];
-    tip6Label.text = @"(请保持照片信息清晰,勿进行修图软件处理)";
-    tip6Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
-    tip6Label.textColor = RGBA(0, 102, 177, 1.0);
-    [row6View addSubview:tip6Label];
-    [tip6Label mas_makeConstraints:^(MASConstraintMaker *make) {
+    _tip6Label = [[UILabel alloc]init];
+    _tip6Label.text = @"(请保持照片信息清晰,勿进行修图软件处理)";
+    _tip6Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
+    _tip6Label.textColor = RGBA(0, 102, 177, 1.0);
+    [_row6View addSubview:_tip6Label];
+    [_tip6Label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(label6.mas_bottom).with.offset(RESIZE_UI(30));
-        make.left.equalTo(row6View.mas_left).with.offset(RESIZE_UI(20));
+        make.left.equalTo(_row6View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
-    _addPic1 = [[UIButton alloc]init];
-    _addPic1.tag = 1;
-    [_addPic1 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
-    [_addPic1 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
-    [row6View addSubview:_addPic1];
-    [_addPic1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(tip6Label.mas_bottom).with.offset(RESIZE_UI(5));
-        make.left.equalTo(row6View.mas_left).with.offset(RESIZE_UI(20));
-        make.width.height.mas_offset(RESIZE_UI(72));
-    }];
+    for (int i=0; i<4; i++) {
+        UIButton *button1 = [[UIButton alloc]init];
+        button1.tag = 1;
+        if (i == 0) {
+            button1.hidden = NO;
+        } else {
+            button1.hidden = YES;
+        }
+        [button1 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
+        [button1 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
+        [_row6View addSubview:button1];
+        [button1 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_tip6Label.mas_bottom).with.offset(RESIZE_UI(5));
+            make.left.equalTo(_row6View.mas_left).with.offset(RESIZE_UI(20)+RESIZE_UI(20+_buttonwidth)*i);
+            make.width.height.mas_offset(_buttonwidth);
+        }];
+        [_buttonArray1 addObject:button1];
+    }
     
     //第七行
-    UIView *row7View = [[UIView alloc]init];
-    row7View.backgroundColor = [UIColor whiteColor];
-    [mainView addSubview:row7View];
-    [row7View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row6View.mas_bottom).with.offset(1);
+    _row7View = [[UIView alloc]init];
+    _row7View.backgroundColor = [UIColor whiteColor];
+    [mainView addSubview:_row7View];
+    [_row7View mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_row6View.mas_bottom).with.offset(1);
         make.left.equalTo(mainView.mas_left);
         make.right.equalTo(mainView.mas_right);
         make.height.mas_offset(RESIZE_UI(180));
     }];
     
     UILabel *label7 = [[UILabel alloc]init];
-    label7.text = @"承兑银行/承兑人";
+    label7.text = @"背书图片";
     label7.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     label7.textColor = RGBA(102, 102, 102, 1.0);
-    [row7View addSubview:label7];
+    [_row7View addSubview:label7];
     [label7 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row7View.mas_top).with.offset(RESIZE_UI(20));
-        make.left.equalTo(row7View.mas_left).with.offset(RESIZE_UI(20));
+        make.top.equalTo(_row7View.mas_top).with.offset(RESIZE_UI(20));
+        make.left.equalTo(_row7View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
-    UILabel *tip7Label = [[UILabel alloc]init];
-    tip7Label.text = @"(请保持照片信息清晰,勿进行修图软件处理)";
-    tip7Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
-    tip7Label.textColor = RGBA(0, 102, 177, 1.0);
-    [row7View addSubview:tip7Label];
-    [tip7Label mas_makeConstraints:^(MASConstraintMaker *make) {
+    _tip7Label = [[UILabel alloc]init];
+    _tip7Label.text = @"(请保持照片信息清晰,勿进行修图软件处理)";
+    _tip7Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
+    _tip7Label.textColor = RGBA(0, 102, 177, 1.0);
+    [_row7View addSubview:_tip7Label];
+    [_tip7Label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(label7.mas_bottom).with.offset(RESIZE_UI(30));
-        make.left.equalTo(row7View.mas_left).with.offset(RESIZE_UI(20));
+        make.left.equalTo(_row7View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
-    _addPic2 = [[UIButton alloc]init];
-    _addPic2.tag = 2;
-    [_addPic2 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
-    [_addPic2 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
-    [row7View addSubview:_addPic2];
-    [_addPic2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(tip7Label.mas_bottom).with.offset(RESIZE_UI(5));
-        make.left.equalTo(row7View.mas_left).with.offset(RESIZE_UI(20));
-        make.width.height.mas_offset(RESIZE_UI(72));
-    }];
+    for (int i=0; i<4; i++) {
+        UIButton *button2 = [[UIButton alloc]init];
+        button2.tag = 2;
+        if (i == 0) {
+            button2.hidden = NO;
+        } else {
+            button2.hidden = YES;
+        }
+        [button2 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
+        [button2 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
+        [_row7View addSubview:button2];
+        [button2 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_tip7Label.mas_bottom).with.offset(RESIZE_UI(5));
+            make.left.equalTo(_row7View.mas_left).with.offset(RESIZE_UI(20)+RESIZE_UI(20+_buttonwidth)*i);
+            make.width.height.mas_offset(_buttonwidth);
+        }];
+        [_buttonArray2 addObject:button2];
+    }
     
     [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(row7View.mas_bottom);
+        make.bottom.equalTo(_row7View.mas_bottom);
     }];
     
 }
@@ -427,7 +471,7 @@
     _dateLabel.text = content;
 }
 
-#pragma mark - 选择头像
+#pragma mark - 选择图片
 - (IBAction)selectHeadImageMethod:(UIButton *)sender {
 
     switch (sender.tag) {
@@ -482,36 +526,178 @@
     
     UIImage *selectImage = [info objectForKey:UIImagePickerControllerOriginalImage];
     if (_selectTag == 1) {
-        [_addPic1 setBackgroundImage:selectImage forState:UIControlStateNormal];
+        [_imageArray1 addObject:selectImage];
+        [self configDealWithButtonOne];
     } else {
-        [_addPic2 setBackgroundImage:selectImage forState:UIControlStateNormal];
+        [_imageArray2 addObject:selectImage];
+        [self configDealWithButtonTwo];
     }
     
 }
 
+#pragma mark - 整理第一组按钮的图片显示问题
+- (void)configDealWithButtonOne {
+    //初始化数组里的button
+    for (int i=0; i<_buttonArray1.count; i++) {
+        UIButton *button1 = _buttonArray1[i];
+        [button1 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
+        if (i==0) {
+            button1.hidden = NO;
+        } else {
+            button1.hidden = YES;
+        }
+    }
+    for (int i=0; i<_deleteArray1.count; i++) {
+        [_deleteArray1[i] removeFromSuperview];
+    }
+    _deleteArray1 = [[NSMutableArray alloc]init];
+    for (int i=0; i<_imageArray1.count; i++) {
+        UIImage *image1 = _imageArray1[i];
+        UIButton *button1 = _buttonArray1[i];
+        button1.hidden = NO;
+        [button1 setBackgroundImage:image1 forState:UIControlStateNormal];
+        UIButton *deleteButton = [[UIButton alloc]init];
+        deleteButton.tag = i;
+        [deleteButton setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
+        [deleteButton addTarget:self action:@selector(deleteImageOne:) forControlEvents:UIControlEventTouchUpInside];
+        [_row6View addSubview:deleteButton];
+        [deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_tip6Label.mas_bottom).with.offset(RESIZE_UI(5));
+            make.left.equalTo(_row6View.mas_left).with.offset(RESIZE_UI(20)+RESIZE_UI(20+_buttonwidth)*i);
+            make.width.height.mas_offset(_buttonwidth);
+        }];
+        [_deleteArray1 addObject:deleteButton];
+        if (i+1<4) {
+            UIButton *button11 = _buttonArray1[i+1];
+            button11.hidden = NO;
+        }
+        
+    }
+}
+
+#pragma mark - 第一组图片删除问题
+- (void)deleteImageOne:(UIButton *)sender {
+    NSInteger row = sender.tag;
+    [_imageArray1 removeObjectAtIndex:row];
+    //回调第一组按钮方法
+    [self configDealWithButtonOne];
+}
+
+#pragma mark - 整理第二组的图片显示问题
+- (void)configDealWithButtonTwo {
+    //初始化数组里的button
+    for (int i=0; i<_buttonArray2.count; i++) {
+        UIButton *button2 = _buttonArray2[i];
+        [button2 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
+        if (i==0) {
+            button2.hidden = NO;
+        } else {
+            button2.hidden = YES;
+        }
+    }
+    for (int i=0; i<_deleteArray2.count; i++) {
+        [_deleteArray2[i] removeFromSuperview];
+    }
+    _deleteArray2 = [[NSMutableArray alloc]init];
+    NSInteger row = _imageArray2.count;
+    for (int i=0; i<_imageArray2.count; i++) {
+        UIImage *image2 = _imageArray2[i];
+        UIButton *button2 = _buttonArray2[i];
+        button2.hidden = NO;
+        [button2 setBackgroundImage:image2 forState:UIControlStateNormal];
+        UIButton *deleteButton = [[UIButton alloc]init];
+        deleteButton.tag = i;
+        [deleteButton setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
+        [deleteButton addTarget:self action:@selector(deleteImageTwo:) forControlEvents:UIControlEventTouchUpInside];
+        [_row7View addSubview:deleteButton];
+        [deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_tip7Label.mas_bottom).with.offset(RESIZE_UI(5));
+            make.left.equalTo(_row7View.mas_left).with.offset(RESIZE_UI(20)+RESIZE_UI(20+_buttonwidth)*i);
+            make.width.height.mas_offset(_buttonwidth);
+        }];
+        [_deleteArray2 addObject:deleteButton];
+        if (i+1<4) {
+            UIButton *button22 = _buttonArray2[i+1];
+            button22.hidden = NO;
+        }
+        
+    }
+}
+
+#pragma mark - 第二组图片删除问题
+- (void)deleteImageTwo:(UIButton *)sender {
+    NSInteger row = sender.tag;
+    [_imageArray2 removeObjectAtIndex:row];
+    //回调第一组按钮方法
+    [self configDealWithButtonTwo];
+}
 #pragma mark - 下一步按钮
 - (void)netStepButtonMethod {
-//    if (_typeTag == 0) {
-//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请选择票据类型" content:@"" time:1.0 andCodes:^{
-//
-//        }];
-//    } else if ([_inputPiaojuMoney.text isEqualToString:@""]) {
-//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入票据金额" content:@"" time:1.0 andCodes:^{
-//
-//        }];
-//    } else if ([_inputRate.text isEqualToString:@""]) {
-//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入期望利率" content:@"" time:1.0 andCodes:^{
-//
-//        }];
-//    } else if ([_dateLabel.text isEqualToString:@""]) {
-//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请选择票据到期日" content:@"" time:1.0 andCodes:^{
-//
-//        }];
-//    } else {
-//
-//    }
-    LoansContentFillViewController *loansFillVC = [[LoansContentFillViewController alloc]init];
-    [self.navigationController pushViewController:loansFillVC animated:YES];
+    if (_typeTag == 0) {
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请选择票据类型" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else if ([_inputPiaojuMoney.text isEqualToString:@""]) {
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入票据金额" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else if ([_inputRate.text isEqualToString:@""]) {
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入期望利率" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else if ([_dateLabel.text isEqualToString:@""]) {
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请选择票据到期日" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else if ([_inputChengdui.text isEqualToString:@""] || [_inputChengdui.text isEqualToString:@"请输入承兑对象"]) {
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入承兑对象" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else if (_imageArray1.count == 0) {
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传票面图片" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else if (_imageArray2.count == 0) {
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传背书图片" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else {
+        LoansContentFillViewController *loansFillVC = [[LoansContentFillViewController alloc]init];
+        loansFillVC.identifier = self.identifier;
+        loansFillVC.typeTag = _typeTag;
+        loansFillVC.piaojuMoney = _inputPiaojuMoney.text;
+        loansFillVC.respectRate = _inputRate.text;
+        loansFillVC.piaojuDate = _dateLabel.text;
+        loansFillVC.chengduiObject = _inputChengdui.text;
+//        NSMutableArray *transImageArray1 = [[NSMutableArray alloc]init];
+//        for (int i=0; i<_imageArray1.count; i++) {
+//            UIImage *image1 = _imageArray1[i];
+//            NSData *data;
+//            if (UIImagePNGRepresentation(image1) == nil) {
+//                data = UIImageJPEGRepresentation(image1, 1);
+//            } else {
+//                data = UIImageJPEGRepresentation(image1, 1); //压缩图片，方便上传
+//            }
+//            NSString *dataString = [NSString stringWithFormat:@"%@",[data base64EncodedStringWithOptions: 0]];
+//            [transImageArray1 addObject:dataString];
+//        }
+        loansFillVC.piaoMianImage = [_imageArray1 copy];
+//        NSMutableArray *transImageArray2 = [[NSMutableArray alloc]init];
+//        for (int i=0; i<_imageArray2.count; i++) {
+//            UIImage *image2 = _imageArray1[i];
+//            NSData *data;
+//            if (UIImagePNGRepresentation(image2) == nil) {
+//                data = UIImageJPEGRepresentation(image2, 1);
+//            } else {
+//                data = UIImageJPEGRepresentation(image2, 1); //压缩图片，方便上传
+//            }
+//            NSString *dataString = [NSString stringWithFormat:@"%@",[data base64EncodedStringWithOptions: 0]];
+//            [transImageArray1 addObject:dataString];
+//        }
+        loansFillVC.beishuImage = [_imageArray1 copy];
+        [self.navigationController pushViewController:loansFillVC animated:YES];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
