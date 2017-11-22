@@ -30,6 +30,7 @@
 //        imageView.image = [UIImage imageNamed:@"image_top"];
         NSString *imageUrl = @"http://api.wmjr888.com/Uploads/app-banner.png";
         [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"image_top"]];
+        imageView.userInteractionEnabled = YES;
         [self addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
@@ -107,13 +108,8 @@
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
         BOOL isNull = [self isNullString:uid];
         if (isNull) {
-            //没登录的
-            buttonSinaCenter.hidden = YES;
-            labelForLine.hidden = YES;
             [self dontLoginView];
         } else {
-            buttonSinaCenter.hidden = NO;
-            labelForLine.hidden = NO;
             //登录后的
             [self alreadyLoginView];
         }
@@ -123,56 +119,12 @@
 
 - (void)dontLoginView {
     
-    UILabel *labelForTitle = [[UILabel alloc]init];
-    labelForTitle.text = @"旺马财富，值得托付";
-    labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(18)];
-    labelForTitle.textColor = [UIColor whiteColor];
-    [self addSubview:labelForTitle];
-    [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(90));
-        make.height.mas_offset(RESIZE_UI(18));
-        make.centerX.equalTo(self.mas_centerX);
-    }];
-    
-    UIView *viewForButton = [[UIView alloc]init];
-    viewForButton.layer.borderColor = [UIColor whiteColor].CGColor;
-    viewForButton.layer.borderWidth = 1.0f;
-    viewForButton.backgroundColor = [UIColor clearColor];
-    [self addSubview:viewForButton];
-    [viewForButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(120));
-        make.centerX.equalTo(self.mas_centerX);
-        make.width.mas_offset(RESIZE_UI(208));
-        make.height.mas_offset(RESIZE_UI(36));
-    }];
-    
-    UILabel *labelForSina = [[UILabel alloc]init];
-    labelForSina.text = @"了解旺马财富安全保障";
-    labelForSina.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
-    labelForSina.textColor = [UIColor whiteColor];
-    [viewForButton addSubview:labelForSina];
-    [labelForSina mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(viewForButton.mas_top).with.offset(RESIZE_UI(10));
-        make.bottom.equalTo(viewForButton.mas_bottom).with.offset(RESIZE_UI(-10));
-        make.left.equalTo(viewForButton.mas_left).with.offset(RESIZE_UI(13));
-        make.width.mas_offset(RESIZE_UI(170));
-    }];
-    
-    UIImageView *imageViewForJianTou = [[UIImageView alloc]init];
-    imageViewForJianTou.image = [UIImage imageNamed:@"icon_enter"];
-    [viewForButton addSubview:imageViewForJianTou];
-    [imageViewForJianTou mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(viewForButton.mas_centerY);
-        make.right.equalTo(viewForButton.mas_right).with.offset(RESIZE_UI(-12));
-        make.width.height.mas_offset(RESIZE_UI(15));
-    }];
-    
-    UIButton *buttonForSina = [[UIButton alloc]init];
-    buttonForSina.backgroundColor = [UIColor clearColor];
-    [buttonForSina addTarget:self action:@selector(jumpToSinaMethod) forControlEvents:UIControlEventTouchUpInside];
-    [viewForButton addSubview:buttonForSina];
-    [buttonForSina mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(viewForButton);
+    UIImageView *backgroundImageView = [[UIImageView alloc]init];
+    backgroundImageView.image = [UIImage imageNamed:@"image_background2"];
+    backgroundImageView.userInteractionEnabled = YES;
+    [self addSubview:backgroundImageView];
+    [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(backgroundImageView);
     }];
     
     UIView *viewForConsult = [[UIView alloc]init];

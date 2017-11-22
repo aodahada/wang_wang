@@ -209,7 +209,7 @@
     return NO;
 }
 
-- (NSString *)convertNullString:(NSString*)oldString{
++ (NSString *)convertNullString:(NSString*)oldString{
     if (oldString!=nil && (NSNull *)oldString != [NSNull null]) {
         if ([oldString length]!=0) {
             if ([oldString isEqualToString:@"(null)"]) {

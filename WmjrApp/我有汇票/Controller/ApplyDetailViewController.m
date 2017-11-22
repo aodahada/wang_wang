@@ -11,6 +11,8 @@
 
 @interface ApplyDetailViewController ()
 
+@property (nonatomic, assign)CGFloat buttonwidth;
+
 @end
 
 @implementation ApplyDetailViewController
@@ -20,6 +22,8 @@
     // Do any additional setup after loading the view.
     self.title = @"申请详情";
     self.view.backgroundColor = [UIColor whiteColor];
+    _buttonwidth = (SCREEN_WIDTH-RESIZE_UI(100))/4;
+    _identifier = [_applyRecordModel.member_type integerValue];//1.个人 2.企业
     [self setUpLayout];
 }
 
@@ -324,74 +328,134 @@
         make.right.equalTo(row6View.mas_right).with.offset(-RESIZE_UI(20));
     }];
     
-    //第七行 职业
-    UIView *row7View = [[UIView alloc]init];
-    row7View.backgroundColor = [UIColor whiteColor];
-    [viewMain addSubview:row7View];
-    [row7View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row6View.mas_bottom).with.offset(RESIZE_UI(1));
-        make.left.equalTo(viewMain.mas_left);
-        make.right.equalTo(viewMain.mas_right);
-        make.height.mas_offset(RESIZE_UI(50));
-    }];
-    
-    UILabel *personJobTitle = [[UILabel alloc]init];
-    personJobTitle.text = @"职业";
-    personJobTitle.textColor = RGBA(102, 102, 102, 1.0);
-    personJobTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [row7View addSubview:personJobTitle];
-    [personJobTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(row7View.mas_centerY);
-        make.left.equalTo(row7View.mas_left).with.offset(RESIZE_UI(20));
-    }];
-    
-    UILabel *personJobContent = [[UILabel alloc]init];
-    personJobContent.text = _applyRecordModel.borrow_carrer;
-    personJobContent.textColor = RGBA(60, 60, 60, 1.0);
-    personJobContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [row7View addSubview:personJobContent];
-    [personJobContent mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(row7View.mas_centerY);
-        make.right.equalTo(row7View.mas_right).with.offset(-RESIZE_UI(20));
-    }];
-    
-    //第八行 年收入
-    UIView *row8View = [[UIView alloc]init];
-    row8View.backgroundColor = [UIColor whiteColor];
-    [viewMain addSubview:row8View];
-    [row8View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row7View.mas_bottom).with.offset(RESIZE_UI(1));
-        make.left.equalTo(viewMain.mas_left);
-        make.right.equalTo(viewMain.mas_right);
-        make.height.mas_offset(RESIZE_UI(50));
-    }];
-    
-    UILabel *personSalaryTitle = [[UILabel alloc]init];
-    personSalaryTitle.text = @"年收入";
-    personSalaryTitle.textColor = RGBA(102, 102, 102, 1.0);
-    personSalaryTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [row8View addSubview:personSalaryTitle];
-    [personSalaryTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(row8View.mas_centerY);
-        make.left.equalTo(row8View.mas_left).with.offset(RESIZE_UI(20));
-    }];
-    
-    UILabel *personSalaryContent = [[UILabel alloc]init];
-    personSalaryContent.text = _applyRecordModel.borrow_income;
-    personSalaryContent.textColor = RGBA(60, 60, 60, 1.0);
-    personSalaryContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [row8View addSubview:personSalaryContent];
-    [personSalaryContent mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(row8View.mas_centerY);
-        make.right.equalTo(row8View.mas_right).with.offset(-RESIZE_UI(20));
-    }];
+    if (_identifier == 1) {
+        //第七行 职业
+        UIView *row7View = [[UIView alloc]init];
+        row7View.backgroundColor = [UIColor whiteColor];
+        [viewMain addSubview:row7View];
+        [row7View mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row6View.mas_bottom).with.offset(RESIZE_UI(1));
+            make.left.equalTo(viewMain.mas_left);
+            make.right.equalTo(viewMain.mas_right);
+            make.height.mas_offset(RESIZE_UI(50));
+        }];
+        
+        UILabel *personJobTitle = [[UILabel alloc]init];
+        personJobTitle.text = @"职业";
+        personJobTitle.textColor = RGBA(102, 102, 102, 1.0);
+        personJobTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [row7View addSubview:personJobTitle];
+        [personJobTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(row7View.mas_centerY);
+            make.left.equalTo(row7View.mas_left).with.offset(RESIZE_UI(20));
+        }];
+        
+        UILabel *personJobContent = [[UILabel alloc]init];
+        if ([[SingletonManager convertNullString:_applyRecordModel.borrow_carrer] isEqualToString:@""]) {
+            personJobContent.text = @"未填写";
+            personJobContent.textColor = RGBA(153, 153, 153, 1.0);
+        } else {
+            personJobContent.text = _applyRecordModel.borrow_carrer;
+            personJobContent.textColor = RGBA(60, 60, 60, 1.0);
+        }
+        personJobContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [row7View addSubview:personJobContent];
+        [personJobContent mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(row7View.mas_centerY);
+            make.right.equalTo(row7View.mas_right).with.offset(-RESIZE_UI(20));
+        }];
+        
+        //第八行 年收入
+        UIView *row8View = [[UIView alloc]init];
+        row8View.backgroundColor = [UIColor whiteColor];
+        [viewMain addSubview:row8View];
+        [row8View mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row7View.mas_bottom).with.offset(RESIZE_UI(1));
+            make.left.equalTo(viewMain.mas_left);
+            make.right.equalTo(viewMain.mas_right);
+            make.height.mas_offset(RESIZE_UI(50));
+        }];
+        
+        UILabel *personSalaryTitle = [[UILabel alloc]init];
+        personSalaryTitle.text = @"年收入";
+        personSalaryTitle.textColor = RGBA(102, 102, 102, 1.0);
+        personSalaryTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [row8View addSubview:personSalaryTitle];
+        [personSalaryTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(row8View.mas_centerY);
+            make.left.equalTo(row8View.mas_left).with.offset(RESIZE_UI(20));
+        }];
+        
+        UILabel *personSalaryContent = [[UILabel alloc]init];
+        if ([[SingletonManager convertNullString:_applyRecordModel.borrow_income] isEqualToString:@""]) {
+            personSalaryContent.text = @"未填写";
+            personSalaryContent.textColor = RGBA(153, 153, 153, 1.0);
+        } else {
+            personSalaryContent.text = _applyRecordModel.borrow_income;
+            personSalaryContent.textColor = RGBA(60, 60, 60, 1.0);
+        }
+        personSalaryContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [row8View addSubview:personSalaryContent];
+        [personSalaryContent mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(row8View.mas_centerY);
+            make.right.equalTo(row8View.mas_right).with.offset(-RESIZE_UI(20));
+        }];
+    } else {
+        //第七行 企业名称
+        UIView *row7View = [[UIView alloc]init];
+        row7View.backgroundColor = [UIColor whiteColor];
+        [viewMain addSubview:row7View];
+        [row7View mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row6View.mas_bottom).with.offset(RESIZE_UI(1));
+            make.left.equalTo(viewMain.mas_left);
+            make.right.equalTo(viewMain.mas_right);
+            make.height.mas_offset(RESIZE_UI(70));
+        }];
+        
+        UILabel *enterpriseTitle = [[UILabel alloc]init];
+        enterpriseTitle.text = @"企业名称";
+        enterpriseTitle.textColor = RGBA(102, 102, 102, 1.0);
+        enterpriseTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [row7View addSubview:enterpriseTitle];
+        [enterpriseTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row7View.mas_top).with.offset(RESIZE_UI(20));
+            make.left.equalTo(row7View.mas_left).with.offset(RESIZE_UI(20));
+        }];
+        
+        UILabel *enterpriseContent = [[UILabel alloc]init];
+        NSString *content = _applyRecordModel.enterprise_name;
+        if (content.length>13) {
+            enterpriseContent.textAlignment = NSTextAlignmentLeft;
+            enterpriseContent.numberOfLines = 2;
+        } else {
+            enterpriseContent.textAlignment = NSTextAlignmentRight;
+            enterpriseContent.numberOfLines = 1;
+        }
+        enterpriseContent.text = content;
+        [enterpriseContent setUserInteractionEnabled:NO];
+        enterpriseContent.textColor = RGBA(60, 60, 60, 1.0);
+        enterpriseContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [row7View addSubview:enterpriseContent];
+        [enterpriseContent mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row7View.mas_top).with.offset(RESIZE_UI(20));
+            make.width.mas_offset(RESIZE_UI(212));
+            make.right.equalTo(row7View.mas_right).with.offset(-RESIZE_UI(20));
+        }];
+    }
     
     //第九行 借款用途标题
+    //距离第六行距离
+    CGFloat row6Distace;
+    if (_identifier == 1) {
+        row6Distace = RESIZE_UI(109);
+    } else {
+        row6Distace = RESIZE_UI(80);
+    }
     UIView *row9View = [[UIView alloc]init];
     row9View.backgroundColor = [UIColor whiteColor];
     [viewMain addSubview:row9View];
     [row9View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row8View.mas_bottom).with.offset(RESIZE_UI(10));
+        make.top.equalTo(row6View.mas_bottom).with.offset(row6Distace);
         make.left.equalTo(viewMain.mas_left);
         make.right.equalTo(viewMain.mas_right);
         make.height.mas_offset(RESIZE_UI(50));
@@ -419,9 +483,14 @@
     }];
     
     UITextView *loansUseTextView = [[UITextView alloc]init];
-    loansUseTextView.text = _applyRecordModel.borrow_use;
+    if ([[SingletonManager convertNullString:_applyRecordModel.borrow_use] isEqualToString:@""]) {
+        loansUseTextView.text = @"未填写";
+        loansUseTextView.textColor = RGBA(153, 153, 153, 1.0);
+    } else {
+        loansUseTextView.text = _applyRecordModel.borrow_use;
+        loansUseTextView.textColor = RGBA(60, 60, 60, 1.0);
+    }
     loansUseTextView.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    loansUseTextView.textColor = RGBA(60, 60, 60, 1.0);
     [row10View addSubview:loansUseTextView];
     [loansUseTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row10View.mas_top).with.offset(RESIZE_UI(14));
@@ -473,9 +542,14 @@
     }];
 
     UITextView *ensureStepTextView = [[UITextView alloc]init];
-    ensureStepTextView.text = _applyRecordModel.borrow_guarantee;
+    if ([[SingletonManager convertNullString:_applyRecordModel.borrow_guarantee] isEqualToString:@""]) {
+        ensureStepTextView.text = @"未填写";
+        ensureStepTextView.textColor = RGBA(153, 153, 153, 1.0);
+    } else {
+        ensureStepTextView.text = _applyRecordModel.borrow_guarantee;
+        ensureStepTextView.textColor = RGBA(60, 60, 60, 1.0);
+    }
     ensureStepTextView.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    ensureStepTextView.textColor = RGBA(60, 60, 60, 1.0);
     [row12View addSubview:ensureStepTextView];
     [ensureStepTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row12View.mas_top).with.offset(RESIZE_UI(14));
@@ -484,43 +558,93 @@
         make.bottom.equalTo(row12View.mas_bottom).with.offset(-RESIZE_UI(30));
     }];
 
-    //第十三行 营业执照正副本
-    UIView *row13View = [[UIView alloc]init];
-    row13View.backgroundColor = [UIColor whiteColor];
-    [viewMain addSubview:row13View];
-    [row13View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row12View.mas_bottom).with.offset(RESIZE_UI(10));
-        make.left.equalTo(viewMain.mas_left);
-        make.right.equalTo(viewMain.mas_right);
-        make.height.mas_offset(RESIZE_UI(150));
-    }];
-
+    //营业执照正副本
+    if (_identifier == 2) {
+        UIView *row13View = [[UIView alloc]init];
+        row13View.backgroundColor = [UIColor whiteColor];
+        [viewMain addSubview:row13View];
+        [row13View mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row12View.mas_bottom).with.offset(RESIZE_UI(10));
+            make.left.equalTo(viewMain.mas_left);
+            make.right.equalTo(viewMain.mas_right);
+            make.height.mas_offset(RESIZE_UI(150));
+        }];
+        
+        UILabel *businessLicenseTitle = [[UILabel alloc]init];
+        businessLicenseTitle.text = @"营业执照正副本";
+        businessLicenseTitle.textColor = RGBA(102, 102, 102, 1.0);
+        businessLicenseTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [row13View addSubview:businessLicenseTitle];
+        [businessLicenseTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row13View.mas_top).with.offset(RESIZE_UI(20));
+            make.left.equalTo(row13View.mas_left).with.offset(RESIZE_UI(20));
+        }];
+        
+        NSArray *enterpriseImageArray = _applyRecordModel.img_enterprise;
+        for (int i=0; i<enterpriseImageArray.count; i++) {
+            NSDictionary *imageDic = enterpriseImageArray[i];
+            NSString *imageUrl = imageDic[@"img_url"];
+            UIButton *imageButton = [[UIButton alloc]init];
+            [imageButton sd_setBackgroundImageWithURL:[NSURL URLWithString:imageUrl] forState:UIControlStateNormal];
+            [row13View addSubview:imageButton];
+            [imageButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(businessLicenseTitle.mas_bottom).with.offset(RESIZE_UI(14));
+                make.left.equalTo(row13View.mas_left).with.offset(RESIZE_UI(20)+RESIZE_UI(20+_buttonwidth)*i);
+                make.width.height.mas_offset(_buttonwidth);
+            }];
+        }
+    }
+    
+    //票面图片
+    UIView *row13HuoView = [[UIView alloc]init];
+    row13HuoView.backgroundColor = [UIColor whiteColor];
+    [viewMain addSubview:row13HuoView];
+    if (_identifier == 1) {
+        [row13HuoView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row12View.mas_bottom).with.offset(RESIZE_UI(10));
+            make.left.equalTo(viewMain.mas_left);
+            make.right.equalTo(viewMain.mas_right);
+            make.height.mas_offset(RESIZE_UI(150));
+        }];
+    } else {
+        [row13HuoView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row12View.mas_bottom).with.offset(RESIZE_UI(161));
+            make.left.equalTo(viewMain.mas_left);
+            make.right.equalTo(viewMain.mas_right);
+            make.height.mas_offset(RESIZE_UI(150));
+        }];
+    }
+    
     UILabel *businessLicenseTitle = [[UILabel alloc]init];
-    businessLicenseTitle.text = @"营业执照正副本";
+    businessLicenseTitle.text = @"票面图片";
     businessLicenseTitle.textColor = RGBA(102, 102, 102, 1.0);
     businessLicenseTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [row13View addSubview:businessLicenseTitle];
+    [row13HuoView addSubview:businessLicenseTitle];
     [businessLicenseTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row13View.mas_top).with.offset(RESIZE_UI(20));
-        make.left.equalTo(row13View.mas_left).with.offset(RESIZE_UI(20));
+        make.top.equalTo(row13HuoView.mas_top).with.offset(RESIZE_UI(20));
+        make.left.equalTo(row13HuoView.mas_left).with.offset(RESIZE_UI(20));
     }];
     
-    UILabel *tip13Label = [[UILabel alloc]init];
-    tip13Label.text = @"(请保持照片信息清晰,勿进行修图软件处理)";
-    tip13Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
-    tip13Label.textColor = RGBA(0, 102, 177, 1.0);
-    [row13View addSubview:tip13Label];
-    [tip13Label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(businessLicenseTitle.mas_bottom).with.offset(RESIZE_UI(15));
-        make.left.equalTo(row13View.mas_left).with.offset(RESIZE_UI(20));
-    }];
+    NSArray *piaomianImageArray = _applyRecordModel.img_front;
+    for (int i=0; i<piaomianImageArray.count; i++) {
+        NSDictionary *imageDic = piaomianImageArray[i];
+        NSString *imageUrl = imageDic[@"img_url"];
+        UIButton *imageButton = [[UIButton alloc]init];
+        [imageButton sd_setBackgroundImageWithURL:[NSURL URLWithString:imageUrl] forState:UIControlStateNormal];
+        [row13HuoView addSubview:imageButton];
+        [imageButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(businessLicenseTitle.mas_bottom).with.offset(RESIZE_UI(14));
+            make.left.equalTo(row13HuoView.mas_left).with.offset(RESIZE_UI(20)+RESIZE_UI(20+_buttonwidth)*i);
+            make.width.height.mas_offset(_buttonwidth);
+        }];
+    }
 
     //第十四行 背书图片
     UIView *row14View = [[UIView alloc]init];
     row14View.backgroundColor = [UIColor whiteColor];
     [viewMain addSubview:row14View];
     [row14View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row13View.mas_bottom).with.offset(RESIZE_UI(1));
+        make.top.equalTo(row13HuoView.mas_bottom).with.offset(RESIZE_UI(1));
         make.left.equalTo(viewMain.mas_left);
         make.right.equalTo(viewMain.mas_right);
         make.height.mas_offset(RESIZE_UI(150));
@@ -535,54 +659,74 @@
         make.top.equalTo(row14View.mas_top).with.offset(RESIZE_UI(20));
         make.left.equalTo(row14View.mas_left).with.offset(RESIZE_UI(20));
     }];
-
-    //第十五行 审核反馈标题
-    UIView *row15View = [[UIView alloc]init];
-    row15View.backgroundColor = [UIColor whiteColor];
-    [viewMain addSubview:row15View];
-    [row15View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row14View.mas_bottom).with.offset(RESIZE_UI(10));
-        make.left.equalTo(viewMain.mas_left);
-        make.right.equalTo(viewMain.mas_right);
-        make.height.mas_offset(RESIZE_UI(50));
-    }];
-
-    UILabel *shenheTitle = [[UILabel alloc]init];
-    shenheTitle.text = @"审核反馈";
-    shenheTitle.textColor = RGBA(102, 102, 102, 1.0);
-    shenheTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [row15View addSubview:shenheTitle];
-    [shenheTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(row15View.mas_centerY);
-        make.left.equalTo(row15View.mas_left).with.offset(RESIZE_UI(20));
-    }];
-
-    //第十六行 审核反馈详情
-    UIView *row16View = [[UIView alloc]init];
-    row16View.backgroundColor = [UIColor whiteColor];
-    [viewMain addSubview:row16View];
-    [row16View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row15View.mas_bottom).with.offset(RESIZE_UI(1));
-        make.left.equalTo(viewMain.mas_left);
-        make.right.equalTo(viewMain.mas_right);
-        make.height.mas_offset(RESIZE_UI(100));
-    }];
-
-    UITextView *shenheTextView = [[UITextView alloc]init];
-    shenheTextView.text = @"公司实际股东经理人的上海浦东新区一处商业房产作为担保物；同时公司的固定资产也一同质押。";
-    shenheTextView.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    shenheTextView.textColor = RGBA(0, 102, 177, 1.0);
-    [row16View addSubview:shenheTextView];
-    [shenheTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row16View.mas_top).with.offset(RESIZE_UI(14));
-        make.left.equalTo(row16View.mas_left).with.offset(RESIZE_UI(20));
-        make.right.equalTo(row16View.mas_right).with.offset(-RESIZE_UI(20));
-        make.bottom.equalTo(row16View.mas_bottom).with.offset(-RESIZE_UI(30));
-    }];
     
-    [viewMain mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(row16View.mas_bottom);
-    }];
+    NSArray *beimainImageArray = _applyRecordModel.img_bg;
+    for (int i=0; i<beimainImageArray.count; i++) {
+        NSDictionary *imageDic = beimainImageArray[i];
+        NSString *imageUrl = imageDic[@"img_url"];
+        UIButton *imageButton = [[UIButton alloc]init];
+        [imageButton sd_setBackgroundImageWithURL:[NSURL URLWithString:imageUrl] forState:UIControlStateNormal];
+        [row14View addSubview:imageButton];
+        [imageButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(beishuPicTitle.mas_bottom).with.offset(RESIZE_UI(14));
+            make.left.equalTo(row14View.mas_left).with.offset(RESIZE_UI(20)+RESIZE_UI(20+_buttonwidth)*i);
+            make.width.height.mas_offset(_buttonwidth);
+        }];
+    }
+    
+    if (_identifier == 1) {
+        //第十五行 审核反馈标题
+        UIView *row15View = [[UIView alloc]init];
+        row15View.backgroundColor = [UIColor whiteColor];
+        [viewMain addSubview:row15View];
+        [row15View mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row14View.mas_bottom).with.offset(RESIZE_UI(10));
+            make.left.equalTo(viewMain.mas_left);
+            make.right.equalTo(viewMain.mas_right);
+            make.height.mas_offset(RESIZE_UI(50));
+        }];
+        
+        UILabel *shenheTitle = [[UILabel alloc]init];
+        shenheTitle.text = @"审核反馈";
+        shenheTitle.textColor = RGBA(102, 102, 102, 1.0);
+        shenheTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [row15View addSubview:shenheTitle];
+        [shenheTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(row15View.mas_centerY);
+            make.left.equalTo(row15View.mas_left).with.offset(RESIZE_UI(20));
+        }];
+        
+        //第十六行 审核反馈详情
+        UIView *row16View = [[UIView alloc]init];
+        row16View.backgroundColor = [UIColor whiteColor];
+        [viewMain addSubview:row16View];
+        [row16View mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row15View.mas_bottom).with.offset(RESIZE_UI(1));
+            make.left.equalTo(viewMain.mas_left);
+            make.right.equalTo(viewMain.mas_right);
+            make.height.mas_offset(RESIZE_UI(100));
+        }];
+        
+        UITextView *shenheTextView = [[UITextView alloc]init];
+        shenheTextView.text = _applyRecordModel.audit;
+        shenheTextView.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        shenheTextView.textColor = RGBA(0, 102, 177, 1.0);
+        [row16View addSubview:shenheTextView];
+        [shenheTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row16View.mas_top).with.offset(RESIZE_UI(14));
+            make.left.equalTo(row16View.mas_left).with.offset(RESIZE_UI(20));
+            make.right.equalTo(row16View.mas_right).with.offset(-RESIZE_UI(20));
+            make.bottom.equalTo(row16View.mas_bottom).with.offset(-RESIZE_UI(30));
+        }];
+        
+        [viewMain mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(row16View.mas_bottom);
+        }];
+    } else {
+        [viewMain mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(row14View.mas_bottom);
+        }];
+    }
     
 }
 

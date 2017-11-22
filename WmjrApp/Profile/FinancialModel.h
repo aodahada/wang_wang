@@ -20,6 +20,6 @@
 @property (nonatomic, copy) NSString *duedate;
 @property (nonatomic, copy) NSString *expirydate;
 @property (nonatomic, copy) NSString *createtime;
-@property (nonatomic, copy) NSString *redpacket;
+@property (nonatomic, copy) NSString *redpacket;//"0为没用红包  其余为收益"
 
 @end

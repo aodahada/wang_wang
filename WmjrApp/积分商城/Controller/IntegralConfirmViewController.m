@@ -270,7 +270,7 @@
 - (void)confirmOrderMethod {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-    NSString *addressId = [[SingletonManager sharedManager] convertNullString:_defaultAddressModel.id];
+    NSString *addressId = [SingletonManager convertNullString:_defaultAddressModel.id];
     [manager postDataWithUrlActionStr:@"Score/exchange" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"goods_id":_integralProductDetailModel.id,@"address_id":addressId} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];

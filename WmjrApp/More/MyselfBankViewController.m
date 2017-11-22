@@ -10,6 +10,7 @@
 #import "MMPopupItem.h"
 #import "MMPopupWindow.h"
 #import "BankDetailViewController.h"
+#import "ReleaseBankCardViewController.h"
 
 @interface MyselfBankViewController ()
 
@@ -139,13 +140,17 @@
 - (IBAction)unbindAction:(id)sender {
     NetManager *manager = [[NetManager alloc] init];
     /* 余额不为零,不能解绑 */
-    [SVProgressHUD showInfoWithStatus:@"请稍等"];
+    [SVProgressHUD showWithStatus:@"请稍等"];
     [manager postDataWithUrlActionStr:@"User/queryBalance" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"} withBlock:^(id obj) {
         if (obj) {
             [SVProgressHUD dismiss];
             NSString *balanceValue = [obj[@"data"] objectForKey:@"available_balance"];
             if ([balanceValue floatValue] > 0) {
-                [[SingletonManager sharedManager] alert1PromptInfo:@"余额不为零,不能解绑"];
+//                [[SingletonManager sharedManager] alert1PromptInfo:@"余额不为零,不能解绑"];
+                //余额不为0解绑银行卡的方式
+                [SVProgressHUD dismiss];
+                ReleaseBankCardViewController *releaseBankCardVC = [[ReleaseBankCardViewController alloc]init];
+                [self.navigationController pushViewController:releaseBankCardVC animated:YES];
                 return ;
             } else {
                 /* 点击确定,可解绑银行卡 */

@@ -26,6 +26,7 @@
 		64880FE21FC424460011A1D3 /* ApplyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FE11FC424460011A1D3 /* ApplyDetailViewController.m */; };
 		64880FE51FC42BC60011A1D3 /* ApplySmallMessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FE41FC42BC60011A1D3 /* ApplySmallMessView.m */; };
 		64880FE81FC4A7E50011A1D3 /* ApplyRocrdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FE71FC4A7E50011A1D3 /* ApplyRocrdModel.m */; };
+		64880FEB1FC569530011A1D3 /* ReleaseBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FEA1FC569530011A1D3 /* ReleaseBankCardViewController.m */; };
 		648CE9AC1F988E3E007E4F74 /* LunBoImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 648CE9AB1F988E3E007E4F74 /* LunBoImageModel.m */; };
 		649982271F91AFCE008511AB /* IntegralShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982261F91AFCE008511AB /* IntegralShopViewController.m */; };
 		649982331F94D241008511AB /* IntegralProductCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 649982311F94D241008511AB /* IntegralProductCollectionViewCell.m */; };
@@ -579,6 +580,8 @@
 		64880FE41FC42BC60011A1D3 /* ApplySmallMessView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplySmallMessView.m; sourceTree = "<group>"; };
 		64880FE61FC4A7E50011A1D3 /* ApplyRocrdModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplyRocrdModel.h; sourceTree = "<group>"; };
 		64880FE71FC4A7E50011A1D3 /* ApplyRocrdModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplyRocrdModel.m; sourceTree = "<group>"; };
+		64880FE91FC569530011A1D3 /* ReleaseBankCardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReleaseBankCardViewController.h; sourceTree = "<group>"; };
+		64880FEA1FC569530011A1D3 /* ReleaseBankCardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseBankCardViewController.m; sourceTree = "<group>"; };
 		648CE9AA1F988E3E007E4F74 /* LunBoImageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunBoImageModel.h; sourceTree = "<group>"; };
 		648CE9AB1F988E3E007E4F74 /* LunBoImageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunBoImageModel.m; sourceTree = "<group>"; };
 		649982251F91AFCE008511AB /* IntegralShopViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralShopViewController.h; sourceTree = "<group>"; };
@@ -2112,6 +2115,8 @@
 				C51B42F51C7854AC001679B5 /* MyselfBankViewController.h */,
 				C51B42F61C7854AC001679B5 /* MyselfBankViewController.m */,
 				C51B42F71C7854AC001679B5 /* MyselfBankViewController.xib */,
+				64880FE91FC569530011A1D3 /* ReleaseBankCardViewController.h */,
+				64880FEA1FC569530011A1D3 /* ReleaseBankCardViewController.m */,
 			);
 			name = mybank;
 			sourceTree = "<group>";
@@ -3258,6 +3263,7 @@
 				C51B43481C7855AD001679B5 /* RegisterModel.m in Sources */,
 				64CDE0C71F9634C8007F9449 /* AddAddressViewController.m in Sources */,
 				C51B43511C7855D6001679B5 /* SingletonManager.m in Sources */,
+				64880FEB1FC569530011A1D3 /* ReleaseBankCardViewController.m in Sources */,
 				C51B42F81C7854AC001679B5 /* MyselfBankViewController.m in Sources */,
 				C51B43231C785535001679B5 /* CapitalAccountViewController.m in Sources */,
 				C51B436E1C785641001679B5 /* SharedView.m in Sources */,

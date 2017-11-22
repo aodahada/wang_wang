@@ -327,7 +327,7 @@
     _tip6Label = [[UILabel alloc]init];
     _tip6Label.text = @"(请保持照片信息清晰,勿进行修图软件处理)";
     _tip6Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
-    _tip6Label.textColor = RGBA(0, 102, 177, 1.0);
+    _tip6Label.textColor = RGBA(153, 153, 153, 1.0);
     [_row6View addSubview:_tip6Label];
     [_tip6Label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(label6.mas_bottom).with.offset(RESIZE_UI(30));
@@ -377,7 +377,7 @@
     _tip7Label = [[UILabel alloc]init];
     _tip7Label.text = @"(请保持照片信息清晰,勿进行修图软件处理)";
     _tip7Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
-    _tip7Label.textColor = RGBA(0, 102, 177, 1.0);
+    _tip7Label.textColor = RGBA(153, 153, 153, 1.0);
     [_row7View addSubview:_tip7Label];
     [_tip7Label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(label7.mas_bottom).with.offset(RESIZE_UI(30));
@@ -450,6 +450,9 @@
 #pragma mark - 查看日期选择器
 - (void)watchDateMethod {
     
+    [_inputRate resignFirstResponder];
+    [_inputPiaojuMoney resignFirstResponder];
+    [_inputChengdui resignFirstResponder];
     UIWindow *window = [[UIApplication sharedApplication].delegate window];
     _dateSelectView = [[DateSelectView alloc]init];
     _dateSelectView.delegate = self;

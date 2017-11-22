@@ -363,7 +363,7 @@
         _tip6Label = [[UILabel alloc]init];
         _tip6Label.text = @"(请保持照片信息清晰,勿进行修图软件处理)";
         _tip6Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
-        _tip6Label.textColor = RGBA(0, 102, 177, 1.0);
+        _tip6Label.textColor = RGBA(153, 153, 153, 1.0);
         [_row6View addSubview:_tip6Label];
         [_tip6Label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(label6.mas_bottom).with.offset(RESIZE_UI(30));
@@ -411,6 +411,16 @@
         make.left.equalTo(row7View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
+    UILabel *label7Tip = [[UILabel alloc]init];
+    label7Tip.text = @"(选填项)";
+    label7Tip.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    label7Tip.textColor = RGBA(153, 153, 153, 1.0);
+    [row7View addSubview:label7Tip];
+    [label7Tip mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(label7.mas_centerY);
+        make.left.equalTo(label7.mas_right);
+    }];
+    
     _loansUseTextView = [[UITextView alloc]init];
     _loansUseTextView.text = @"借款用途描述，200字以内";
     _loansUseTextView.textColor = RGBA(199, 199, 204, 1.0);
@@ -443,6 +453,16 @@
     [label8 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row8View.mas_top).with.offset(RESIZE_UI(20));
         make.left.equalTo(row8View.mas_left).with.offset(RESIZE_UI(20));
+    }];
+    
+    UILabel *label8Tip = [[UILabel alloc]init];
+    label8Tip.text = @"(选填项)";
+    label8Tip.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    label8Tip.textColor = RGBA(153, 153, 153, 1.0);
+    [row8View addSubview:label8Tip];
+    [label8Tip mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(label8.mas_centerY);
+        make.left.equalTo(label8.mas_right);
     }];
     
     UIImageView *selectZhiya = [[UIImageView alloc]init];
@@ -660,67 +680,72 @@
         dict[@"borrow_income"] = _inputYearIncome.text;
     } else {
         dict[@"enterprise_name"] = _inputEnterpriseName.text;
-        NSMutableArray *transImageArray3 = [[NSMutableArray alloc]init];
-        for (int i=0; i<_imageArray3.count; i++) {
-            UIImage *image3 = _imageArray3[i];
-            NSData *data;
-            if (UIImagePNGRepresentation(image3) == nil) {
-                data = UIImageJPEGRepresentation(image3, 1);
-            } else {
-                data = UIImageJPEGRepresentation(image3, 1); //压缩图片，方便上传
-            }
-            NSString *dataString = [data base64Encoding];
-            [transImageArray3 addObject:dataString];
-        }
-        dict[@"img_enterprise"] = [transImageArray3 copy];
     }
     dict[@"borrow_use"] = _loansUseTextView.text;
     dict[@"borrow_guarantee"] = _danbaoSelectTextView.text;
-    NSMutableArray *transImageArray1 = [[NSMutableArray alloc]init];
+
+    [SVProgressHUD showWithStatus:@"上传中"];
+    NSMutableArray *paramImagArray = [[NSMutableArray alloc]init];//参数数组
+    NSMutableArray *imageSumArray = [[NSMutableArray alloc]init];//图片数组
     for (int i=0; i<_piaoMianImage.count; i++) {
-        UIImage *image1 = _piaoMianImage[i];
-        NSData *data;
-        if (UIImagePNGRepresentation(image1) == nil) {
-            data = UIImageJPEGRepresentation(image1, 1);
-        } else {
-            data = UIImageJPEGRepresentation(image1, 1); //压缩图片，方便上传
-        }
-        NSString *dataString = [data base64Encoding];
-        [transImageArray1 addObject:dataString];
+        [paramImagArray addObject:@"img_front"];
+        [imageSumArray addObject:_piaoMianImage[i]];
     }
-    dict[@"img_front"] = [transImageArray1 copy];
-    
-    NSMutableArray *transImageArray2 = [[NSMutableArray alloc]init];
     for (int i=0; i<_beishuImage.count; i++) {
-        UIImage *image2 = _beishuImage[i];
-        NSData *data;
-        if (UIImagePNGRepresentation(image2) == nil) {
-            data = UIImageJPEGRepresentation(image2, 1);
-        } else {
-            data = UIImageJPEGRepresentation(image2, 1); //压缩图片，方便上传
-        }
-        NSString *dataString = [data base64Encoding];
-        [transImageArray2 addObject:dataString];
+        [paramImagArray addObject:@"img_bg"];
+        [imageSumArray addObject:_beishuImage[i]];
     }
-    dict[@"img_bg"] = [transImageArray2 copy];
-//    NSLog(@"我的字段:%@",dict);
-    [manager postDataWithUrlActionStr:@"Bill/apply" withParamDictionary:dict withBlock:^(id obj) {
-        if ([obj[@"result"] isEqualToString:@"1"]) {
-            NSDictionary *dic = obj[@"data"];
-            [SVProgressHUD dismiss];
-            [[SingletonManager sharedManager] showHUDView:self.view title:@"提交成功" content:@"" time:1.0 andCodes:^{
-                LoansFilledSuccessViewController *loanFillSuccessVC = [[LoansFilledSuccessViewController alloc]init];
-                [self.navigationController pushViewController:loanFillSuccessVC animated:YES];
-            }];
-        } else {
-            NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
-            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
-            alertConfig.defaultTextOK = @"确定";
-            [SVProgressHUD dismiss];
-            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
-            [alertView show];
+    for (int i=0; i<_imageArray3.count; i++) {
+        [paramImagArray addObject:@"img_enterprise"];
+        [imageSumArray addObject:_imageArray3[i]];
+    }
+    AFHTTPSessionManager *httpManager = [AFHTTPSessionManager manager];
+    httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html",  nil];//设置相应内容类型
+    httpManager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    httpManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [httpManager.requestSerializer setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
+    
+    NSString *dateNew = [manager getCurrentTimestamp];
+    NSDictionary *paramDic = @{@"timestamp":dateNew, @"action":@"Bill/lists", @"data":dict};//参数序列
+    NSString *base64Str = [manager paramCodeStr:paramDic];
+    //@"file":@"ss"
+    [httpManager POST:WMJRAPI parameters:@{@"msg":base64Str,@"file":@"ss"} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+        if (imageSumArray.count != 0) {
+            for (int i = 0; i < imageSumArray.count; i++)
+            {
+                NSData *imageData = UIImageJPEGRepresentation(imageSumArray[i], 1.0);
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                formatter.dateFormat = @"yyyyMMddHHmmss";
+                NSString *str = [formatter stringFromDate:[NSDate date]];
+                NSString *fileName = [NSString stringWithFormat:@"%@ - %d.jpg", str,i];
+                
+                // 上传图片，以文件流的格式
+                [formData appendPartWithFileData:imageData name:paramImagArray[i] fileName:fileName mimeType:@"image/jpeg"];
+            }
         }
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        id obj = [manager paramUnCodeStr:responseStr];
+        if (obj) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"上传成功"];
+            LoansFilledSuccessViewController *loansFillSuccessVC = [[LoansFilledSuccessViewController alloc]init];
+            [self.navigationController pushViewController:loansFillSuccessVC animated:YES];
+            
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSString *msgStr = @"上传失败";
+        MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+        alertConfig.defaultTextOK = @"确定";
+        [SVProgressHUD dismiss];
+        MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+        [alertView show];
     }];
+    
     
 }
 

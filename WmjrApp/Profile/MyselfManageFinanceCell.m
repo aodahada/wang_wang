@@ -12,6 +12,7 @@
 {
     UILabel *_fundWealth;//基金财富宝
     UILabel *_holdNum;//持有数量
+    UILabel *_redBallEarn;//红包收益
 //    UILabel *_ydayEarn;//昨日收益
     UILabel *_accountEarn;//累计收益
     UILabel *_weekOfYield;//仅七日年化收益率
@@ -41,18 +42,25 @@
     [self.contentView addSubview:_fundWealth];
     
     _holdNum = [[UILabel alloc] initWithFrame:RESIZE_FRAME(RESIZE_FRAME(CGRectMake(20, 40, 150, 20)))];
-    
     _holdNum.textAlignment = NSTextAlignmentLeft;
     _holdNum.textColor = AUXILY_COLOR;
     _holdNum.font = [UIFont systemFontOfSize:RESIZE_UI(13.0f)];
     [self.contentView addSubview:_holdNum];
     
     _ydayEarn = [[UILabel alloc] initWithFrame:RESIZE_FRAME(CGRectMake(200, 40, 120, 20))];
-    
     _ydayEarn.textAlignment = NSTextAlignmentRight;
     _ydayEarn.textColor = AUXILY_COLOR;
     _ydayEarn.font = [UIFont systemFontOfSize:RESIZE_UI(13.0f)];
     [self.contentView addSubview:_ydayEarn];
+    
+    _redBallEarn = [[UILabel alloc]init];
+    _redBallEarn.textColor = AUXILY_COLOR;
+    _redBallEarn.font = [UIFont systemFontOfSize:RESIZE_UI(13.0f)];
+    [self.contentView addSubview:_redBallEarn];
+    [_redBallEarn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_fundWealth.mas_centerY);
+        make.right.equalTo(_ydayEarn.mas_right);
+    }];
     
     UILabel *grayLine = [[UILabel alloc] initWithFrame:RESIZE_FRAME(RESIZE_FRAME(CGRectMake(20, 70, 300, 1)))];
     grayLine.alpha = .4;
@@ -75,6 +83,12 @@
 
 - (void)setModel:(FinancialModel *)model {
     _fundWealth.text = model.name;
+    if ([model.redpacket isEqualToString:@"0"]) {
+        _redBallEarn.hidden = YES;
+    } else {
+        _redBallEarn.hidden = NO;
+        _redBallEarn.text = [NSString stringWithFormat:@"红包收益 %@元",model.redpacket];
+    }
     _holdNum.text = [NSString stringWithFormat:@"持有%@元", model.money];
     _ydayEarn.text = [NSString stringWithFormat:@"日收＋%.2f元", [model.day_income doubleValue]];
     _weekOfYield.text = [NSString stringWithFormat:@"年化率%.2f%@", [model.returnrate doubleValue] *100, @"%"];
