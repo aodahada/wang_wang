@@ -1,4 +1,4 @@
-platform:ios, '7.1'
+platform:ios, '8.1'
 target "WmjrApp" do
 pod 'AFNetworking', '~> 3.1.0'
 pod 'SDWebImage'
@@ -16,5 +16,6 @@ pod 'MBProgressHUD'
 pod 'Bugly'
 pod 'UMengAnalytics'
 pod 'DZNEmptyDataSet'
+pod 'ZLPhotoBrowser'
 end
 

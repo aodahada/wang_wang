@@ -60,6 +60,7 @@
     UIButton *personalButton = [[UIButton alloc]init];
     [personalButton setBackgroundImage:[UIImage imageNamed:@"image_geren"] forState:UIControlStateNormal];
     [personalButton addTarget:self action:@selector(jumpToImmediatelyApplyPersonal) forControlEvents:UIControlEventTouchUpInside];
+    [personalButton setAdjustsImageWhenHighlighted:NO];
     [self.view addSubview:personalButton];
     [personalButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topImageView.mas_bottom).with.offset(RESIZE_UI(38));
@@ -71,6 +72,7 @@
     UIButton *enterpriseButton = [[UIButton alloc]init];
     [enterpriseButton setBackgroundImage:[UIImage imageNamed:@"image_qiye"] forState:UIControlStateNormal];
     [enterpriseButton addTarget:self action:@selector(jumpToImmediatelyApplyEnterprise) forControlEvents:UIControlEventTouchUpInside];
+    [enterpriseButton setAdjustsImageWhenHighlighted:NO];
     [self.view addSubview:enterpriseButton];
     [enterpriseButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(personalButton.mas_bottom).with.offset(RESIZE_UI(10));

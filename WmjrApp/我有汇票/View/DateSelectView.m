@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong)UIDatePicker *dataPicker;
 @property (nonatomic, copy)NSString *contentValue;
+@property (nonatomic, strong)NSDate *selectDate;
 
 @end
 
@@ -87,17 +88,18 @@
 
 #pragma mark - 确定方法
 - (void)confirmMethod {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(confirmDatePickerView:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(confirmDatePickerView: andDate:)]) {
         if ([_contentValue isEqualToString:@""]) {
             NSDate *date = [NSDate date];
             NSString *dateString = [NSString stringWithFormat:@"%@",date];
             _contentValue = [self dealStringMethod:dateString];
         }
-        [self.delegate confirmDatePickerView:_contentValue];
+        [self.delegate confirmDatePickerView:_contentValue andDate:_selectDate];
     }
 }
 
 - (void)rollAction:(UIDatePicker *)datePicker {
+    _selectDate = datePicker.date;
     _contentValue = [NSString stringWithFormat:@"%@",datePicker.date];
     _contentValue = [self dealStringMethod:_contentValue];
 }

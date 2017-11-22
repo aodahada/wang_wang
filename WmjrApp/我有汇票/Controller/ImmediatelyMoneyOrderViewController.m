@@ -9,6 +9,8 @@
 #import "ImmediatelyMoneyOrderViewController.h"
 #import "DateSelectView.h"
 #import "LoansContentFillViewController.h"
+#import "ZLPhotoActionSheet.h"
+#import "ZLPhotoConfiguration.h"
 
 @interface ImmediatelyMoneyOrderViewController ()<UITextViewDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,DateSelectViewDelegate,UITextViewDelegate>
 
@@ -17,12 +19,15 @@
 @property (nonatomic, strong)UIButton *yinpiaoButton;
 @property (nonatomic, assign)NSInteger typeTag;//选择银票按钮为1  选择商票按钮为2  没选为0
 @property (nonatomic, strong)UITextField *inputPiaojuMoney;
+@property (nonatomic, strong)UILabel *piaojuUnitLabel;//配合inputPiaojuMoney
 @property (nonatomic, strong)UITextField *inputRate;
+@property (nonatomic, strong)UILabel *rateUnitLabel;//配合inputRate
 @property (nonatomic, strong)UILabel *dateLabel;
 @property (nonatomic, strong)UITextView *inputChengdui;
 @property (nonatomic, assign)NSInteger selectTag;
 @property (nonatomic, strong)DateSelectView *dateSelectView;
 
+@property (nonatomic, strong)UIView *row3View;
 @property (nonatomic, strong)UIView *row6View;
 @property (nonatomic, strong)UILabel *tip6Label;
 @property (nonatomic, strong)UIView *row7View;
@@ -35,6 +40,8 @@
 @property (nonatomic, strong)NSMutableArray *buttonArray2;//第二组Button
 @property (nonatomic, strong)NSMutableArray *imageArray2;//第二组图片
 @property (nonatomic, strong)NSMutableArray *deleteArray2;//第二组删除按钮
+
+@property (nonatomic, strong)NSDate *selectDate;
 
 @end
 
@@ -169,22 +176,33 @@
         make.left.equalTo(row2View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
+    _piaojuUnitLabel = [[UILabel alloc]init];
+    _piaojuUnitLabel.text = @"";//@" 元"
+    _piaojuUnitLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    [row2View addSubview:_piaojuUnitLabel];
+    [_piaojuUnitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(row2View);
+        make.right.equalTo(row2View.mas_right).with.offset(-RESIZE_UI(20));
+    }];
+    
     _inputPiaojuMoney = [[UITextField alloc]init];
     _inputPiaojuMoney.placeholder = @"请输入票据面额(元)";
     _inputPiaojuMoney.keyboardType = UIKeyboardTypeDecimalPad;
     _inputPiaojuMoney.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputPiaojuMoney.textAlignment = NSTextAlignmentRight;
+    _inputPiaojuMoney.tag = 1;
+    [_inputPiaojuMoney addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row2View addSubview:_inputPiaojuMoney];
     [_inputPiaojuMoney mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row2View);
-        make.right.equalTo(row2View.mas_right).with.offset(-RESIZE_UI(20));
+        make.right.equalTo(_piaojuUnitLabel.mas_left);
     }];
     
     //第三行
-    UIView *row3View = [[UIView alloc]init];
-    row3View.backgroundColor = [UIColor whiteColor];
-    [mainView addSubview:row3View];
-    [row3View mas_makeConstraints:^(MASConstraintMaker *make) {
+    _row3View = [[UIView alloc]init];
+    _row3View.backgroundColor = [UIColor whiteColor];
+    [mainView addSubview:_row3View];
+    [_row3View mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row2View.mas_bottom).with.offset(1);
         make.left.equalTo(mainView.mas_left);
         make.right.equalTo(mainView.mas_right);
@@ -195,31 +213,32 @@
     label3.text = @"期望利率";
     label3.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     label3.textColor = RGBA(102, 102, 102, 1.0);
-    [row3View addSubview:label3];
+    [_row3View addSubview:label3];
     [label3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(row3View);
-        make.left.equalTo(row3View.mas_left).with.offset(RESIZE_UI(20));
+        make.centerY.equalTo(_row3View);
+        make.left.equalTo(_row3View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
-//    UILabel *baifenhaoLabel = [[UILabel alloc]init];
-//    baifenhaoLabel.text = @"%";
-//    baifenhaoLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-//    [row3View addSubview:baifenhaoLabel];
-//    [baifenhaoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(row3View);
-//        make.right.equalTo(row3View.mas_right).with.offset(-RESIZE_UI(20));
-//    }];
+    _rateUnitLabel = [[UILabel alloc]init];
+    _rateUnitLabel.text = @"";//@" %"
+    _rateUnitLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    [_row3View addSubview:_rateUnitLabel];
+    [_rateUnitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_row3View);
+        make.right.equalTo(_row3View.mas_right).with.offset(-RESIZE_UI(20));
+    }];
     
     _inputRate = [[UITextField alloc]init];
     _inputRate.placeholder = @"请输入期望利率(%)";
     _inputRate.keyboardType = UIKeyboardTypeDecimalPad;
     _inputRate.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputRate.textAlignment = NSTextAlignmentRight;
-    [row3View addSubview:_inputRate];
+    _inputRate.tag = 2;
+    [_inputRate addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [_row3View addSubview:_inputRate];
     [_inputRate mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(row3View);
-//        make.right.equalTo(baifenhaoLabel.mas_left);
-        make.right.equalTo(row3View.mas_right).with.offset(-RESIZE_UI(20));
+        make.centerY.equalTo(_row3View);
+        make.right.equalTo(_rateUnitLabel.mas_left);
     }];
     
     //第四行
@@ -227,7 +246,7 @@
     row4View.backgroundColor = [UIColor whiteColor];
     [mainView addSubview:row4View];
     [row4View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row3View.mas_bottom).with.offset(1);
+        make.top.equalTo(_row3View.mas_bottom).with.offset(1);
         make.left.equalTo(mainView.mas_left);
         make.right.equalTo(mainView.mas_right);
         make.height.mas_offset(RESIZE_UI(60));
@@ -409,6 +428,37 @@
     
 }
 
+#pragma mark - 监听textfield
+-(void)textFieldDidChange :(UITextField *)theTextField {
+    
+    if ([theTextField.text isEqualToString:@""]) {
+        switch (theTextField.tag) {
+            case 1:
+                _piaojuUnitLabel.text = @"";
+                break;
+            case 2:
+                _rateUnitLabel.text = @"";
+                break;
+                
+            default:
+                break;
+        }
+    } else {
+        switch (theTextField.tag) {
+            case 1:
+                _piaojuUnitLabel.text = @" 元";
+                break;
+            case 2:
+                _rateUnitLabel.text = @" %";
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+}
+
 #pragma mark - UITextViewDelegate
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     if ([textView.text isEqualToString:@"请输入承兑对象"]) {
@@ -426,6 +476,11 @@
         textView.textColor = RGBA(60, 60, 60, 1.0);
     } else {
         textView.textColor = RGBA(199, 199, 204, 1.0);
+    }
+    if (textView.text.length>11) {
+        textView.textAlignment = NSTextAlignmentLeft;
+    } else {
+        textView.textAlignment = NSTextAlignmentRight;
     }
 }
 
@@ -469,8 +524,9 @@
     _dateSelectView = nil;
 }
 
-- (void)confirmDatePickerView:(NSString *)content {
+- (void)confirmDatePickerView:(NSString *)content andDate:(NSDate *)selectDate {
     [self cancelDatePickerView];
+    _selectDate = selectDate;
     _dateLabel.text = content;
 }
 
@@ -488,53 +544,40 @@
         default:
             break;
     }
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"选取图片",@"拍摄照片", nil];
-    [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
+    ZLPhotoActionSheet *ac = [[ZLPhotoActionSheet alloc] init];
     
-}
-
-#pragma mark - actionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-    UIImagePickerController *picker= [[UIImagePickerController alloc]init];
-    picker.delegate = self;
-    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    if (buttonIndex == 0) {
-        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        
-    } else if (buttonIndex == 1) {
-        sourceType = UIImagePickerControllerSourceTypeCamera;
-    } else {
-        return;
-    }
-    // 没有拍照功能
-    if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
-        UIAlertView *cameraAlert = [[UIAlertView alloc] init];
-        cameraAlert.message = @"您的设备不支持拍照。";
-        [cameraAlert addButtonWithTitle:@"OK"];
-        [cameraAlert show];
-        return;
-    }
-    picker.sourceType = sourceType;
-    [self presentViewController:picker animated:YES completion:^{
-    }];
-    
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-    
-    UIImage *selectImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    //相册参数配置
+    ZLPhotoConfiguration *configuration = [ZLPhotoConfiguration defaultPhotoConfiguration];
     if (_selectTag == 1) {
-        [_imageArray1 addObject:selectImage];
-        [self configDealWithButtonOne];
+        configuration.maxSelectCount = 4-_imageArray1.count;
     } else {
-        [_imageArray2 addObject:selectImage];
-        [self configDealWithButtonTwo];
+        configuration.maxSelectCount = 4-_imageArray2.count;
     }
+    ac.configuration = configuration;
+    
+    //如调用的方法无sender参数，则该参数必传
+    ac.sender = self;
+    
+    //选择回调
+    [ac setSelectImageBlock:^(NSArray<UIImage *> * _Nonnull images, NSArray<PHAsset *> * _Nonnull assets, BOOL isOriginal) {
+        //your codes
+        for (int i=0; i<images.count; i++) {
+            UIImage *selectImage = images[i];
+            if (_selectTag == 1) {
+                [_imageArray1 addObject:selectImage];
+            } else {
+                [_imageArray2 addObject:selectImage];
+            }
+        }
+        if (_selectTag == 1) {
+            [self configDealWithButtonOne];
+        } else {
+            [self configDealWithButtonTwo];
+        }
+    }];
+    
+    //调用相册
+    [ac showPreviewAnimated:YES];
     
 }
 
@@ -672,6 +715,7 @@
         loansFillVC.respectRate = _inputRate.text;
         loansFillVC.piaojuDate = _dateLabel.text;
         loansFillVC.chengduiObject = _inputChengdui.text;
+        loansFillVC.selectDate = _selectDate;
 //        NSMutableArray *transImageArray1 = [[NSMutableArray alloc]init];
 //        for (int i=0; i<_imageArray1.count; i++) {
 //            UIImage *image1 = _imageArray1[i];

@@ -56,4 +56,13 @@
 /**为金额添加千位分隔符*/
 - (NSString *)getQianWeiFenGeFuString:(NSString *)stringValue;
 
+/**
+ 相差天数
+
+ @param beginDate 开始日期
+ @param endDate 结束日期
+ @return 相差天数
+ */
++ (NSInteger)getTheCountOfTwoDaysWithBeginDate:(NSDate *)beginDate endDate:(NSDate *)endDate;
+
 @end

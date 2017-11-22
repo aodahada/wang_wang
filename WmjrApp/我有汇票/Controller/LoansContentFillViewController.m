@@ -8,17 +8,22 @@
 
 #import "LoansContentFillViewController.h"
 #import "LoansFilledSuccessViewController.h"
+#import "ZLPhotoActionSheet.h"
+#import "ZLPhotoConfiguration.h"
 
 @interface LoansContentFillViewController ()<UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate>
 
 @property (nonatomic, strong)UIButton *commitApplyButton;
 @property (nonatomic, strong)UITextField *inputLoansMoney;//借款金额
+@property (nonatomic, strong)UILabel *loansMoneyUnitLabel;//配合inputLoansMoney
 @property (nonatomic, strong)UITextField *inputLoansDuration;//借款期限
+@property (nonatomic, strong)UILabel *loansDurationUnitLabel;//配合inputLoansDuration
 @property (nonatomic, strong)UITextField *inputApplyName;//申请人姓名
 @property (nonatomic, strong)UITextField *inputApplyPhone;//申请人电话
 @property (nonatomic, strong)UITextField *inputProfession;//申请人职业
 @property (nonatomic, strong)UITextField *inputEnterpriseName;//企业名称
 @property (nonatomic, strong)UITextField *inputYearIncome;//申请人年收入
+@property (nonatomic, strong)UILabel *yearIncomeUnitLabel;//配合inputYearIncome
 @property (nonatomic, strong)UITextView *loansUseTextView;//借款用途
 @property (nonatomic, strong)UITextView *danbaoSelectTextView;//担保措施用途
 
@@ -28,6 +33,8 @@
 @property (nonatomic, strong)NSMutableArray *buttonArray3;//第三组Button
 @property (nonatomic, strong)NSMutableArray *imageArray3;//第三组图片
 @property (nonatomic, strong)NSMutableArray *deleteArray3;//第三组删除按钮
+
+@property (nonatomic, assign)NSInteger day;//到期天数差
 
 @end
 
@@ -98,19 +105,30 @@
         make.left.equalTo(row1View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
+    _loansMoneyUnitLabel = [[UILabel alloc]init];
+    _loansMoneyUnitLabel.text = @"";//@" 元"
+    _loansMoneyUnitLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    [row1View addSubview:_loansMoneyUnitLabel];
+    [_loansMoneyUnitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(row1View.mas_top).with.offset(RESIZE_UI(20));
+        make.right.equalTo(row1View.mas_right).with.offset(-RESIZE_UI(20));
+    }];
+    
     _inputLoansMoney = [[UITextField alloc]init];
     _inputLoansMoney.placeholder = @"请输入借款面额(元)";
     _inputLoansMoney.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputLoansMoney.textAlignment = NSTextAlignmentRight;
     _inputLoansMoney.keyboardType = UIKeyboardTypeDecimalPad;
+    _inputLoansMoney.tag = 1;
+    [_inputLoansMoney addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row1View addSubview:_inputLoansMoney];
     [_inputLoansMoney mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row1View.mas_top).with.offset(RESIZE_UI(20));
-        make.right.equalTo(row1View.mas_right).with.offset(-RESIZE_UI(20));
+        make.right.equalTo(_loansMoneyUnitLabel.mas_left);
     }];
     
     UILabel *tip1Label = [[UILabel alloc]init];
-    tip1Label.text = @"注:借款金额需小于等于票面金额88元";
+    tip1Label.text = [NSString stringWithFormat:@"注:借款金额需小于等于票面金额%@元",_piaojuMoney];
     tip1Label.textColor = RGBA(0, 104, 178, 1.0);
     tip1Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
     [row1View addSubview:tip1Label];
@@ -140,19 +158,35 @@
         make.left.equalTo(row2View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
+    _loansDurationUnitLabel = [[UILabel alloc]init];
+    _loansDurationUnitLabel.text = @"";//@" 天"
+    _loansDurationUnitLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    [row2View addSubview:_loansDurationUnitLabel];
+    [_loansDurationUnitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(row2View.mas_top).with.offset(RESIZE_UI(20));
+        make.right.equalTo(row2View.mas_right).with.offset(-RESIZE_UI(20));
+    }];
+    
     _inputLoansDuration = [[UITextField alloc]init];
     _inputLoansDuration.placeholder = @"请输入借款期限(天)";
     _inputLoansDuration.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputLoansDuration.textAlignment = NSTextAlignmentRight;
     _inputLoansDuration.keyboardType = UIKeyboardTypeDecimalPad;
+    _inputLoansDuration.tag = 2;
+    [_inputLoansDuration addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row2View addSubview:_inputLoansDuration];
     [_inputLoansDuration mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row2View.mas_top).with.offset(RESIZE_UI(20));
-        make.right.equalTo(row2View.mas_right).with.offset(-RESIZE_UI(20));
+        make.right.equalTo(_loansDurationUnitLabel.mas_left);
     }];
     
+//    NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];//实例化一个NSDateFormatter对象
+//    [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
+//    NSString *dateTodayString = [dateFormat stringFromDate:[NSDate date]];
+//    NSString *dateEndString = [dateFormat stringFromDate:_selectDate];
+    _day = [SingletonManager getTheCountOfTwoDaysWithBeginDate:[NSDate date] endDate:_selectDate];
     UILabel *tip2Label = [[UILabel alloc]init];
-    tip2Label.text = @"注:借款期限需要小于等于票据到期期限12天";
+    tip2Label.text = [NSString stringWithFormat:@"注:借款期限需要小于等于票据到期期限%ld天",(long)_day];
     tip2Label.textColor = RGBA(0, 104, 178, 1.0);
     tip2Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
     [row2View addSubview:tip2Label];
@@ -331,15 +365,26 @@
             make.left.equalTo(_row6View.mas_left).with.offset(RESIZE_UI(20));
         }];
         
+        _yearIncomeUnitLabel = [[UILabel alloc]init];
+        _yearIncomeUnitLabel.text = @"";//@" 万"
+        _yearIncomeUnitLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [_row6View addSubview:_yearIncomeUnitLabel];
+        [_yearIncomeUnitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(_row6View);
+            make.right.equalTo(_row6View.mas_right).with.offset(-RESIZE_UI(20));
+        }];
+        
         _inputYearIncome = [[UITextField alloc]init];
         _inputYearIncome.placeholder = @"请输入申请人年收入(万)";
         _inputYearIncome.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
         _inputYearIncome.textAlignment = NSTextAlignmentRight;
         _inputYearIncome.keyboardType = UIKeyboardTypeDecimalPad;
+        _inputYearIncome.tag = 3;
+        [_inputYearIncome addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         [_row6View addSubview:_inputYearIncome];
         [_inputYearIncome mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(_row6View);
-            make.right.equalTo(_row6View.mas_right).with.offset(-RESIZE_UI(20));
+            make.right.equalTo(_yearIncomeUnitLabel.mas_left);
         }];
     } else {
         [viewMain addSubview:_row6View];
@@ -503,39 +548,91 @@
     
 }
 
-#pragma mark - 选择图片
-- (IBAction)selectHeadImageMethod:(UIButton *)sender {
+#pragma mark - 监听textfield
+-(void)textFieldDidChange :(UITextField *)theTextField {
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"选取图片",@"拍摄照片", nil];
-    [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
+    if ([theTextField.text isEqualToString:@""]) {
+        switch (theTextField.tag) {
+            case 1:
+                _loansMoneyUnitLabel.text = @"";
+                break;
+            case 2:
+                _loansDurationUnitLabel.text = @"";
+                break;
+            case 3:
+                _yearIncomeUnitLabel.text = @"";
+                break;
+                
+            default:
+                break;
+        }
+    } else {
+        switch (theTextField.tag) {
+            case 1:
+            {
+                _loansMoneyUnitLabel.text = @" 元";
+                CGFloat money = [_inputLoansMoney.text floatValue];
+                CGFloat bottomMoney = [_piaojuMoney floatValue];
+                if (money>bottomMoney) {
+                    [[SingletonManager sharedManager] showHUDView:self.view title:@"借款金额不能大于票面金额" content:@"" time:1.0 andCodes:^{
+                        
+                    }];
+                    return;
+                } else {
+                    NSLog(@"ok的");
+                }
+            }
+                break;
+            case 2:
+            {
+                _loansDurationUnitLabel.text = @" 天";
+                NSInteger needDay = [_inputLoansDuration.text integerValue];
+                if (needDay>_day) {
+                    [[SingletonManager sharedManager] showHUDView:self.view title:@"借款期限不能大于票据期限" content:@"" time:1.0 andCodes:^{
+                        
+                    }];
+                    return;
+                } else {
+                    
+                }
+            }
+                break;
+            case 3:
+                _yearIncomeUnitLabel.text = @" 万";
+                break;
+                
+            default:
+                break;
+        }
+    }
     
 }
 
-#pragma mark - actionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+#pragma mark - 选择图片
+- (void)selectHeadImageMethod:(UIButton *)sender {
     
-    UIImagePickerController *picker= [[UIImagePickerController alloc]init];
-    picker.delegate = self;
-    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    if (buttonIndex == 0) {
-        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        
-    } else if (buttonIndex == 1) {
-        sourceType = UIImagePickerControllerSourceTypeCamera;
-    } else {
-        return;
-    }
-    // 没有拍照功能
-    if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
-        UIAlertView *cameraAlert = [[UIAlertView alloc] init];
-        cameraAlert.message = @"您的设备不支持拍照。";
-        [cameraAlert addButtonWithTitle:@"OK"];
-        [cameraAlert show];
-        return;
-    }
-    picker.sourceType = sourceType;
-    [self presentViewController:picker animated:YES completion:^{
+    ZLPhotoActionSheet *ac = [[ZLPhotoActionSheet alloc] init];
+    
+    //相册参数配置
+    ZLPhotoConfiguration *configuration = [ZLPhotoConfiguration defaultPhotoConfiguration];
+    configuration.maxSelectCount = 4-_imageArray3.count;
+    ac.configuration = configuration;
+    
+    //如调用的方法无sender参数，则该参数必传
+    ac.sender = self;
+    
+    //选择回调
+    [ac setSelectImageBlock:^(NSArray<UIImage *> * _Nonnull images, NSArray<PHAsset *> * _Nonnull assets, BOOL isOriginal) {
+        //your codes
+        for (int i=0; i<images.count; i++) {
+            UIImage *selectImage = images[i];
+            [_imageArray3 addObject:selectImage];
+        }
+        [self configDealWithButtonThree];
     }];
+    
+    //调用相册
+    [ac showPreviewAnimated:YES];
     
 }
 
@@ -600,6 +697,11 @@
 
 #pragma mark - 提交信息
 - (void)commitLoansMethod {
+    
+    CGFloat money = [_inputLoansMoney.text floatValue];
+    CGFloat bottomMoney = [_piaojuMoney floatValue];
+    NSInteger needDay = [_inputLoansDuration.text integerValue];
+    
     if ([_inputLoansMoney.text isEqualToString:@""]) {
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入借款金额" content:@"" time:1.0 andCodes:^{
 
@@ -618,22 +720,22 @@
         [[SingletonManager sharedManager] showHUDView:self.view title:tip content:@"" time:1.0 andCodes:^{
             
         }];
-    } else if ([_inputApplyPhone.text isEqualToString:@""]) {
+    } else if ([_inputApplyPhone.text isEqualToString:@""] || _inputApplyPhone.text.length != 11) {
         NSString *tip;
         if (_identifier == 1) {
-            tip = @"请输入申请人电话";
+            tip = @"请输入正确的申请人电话";
         } else {
-            tip = @"请输入联系人电话";
+            tip = @"请输入正确的联系人电话";
         }
         [[SingletonManager sharedManager] showHUDView:self.view title:tip content:@"" time:1.0 andCodes:^{
             
         }];
-    } else if ([_loansUseTextView.text isEqualToString:@"借款用途描述，200字以内"] || [_loansUseTextView.text isEqualToString:@""]) {
-        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入借款用途描述" content:@"" time:1.0 andCodes:^{
+    } else if (money>bottomMoney) {
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"借款金额不能大于票面金额" content:@"" time:1.0 andCodes:^{
             
         }];
-    } else if ([_danbaoSelectTextView.text isEqualToString:@"担保措施描述，200字以内"] || [_danbaoSelectTextView.text isEqualToString:@""]) {
-        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入担保措施描述" content:@"" time:1.0 andCodes:^{
+    } else if (needDay>_day) {
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"借款期限不能大于票据期限" content:@"" time:1.0 andCodes:^{
             
         }];
     } else {
@@ -711,18 +813,16 @@
     //@"file":@"ss"
     [httpManager POST:WMJRAPI parameters:@{@"msg":base64Str,@"file":@"ss"} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-        if (imageSumArray.count != 0) {
-            for (int i = 0; i < imageSumArray.count; i++)
-            {
-                NSData *imageData = UIImageJPEGRepresentation(imageSumArray[i], 1.0);
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                formatter.dateFormat = @"yyyyMMddHHmmss";
-                NSString *str = [formatter stringFromDate:[NSDate date]];
-                NSString *fileName = [NSString stringWithFormat:@"%@ - %d.jpg", str,i];
-                
-                // 上传图片，以文件流的格式
-                [formData appendPartWithFileData:imageData name:paramImagArray[i] fileName:fileName mimeType:@"image/jpeg"];
-            }
+        for (int i = 0; i < paramImagArray.count; i++)
+        {
+            NSData *imageData = UIImageJPEGRepresentation(imageSumArray[i], 1.0);
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"yyyyMMddHHmmss";
+            NSString *str = [formatter stringFromDate:[NSDate date]];
+            NSString *fileName = [NSString stringWithFormat:@"%@ - %d.jpg", str,i];
+            
+            // 上传图片，以文件流的格式
+            [formData appendPartWithFileData:imageData name:paramImagArray[i] fileName:fileName mimeType:@"image/jpeg"];
         }
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -732,7 +832,8 @@
         id obj = [manager paramUnCodeStr:responseStr];
         if (obj) {
             
-            [SVProgressHUD showSuccessWithStatus:@"上传成功"];
+//            [SVProgressHUD showSuccessWithStatus:@"上传成功"];
+            [SVProgressHUD dismiss];
             LoansFilledSuccessViewController *loansFillSuccessVC = [[LoansFilledSuccessViewController alloc]init];
             [self.navigationController pushViewController:loansFillSuccessVC animated:YES];
             

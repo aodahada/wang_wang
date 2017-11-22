@@ -18,5 +18,6 @@
 @property (nonatomic, copy)NSString *chengduiObject;//承兑银行/人
 @property (nonatomic, strong)NSArray *piaoMianImage;//票面图片
 @property (nonatomic, strong)NSArray *beishuImage;//背书图片
+@property (nonatomic, strong)NSDate *selectDate;//选择的日期数据
 
 @end

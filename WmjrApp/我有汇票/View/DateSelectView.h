@@ -12,7 +12,7 @@
 
 - (void)cancelDatePickerView;
 
-- (void)confirmDatePickerView:(NSString *)content;
+- (void)confirmDatePickerView:(NSString *)content andDate:(NSDate *)selectDate;
 
 @end
 

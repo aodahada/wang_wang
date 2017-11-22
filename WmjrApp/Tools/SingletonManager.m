@@ -246,4 +246,26 @@
     return stringResult;
 }
 
+/**任意两天相差天数*/
++ (NSInteger)getTheCountOfTwoDaysWithBeginDate:(NSDate *)beginDate endDate:(NSDate *)endDate{
+    
+//    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+//    [inputFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+//    [inputFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+//    NSDate *startD =[inputFormatter dateFromString:beginDate];
+//    NSDate *endD = [inputFormatter dateFromString:endDate];
+    NSDate *startD = beginDate;
+    NSDate *endD = endDate;
+    // 当前日历
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    // 需要对比的时间数据
+    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
+    | NSCalendarUnitDay;
+    // 对比时间差
+    NSDateComponents *dateCom = [calendar components:unit fromDate:startD toDate:endD options:0];
+    
+    return dateCom.day;
+}
+
 @end
