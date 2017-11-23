@@ -18,6 +18,7 @@
 #import "HelpViewController.h"
 #import "FeedbackViewController.h"
 #import "BaseNavigationController.h"
+#import "UIAlertView+Block.h"
 
 @interface NewMoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -77,11 +78,12 @@
 #pragma mark - 退出登录
 - (void)exitMethod {
     /* 安全退出 */
-    MMPopupItemHandler block = ^(NSInteger index){
-        if (index == 0) {
+    
+    [UIAlertView alertWithCallBackBlock:^(NSInteger buttonIndex) {
+        if (buttonIndex == 0) {
             return ;
         }
-        if (index == 1) {
+        if (buttonIndex == 1) {
             /* 将当前的uid置为空 */
             [SingletonManager sharedManager].uid = @"";
             [SingletonManager sharedManager].userModel = nil;
@@ -95,7 +97,7 @@
             //可能退出时也要删除手势密码
             //                [KeychainData forgotPsw];
             [[SingletonManager sharedManager] removeHandGestureInfoDefault];
-
+            
             LoginViewController *loginVC = [[LoginViewController alloc] init];
             loginVC.loginIden = @"login";
             loginVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -104,14 +106,43 @@
             }];
             [self.navigationController popViewControllerAnimated:YES];
         }
-    };
-    NSArray *items =
-    @[MMItemMake(@"取消", MMItemTypeNormal, block),
-      MMItemMake(@"确定", MMItemTypeNormal, block)];
-    MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
-                                                         detail:@"是否确定退出"
-                                                          items:items];
-    [alertView show];
+    } title:@"是否确定退出" message:@"" cancelButtonName:@"取消" otherButtonTitles:@"确定", nil];
+    
+//    MMPopupItemHandler block = ^(NSInteger index){
+//        if (index == 0) {
+//            return ;
+//        }
+//        if (index == 1) {
+//            /* 将当前的uid置为空 */
+//            [SingletonManager sharedManager].uid = @"";
+//            [SingletonManager sharedManager].userModel = nil;
+//            [[NSUserDefaults standardUserDefaults] setValue:[SingletonManager sharedManager].uid forKey:@"uid"];
+//            [[NSUserDefaults standardUserDefaults] setValue:[SingletonManager sharedManager].userModel forKey:@"userModel"];
+//            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"mobile"];
+//            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"passWord"];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//            [[NSNotificationCenter defaultCenter]postNotificationName:@"logout" object:nil];
+//#warning 待定
+//            //可能退出时也要删除手势密码
+//            //                [KeychainData forgotPsw];
+//            [[SingletonManager sharedManager] removeHandGestureInfoDefault];
+//
+//            LoginViewController *loginVC = [[LoginViewController alloc] init];
+//            loginVC.loginIden = @"login";
+//            loginVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//            BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
+//            [self presentViewController:loginNa animated:YES completion:^{
+//            }];
+//            [self.navigationController popViewControllerAnimated:YES];
+//        }
+//    };
+//    NSArray *items =
+//    @[MMItemMake(@"取消", MMItemTypeNormal, block),
+//      MMItemMake(@"确定", MMItemTypeNormal, block)];
+//    MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
+//                                                         detail:@"是否确定退出"
+//                                                          items:items];
+//    [alertView show];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

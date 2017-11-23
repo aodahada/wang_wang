@@ -32,6 +32,7 @@
     
     _name.text = self.nameStr;
     _earnTotal.text = self.earnToatl;
+    _hongbaoBenXi.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     if ([self.redpacket isEqualToString:@"0"]) {
         _hongbaoBenXi.hidden = YES;
         _hongbaoLabel.hidden = YES;

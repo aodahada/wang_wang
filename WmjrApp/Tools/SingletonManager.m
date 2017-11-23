@@ -257,15 +257,23 @@
 //    NSDate *endD = [inputFormatter dateFromString:endDate];
     NSDate *startD = beginDate;
     NSDate *endD = endDate;
-    // 当前日历
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    // 需要对比的时间数据
-    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
-    | NSCalendarUnitDay;
-    // 对比时间差
-    NSDateComponents *dateCom = [calendar components:unit fromDate:startD toDate:endD options:0];
+//    // 当前日历
+//    NSCalendar *calendar = [NSCalendar currentCalendar];
+//    // 需要对比的时间数据
+//    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
+//    | NSCalendarUnitDay;
+//    // 对比时间差
+//    NSDateComponents *dateCom = [calendar components:unit fromDate:startD toDate:endD options:0];
     
-    return dateCom.day;
+    //计算时间间隔（单位是秒）
+    NSTimeInterval time = [endD timeIntervalSinceDate:startD];
+    //计算天数、时、分、秒
+    int days = ((int)time)/(3600*24);
+//    int hours = ((int)time)%(3600*24)/3600;
+//    int minutes = ((int)time)%(3600*24)%3600/60;
+//    int seconds = ((int)time)%(3600*24)%3600%60;
+    
+    return days;
 }
 
 @end

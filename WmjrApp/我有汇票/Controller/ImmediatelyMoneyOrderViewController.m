@@ -167,7 +167,7 @@
     }];
     
     UILabel *label2 = [[UILabel alloc]init];
-    label2.text = @"票据金额";
+    label2.text = @"票面金额";
     label2.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     label2.textColor = RGBA(102, 102, 102, 1.0);
     [row2View addSubview:label2];
@@ -186,7 +186,7 @@
     }];
     
     _inputPiaojuMoney = [[UITextField alloc]init];
-    _inputPiaojuMoney.placeholder = @"请输入票据面额(元)";
+    _inputPiaojuMoney.placeholder = @"请输入票面面额(元)";
     _inputPiaojuMoney.keyboardType = UIKeyboardTypeDecimalPad;
     _inputPiaojuMoney.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputPiaojuMoney.textAlignment = NSTextAlignmentRight;
@@ -684,7 +684,7 @@
 
         }];
     } else if ([_inputPiaojuMoney.text isEqualToString:@""]) {
-        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入票据金额" content:@"" time:1.0 andCodes:^{
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入票面金额" content:@"" time:1.0 andCodes:^{
 
         }];
     } else if ([_inputRate.text isEqualToString:@""]) {
@@ -716,31 +716,7 @@
         loansFillVC.piaojuDate = _dateLabel.text;
         loansFillVC.chengduiObject = _inputChengdui.text;
         loansFillVC.selectDate = _selectDate;
-//        NSMutableArray *transImageArray1 = [[NSMutableArray alloc]init];
-//        for (int i=0; i<_imageArray1.count; i++) {
-//            UIImage *image1 = _imageArray1[i];
-//            NSData *data;
-//            if (UIImagePNGRepresentation(image1) == nil) {
-//                data = UIImageJPEGRepresentation(image1, 1);
-//            } else {
-//                data = UIImageJPEGRepresentation(image1, 1); //压缩图片，方便上传
-//            }
-//            NSString *dataString = [NSString stringWithFormat:@"%@",[data base64EncodedStringWithOptions: 0]];
-//            [transImageArray1 addObject:dataString];
-//        }
         loansFillVC.piaoMianImage = [_imageArray1 copy];
-//        NSMutableArray *transImageArray2 = [[NSMutableArray alloc]init];
-//        for (int i=0; i<_imageArray2.count; i++) {
-//            UIImage *image2 = _imageArray1[i];
-//            NSData *data;
-//            if (UIImagePNGRepresentation(image2) == nil) {
-//                data = UIImageJPEGRepresentation(image2, 1);
-//            } else {
-//                data = UIImageJPEGRepresentation(image2, 1); //压缩图片，方便上传
-//            }
-//            NSString *dataString = [NSString stringWithFormat:@"%@",[data base64EncodedStringWithOptions: 0]];
-//            [transImageArray1 addObject:dataString];
-//        }
         loansFillVC.beishuImage = [_imageArray1 copy];
         [self.navigationController pushViewController:loansFillVC animated:YES];
     }

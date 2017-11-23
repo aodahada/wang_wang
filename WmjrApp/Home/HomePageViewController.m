@@ -73,6 +73,8 @@
 
 @property (nonatomic, assign) NSInteger enterViewNumber;//第几次进入界面
 
+@property (nonatomic, strong)UILabel *tipLabel;
+
 @end
 
 @implementation HomePageViewController
@@ -715,7 +717,6 @@
                 [_homeTableView.mj_footer endRefreshing];
             }
             
-            
         } else {
             [SVProgressHUD dismiss];
             [_homeTableView.mj_footer endRefreshing];
@@ -930,7 +931,7 @@
     }];
     
     
-    _homeTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    _homeTableView.mj_footer = [MJRefreshBackStateFooter footerWithRefreshingBlock:^{
         self.currentPage ++;
         [self getNewsListMethodTwo:self.currentPage];
     }];
@@ -981,8 +982,10 @@
         return _arrayForNewBuy.count;
     } else if (section == 3) {
         return _arrayForRecommendPro.count;
-    } else {
+    } else if (section == 4){
         return _arrayForNewsList.count;
+    } else {
+        return 1;
     }
     
 }
@@ -993,6 +996,8 @@
         return 0;
     } else if(section == 1) {
         return RESIZE_UI(12);
+    } else if (section == 5) {
+        return 0;
     } else {
         return RESIZE_UI(54);
     }
@@ -1055,7 +1060,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 5;
+    return 5+1;//+1是显示在下方的
     
 }
 
@@ -1071,8 +1076,10 @@
         return RESIZE_UI(109);
     } else if (indexPath.section == 3) {
         return RESIZE_UI(109);
-    } else {
+    } else if (indexPath.section == 4) {
         return RESIZE_UI(117);
+    } else {
+        return RESIZE_UI(40);
     }
     
 }
@@ -1174,8 +1181,7 @@
             }
             return cell;
         }
-    }
-    else {
+    } else if (indexPath.section == 4) {
         HomeTableViewCellForth *cell = [tableView dequeueReusableCellWithIdentifier:@"forthcell"];
         if (cell == nil) {
             NSBundle *bundle = [NSBundle mainBundle];
@@ -1190,6 +1196,25 @@
         cell.labelForTitle.text = newsModel.title;
         cell.labelForInfo.text = newsModel.intro;
         return cell;
+    } else {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"identifierHuo"];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"identifierHuo"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        cell.backgroundColor = [UIColor whiteColor];
+        _tipLabel = [[UILabel alloc]init];
+        _tipLabel.textColor = RGBA(85, 85, 85, 1.0);
+        _tipLabel.text =  @"上拉加载更多";
+        _tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        _tipLabel.textAlignment = NSTextAlignmentCenter;
+        [cell addSubview:_tipLabel];
+        [_tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(cell);
+        }];
+        
+        return cell;
+        
     }
 }
 
@@ -1280,6 +1305,28 @@
 //    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
 //        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
 //    }
+    
+    //判断tablview是否在最底部
+    CGFloat height = _homeTableView.frame.size.height;
+    CGFloat contentOffsetY = _homeTableView.contentOffset.y;
+    CGFloat bottomOffset = _homeTableView.contentSize.height - contentOffsetY;
+//    if (bottomOffset <= height)
+//    {
+//        //在最底部
+//        NSLog(@"在");
+//    }
+//    else
+//    {
+//        NSLog(@"不在");
+//    }
+    if (bottomOffset >= height)
+    {
+        _tipLabel.hidden = YES;
+    }
+    else
+    {
+        _tipLabel.hidden = NO;
+    }
 
 }
 
@@ -1309,6 +1356,8 @@
         [self.navigationController pushViewController:messageVC animated:YES];
     }
 }
+
+
 
 #pragma mark - 判断字符串是否为空
 - (NSString*)convertNullString:(NSString*)oldString{

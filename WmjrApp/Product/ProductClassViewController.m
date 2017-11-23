@@ -148,6 +148,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         return 0;
+    } else if (section == 1) {
+        return 0;
     } else {
         return RESIZE_UI(12);
     }

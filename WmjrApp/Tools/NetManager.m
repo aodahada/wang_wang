@@ -42,7 +42,6 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//            NSLog(@"发生了啥:%@",responseStr);
             id obj = [self paramUnCodeStr:responseStr];
             
             if (obj) {

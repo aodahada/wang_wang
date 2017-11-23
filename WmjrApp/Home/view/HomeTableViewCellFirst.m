@@ -35,7 +35,6 @@
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
-        UIImage *image = imageView.image;
         
         UIImageView *imageViewForLeft = [[UIImageView alloc]init];
         imageViewForLeft.image = [UIImage imageNamed:@"navi_bar"];
@@ -124,7 +123,7 @@
     backgroundImageView.userInteractionEnabled = YES;
     [self addSubview:backgroundImageView];
     [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(backgroundImageView);
+        make.edges.equalTo(self);
     }];
     
     UIView *viewForConsult = [[UIView alloc]init];

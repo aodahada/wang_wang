@@ -11,7 +11,7 @@
 #import "ZLPhotoActionSheet.h"
 #import "ZLPhotoConfiguration.h"
 
-@interface LoansContentFillViewController ()<UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate>
+@interface LoansContentFillViewController ()<UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UITextViewDelegate>
 
 @property (nonatomic, strong)UIButton *commitApplyButton;
 @property (nonatomic, strong)UITextField *inputLoansMoney;//借款金额
@@ -129,7 +129,7 @@
     
     UILabel *tip1Label = [[UILabel alloc]init];
     tip1Label.text = [NSString stringWithFormat:@"注:借款金额需小于等于票面金额%@元",_piaojuMoney];
-    tip1Label.textColor = RGBA(0, 104, 178, 1.0);
+    tip1Label.textColor = RGBA(153, 153, 153, 1.0);
     tip1Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
     [row1View addSubview:tip1Label];
     [tip1Label mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -180,14 +180,10 @@
         make.right.equalTo(_loansDurationUnitLabel.mas_left);
     }];
     
-//    NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];//实例化一个NSDateFormatter对象
-//    [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
-//    NSString *dateTodayString = [dateFormat stringFromDate:[NSDate date]];
-//    NSString *dateEndString = [dateFormat stringFromDate:_selectDate];
     _day = [SingletonManager getTheCountOfTwoDaysWithBeginDate:[NSDate date] endDate:_selectDate];
     UILabel *tip2Label = [[UILabel alloc]init];
     tip2Label.text = [NSString stringWithFormat:@"注:借款期限需要小于等于票据到期期限%ld天",(long)_day];
-    tip2Label.textColor = RGBA(0, 104, 178, 1.0);
+    tip2Label.textColor = RGBA(153, 153, 153, 1.0);
     tip2Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
     [row2View addSubview:tip2Label];
     [tip2Label mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -334,7 +330,7 @@
         
         UILabel *tip3Label = [[UILabel alloc]init];
         tip3Label.text = @"注:企业名称需与营业执照上名称保持一致";
-        tip3Label.textColor = RGBA(0, 104, 178, 1.0);
+        tip3Label.textColor = RGBA(153, 153, 153, 1.0);
         tip3Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
         [row5View addSubview:tip3Label];
         [tip3Label mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -471,6 +467,8 @@
     _loansUseTextView.textColor = RGBA(199, 199, 204, 1.0);
     _loansUseTextView.layer.borderWidth = 1.0;;
     _loansUseTextView.layer.borderColor = RGBA(136, 136, 136, 1.0).CGColor;
+    _loansUseTextView.tag = 1;
+    _loansUseTextView.delegate = self;
     [row7View addSubview:_loansUseTextView];
     [_loansUseTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(label7.mas_bottom).with.offset(RESIZE_UI(10));
@@ -534,6 +532,8 @@
     _danbaoSelectTextView.textColor = RGBA(199, 199, 204, 1.0);
     _danbaoSelectTextView.layer.borderWidth = 1.0;;
     _danbaoSelectTextView.layer.borderColor = RGBA(136, 136, 136, 1.0).CGColor;
+    _danbaoSelectTextView.tag = 2;
+    _danbaoSelectTextView.delegate = self;
     [row8View addSubview:_danbaoSelectTextView];
     [_danbaoSelectTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(tip8Label.mas_bottom).with.offset(RESIZE_UI(10));
@@ -606,6 +606,64 @@
         }
     }
     
+}
+
+#pragma mark - UITextViewDelegate
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    switch (textView.tag) {
+        case 1:
+        {
+            if ([textView.text isEqualToString:@"借款用途描述，200字以内"]) {
+                textView.text = @"";
+            }
+        }
+            break;
+        case 2:
+        {
+            if ([textView.text isEqualToString:@"担保措施描述，200字以内"]) {
+                textView.text = @"";
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    switch (textView.tag) {
+        case 1:
+        {
+            if(textView.text.length < 1){
+                textView.text = @"借款用途描述，200字以内";
+                textView.textColor = RGBA(199, 199, 204, 1.0);
+            }
+            if (![textView.text isEqualToString:@"借款用途描述，200字以内"]) {
+                textView.textColor = RGBA(60, 60, 60, 1.0);
+            } else {
+                textView.textColor = RGBA(199, 199, 204, 1.0);
+            }
+        }
+            break;
+        case 2:
+        {
+            if(textView.text.length < 1){
+                textView.text = @"担保措施描述，200字以内";
+                textView.textColor = RGBA(199, 199, 204, 1.0);
+            }
+            if (![textView.text isEqualToString:@"担保措施描述，200字以内"]) {
+                textView.textColor = RGBA(60, 60, 60, 1.0);
+            } else {
+                textView.textColor = RGBA(199, 199, 204, 1.0);
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - 选择图片
@@ -787,20 +845,25 @@
     dict[@"borrow_guarantee"] = _danbaoSelectTextView.text;
 
     [SVProgressHUD showWithStatus:@"上传中"];
-    NSMutableArray *paramImagArray = [[NSMutableArray alloc]init];//参数数组
-    NSMutableArray *imageSumArray = [[NSMutableArray alloc]init];//图片数组
+    NSArray *paramImagArray = [[NSArray alloc]init];//参数数组
+    NSArray *imageSumArray = [[NSArray alloc]init];//图片数组
+    paramImagArray = @[@"img_front[]",@"img_bg[]",@"img_enterprise[]"];
+    NSMutableArray *piaoMianArry = [[NSMutableArray alloc]init];
     for (int i=0; i<_piaoMianImage.count; i++) {
-        [paramImagArray addObject:@"img_front"];
-        [imageSumArray addObject:_piaoMianImage[i]];
+        [piaoMianArry addObject:_piaoMianImage[i]];
     }
+    NSArray *piaoA = [piaoMianArry copy];
+    NSMutableArray *beishuArry = [[NSMutableArray alloc]init];
     for (int i=0; i<_beishuImage.count; i++) {
-        [paramImagArray addObject:@"img_bg"];
-        [imageSumArray addObject:_beishuImage[i]];
+        [beishuArry addObject:_beishuImage[i]];
     }
+    NSArray *beiA = [beishuArry copy];
+    NSMutableArray *yingyezhizhaoArry = [[NSMutableArray alloc]init];
     for (int i=0; i<_imageArray3.count; i++) {
-        [paramImagArray addObject:@"img_enterprise"];
-        [imageSumArray addObject:_imageArray3[i]];
+        [yingyezhizhaoArry addObject:_imageArray3[i]];
     }
+    NSArray *yingyezhizhaoA = [yingyezhizhaoArry copy];
+    imageSumArray = @[piaoA,beiA,yingyezhizhaoA];
     AFHTTPSessionManager *httpManager = [AFHTTPSessionManager manager];
     httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html",  nil];//设置相应内容类型
     httpManager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -808,21 +871,24 @@
     [httpManager.requestSerializer setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
     
     NSString *dateNew = [manager getCurrentTimestamp];
-    NSDictionary *paramDic = @{@"timestamp":dateNew, @"action":@"Bill/lists", @"data":dict};//参数序列
+    NSDictionary *paramDic = @{@"timestamp":dateNew, @"action":@"Bill/apply", @"data":dict};//参数序列
     NSString *base64Str = [manager paramCodeStr:paramDic];
     //@"file":@"ss"
-    [httpManager POST:WMJRAPI parameters:@{@"msg":base64Str,@"file":@"ss"} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [httpManager POST:WMJRAPI parameters:@{@"msg":base64Str} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         for (int i = 0; i < paramImagArray.count; i++)
         {
-            NSData *imageData = UIImageJPEGRepresentation(imageSumArray[i], 1.0);
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            formatter.dateFormat = @"yyyyMMddHHmmss";
-            NSString *str = [formatter stringFromDate:[NSDate date]];
-            NSString *fileName = [NSString stringWithFormat:@"%@ - %d.jpg", str,i];
-            
-            // 上传图片，以文件流的格式
-            [formData appendPartWithFileData:imageData name:paramImagArray[i] fileName:fileName mimeType:@"image/jpeg"];
+            NSArray *imageArray = imageSumArray[i];
+            for (int j=0; j<imageArray.count;j++) {
+                NSData *imageData = UIImageJPEGRepresentation(imageArray[j], 1.0);
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                formatter.dateFormat = @"yyyyMMddHHmmss";
+                NSString *str = [formatter stringFromDate:[NSDate date]];
+                NSString *fileName = [NSString stringWithFormat:@"%@ - %d.jpg", str,i];
+                
+                // 上传图片，以文件流的格式
+                [formData appendPartWithFileData:imageData name:paramImagArray[i] fileName:fileName mimeType:@"image/jpeg"];
+            }
         }
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {

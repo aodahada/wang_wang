@@ -399,7 +399,7 @@
 
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    if ([viewController.tabBarItem.title isEqualToString:@"账户中心"]) {
+    if ([viewController.tabBarItem.title isEqualToString:@"账户中心"] || [viewController.tabBarItem.title isEqualToString:@"我有汇票"]) {
         NSString *uid = [[NSUserDefaults standardUserDefaults]objectForKey:@"uid"];
         uid = [self convertNullString:uid];
         if ([uid isEqualToString:@""]) {
