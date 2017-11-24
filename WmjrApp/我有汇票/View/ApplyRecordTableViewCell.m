@@ -207,7 +207,11 @@
         UILabel *tipLabel = [[UILabel alloc]init];
         tipLabel.textColor = RGBA(153, 153, 153, 1.0);
         tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
-        tipLabel.text = [NSString stringWithFormat:@"借款说明:%@",applyRecordModel.borrow_use];
+        if ([[SingletonManager convertNullString:applyRecordModel.borrow_use] isEqualToString:@""]) {
+            tipLabel.text = @"借款说明:未填写";
+        } else {
+            tipLabel.text = [NSString stringWithFormat:@"借款说明:%@",applyRecordModel.borrow_use];
+        }
         [bottomView addSubview:tipLabel];
         [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(bottomView.mas_centerY);

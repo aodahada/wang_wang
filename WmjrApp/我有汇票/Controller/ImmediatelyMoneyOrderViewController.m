@@ -30,8 +30,10 @@
 @property (nonatomic, strong)UIView *row3View;
 @property (nonatomic, strong)UIView *row6View;
 @property (nonatomic, strong)UILabel *tip6Label;
+@property (nonatomic, strong)UILabel *unselectTip6;//提示票面图片
 @property (nonatomic, strong)UIView *row7View;
 @property (nonatomic, strong)UILabel *tip7Label;
+@property (nonatomic, strong)UILabel *unselectTip7;//提示背书图片
 
 @property (nonatomic, assign)CGFloat buttonwidth;
 @property (nonatomic, strong)NSMutableArray *buttonArray1;//第一组Button
@@ -57,7 +59,7 @@
     // Do any additional setup after loading the view.
     self.title = @"立即申请";
     self.view.backgroundColor = RGBA(240, 241, 243, 1.0);
-    _typeTag = 0;
+    _typeTag = 1;
     _buttonArray1 = [[NSMutableArray alloc]init];
     _imageArray1 = [[NSMutableArray alloc]init];
     _buttonArray2 = [[NSMutableArray alloc]init];
@@ -141,7 +143,8 @@
     _yinpiaoButton = [[UIButton alloc]init];
     [_yinpiaoButton setTitle:@"银票" forState:UIControlStateNormal];
     _yinpiaoButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [_yinpiaoButton setTitleColor:RGBA(0, 104, 178, 1.0) forState:UIControlStateNormal];
+    [_yinpiaoButton setBackgroundColor:RGBA(0, 104, 178, 1.0)];
+    [_yinpiaoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_yinpiaoButton.layer setMasksToBounds:YES];
     _yinpiaoButton.layer.cornerRadius = 5.0f;
     _yinpiaoButton.layer.borderWidth = 1.0f;
@@ -343,6 +346,17 @@
         make.left.equalTo(_row6View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
+    _unselectTip6 = [[UILabel alloc]init];
+    _unselectTip6.text = @"请上传票面图片";
+    _unselectTip6.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    _unselectTip6.textColor = [UIColor redColor];
+    _unselectTip6.hidden = YES;
+    [_row6View addSubview:_unselectTip6];
+    [_unselectTip6 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(label6.mas_centerY);
+        make.right.equalTo(_row6View.mas_right).with.offset(-RESIZE_UI(20));
+    }];
+    
     _tip6Label = [[UILabel alloc]init];
     _tip6Label.text = @"(请保持照片信息清晰,勿进行修图软件处理)";
     _tip6Label.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
@@ -353,7 +367,7 @@
         make.left.equalTo(_row6View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
-    for (int i=0; i<4; i++) {
+    for (int i=0; i<2; i++) {
         UIButton *button1 = [[UIButton alloc]init];
         button1.tag = 1;
         if (i == 0) {
@@ -391,6 +405,17 @@
     [label7 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_row7View.mas_top).with.offset(RESIZE_UI(20));
         make.left.equalTo(_row7View.mas_left).with.offset(RESIZE_UI(20));
+    }];
+    
+    _unselectTip7 = [[UILabel alloc]init];
+    _unselectTip7.text = @"请上传背书图片";
+    _unselectTip7.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    _unselectTip7.textColor = [UIColor redColor];
+    _unselectTip7.hidden = YES;
+    [_row7View addSubview:_unselectTip7];
+    [_unselectTip7 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_row7View.mas_top).with.offset(RESIZE_UI(20));
+        make.right.equalTo(_row7View.mas_right).with.offset(-RESIZE_UI(20));
     }];
     
     _tip7Label = [[UILabel alloc]init];
@@ -431,6 +456,17 @@
 #pragma mark - 监听textfield
 -(void)textFieldDidChange :(UITextField *)theTextField {
     
+    [self recoverPlaceholderMethod:theTextField];
+    if ([theTextField isEqual:_inputPiaojuMoney]) {
+        _inputPiaojuMoney.textColor = RGBA(60, 60, 60, 1.0);
+//        _inputPiaojuMoney.text = _inputPiaojuMoney.text;
+        _piaojuUnitLabel.textColor = RGBA(60, 60, 60, 1.0);
+    }
+    if ([theTextField isEqual:_inputRate]) {
+        _inputRate.textColor = RGBA(60, 60, 60, 1.0);
+//        _inputRate.text = _inputRate.text;
+        _rateUnitLabel.textColor = RGBA(60, 60, 60, 1.0);
+    }
     if ([theTextField.text isEqualToString:@""]) {
         switch (theTextField.tag) {
             case 1:
@@ -461,6 +497,7 @@
 
 #pragma mark - UITextViewDelegate
 - (void)textViewDidBeginEditing:(UITextView *)textView {
+    _inputChengdui.textColor = RGBA(60, 60, 60, 1.0);
     if ([textView.text isEqualToString:@"请输入承兑对象"]) {
         textView.text = @"";
     }
@@ -549,7 +586,7 @@
     //相册参数配置
     ZLPhotoConfiguration *configuration = [ZLPhotoConfiguration defaultPhotoConfiguration];
     if (_selectTag == 1) {
-        configuration.maxSelectCount = 4-_imageArray1.count;
+        configuration.maxSelectCount = 2-_imageArray1.count;
     } else {
         configuration.maxSelectCount = 4-_imageArray2.count;
     }
@@ -570,8 +607,10 @@
             }
         }
         if (_selectTag == 1) {
+            _unselectTip6.hidden = YES;
             [self configDealWithButtonOne];
         } else {
+            _unselectTip7.hidden = YES;
             [self configDealWithButtonTwo];
         }
     }];
@@ -613,10 +652,18 @@
             make.width.height.mas_offset(_buttonwidth);
         }];
         [_deleteArray1 addObject:deleteButton];
-        if (i+1<4) {
-            UIButton *button11 = _buttonArray1[i+1];
-            button11.hidden = NO;
+        if (_selectTag == 1) {
+            if (i+1<2) {
+                UIButton *button11 = _buttonArray1[i+1];
+                button11.hidden = NO;
+            }
+        } else {
+            if (i+1<4) {
+                UIButton *button11 = _buttonArray1[i+1];
+                button11.hidden = NO;
+            }
         }
+        
         
     }
 }
@@ -645,7 +692,6 @@
         [_deleteArray2[i] removeFromSuperview];
     }
     _deleteArray2 = [[NSMutableArray alloc]init];
-    NSInteger row = _imageArray2.count;
     for (int i=0; i<_imageArray2.count; i++) {
         UIImage *image2 = _imageArray2[i];
         UIButton *button2 = _buttonArray2[i];
@@ -679,15 +725,19 @@
 }
 #pragma mark - 下一步按钮
 - (void)netStepButtonMethod {
-    if (_typeTag == 0) {
-        [[SingletonManager sharedManager] showHUDView:self.view title:@"请选择票据类型" content:@"" time:1.0 andCodes:^{
+    if ([_inputPiaojuMoney.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputPiaojuMoney.text] || [_inputPiaojuMoney.text floatValue]<0) {
+        [self changgePlaceholderMethod:_inputPiaojuMoney];
+        _inputPiaojuMoney.textColor = [UIColor redColor];
+        _inputPiaojuMoney.text = _inputPiaojuMoney.text;
+        _piaojuUnitLabel.textColor = [UIColor redColor];
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入正确的票面金额" content:@"" time:1.0 andCodes:^{
 
         }];
-    } else if ([_inputPiaojuMoney.text isEqualToString:@""]) {
-        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入票面金额" content:@"" time:1.0 andCodes:^{
-
-        }];
-    } else if ([_inputRate.text isEqualToString:@""]) {
+    } else if ([_inputRate.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputRate.text] || [_inputRate.text floatValue]<0) {
+        [self changgePlaceholderMethod:_inputRate];
+        _inputRate.textColor = [UIColor redColor];
+        _inputRate.text = _inputRate.text;
+        _rateUnitLabel.textColor = [UIColor redColor];
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入期望利率" content:@"" time:1.0 andCodes:^{
 
         }];
@@ -696,14 +746,18 @@
 
         }];
     } else if ([_inputChengdui.text isEqualToString:@""] || [_inputChengdui.text isEqualToString:@"请输入承兑对象"]) {
+        _inputChengdui.textColor = [UIColor redColor];
+        _inputChengdui.text = _inputChengdui.text;
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入承兑对象" content:@"" time:1.0 andCodes:^{
 
         }];
     } else if (_imageArray1.count == 0) {
+        _unselectTip6.hidden = NO;
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传票面图片" content:@"" time:1.0 andCodes:^{
 
         }];
     } else if (_imageArray2.count == 0) {
+        _unselectTip7.hidden = NO;
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传背书图片" content:@"" time:1.0 andCodes:^{
 
         }];
@@ -721,6 +775,17 @@
         [self.navigationController pushViewController:loansFillVC animated:YES];
     }
 
+}
+
+#pragma mark - 修改placeholder字体
+- (void)changgePlaceholderMethod:(UITextField *)textField {
+    [textField setValue:[UIColor redColor] forKeyPath:@"_placeholderLabel.textColor"];
+//    [textField setValue:[UIFont boldSystemFontOfSize:16] forKeyPath:@"_placeholderLabel.font"];
+}
+
+#pragma mark - 恢复placeholder字体
+- (void)recoverPlaceholderMethod:(UITextField *)textField {
+    [textField setValue:RGBA(153, 153, 153, 1.0) forKeyPath:@"_placeholderLabel.textColor"];
 }
 
 - (void)didReceiveMemoryWarning {

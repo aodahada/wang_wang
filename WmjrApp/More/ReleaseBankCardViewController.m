@@ -476,7 +476,7 @@
     dict[@"cert_no"] = _inputIdCard.text;
     dict[@"card_no"] = _inputBankCard.text;
     
-    NSArray *paramArray = @[@"cert_front",@"cert_front",@"cert_bg",@"cert_bg"];
+    NSArray *paramArray = @[@"cert_front[]",@"cert_front[]",@"cert_bg[]",@"cert_bg[]"];
     NSArray *imageArray = @[_select1,_select2,_select3,_select4];
     
     [SVProgressHUD showWithStatus:@"上传中"];
@@ -490,7 +490,7 @@
     NSDictionary *paramDic = @{@"timestamp":dateNew, @"action":@"Bank/unbind_apply", @"data":dict};//参数序列
     NSString *base64Str = [manager paramCodeStr:paramDic];
     //@"file":@"ss"
-    [httpManager POST:WMJRAPI parameters:@{@"msg":base64Str,@"file":@"ss"} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [httpManager POST:WMJRAPI parameters:@{@"msg":base64Str} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         for (int i = 0; i < paramArray.count; i++)
         {

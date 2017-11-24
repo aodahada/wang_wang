@@ -10,6 +10,6 @@
 
 @interface ApplySmallMessView : UIView
 
-- (instancetype)initWithTitle:(NSString *)title Content:(NSString *)content;
+- (instancetype)initWithTitle:(NSString *)title Content:(NSString *)content andUnit:(NSString *)unit;
 
 @end

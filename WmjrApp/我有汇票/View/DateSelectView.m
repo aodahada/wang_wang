@@ -13,6 +13,7 @@
 @property (nonatomic, strong)UIDatePicker *dataPicker;
 @property (nonatomic, copy)NSString *contentValue;
 @property (nonatomic, strong)NSDate *selectDate;
+@property (nonatomic, strong)UITapGestureRecognizer *tap;
 
 @end
 
@@ -23,12 +24,17 @@
     if (self) {
         
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.29];
+        
+        _tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(cancelMethod)];
+        [self addGestureRecognizer:_tap];
+        
         _contentValue = @"";
         _dataPicker = [[UIDatePicker alloc]init];
         _dataPicker.backgroundColor = [UIColor whiteColor];
         _dataPicker.datePickerMode = UIDatePickerModeDate; // 设置模式 这里是 年月日 没有上下午
         _dataPicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"]; // 设置地区 这里是
         //    self.timeField.inputView = _dateKB; // 用 UIDatePicker 替换 timeField 的键盘
+        _dataPicker.minimumDate = [NSDate date];
         
         // 当值改变的时候会触发的方法  我们滑动日期键盘的时候  执行方法 rollAction:
         [_dataPicker addTarget:self action:@selector(rollAction:) forControlEvents:(UIControlEventValueChanged)];
@@ -89,7 +95,15 @@
 #pragma mark - 确定方法
 - (void)confirmMethod {
     if (self.delegate && [self.delegate respondsToSelector:@selector(confirmDatePickerView: andDate:)]) {
-        if ([_contentValue isEqualToString:@""]) {
+        NSInteger chaDay = [SingletonManager getTheCountOfTwoDaysWithBeginDate:[NSDate date] endDate:_selectDate];
+        if (chaDay == 0) {
+            if (![_selectDate isEqualToDate:[NSDate date]]) {
+                NSDate *date = [NSDate date];
+                NSString *dateString = [NSString stringWithFormat:@"%@",date];
+                _contentValue = [self dealStringMethod:dateString];
+            }
+        }
+        if ([_contentValue isEqualToString:@""] || chaDay<0) {
             NSDate *date = [NSDate date];
             NSString *dateString = [NSString stringWithFormat:@"%@",date];
             _contentValue = [self dealStringMethod:dateString];

@@ -10,7 +10,7 @@
 
 @implementation ApplySmallMessView
 
-- (instancetype)initWithTitle:(NSString *)title Content:(NSString *)content {
+- (instancetype)initWithTitle:(NSString *)title Content:(NSString *)content andUnit:(NSString *)unit{
     self = [super init];
     if (self) {
         UILabel *titleLabel = [[UILabel alloc]init];
@@ -24,7 +24,7 @@
         }];
         
         UILabel *contentLabel = [[UILabel alloc]init];
-        contentLabel.text = content;
+        contentLabel.text = [NSString stringWithFormat:@"%@%@",content,unit];
         contentLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
         contentLabel.textColor = RGBA(20, 20, 23, 1.0);
         [self addSubview:contentLabel];

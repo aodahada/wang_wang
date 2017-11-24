@@ -65,4 +65,20 @@
  */
 + (NSInteger)getTheCountOfTwoDaysWithBeginDate:(NSDate *)beginDate endDate:(NSDate *)endDate;
 
+/**
+ 判断字符串是否只有浮点数
+ 
+ @param string 字符串
+ @return bool
+ */
++ (BOOL)isPureFloat:(NSString *)string;
+
+/**
+ 判断字符串是否只有整数数
+ 
+ @param string 字符串
+ @return bool
+ */
++ (BOOL)isPureInt:(NSString *)string;
+
 @end
