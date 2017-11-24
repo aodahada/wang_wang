@@ -194,11 +194,13 @@
     _inputPiaojuMoney.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputPiaojuMoney.textAlignment = NSTextAlignmentRight;
     _inputPiaojuMoney.tag = 1;
+    _inputPiaojuMoney.delegate = self;
     [_inputPiaojuMoney addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row2View addSubview:_inputPiaojuMoney];
     [_inputPiaojuMoney mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row2View);
         make.right.equalTo(_piaojuUnitLabel.mas_left);
+        make.width.mas_offset(RESIZE_UI(160));
     }];
     
     //第三行
@@ -237,11 +239,13 @@
     _inputRate.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputRate.textAlignment = NSTextAlignmentRight;
     _inputRate.tag = 2;
+    _inputRate.delegate = self;
     [_inputRate addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [_row3View addSubview:_inputRate];
     [_inputRate mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_row3View);
         make.right.equalTo(_rateUnitLabel.mas_left);
+        make.width.mas_offset(RESIZE_UI(160));
     }];
     
     //第四行
@@ -317,12 +321,13 @@
     _inputChengdui.delegate = self;
     _inputChengdui.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputChengdui.textAlignment = NSTextAlignmentRight;
+    _inputChengdui.delegate = self;
     [row5View addSubview:_inputChengdui];
     [_inputChengdui mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row5View.mas_top).with.offset(RESIZE_UI(12));
         make.right.equalTo(row5View.mas_right).with.offset(-RESIZE_UI(20));
         make.width.mas_offset(RESIZE_UI(176));
-        make.height.mas_offset(RESIZE_UI(42));
+        make.height.mas_offset(RESIZE_UI(50));
     }];
     
     //第六行
@@ -454,6 +459,19 @@
 }
 
 #pragma mark - 监听textfield
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    textField.placeholder = @"";
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if ([textField isEqual:_inputPiaojuMoney]) {
+        textField.placeholder = @"请输入票面面额(元)";
+    }
+    if ([textField isEqual:_inputRate]) {
+        textField.placeholder = @"请输入期望利率(%)";
+    }
+}
+
 -(void)textFieldDidChange :(UITextField *)theTextField {
     
     [self recoverPlaceholderMethod:theTextField];
@@ -725,43 +743,43 @@
 }
 #pragma mark - 下一步按钮
 - (void)netStepButtonMethod {
-    if ([_inputPiaojuMoney.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputPiaojuMoney.text] || [_inputPiaojuMoney.text floatValue]<0) {
-        [self changgePlaceholderMethod:_inputPiaojuMoney];
-        _inputPiaojuMoney.textColor = [UIColor redColor];
-        _inputPiaojuMoney.text = _inputPiaojuMoney.text;
-        _piaojuUnitLabel.textColor = [UIColor redColor];
-        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入正确的票面金额" content:@"" time:1.0 andCodes:^{
-
-        }];
-    } else if ([_inputRate.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputRate.text] || [_inputRate.text floatValue]<0) {
-        [self changgePlaceholderMethod:_inputRate];
-        _inputRate.textColor = [UIColor redColor];
-        _inputRate.text = _inputRate.text;
-        _rateUnitLabel.textColor = [UIColor redColor];
-        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入期望利率" content:@"" time:1.0 andCodes:^{
-
-        }];
-    } else if ([_dateLabel.text isEqualToString:@""]) {
-        [[SingletonManager sharedManager] showHUDView:self.view title:@"请选择票据到期日" content:@"" time:1.0 andCodes:^{
-
-        }];
-    } else if ([_inputChengdui.text isEqualToString:@""] || [_inputChengdui.text isEqualToString:@"请输入承兑对象"]) {
-        _inputChengdui.textColor = [UIColor redColor];
-        _inputChengdui.text = _inputChengdui.text;
-        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入承兑对象" content:@"" time:1.0 andCodes:^{
-
-        }];
-    } else if (_imageArray1.count == 0) {
-        _unselectTip6.hidden = NO;
-        [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传票面图片" content:@"" time:1.0 andCodes:^{
-
-        }];
-    } else if (_imageArray2.count == 0) {
-        _unselectTip7.hidden = NO;
-        [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传背书图片" content:@"" time:1.0 andCodes:^{
-
-        }];
-    } else {
+//    if ([_inputPiaojuMoney.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputPiaojuMoney.text] || [_inputPiaojuMoney.text floatValue]<0) {
+//        [self changgePlaceholderMethod:_inputPiaojuMoney];
+//        _inputPiaojuMoney.textColor = [UIColor redColor];
+//        _inputPiaojuMoney.text = _inputPiaojuMoney.text;
+//        _piaojuUnitLabel.textColor = [UIColor redColor];
+//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入正确的票面金额" content:@"" time:1.0 andCodes:^{
+//
+//        }];
+//    } else if ([_inputRate.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputRate.text] || [_inputRate.text floatValue]<0) {
+//        [self changgePlaceholderMethod:_inputRate];
+//        _inputRate.textColor = [UIColor redColor];
+//        _inputRate.text = _inputRate.text;
+//        _rateUnitLabel.textColor = [UIColor redColor];
+//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入期望利率" content:@"" time:1.0 andCodes:^{
+//
+//        }];
+//    } else if ([_dateLabel.text isEqualToString:@""]) {
+//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请选择票据到期日" content:@"" time:1.0 andCodes:^{
+//
+//        }];
+//    } else if ([_inputChengdui.text isEqualToString:@""] || [_inputChengdui.text isEqualToString:@"请输入承兑对象"]) {
+//        _inputChengdui.textColor = [UIColor redColor];
+//        _inputChengdui.text = _inputChengdui.text;
+//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入承兑对象" content:@"" time:1.0 andCodes:^{
+//
+//        }];
+//    } else if (_imageArray1.count == 0) {
+//        _unselectTip6.hidden = NO;
+//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传票面图片" content:@"" time:1.0 andCodes:^{
+//
+//        }];
+//    } else if (_imageArray2.count == 0) {
+//        _unselectTip7.hidden = NO;
+//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传背书图片" content:@"" time:1.0 andCodes:^{
+//
+//        }];
+//    } else {
         LoansContentFillViewController *loansFillVC = [[LoansContentFillViewController alloc]init];
         loansFillVC.identifier = self.identifier;
         loansFillVC.typeTag = _typeTag;
@@ -773,7 +791,7 @@
         loansFillVC.piaoMianImage = [_imageArray1 copy];
         loansFillVC.beishuImage = [_imageArray1 copy];
         [self.navigationController pushViewController:loansFillVC animated:YES];
-    }
+//    }
 
 }
 
@@ -785,7 +803,7 @@
 
 #pragma mark - 恢复placeholder字体
 - (void)recoverPlaceholderMethod:(UITextField *)textField {
-    [textField setValue:RGBA(153, 153, 153, 1.0) forKeyPath:@"_placeholderLabel.textColor"];
+    [textField setValue:RGBA(207, 207, 207, 1.0) forKeyPath:@"_placeholderLabel.textColor"];
 }
 
 - (void)didReceiveMemoryWarning {

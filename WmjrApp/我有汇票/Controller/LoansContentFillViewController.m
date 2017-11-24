@@ -14,7 +14,7 @@
 #define defaultInputColor RGBA(60, 60, 60, 1.0)
 #define errorInputColor [UIColor redColor]
 
-@interface LoansContentFillViewController ()<UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UITextViewDelegate>
+@interface LoansContentFillViewController ()<UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UITextViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic, strong)UIButton *commitApplyButton;
 @property (nonatomic, strong)UITextField *inputLoansMoney;//借款金额
@@ -34,11 +34,19 @@
 @property (nonatomic, strong)UILabel *tip6Label;
 @property (nonatomic, strong)UILabel *unselectTip6;//提示营业执照图片
 @property (nonatomic, assign)CGFloat buttonwidth;
-@property (nonatomic, strong)NSMutableArray *buttonArray3;//第三组Button
-@property (nonatomic, strong)NSMutableArray *imageArray3;//第三组图片
-@property (nonatomic, strong)NSMutableArray *deleteArray3;//第三组删除按钮
+
+@property (nonatomic, strong)UIImage *yingyezhizhaoImage1;
+@property (nonatomic, strong)UIImage *yingyezhizhaoImage2;
 
 @property (nonatomic, assign)NSInteger day;//到期天数差
+
+
+@property (nonatomic, strong)UIButton *idCardButton1;
+@property (nonatomic, strong)UIButton *idCardDeleteButton1;
+@property (nonatomic, strong)UIButton *idCardButton2;
+@property (nonatomic, strong)UIButton *idCardDeleteButton2;
+@property (nonatomic, strong)UIImage *select1;
+@property (nonatomic, strong)UIImage *select2;
 
 @end
 
@@ -50,8 +58,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"借款信息填写";
     _buttonwidth = (SCREEN_WIDTH-RESIZE_UI(100))/4;
-    _buttonArray3 = [[NSMutableArray alloc]init];
-    _imageArray3 = [[NSMutableArray alloc]init];
     [self setUpLayout];
 }
 
@@ -124,11 +130,13 @@
     _inputLoansMoney.textAlignment = NSTextAlignmentRight;
     _inputLoansMoney.keyboardType = UIKeyboardTypeDecimalPad;
     _inputLoansMoney.tag = 1;
+    _inputLoansMoney.delegate = self;
     [_inputLoansMoney addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row1View addSubview:_inputLoansMoney];
     [_inputLoansMoney mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row1View.mas_top).with.offset(RESIZE_UI(20));
         make.right.equalTo(_loansMoneyUnitLabel.mas_left);
+        make.width.mas_offset(RESIZE_UI(160));
     }];
     
     UILabel *tip1Label = [[UILabel alloc]init];
@@ -177,11 +185,13 @@
     _inputLoansDuration.textAlignment = NSTextAlignmentRight;
     _inputLoansDuration.keyboardType = UIKeyboardTypeDecimalPad;
     _inputLoansDuration.tag = 2;
+    _inputLoansDuration.delegate = self;
     [_inputLoansDuration addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row2View addSubview:_inputLoansDuration];
     [_inputLoansDuration mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row2View.mas_top).with.offset(RESIZE_UI(20));
         make.right.equalTo(_loansDurationUnitLabel.mas_left);
+        make.width.mas_offset(RESIZE_UI(160));
     }];
     
     _day = [SingletonManager getTheCountOfTwoDaysWithBeginDate:[NSDate date] endDate:_selectDate];
@@ -229,11 +239,13 @@
     _inputApplyName.tag = 4;
     _inputApplyName.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputApplyName.textAlignment = NSTextAlignmentRight;
+    _inputApplyName.delegate = self;
     [_inputApplyName addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row3View addSubview:_inputApplyName];
     [_inputApplyName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row3View);
         make.right.equalTo(row3View.mas_right).with.offset(-RESIZE_UI(20));
+        make.width.mas_offset(RESIZE_UI(160));
     }];
     
     //第四行
@@ -271,11 +283,13 @@
     _inputApplyPhone.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputApplyPhone.textAlignment = NSTextAlignmentRight;
     _inputApplyPhone.keyboardType = UIKeyboardTypeNumberPad;
+    _inputApplyPhone.delegate = self;
     [_inputApplyPhone addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row4View addSubview:_inputApplyPhone];
     [_inputApplyPhone mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row4View);
         make.right.equalTo(row4View.mas_right).with.offset(-RESIZE_UI(20));
+        make.width.mas_offset(RESIZE_UI(160));
     }];
     
     //第五行
@@ -310,10 +324,12 @@
         _inputProfession.placeholder = @"请输入申请人职业";
         _inputProfession.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
         _inputProfession.textAlignment = NSTextAlignmentRight;
+        _inputProfession.delegate = self;
         [row5View addSubview:_inputProfession];
         [_inputProfession mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(row5View);
             make.right.equalTo(row5View.mas_right).with.offset(-RESIZE_UI(20));
+            make.width.mas_offset(RESIZE_UI(160));
         }];
     } else {
         UILabel *label5 = [[UILabel alloc]init];
@@ -331,11 +347,13 @@
         _inputEnterpriseName.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
         _inputEnterpriseName.textAlignment = NSTextAlignmentRight;
         _inputEnterpriseName.tag = 6;
+        _inputEnterpriseName.delegate = self;
         [_inputEnterpriseName addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         [row5View addSubview:_inputEnterpriseName];
         [_inputEnterpriseName mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(row5View.mas_top).with.offset(RESIZE_UI(20));
             make.right.equalTo(row5View.mas_right).with.offset(-RESIZE_UI(20));
+            make.width.mas_offset(RESIZE_UI(160));
         }];
         
         UILabel *tip3Label = [[UILabel alloc]init];
@@ -386,11 +404,13 @@
         _inputYearIncome.textAlignment = NSTextAlignmentRight;
         _inputYearIncome.keyboardType = UIKeyboardTypeDecimalPad;
         _inputYearIncome.tag = 3;
+        _inputYearIncome.delegate = self;
         [_inputYearIncome addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         [_row6View addSubview:_inputYearIncome];
         [_inputYearIncome mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(_row6View);
             make.right.equalTo(_yearIncomeUnitLabel.mas_left);
+            make.width.mas_offset(RESIZE_UI(160));
         }];
     } else {
         [viewMain addSubview:_row6View];
@@ -432,24 +452,27 @@
             make.left.equalTo(_row6View.mas_left).with.offset(RESIZE_UI(20));
         }];
         
-        for (int i=0; i<2; i++) {
-            UIButton *button3 = [[UIButton alloc]init];
-            button3.tag = 1;
-            if (i == 0) {
-                button3.hidden = NO;
-            } else {
-                button3.hidden = YES;
-            }
-            [button3 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
-            [button3 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
-            [_row6View addSubview:button3];
-            [button3 mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(_tip6Label.mas_bottom).with.offset(RESIZE_UI(5));
-                make.left.equalTo(_row6View.mas_left).with.offset(RESIZE_UI(20)+RESIZE_UI(20+_buttonwidth)*i);
-                make.width.height.mas_offset(_buttonwidth);
-            }];
-            [_buttonArray3 addObject:button3];
-        }
+        _idCardButton1 = [[UIButton alloc]init];
+        _idCardButton1.tag = 1;
+        [_idCardButton1 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
+        [_idCardButton1 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
+        [_row6View addSubview:_idCardButton1];
+        [_idCardButton1 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_tip6Label.mas_bottom).with.offset(RESIZE_UI(5));
+            make.left.equalTo(_row6View.mas_left).with.offset(RESIZE_UI(20));
+            make.width.height.mas_offset(RESIZE_UI(72));
+        }];
+        
+        _idCardButton2 = [[UIButton alloc]init];
+        _idCardButton2.tag = 2;
+        [_idCardButton2 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
+        [_idCardButton2 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
+        [_row6View addSubview:_idCardButton2];
+        [_idCardButton2 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_tip6Label.mas_bottom).with.offset(RESIZE_UI(5));
+            make.left.equalTo(_idCardButton1.mas_right).with.offset(RESIZE_UI(20));
+            make.width.height.mas_offset(RESIZE_UI(72));
+        }];
     }
     
     //第七行
@@ -570,6 +593,31 @@
 }
 
 #pragma mark - 监听textfield
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    textField.placeholder = @"";
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if ([textField isEqual:_inputLoansMoney]) {
+        textField.placeholder = @"请输入借款面额(元)";
+    }
+    if ([textField isEqual:_inputLoansDuration]) {
+        textField.placeholder = @"请输入借款期限(天)";
+    }
+    if ([textField isEqual:_inputApplyName]) {
+        textField.placeholder = @"请输入申请人姓名";
+    }
+    if ([textField isEqual:_inputApplyPhone]) {
+        textField.placeholder = @"请输入申请人电话";
+    }
+    if ([textField isEqual:_inputProfession]) {
+        textField.placeholder = @"请输入申请人职业";
+    }
+    if ([textField isEqual:_inputYearIncome]) {
+        textField.placeholder = @"请输入申请人年收入(万)";
+    }
+}
+
 -(void)textFieldDidChange :(UITextField *)theTextField {
     
     if ([theTextField isEqual:_inputLoansMoney]) {
@@ -723,7 +771,7 @@
     
     //相册参数配置
     ZLPhotoConfiguration *configuration = [ZLPhotoConfiguration defaultPhotoConfiguration];
-    configuration.maxSelectCount = 2-_imageArray3.count;
+    configuration.maxSelectCount = 1;
     ac.configuration = configuration;
     
     //如调用的方法无sender参数，则该参数必传
@@ -732,12 +780,42 @@
     //选择回调
     [ac setSelectImageBlock:^(NSArray<UIImage *> * _Nonnull images, NSArray<PHAsset *> * _Nonnull assets, BOOL isOriginal) {
         //your codes
-        for (int i=0; i<images.count; i++) {
-            UIImage *selectImage = images[i];
-            [_imageArray3 addObject:selectImage];
+        switch (sender.tag) {
+            case 1:
+            {
+                [_idCardButton1 setBackgroundImage:images[0] forState:UIControlStateNormal];
+                _select1 = images[0];
+                _idCardDeleteButton1 = [[UIButton alloc]init];
+                _idCardDeleteButton1.tag = 1;
+                [_idCardDeleteButton1 setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
+                [_idCardDeleteButton1 addTarget:self action:@selector(deleteSelectImage:) forControlEvents:UIControlEventTouchUpInside];
+                [_idCardButton1 addSubview:_idCardDeleteButton1];
+                [_idCardDeleteButton1 mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.edges.equalTo(_idCardButton1);
+                }];
+            }
+                break;
+            case 2:
+            {
+                [_idCardButton2 setBackgroundImage:images[0] forState:UIControlStateNormal];
+                _select2 = images[0];
+                _idCardDeleteButton2 = [[UIButton alloc]init];
+                _idCardDeleteButton2.tag = 2;
+                [_idCardDeleteButton2 setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
+                [_idCardDeleteButton2 addTarget:self action:@selector(deleteSelectImage:) forControlEvents:UIControlEventTouchUpInside];
+                [_idCardButton2 addSubview:_idCardDeleteButton2];
+                [_idCardDeleteButton2 mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.edges.equalTo(_idCardButton2);
+                }];
+            }
+                break;
+                
+            default:
+                break;
         }
-        [self configDealWithButtonThree];
-        _unselectTip6.hidden = YES;
+        if (_select1 && _select2) {
+            _unselectTip6.hidden = YES;
+        }
     }];
     
     //调用相册
@@ -745,52 +823,28 @@
     
 }
 
-#pragma mark - 整理第三组按钮的图片显示问题
-- (void)configDealWithButtonThree {
-    //初始化数组里的button
-    for (int i=0; i<_buttonArray3.count; i++) {
-        UIButton *button3 = _buttonArray3[i];
-        [button3 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
-        if (i==0) {
-            button3.hidden = NO;
-        } else {
-            button3.hidden = YES;
+- (void)deleteSelectImage:(UIButton *)btn {
+    switch (btn.tag) {
+        case 1:
+        {
+            [_idCardDeleteButton1 removeFromSuperview];
+            _idCardDeleteButton1 = nil;
+            [_idCardButton1 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
+            _select1 = nil;
         }
-    }
-    for (int i=0; i<_deleteArray3.count; i++) {
-        [_deleteArray3[i] removeFromSuperview];
-    }
-    _deleteArray3 = [[NSMutableArray alloc]init];
-    for (int i=0; i<_imageArray3.count; i++) {
-        UIImage *image3 = _imageArray3[i];
-        UIButton *button3 = _buttonArray3[i];
-        button3.hidden = NO;
-        [button3 setBackgroundImage:image3 forState:UIControlStateNormal];
-        UIButton *deleteButton = [[UIButton alloc]init];
-        deleteButton.tag = i;
-        [deleteButton setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
-        [deleteButton addTarget:self action:@selector(deleteImageThree:) forControlEvents:UIControlEventTouchUpInside];
-        [_row6View addSubview:deleteButton];
-        [deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_tip6Label.mas_bottom).with.offset(RESIZE_UI(5));
-            make.left.equalTo(_row6View.mas_left).with.offset(RESIZE_UI(20)+RESIZE_UI(20+_buttonwidth)*i);
-            make.width.height.mas_offset(_buttonwidth);
-        }];
-        [_deleteArray3 addObject:deleteButton];
-        if (i+1<2) {
-            UIButton *button11 = _buttonArray3[i+1];
-            button11.hidden = NO;
+            break;
+        case 2:
+        {
+            [_idCardDeleteButton2 removeFromSuperview];
+            _idCardDeleteButton2 = nil;
+            [_idCardButton2 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
+            _select2 = nil;
         }
-        
+            break;
+            
+        default:
+            break;
     }
-}
-
-#pragma mark - 第一组图片删除问题
-- (void)deleteImageThree:(UIButton *)sender {
-    NSInteger row = sender.tag;
-    [_imageArray3 removeObjectAtIndex:row];
-    //回调第一组按钮方法
-    [self configDealWithButtonThree];
 }
 
 #pragma mark - 提交信息
@@ -805,11 +859,11 @@
         _loansMoneyUnitLabel.textColor = [UIColor redColor];
         [self changgePlaceholderMethod:_inputLoansMoney];
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入正确的借款金额" content:@"" time:1.0 andCodes:^{
-
+            [_commitApplyButton setUserInteractionEnabled:YES];
         }];
     } else if ([_inputLoansDuration.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputLoansDuration.text]) {
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入借款期限" content:@"" time:1.0 andCodes:^{
-            
+            [_commitApplyButton setUserInteractionEnabled:YES];
         }];
     } else if ([_inputApplyName.text isEqualToString:@""]) {
         NSString *tip;
@@ -820,7 +874,7 @@
         }
         [self changgePlaceholderMethod:_inputApplyName];
         [[SingletonManager sharedManager] showHUDView:self.view title:tip content:@"" time:1.0 andCodes:^{
-            
+            [_commitApplyButton setUserInteractionEnabled:YES];
         }];
     } else if ([_inputApplyPhone.text isEqualToString:@""] || _inputApplyPhone.text.length != 11 || ![SingletonManager isPureInt:_inputApplyPhone.text]) {
         NSString *tip;
@@ -831,29 +885,37 @@
         }
         [self changgePlaceholderMethod:_inputApplyPhone];
         [[SingletonManager sharedManager] showHUDView:self.view title:tip content:@"" time:1.0 andCodes:^{
-            
+            [_commitApplyButton setUserInteractionEnabled:YES];
         }];
     } else if (money>bottomMoney) {
         NSString *tipString = [NSString stringWithFormat:@"借款金额需小于等于票面金额%.2f元",bottomMoney];
         [[SingletonManager sharedManager] showHUDView:self.view title:tipString content:@"" time:1.0 andCodes:^{
-            
+            [_commitApplyButton setUserInteractionEnabled:YES];
         }];
     } else if (needDay>_day) {
         NSString *tipString = [NSString stringWithFormat:@"借款期限需小于等于票据期限%ld天",(long)_day];
         [[SingletonManager sharedManager] showHUDView:self.view title:tipString content:@"" time:1.0 andCodes:^{
-            
+            [_commitApplyButton setUserInteractionEnabled:YES];
+        }];
+    } else if (_loansUseTextView.text.length>200) {
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"借款用途描述200字以内" content:@"" time:1.0 andCodes:^{
+            [_commitApplyButton setUserInteractionEnabled:YES];
+        }];
+    } else if (_danbaoSelectTextView.text.length>200) {
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"担保措施描述200字以内" content:@"" time:1.0 andCodes:^{
+            [_commitApplyButton setUserInteractionEnabled:YES];
         }];
     } else {
         if (_identifier == 2) {
             if ([_inputEnterpriseName.text isEqualToString:@""]) {
                 [self changgePlaceholderMethod:_inputEnterpriseName];
                 [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入企业名称" content:@"" time:1.0 andCodes:^{
-                    
+                    [_commitApplyButton setUserInteractionEnabled:YES];
                 }];
-            } else if (_imageArray3.count == 0) {
+            } else if (!_select1 || !_select2) {
                 _unselectTip6.hidden = NO;
                 [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传营业执照正副本" content:@"" time:1.0 andCodes:^{
-                    
+                    [_commitApplyButton setUserInteractionEnabled:YES];
                 }];
             } else {
                 //网络请求
@@ -915,11 +977,7 @@
         [beishuArry addObject:_beishuImage[i]];
     }
     NSArray *beiA = [beishuArry copy];
-    NSMutableArray *yingyezhizhaoArry = [[NSMutableArray alloc]init];
-    for (int i=0; i<_imageArray3.count; i++) {
-        [yingyezhizhaoArry addObject:_imageArray3[i]];
-    }
-    NSArray *yingyezhizhaoA = [yingyezhizhaoArry copy];
+    NSArray *yingyezhizhaoA = [[NSArray alloc]initWithObjects:_select1,_select2, nil];;
     imageSumArray = @[piaoA,beiA,yingyezhizhaoA];
     AFHTTPSessionManager *httpManager = [AFHTTPSessionManager manager];
     httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html",  nil];//设置相应内容类型
@@ -951,11 +1009,10 @@
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [_commitApplyButton setUserInteractionEnabled:YES];
         NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         id obj = [manager paramUnCodeStr:responseStr];
         if (obj) {
-            
-            [_commitApplyButton setUserInteractionEnabled:YES];
             [SVProgressHUD dismiss];
             LoansFilledSuccessViewController *loansFillSuccessVC = [[LoansFilledSuccessViewController alloc]init];
             [self.navigationController pushViewController:loansFillSuccessVC animated:YES];
@@ -984,7 +1041,7 @@
 
 #pragma mark - 恢复placeholder字体
 - (void)recoverPlaceholderMethod:(UITextField *)textField {
-    [textField setValue:RGBA(153, 153, 153, 1.0) forKeyPath:@"_placeholderLabel.textColor"];
+    [textField setValue:RGBA(207, 207, 207, 1.0) forKeyPath:@"_placeholderLabel.textColor"];
     textField.textColor = defaultInputColor;
     textField.text = textField.text;
 }

@@ -87,7 +87,7 @@
         _redBallEarn.hidden = YES;
     } else {
         _redBallEarn.hidden = NO;
-        _redBallEarn.text = [NSString stringWithFormat:@"红包收益 %@元",model.redpacket];
+        _redBallEarn.text = [NSString stringWithFormat:@"使用红包 %@元",model.redpacket];
     }
     _holdNum.text = [NSString stringWithFormat:@"持有%@元", model.money];
     _ydayEarn.text = [NSString stringWithFormat:@"日收＋%.2f元", [model.day_income doubleValue]];
