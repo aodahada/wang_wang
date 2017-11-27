@@ -14,17 +14,18 @@
 @property (nonatomic, copy)NSString *contentValue;
 @property (nonatomic, strong)NSDate *selectDate;
 @property (nonatomic, strong)UITapGestureRecognizer *tap;
+@property (nonatomic, strong)NSDate *currentdate;
 
 @end
 
 @implementation DateSelectView
 
-- (instancetype)init {
+- (instancetype)initWithCurrentDate:(NSDate *)currentDate {
     self = [super init];
     if (self) {
         
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.29];
-        
+        _currentdate = currentDate;
         _tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(cancelMethod)];
         [self addGestureRecognizer:_tap];
         
@@ -35,6 +36,7 @@
         _dataPicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"]; // 设置地区 这里是
         //    self.timeField.inputView = _dateKB; // 用 UIDatePicker 替换 timeField 的键盘
         _dataPicker.minimumDate = [NSDate date];
+        [_dataPicker setDate:currentDate];
         
         // 当值改变的时候会触发的方法  我们滑动日期键盘的时候  执行方法 rollAction:
         [_dataPicker addTarget:self action:@selector(rollAction:) forControlEvents:(UIControlEventValueChanged)];
@@ -96,17 +98,18 @@
 - (void)confirmMethod {
     if (self.delegate && [self.delegate respondsToSelector:@selector(confirmDatePickerView: andDate:)]) {
         NSInteger chaDay = [SingletonManager getTheCountOfTwoDaysWithBeginDate:[NSDate date] endDate:_selectDate];
-        if (chaDay == 0) {
-            if (![_selectDate isEqualToDate:[NSDate date]]) {
+        if ([_contentValue isEqualToString:@""]) {
+            _selectDate = _currentdate;
+            _contentValue = [self dealStringMethod:[NSString stringWithFormat:@"%@",_currentdate]];
+        } else {
+            if (chaDay<=0) {
                 NSDate *date = [NSDate date];
+                _selectDate = date;
                 NSString *dateString = [NSString stringWithFormat:@"%@",date];
                 _contentValue = [self dealStringMethod:dateString];
+            } else {
+                _contentValue = [self dealStringMethod:[NSString stringWithFormat:@"%@",_selectDate]];
             }
-        }
-        if ([_contentValue isEqualToString:@""] || chaDay<0) {
-            NSDate *date = [NSDate date];
-            NSString *dateString = [NSString stringWithFormat:@"%@",date];
-            _contentValue = [self dealStringMethod:dateString];
         }
         [self.delegate confirmDatePickerView:_contentValue andDate:_selectDate];
     }

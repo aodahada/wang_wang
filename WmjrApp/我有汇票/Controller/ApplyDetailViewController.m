@@ -260,10 +260,12 @@
     chengduiContent.text = _applyRecordModel.acceptor;
     chengduiContent.textColor = RGBA(60, 60, 60, 1.0);
     chengduiContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    chengduiContent.textAlignment = NSTextAlignmentRight;
     [row4View addSubview:chengduiContent];
     [chengduiContent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row4View.mas_centerY);
         make.right.equalTo(row4View.mas_right).with.offset(-RESIZE_UI(20));
+        make.width.mas_offset(RESIZE_UI(160));
     }];
     
     //第五行 联系人姓名
@@ -291,10 +293,12 @@
     personNameContent.text = _applyRecordModel.borrow_name;
     personNameContent.textColor = RGBA(60, 60, 60, 1.0);
     personNameContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    personNameContent.textAlignment = NSTextAlignmentRight;
     [row5View addSubview:personNameContent];
     [personNameContent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row5View.mas_centerY);
         make.right.equalTo(row5View.mas_right).with.offset(-RESIZE_UI(20));
+        make.width.mas_offset(RESIZE_UI(160));
     }];
     
     //第六行 申请人电话
@@ -322,10 +326,12 @@
     personPhoneContent.text = _applyRecordModel.borrow_phone;
     personPhoneContent.textColor = RGBA(60, 60, 60, 1.0);
     personPhoneContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    personPhoneContent.textAlignment = NSTextAlignmentRight;
     [row6View addSubview:personPhoneContent];
     [personPhoneContent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row6View.mas_centerY);
         make.right.equalTo(row6View.mas_right).with.offset(-RESIZE_UI(20));
+        make.width.mas_offset(RESIZE_UI(160));
     }];
     
     if (_identifier == 1) {
@@ -359,10 +365,12 @@
             personJobContent.textColor = RGBA(60, 60, 60, 1.0);
         }
         personJobContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        personJobContent.textAlignment = NSTextAlignmentRight;
         [row7View addSubview:personJobContent];
         [personJobContent mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(row7View.mas_centerY);
             make.right.equalTo(row7View.mas_right).with.offset(-RESIZE_UI(20));
+            make.width.mas_offset(RESIZE_UI(160));
         }];
         
         //第八行 年收入
@@ -395,10 +403,12 @@
             personSalaryContent.textColor = RGBA(60, 60, 60, 1.0);
         }
         personSalaryContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        personSalaryContent.textAlignment = NSTextAlignmentRight;
         [row8View addSubview:personSalaryContent];
         [personSalaryContent mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(row8View.mas_centerY);
             make.right.equalTo(row8View.mas_right).with.offset(-RESIZE_UI(20));
+            make.width.mas_offset(RESIZE_UI(160));
         }];
     } else {
         //第七行 企业名称
@@ -435,6 +445,7 @@
         [enterpriseContent setUserInteractionEnabled:NO];
         enterpriseContent.textColor = RGBA(60, 60, 60, 1.0);
         enterpriseContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        enterpriseContent.textAlignment = NSTextAlignmentRight;
         [row7View addSubview:enterpriseContent];
         [enterpriseContent mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(row7View.mas_top).with.offset(RESIZE_UI(20));
@@ -674,63 +685,57 @@
         }];
     }
     
-    if (_identifier == 1) {
-        //第十五行 审核反馈标题
-        if ([_applyRecordModel.status isEqualToString:@"0"]) {
-            [viewMain mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.equalTo(row14View.mas_bottom);
-            }];
-        } else {
-            UIView *row15View = [[UIView alloc]init];
-            row15View.backgroundColor = [UIColor whiteColor];
-            [viewMain addSubview:row15View];
-            [row15View mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(row14View.mas_bottom).with.offset(RESIZE_UI(10));
-                make.left.equalTo(viewMain.mas_left);
-                make.right.equalTo(viewMain.mas_right);
-                make.height.mas_offset(RESIZE_UI(50));
-            }];
-            
-            UILabel *shenheTitle = [[UILabel alloc]init];
-            shenheTitle.text = @"审核反馈";
-            shenheTitle.textColor = RGBA(102, 102, 102, 1.0);
-            shenheTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-            [row15View addSubview:shenheTitle];
-            [shenheTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.equalTo(row15View.mas_centerY);
-                make.left.equalTo(row15View.mas_left).with.offset(RESIZE_UI(20));
-            }];
-            
-            //第十六行 审核反馈详情
-            UIView *row16View = [[UIView alloc]init];
-            row16View.backgroundColor = [UIColor whiteColor];
-            [viewMain addSubview:row16View];
-            [row16View mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(row15View.mas_bottom).with.offset(RESIZE_UI(1));
-                make.left.equalTo(viewMain.mas_left);
-                make.right.equalTo(viewMain.mas_right);
-                make.height.mas_offset(RESIZE_UI(100));
-            }];
-            
-            UITextView *shenheTextView = [[UITextView alloc]init];
-            shenheTextView.text = _applyRecordModel.audit;
-            shenheTextView.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-            shenheTextView.textColor = RGBA(0, 102, 177, 1.0);
-            [row16View addSubview:shenheTextView];
-            [shenheTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(row16View.mas_top).with.offset(RESIZE_UI(14));
-                make.left.equalTo(row16View.mas_left).with.offset(RESIZE_UI(20));
-                make.right.equalTo(row16View.mas_right).with.offset(-RESIZE_UI(20));
-                make.bottom.equalTo(row16View.mas_bottom).with.offset(-RESIZE_UI(30));
-            }];
-            
-            [viewMain mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.equalTo(row16View.mas_bottom);
-            }];
-        }
-    } else {
+    //第十五行 审核反馈标题
+    if ([_applyRecordModel.status isEqualToString:@"0"] || [[SingletonManager convertNullString:_applyRecordModel.audit] isEqualToString:@""]) {
         [viewMain mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(row14View.mas_bottom);
+        }];
+    } else {
+        UIView *row15View = [[UIView alloc]init];
+        row15View.backgroundColor = [UIColor whiteColor];
+        [viewMain addSubview:row15View];
+        [row15View mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row14View.mas_bottom).with.offset(RESIZE_UI(10));
+            make.left.equalTo(viewMain.mas_left);
+            make.right.equalTo(viewMain.mas_right);
+            make.height.mas_offset(RESIZE_UI(50));
+        }];
+        
+        UILabel *shenheTitle = [[UILabel alloc]init];
+        shenheTitle.text = @"审核反馈";
+        shenheTitle.textColor = RGBA(102, 102, 102, 1.0);
+        shenheTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [row15View addSubview:shenheTitle];
+        [shenheTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(row15View.mas_centerY);
+            make.left.equalTo(row15View.mas_left).with.offset(RESIZE_UI(20));
+        }];
+        
+        //第十六行 审核反馈详情
+        UIView *row16View = [[UIView alloc]init];
+        row16View.backgroundColor = [UIColor whiteColor];
+        [viewMain addSubview:row16View];
+        [row16View mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row15View.mas_bottom).with.offset(RESIZE_UI(1));
+            make.left.equalTo(viewMain.mas_left);
+            make.right.equalTo(viewMain.mas_right);
+            make.height.mas_offset(RESIZE_UI(100));
+        }];
+        
+        UITextView *shenheTextView = [[UITextView alloc]init];
+        shenheTextView.text = _applyRecordModel.audit;
+        shenheTextView.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        shenheTextView.textColor = [UIColor redColor];
+        [row16View addSubview:shenheTextView];
+        [shenheTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(row16View.mas_top).with.offset(RESIZE_UI(14));
+            make.left.equalTo(row16View.mas_left).with.offset(RESIZE_UI(20));
+            make.right.equalTo(row16View.mas_right).with.offset(-RESIZE_UI(20));
+            make.bottom.equalTo(row16View.mas_bottom).with.offset(-RESIZE_UI(30));
+        }];
+        
+        [viewMain mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(row16View.mas_bottom);
         }];
     }
     

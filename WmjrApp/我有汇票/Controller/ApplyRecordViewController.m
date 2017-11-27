@@ -56,16 +56,8 @@
     self.title = @"申请记录";
     self.view.backgroundColor = RGBA(238, 240, 242, 1.0);
     
-    UIImage *image = [[UIImage imageNamed:@"arrow_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backClick)];
-    self.navigationItem.leftBarButtonItem = backButton;
-    
     [self setUpLayout];
     [self getMessageMethod:@"0"];
-}
-
-- (void)backClick {
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -287,7 +279,7 @@
 
 #pragma mark - 返回上一页
 - (void)backViewMethod {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 

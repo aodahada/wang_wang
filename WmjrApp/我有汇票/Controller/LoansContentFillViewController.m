@@ -410,7 +410,7 @@
         [_inputYearIncome mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(_row6View);
             make.right.equalTo(_yearIncomeUnitLabel.mas_left);
-            make.width.mas_offset(RESIZE_UI(160));
+            make.width.mas_offset(RESIZE_UI(170));
         }];
     } else {
         [viewMain addSubview:_row6View];
@@ -664,7 +664,7 @@
                 if (money>bottomMoney) {
                     [self changgePlaceholderMethod:_inputLoansMoney];
                     _loansMoneyUnitLabel.textColor = errorInputColor;
-                    [[SingletonManager sharedManager] showHUDView:self.view title:tipString content:@"" time:1.0 andCodes:^{
+                    [[SingletonManager sharedManager] showHUDView:self.view title:@"提示" content:tipString time:1.0 andCodes:^{
                         
                     }];
                     return;
@@ -858,14 +858,24 @@
     if ([_inputLoansMoney.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputLoansMoney.text]) {
         _loansMoneyUnitLabel.textColor = [UIColor redColor];
         [self changgePlaceholderMethod:_inputLoansMoney];
-        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入正确的借款金额" content:@"" time:1.0 andCodes:^{
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入借款金额" content:@"" time:1.0 andCodes:^{
             [_commitApplyButton setUserInteractionEnabled:YES];
         }];
-    } else if ([_inputLoansDuration.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputLoansDuration.text]) {
+    } else if (money>bottomMoney) {
+        NSString *tipString = [NSString stringWithFormat:@"借款金额需小于等于票面金额%.2f元",bottomMoney];
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"提示" content:tipString time:1.0 andCodes:^{
+            [_commitApplyButton setUserInteractionEnabled:YES];
+        }];
+    }  else if ([_inputLoansDuration.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputLoansDuration.text]) {
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入借款期限" content:@"" time:1.0 andCodes:^{
             [_commitApplyButton setUserInteractionEnabled:YES];
         }];
-    } else if ([_inputApplyName.text isEqualToString:@""]) {
+    } else if (needDay>_day) {
+        NSString *tipString = [NSString stringWithFormat:@"借款期限需小于等于票据期限%ld天",(long)_day];
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"提示" content:tipString time:1.0 andCodes:^{
+            [_commitApplyButton setUserInteractionEnabled:YES];
+        }];
+    }else if ([_inputApplyName.text isEqualToString:@""]) {
         NSString *tip;
         if (_identifier == 1) {
             tip = @"请输入申请人姓名";
@@ -876,28 +886,20 @@
         [[SingletonManager sharedManager] showHUDView:self.view title:tip content:@"" time:1.0 andCodes:^{
             [_commitApplyButton setUserInteractionEnabled:YES];
         }];
-    } else if ([_inputApplyPhone.text isEqualToString:@""] || _inputApplyPhone.text.length != 11 || ![SingletonManager isPureInt:_inputApplyPhone.text]) {
-        NSString *tip;
-        if (_identifier == 1) {
-            tip = @"请输入正确的申请人电话";
-        } else {
-            tip = @"请输入正确的联系人电话";
-        }
-        [self changgePlaceholderMethod:_inputApplyPhone];
-        [[SingletonManager sharedManager] showHUDView:self.view title:tip content:@"" time:1.0 andCodes:^{
-            [_commitApplyButton setUserInteractionEnabled:YES];
-        }];
-    } else if (money>bottomMoney) {
-        NSString *tipString = [NSString stringWithFormat:@"借款金额需小于等于票面金额%.2f元",bottomMoney];
-        [[SingletonManager sharedManager] showHUDView:self.view title:tipString content:@"" time:1.0 andCodes:^{
-            [_commitApplyButton setUserInteractionEnabled:YES];
-        }];
-    } else if (needDay>_day) {
-        NSString *tipString = [NSString stringWithFormat:@"借款期限需小于等于票据期限%ld天",(long)_day];
-        [[SingletonManager sharedManager] showHUDView:self.view title:tipString content:@"" time:1.0 andCodes:^{
-            [_commitApplyButton setUserInteractionEnabled:YES];
-        }];
-    } else if (_loansUseTextView.text.length>200) {
+    }
+//    else if ([_inputApplyPhone.text isEqualToString:@""] || _inputApplyPhone.text.length != 11 || ![SingletonManager isPureInt:_inputApplyPhone.text]) {
+//        NSString *tip;
+//        if (_identifier == 1) {
+//            tip = @"请输入正确的申请人电话";
+//        } else {
+//            tip = @"请输入正确的联系人电话";
+//        }
+//        [self changgePlaceholderMethod:_inputApplyPhone];
+//        [[SingletonManager sharedManager] showHUDView:self.view title:tip content:@"" time:1.0 andCodes:^{
+//            [_commitApplyButton setUserInteractionEnabled:YES];
+//        }];
+//    }
+    else if (_loansUseTextView.text.length>200) {
         [[SingletonManager sharedManager] showHUDView:self.view title:@"借款用途描述200字以内" content:@"" time:1.0 andCodes:^{
             [_commitApplyButton setUserInteractionEnabled:YES];
         }];
@@ -1020,6 +1022,7 @@
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSString *msgStr = @"上传失败";
+        [_commitApplyButton setUserInteractionEnabled:YES];
         MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
         alertConfig.defaultTextOK = @"确定";
         [SVProgressHUD dismiss];

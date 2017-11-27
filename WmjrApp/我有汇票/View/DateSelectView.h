@@ -20,4 +20,6 @@
 
 @property (nonatomic, assign)id<DateSelectViewDelegate> delegate;
 
+- (instancetype)initWithCurrentDate:(NSDate *)currentDate;
+
 @end

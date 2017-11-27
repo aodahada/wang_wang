@@ -77,7 +77,7 @@
         [leftView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(line1.mas_bottom);
             make.left.equalTo(self.mas_left);
-            make.height.mas_offset(95);
+            make.height.mas_offset(RESIZE_UI(95));
             make.width.mas_offset(SCREEN_WIDTH/3-1);
         }];
         

@@ -10,7 +10,7 @@
 #import "ZLPhotoActionSheet.h"
 #import "ZLPhotoConfiguration.h"
 
-@interface ReleaseBankCardViewController ()<UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate>
+@interface ReleaseBankCardViewController ()<UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic, strong)UITextField *inputName;
 @property (nonatomic, strong)UITextField *inputIdCard;
@@ -19,10 +19,12 @@
 @property (nonatomic, strong)UIButton *idCardDeleteButton1;
 @property (nonatomic, strong)UIButton *idCardButton2;
 @property (nonatomic, strong)UIButton *idCardDeleteButton2;
+@property (nonatomic, strong)UILabel *unselectTipId;
 @property (nonatomic, strong)UIButton *bankCardButton1;
 @property (nonatomic, strong)UIButton *bankCardDeleteButton1;
 @property (nonatomic, strong)UIButton *bankCardButton2;
 @property (nonatomic, strong)UIButton *bankCardDeleteButton2;
+@property (nonatomic, strong)UILabel *unselectTipBnak;
 
 @property (nonatomic, strong)UIImage *select1;
 @property (nonatomic, strong)UIImage *select2;
@@ -126,6 +128,8 @@
     _inputName.keyboardType = UIKeyboardTypeDecimalPad;
     _inputName.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputName.textAlignment = NSTextAlignmentRight;
+    _inputName.delegate = self;
+    [_inputName addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row1View addSubview:_inputName];
     [_inputName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row1View);
@@ -158,6 +162,8 @@
     _inputIdCard.keyboardType = UIKeyboardTypeDecimalPad;
     _inputIdCard.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputIdCard.textAlignment = NSTextAlignmentRight;
+    _inputIdCard.delegate = self;
+    [_inputIdCard addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row2View addSubview:_inputIdCard];
     [_inputIdCard mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row2View);
@@ -190,6 +196,8 @@
     _inputBankCard.keyboardType = UIKeyboardTypeDecimalPad;
     _inputBankCard.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputBankCard.textAlignment = NSTextAlignmentRight;
+    _inputBankCard.delegate = self;
+    [_inputBankCard addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row3View addSubview:_inputBankCard];
     [_inputBankCard mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row3View);
@@ -215,6 +223,17 @@
     [label4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row4View.mas_top).with.offset(RESIZE_UI(20));
         make.left.equalTo(row4View.mas_left).with.offset(RESIZE_UI(20));
+    }];
+    
+    _unselectTipId = [[UILabel alloc]init];
+    _unselectTipId.text = @"请上传身份证正反面照";
+    _unselectTipId.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    _unselectTipId.textColor = [UIColor redColor];
+    _unselectTipId.hidden = YES;
+    [row4View addSubview:_unselectTipId];
+    [_unselectTipId mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(label4.mas_centerY);
+        make.right.equalTo(row4View.mas_right).with.offset(-RESIZE_UI(20));
     }];
     
     UILabel *tip4Label = [[UILabel alloc]init];
@@ -268,6 +287,17 @@
     [label5 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(row5View.mas_top).with.offset(RESIZE_UI(20));
         make.left.equalTo(row5View.mas_left).with.offset(RESIZE_UI(20));
+    }];
+    
+    _unselectTipBnak = [[UILabel alloc]init];
+    _unselectTipBnak.text = @"请上传银行卡正反面照";
+    _unselectTipBnak.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    _unselectTipBnak.textColor = [UIColor redColor];
+    _unselectTipBnak.hidden = YES;
+    [row5View addSubview:_unselectTipBnak];
+    [_unselectTipBnak mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(label5.mas_centerY);
+        make.right.equalTo(row5View.mas_right).with.offset(-RESIZE_UI(20));
     }];
     
     UILabel *tip5Label = [[UILabel alloc]init];
@@ -340,6 +370,9 @@
                 [_idCardDeleteButton1 mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.edges.equalTo(_idCardButton1);
                 }];
+                if (_select2) {
+                    _unselectTipId.hidden = YES;
+                }
             }
                 break;
             case 2:
@@ -354,6 +387,9 @@
                 [_idCardDeleteButton2 mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.edges.equalTo(_idCardButton2);
                 }];
+                if (_select1) {
+                    _unselectTipId.hidden = YES;
+                }
             }
                 break;
             case 3:
@@ -368,6 +404,9 @@
                 [_bankCardDeleteButton1 mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.edges.equalTo(_bankCardButton1);
                 }];
+                if (_select4) {
+                    _unselectTipBnak.hidden = YES;
+                }
             }
                 break;
             case 4:
@@ -382,6 +421,9 @@
                 [_bankCardDeleteButton2 mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.edges.equalTo(_bankCardButton2);
                 }];
+                if (_select3) {
+                    _unselectTipBnak.hidden = YES;
+                }
             }
                 break;
                 
@@ -404,6 +446,7 @@
             _idCardDeleteButton1 = nil;
             [_idCardButton1 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
             _select1 = nil;
+            _unselectTipId.hidden = NO;
         }
             break;
         case 2:
@@ -412,6 +455,7 @@
             _idCardDeleteButton2 = nil;
             [_idCardButton2 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
             _select2 = nil;
+            _unselectTipId.hidden = NO;
         }
             break;
         case 3:
@@ -420,6 +464,7 @@
             _bankCardDeleteButton1 = nil;
             [_bankCardButton1 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
             _select3 = nil;
+            _unselectTipBnak.hidden = NO;
         }
             break;
         case 4:
@@ -428,6 +473,7 @@
             _bankCardDeleteButton2 = nil;
             [_bankCardButton2 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
             _select4 = nil;
+            _unselectTipBnak.hidden = NO;
         }
             break;
             
@@ -439,30 +485,38 @@
 #pragma mark - 提交申请
 - (void)netStepButtonMethod {
     if ([_inputName.text isEqualToString:@""]) {
+        [self changgePlaceholderMethod:_inputName];
+        _inputName.textColor = [UIColor redColor];
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入用户姓名" content:@"" time:1.0 andCodes:^{
             
         }];
         return;
     }
     if ([_inputIdCard.text isEqualToString:@""]) {
+        [self changgePlaceholderMethod:_inputIdCard];
+        _inputIdCard.textColor = [UIColor redColor];
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入身份证号码" content:@"" time:1.0 andCodes:^{
             
         }];
         return;
     }
     if ([_inputBankCard.text isEqualToString:@""]) {
+        [self changgePlaceholderMethod:_inputBankCard];
+        _inputBankCard.textColor = [UIColor redColor];
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入银行卡卡号" content:@"" time:1.0 andCodes:^{
             
         }];
         return;
     }
-    if (!_select1&&_select2) {
+    if (!_select1||!_select2) {
+        _unselectTipId.hidden = NO;
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传身份证正反面照" content:@"" time:1.0 andCodes:^{
             
         }];
         return;
     }
-    if (!_select3&&_select4) {
+    if (!_select3||!_select4) {
+        _unselectTipBnak.hidden = NO;
         [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传银行卡正反面照" content:@"" time:1.0 andCodes:^{
             
         }];
@@ -585,6 +639,51 @@
     
     [self.navigationController popViewControllerAnimated:YES];
     
+}
+
+#pragma mark - 监听textfield
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    textField.placeholder = @"";
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if ([textField isEqual:_inputName]) {
+        textField.placeholder = @"请输入用户姓名";
+    }
+    if ([textField isEqual:_inputIdCard]) {
+        textField.placeholder = @"请输入身份证号码";
+    }
+    if ([textField isEqual:_inputBankCard]) {
+        textField.placeholder = @"请输入银行卡卡号";
+    }
+}
+
+-(void)textFieldDidChange :(UITextField *)theTextField {
+    
+    [self recoverPlaceholderMethod:theTextField];
+//    if ([theTextField isEqual:_inputPiaojuMoney]) {
+//        _inputPiaojuMoney.textColor = RGBA(60, 60, 60, 1.0);
+//        //        _inputPiaojuMoney.text = _inputPiaojuMoney.text;
+//        _piaojuUnitLabel.textColor = RGBA(60, 60, 60, 1.0);
+//    }
+//    if ([theTextField isEqual:_inputRate]) {
+//        _inputRate.textColor = RGBA(60, 60, 60, 1.0);
+//        //        _inputRate.text = _inputRate.text;
+//        _rateUnitLabel.textColor = RGBA(60, 60, 60, 1.0);
+//    }
+    theTextField.textColor = RGBA(60, 60, 60, 1.0);
+    
+}
+
+#pragma mark - 修改placeholder字体
+- (void)changgePlaceholderMethod:(UITextField *)textField {
+    [textField setValue:[UIColor redColor] forKeyPath:@"_placeholderLabel.textColor"];
+    //    [textField setValue:[UIFont boldSystemFontOfSize:16] forKeyPath:@"_placeholderLabel.font"];
+}
+
+#pragma mark - 恢复placeholder字体
+- (void)recoverPlaceholderMethod:(UITextField *)textField {
+    [textField setValue:RGBA(207, 207, 207, 1.0) forKeyPath:@"_placeholderLabel.textColor"];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -60,6 +60,7 @@
     self.title = @"立即申请";
     self.view.backgroundColor = RGBA(240, 241, 243, 1.0);
     _typeTag = 1;
+    _selectDate = [NSDate date];
     _buttonArray1 = [[NSMutableArray alloc]init];
     _imageArray1 = [[NSMutableArray alloc]init];
     _buttonArray2 = [[NSMutableArray alloc]init];
@@ -560,11 +561,12 @@
 #pragma mark - 查看日期选择器
 - (void)watchDateMethod {
     
+    _selectDate;
     [_inputRate resignFirstResponder];
     [_inputPiaojuMoney resignFirstResponder];
     [_inputChengdui resignFirstResponder];
     UIWindow *window = [[UIApplication sharedApplication].delegate window];
-    _dateSelectView = [[DateSelectView alloc]init];
+    _dateSelectView = [[DateSelectView alloc]initWithCurrentDate:_selectDate];
     _dateSelectView.delegate = self;
     [window addSubview:_dateSelectView];
     [_dateSelectView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -743,43 +745,43 @@
 }
 #pragma mark - 下一步按钮
 - (void)netStepButtonMethod {
-//    if ([_inputPiaojuMoney.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputPiaojuMoney.text] || [_inputPiaojuMoney.text floatValue]<0) {
-//        [self changgePlaceholderMethod:_inputPiaojuMoney];
-//        _inputPiaojuMoney.textColor = [UIColor redColor];
-//        _inputPiaojuMoney.text = _inputPiaojuMoney.text;
-//        _piaojuUnitLabel.textColor = [UIColor redColor];
-//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入正确的票面金额" content:@"" time:1.0 andCodes:^{
-//
-//        }];
-//    } else if ([_inputRate.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputRate.text] || [_inputRate.text floatValue]<0) {
-//        [self changgePlaceholderMethod:_inputRate];
-//        _inputRate.textColor = [UIColor redColor];
-//        _inputRate.text = _inputRate.text;
-//        _rateUnitLabel.textColor = [UIColor redColor];
-//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入期望利率" content:@"" time:1.0 andCodes:^{
-//
-//        }];
-//    } else if ([_dateLabel.text isEqualToString:@""]) {
-//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请选择票据到期日" content:@"" time:1.0 andCodes:^{
-//
-//        }];
-//    } else if ([_inputChengdui.text isEqualToString:@""] || [_inputChengdui.text isEqualToString:@"请输入承兑对象"]) {
-//        _inputChengdui.textColor = [UIColor redColor];
-//        _inputChengdui.text = _inputChengdui.text;
-//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入承兑对象" content:@"" time:1.0 andCodes:^{
-//
-//        }];
-//    } else if (_imageArray1.count == 0) {
-//        _unselectTip6.hidden = NO;
-//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传票面图片" content:@"" time:1.0 andCodes:^{
-//
-//        }];
-//    } else if (_imageArray2.count == 0) {
-//        _unselectTip7.hidden = NO;
-//        [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传背书图片" content:@"" time:1.0 andCodes:^{
-//
-//        }];
-//    } else {
+    if ([_inputPiaojuMoney.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputPiaojuMoney.text] || [_inputPiaojuMoney.text floatValue]<0) {
+        [self changgePlaceholderMethod:_inputPiaojuMoney];
+        _inputPiaojuMoney.textColor = [UIColor redColor];
+        _inputPiaojuMoney.text = _inputPiaojuMoney.text;
+        _piaojuUnitLabel.textColor = [UIColor redColor];
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入票面金额" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else if ([_inputRate.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputRate.text] || [_inputRate.text floatValue]<0) {
+        [self changgePlaceholderMethod:_inputRate];
+        _inputRate.textColor = [UIColor redColor];
+        _inputRate.text = _inputRate.text;
+        _rateUnitLabel.textColor = [UIColor redColor];
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入期望利率" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else if ([_dateLabel.text isEqualToString:@""]) {
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请选择票据到期日" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else if ([_inputChengdui.text isEqualToString:@""] || [_inputChengdui.text isEqualToString:@"请输入承兑对象"]) {
+        _inputChengdui.textColor = [UIColor redColor];
+        _inputChengdui.text = _inputChengdui.text;
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入承兑对象" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else if (_imageArray1.count == 0) {
+        _unselectTip6.hidden = NO;
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传票面图片" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else if (_imageArray2.count == 0) {
+        _unselectTip7.hidden = NO;
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请上传背书图片" content:@"" time:1.0 andCodes:^{
+
+        }];
+    } else {
         LoansContentFillViewController *loansFillVC = [[LoansContentFillViewController alloc]init];
         loansFillVC.identifier = self.identifier;
         loansFillVC.typeTag = _typeTag;
@@ -791,7 +793,7 @@
         loansFillVC.piaoMianImage = [_imageArray1 copy];
         loansFillVC.beishuImage = [_imageArray1 copy];
         [self.navigationController pushViewController:loansFillVC animated:YES];
-//    }
+    }
 
 }
 
