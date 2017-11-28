@@ -24,7 +24,7 @@
 @property (nonatomic, strong)UITextField *inputApplyName;//申请人姓名
 @property (nonatomic, strong)UITextField *inputApplyPhone;//申请人电话
 @property (nonatomic, strong)UITextField *inputProfession;//申请人职业
-@property (nonatomic, strong)UITextField *inputEnterpriseName;//企业名称
+@property (nonatomic, strong)UITextView *inputEnterpriseName;//企业名称
 @property (nonatomic, strong)UITextField *inputYearIncome;//申请人年收入
 @property (nonatomic, strong)UILabel *yearIncomeUnitLabel;//配合inputYearIncome
 @property (nonatomic, strong)UITextView *loansUseTextView;//借款用途
@@ -134,9 +134,10 @@
     [_inputLoansMoney addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row1View addSubview:_inputLoansMoney];
     [_inputLoansMoney mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row1View.mas_top).with.offset(RESIZE_UI(20));
+        make.centerY.equalTo(label1.mas_centerY);
         make.right.equalTo(_loansMoneyUnitLabel.mas_left);
         make.width.mas_offset(RESIZE_UI(160));
+        make.height.mas_equalTo(RESIZE_UI(40));
     }];
     
     UILabel *tip1Label = [[UILabel alloc]init];
@@ -189,9 +190,10 @@
     [_inputLoansDuration addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row2View addSubview:_inputLoansDuration];
     [_inputLoansDuration mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row2View.mas_top).with.offset(RESIZE_UI(20));
+        make.centerY.equalTo(label2.mas_centerY);
         make.right.equalTo(_loansDurationUnitLabel.mas_left);
         make.width.mas_offset(RESIZE_UI(160));
+        make.height.mas_equalTo(RESIZE_UI(40));
     }];
     
     _day = [SingletonManager getTheCountOfTwoDaysWithBeginDate:[NSDate date] endDate:_selectDate];
@@ -246,6 +248,7 @@
         make.centerY.equalTo(row3View);
         make.right.equalTo(row3View.mas_right).with.offset(-RESIZE_UI(20));
         make.width.mas_offset(RESIZE_UI(160));
+        make.height.mas_equalTo(row3View.mas_height);
     }];
     
     //第四行
@@ -290,6 +293,7 @@
         make.centerY.equalTo(row4View);
         make.right.equalTo(row4View.mas_right).with.offset(-RESIZE_UI(20));
         make.width.mas_offset(RESIZE_UI(160));
+        make.height.mas_equalTo(row4View.mas_height);
     }];
     
     //第五行
@@ -330,6 +334,7 @@
             make.centerY.equalTo(row5View);
             make.right.equalTo(row5View.mas_right).with.offset(-RESIZE_UI(20));
             make.width.mas_offset(RESIZE_UI(160));
+            make.height.mas_equalTo(row5View.mas_height);
         }];
     } else {
         UILabel *label5 = [[UILabel alloc]init];
@@ -342,18 +347,20 @@
             make.left.equalTo(row5View.mas_left).with.offset(RESIZE_UI(20));
         }];
         
-        _inputEnterpriseName = [[UITextField alloc]init];
-        _inputEnterpriseName.placeholder = @"请输入企业名称";
+        _inputEnterpriseName = [[UITextView alloc]init];
+        _inputEnterpriseName.text = @"请输入企业名称";
+        _inputEnterpriseName.textColor = RGBA(199, 199, 204, 1.0);
+        _inputEnterpriseName.delegate = self;
         _inputEnterpriseName.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
         _inputEnterpriseName.textAlignment = NSTextAlignmentRight;
-        _inputEnterpriseName.tag = 6;
         _inputEnterpriseName.delegate = self;
-        [_inputEnterpriseName addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        _inputEnterpriseName.tag = 3;
         [row5View addSubview:_inputEnterpriseName];
         [_inputEnterpriseName mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(row5View.mas_top).with.offset(RESIZE_UI(20));
+            make.top.equalTo(row5View.mas_top).with.offset(RESIZE_UI(10));
             make.right.equalTo(row5View.mas_right).with.offset(-RESIZE_UI(20));
-            make.width.mas_offset(RESIZE_UI(160));
+            make.width.mas_offset(RESIZE_UI(176));
+            make.height.mas_offset(RESIZE_UI(45));
         }];
         
         UILabel *tip3Label = [[UILabel alloc]init];
@@ -411,6 +418,7 @@
             make.centerY.equalTo(_row6View);
             make.right.equalTo(_yearIncomeUnitLabel.mas_left);
             make.width.mas_offset(RESIZE_UI(170));
+            make.height.mas_equalTo(_row6View.mas_height);
         }];
     } else {
         [viewMain addSubview:_row6View];
@@ -595,6 +603,13 @@
 #pragma mark - 监听textfield
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     textField.placeholder = @"";
+    [self recoverPlaceholderMethod:textField];
+    if ([textField isEqual:_inputLoansMoney]) {
+        _loansMoneyUnitLabel.textColor = defaultInputColor;
+    }
+    if ([textField isEqual:_inputLoansDuration]) {
+        _loansDurationUnitLabel.textColor = defaultInputColor;
+    }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -620,24 +635,6 @@
 
 -(void)textFieldDidChange :(UITextField *)theTextField {
     
-    if ([theTextField isEqual:_inputLoansMoney]) {
-        _loansMoneyUnitLabel.textColor = defaultInputColor;
-        [self recoverPlaceholderMethod:_inputLoansMoney];
-    }
-    if ([theTextField isEqual:_inputLoansDuration]) {
-        [self recoverPlaceholderMethod:_inputLoansDuration];
-        _loansDurationUnitLabel.textColor = defaultInputColor;
-    }
-    if ([theTextField isEqual:_inputApplyName]) {
-        [self recoverPlaceholderMethod:_inputApplyName];
-    }
-    if ([theTextField isEqual:_inputApplyPhone]) {
-        [self recoverPlaceholderMethod:_inputApplyPhone];
-    }
-    if ([theTextField isEqual:_inputEnterpriseName]) {
-        [self recoverPlaceholderMethod:_inputEnterpriseName];
-    }
-    
     if ([theTextField.text isEqualToString:@""]) {
         switch (theTextField.tag) {
             case 1:
@@ -658,39 +655,11 @@
             case 1:
             {
                 _loansMoneyUnitLabel.text = @" 元";
-                CGFloat money = [_inputLoansMoney.text floatValue];
-                CGFloat bottomMoney = [_piaojuMoney floatValue];
-                NSString *tipString = [NSString stringWithFormat:@"借款金额需小于等于票面金额%.2f元",bottomMoney];
-                if (money>bottomMoney) {
-                    [self changgePlaceholderMethod:_inputLoansMoney];
-                    _loansMoneyUnitLabel.textColor = errorInputColor;
-                    [[SingletonManager sharedManager] showHUDView:self.view title:@"提示" content:tipString time:1.0 andCodes:^{
-                        
-                    }];
-                    return;
-                } else {
-//                    NSLog(@"ok的");
-                    [self recoverPlaceholderMethod:_inputLoansMoney];
-                    _loansMoneyUnitLabel.textColor = defaultInputColor;
-                }
             }
                 break;
             case 2:
             {
                 _loansDurationUnitLabel.text = @" 天";
-                NSInteger needDay = [_inputLoansDuration.text integerValue];
-                NSString *tipString = [NSString stringWithFormat:@"借款期限需小于等于票据期限%ld天",(long)_day];
-                if (needDay>_day) {
-                    [self changgePlaceholderMethod:_inputLoansDuration];
-                    _loansDurationUnitLabel.textColor = errorInputColor;
-                    [[SingletonManager sharedManager] showHUDView:self.view title:tipString content:@"" time:1.0 andCodes:^{
-                        
-                    }];
-                    return;
-                } else {
-                    [self recoverPlaceholderMethod:_inputLoansDuration];
-                    _loansDurationUnitLabel.textColor = defaultInputColor;
-                }
             }
                 break;
             case 3:
@@ -719,6 +688,14 @@
         {
             textView.textColor = RGBA(60, 60, 60, 1.0);
             if ([textView.text isEqualToString:@"担保措施描述，200字以内"]) {
+                textView.text = @"";
+            }
+        }
+            break;
+        case 3:
+        {
+            textView.textColor = RGBA(60, 60, 60, 1.0);
+            if ([textView.text isEqualToString:@"请输入企业名称"]) {
                 textView.text = @"";
             }
         }
@@ -755,6 +732,24 @@
                 textView.textColor = RGBA(60, 60, 60, 1.0);
             } else {
                 textView.textColor = RGBA(199, 199, 204, 1.0);
+            }
+        }
+            break;
+        case 3:
+        {
+            if(textView.text.length < 1){
+                textView.text = @"请输入企业名称";
+                textView.textColor = RGBA(199, 199, 204, 1.0);
+            }
+            if (![textView.text isEqualToString:@"请输入企业名称"]) {
+                textView.textColor = RGBA(60, 60, 60, 1.0);
+            } else {
+                textView.textColor = RGBA(199, 199, 204, 1.0);
+            }
+            if (textView.text.length>11) {
+                textView.textAlignment = NSTextAlignmentLeft;
+            } else {
+                textView.textAlignment = NSTextAlignmentRight;
             }
         }
             break;
@@ -846,6 +841,20 @@
             break;
     }
 }
+#pragma mark - 所有的都恢复正常
+- (void)allRecoverNormal {
+    _inputLoansMoney.textColor = defaultInputColor;
+    _inputLoansMoney.text = _inputLoansMoney.text;
+    _inputLoansDuration.textColor = defaultInputColor;
+    _inputLoansDuration.text = _inputLoansDuration.text;
+    _inputApplyName.textColor = defaultInputColor;
+    _inputApplyName.text = _inputApplyName.text;
+    _inputApplyPhone.textColor = defaultInputColor;
+    _inputApplyPhone.text = _inputApplyPhone.text;
+    _loansMoneyUnitLabel.textColor = defaultInputColor;
+    _loansDurationUnitLabel.textColor = defaultInputColor;
+    _tip6Label.hidden = YES;
+}
 
 #pragma mark - 提交信息
 - (void)commitLoansMethod {
@@ -855,6 +864,9 @@
     CGFloat bottomMoney = [_piaojuMoney floatValue];
     NSInteger needDay = [_inputLoansDuration.text integerValue];
     
+    //所有都恢复正常
+    [self allRecoverNormal];
+    
     if ([_inputLoansMoney.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputLoansMoney.text]) {
         _loansMoneyUnitLabel.textColor = [UIColor redColor];
         [self changgePlaceholderMethod:_inputLoansMoney];
@@ -862,6 +874,8 @@
             [_commitApplyButton setUserInteractionEnabled:YES];
         }];
     } else if (money>bottomMoney) {
+        [self changgePlaceholderMethod:_inputLoansMoney];
+        _loansMoneyUnitLabel.textColor = errorInputColor;
         NSString *tipString = [NSString stringWithFormat:@"借款金额需小于等于票面金额%.2f元",bottomMoney];
         [[SingletonManager sharedManager] showHUDView:self.view title:@"提示" content:tipString time:1.0 andCodes:^{
             [_commitApplyButton setUserInteractionEnabled:YES];
@@ -871,6 +885,8 @@
             [_commitApplyButton setUserInteractionEnabled:YES];
         }];
     } else if (needDay>_day) {
+        [self changgePlaceholderMethod:_inputLoansDuration];
+        _loansDurationUnitLabel.textColor = errorInputColor;
         NSString *tipString = [NSString stringWithFormat:@"借款期限需小于等于票据期限%ld天",(long)_day];
         [[SingletonManager sharedManager] showHUDView:self.view title:@"提示" content:tipString time:1.0 andCodes:^{
             [_commitApplyButton setUserInteractionEnabled:YES];

@@ -100,16 +100,9 @@
         NSInteger chaDay = [SingletonManager getTheCountOfTwoDaysWithBeginDate:[NSDate date] endDate:_selectDate];
         if ([_contentValue isEqualToString:@""]) {
             _selectDate = _currentdate;
-            _contentValue = [self dealStringMethod:[NSString stringWithFormat:@"%@",_currentdate]];
+            _contentValue = [self dealStringMethod:_currentdate];
         } else {
-            if (chaDay<=0) {
-                NSDate *date = [NSDate date];
-                _selectDate = date;
-                NSString *dateString = [NSString stringWithFormat:@"%@",date];
-                _contentValue = [self dealStringMethod:dateString];
-            } else {
-                _contentValue = [self dealStringMethod:[NSString stringWithFormat:@"%@",_selectDate]];
-            }
+            _contentValue = [self dealStringMethod:_selectDate];
         }
         [self.delegate confirmDatePickerView:_contentValue andDate:_selectDate];
     }
@@ -117,16 +110,14 @@
 
 - (void)rollAction:(UIDatePicker *)datePicker {
     _selectDate = datePicker.date;
-    _contentValue = [NSString stringWithFormat:@"%@",datePicker.date];
-    _contentValue = [self dealStringMethod:_contentValue];
+    _contentValue = [self dealStringMethod:_selectDate];
 }
 
-#pragma mark - 处理字符串
-- (NSString *)dealStringMethod:(NSString *)dateString {
-    NSString *content = [dateString substringToIndex:10];
-//    NSArray *contentArray = [content componentsSeparatedByString:@"-"];
-//    NSString *value = [NSString stringWithFormat:@"%@年%@月%@日",contentArray[0],contentArray[1],contentArray[2]];
-    return content;
+- (NSString *)dealStringMethod:(NSDate *)selectDate {
+    NSDateFormatter *dateformatter = [[NSDateFormatter alloc]init];
+    [dateformatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [dateformatter stringFromDate:selectDate];
+    return dateStr;
 }
 
 @end

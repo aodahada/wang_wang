@@ -12,6 +12,9 @@
 #import "ZLPhotoActionSheet.h"
 #import "ZLPhotoConfiguration.h"
 
+#define defaultInputColor RGBA(60, 60, 60, 1.0)
+#define errorInputColor [UIColor redColor]
+
 @interface ImmediatelyMoneyOrderViewController ()<UITextViewDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,DateSelectViewDelegate,UITextViewDelegate>
 
 @property (nonatomic, strong)UIButton *nextStepButton;
@@ -202,6 +205,7 @@
         make.centerY.equalTo(row2View);
         make.right.equalTo(_piaojuUnitLabel.mas_left);
         make.width.mas_offset(RESIZE_UI(160));
+        make.height.mas_equalTo(row2View.mas_height);
     }];
     
     //第三行
@@ -247,6 +251,7 @@
         make.centerY.equalTo(_row3View);
         make.right.equalTo(_rateUnitLabel.mas_left);
         make.width.mas_offset(RESIZE_UI(160));
+        make.height.mas_equalTo(_row3View.mas_height);
     }];
     
     //第四行
@@ -462,6 +467,13 @@
 #pragma mark - 监听textfield
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     textField.placeholder = @"";
+    [self recoverPlaceholderMethod:textField];
+    if ([textField isEqual:_inputPiaojuMoney]) {
+        _piaojuUnitLabel.textColor = RGBA(60, 60, 60, 1.0);
+    }
+    if ([textField isEqual:_inputRate]) {
+        _rateUnitLabel.textColor = RGBA(60, 60, 60, 1.0);
+    }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -475,17 +487,6 @@
 
 -(void)textFieldDidChange :(UITextField *)theTextField {
     
-    [self recoverPlaceholderMethod:theTextField];
-    if ([theTextField isEqual:_inputPiaojuMoney]) {
-        _inputPiaojuMoney.textColor = RGBA(60, 60, 60, 1.0);
-//        _inputPiaojuMoney.text = _inputPiaojuMoney.text;
-        _piaojuUnitLabel.textColor = RGBA(60, 60, 60, 1.0);
-    }
-    if ([theTextField isEqual:_inputRate]) {
-        _inputRate.textColor = RGBA(60, 60, 60, 1.0);
-//        _inputRate.text = _inputRate.text;
-        _rateUnitLabel.textColor = RGBA(60, 60, 60, 1.0);
-    }
     if ([theTextField.text isEqualToString:@""]) {
         switch (theTextField.tag) {
             case 1:
@@ -561,7 +562,6 @@
 #pragma mark - 查看日期选择器
 - (void)watchDateMethod {
     
-    _selectDate;
     [_inputRate resignFirstResponder];
     [_inputPiaojuMoney resignFirstResponder];
     [_inputChengdui resignFirstResponder];
@@ -743,8 +743,22 @@
     //回调第一组按钮方法
     [self configDealWithButtonTwo];
 }
+
+#pragma mark - 全部恢复
+- (void)allRecoverNormal {
+    _inputPiaojuMoney.textColor = defaultInputColor;
+    _inputPiaojuMoney.text = _inputPiaojuMoney.text;
+    _inputRate.textColor = defaultInputColor;
+    _inputRate.text = _inputRate.text;
+    _inputChengdui.textColor = defaultInputColor;
+    _inputChengdui.text = _inputChengdui.text;
+    _tip6Label.hidden = YES;
+    _tip7Label.hidden = YES;
+}
+
 #pragma mark - 下一步按钮
 - (void)netStepButtonMethod {
+    [self allRecoverNormal];
     if ([_inputPiaojuMoney.text isEqualToString:@""] || ![SingletonManager isPureFloat:_inputPiaojuMoney.text] || [_inputPiaojuMoney.text floatValue]<0) {
         [self changgePlaceholderMethod:_inputPiaojuMoney];
         _inputPiaojuMoney.textColor = [UIColor redColor];
@@ -806,6 +820,7 @@
 #pragma mark - 恢复placeholder字体
 - (void)recoverPlaceholderMethod:(UITextField *)textField {
     [textField setValue:RGBA(207, 207, 207, 1.0) forKeyPath:@"_placeholderLabel.textColor"];
+    textField.textColor = RGBA(60,60,60,1.0);
 }
 
 - (void)didReceiveMemoryWarning {

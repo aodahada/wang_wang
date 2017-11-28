@@ -10,6 +10,8 @@
 #import "ZLPhotoActionSheet.h"
 #import "ZLPhotoConfiguration.h"
 
+#define defaultInputColor RGBA(60, 60, 60, 1.0)
+
 @interface ReleaseBankCardViewController ()<UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic, strong)UITextField *inputName;
@@ -129,11 +131,12 @@
     _inputName.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputName.textAlignment = NSTextAlignmentRight;
     _inputName.delegate = self;
-    [_inputName addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+//    [_inputName addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row1View addSubview:_inputName];
     [_inputName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(row1View);
         make.right.equalTo(row1View.mas_right).with.offset(-RESIZE_UI(20));
+        make.height.mas_equalTo(row1View.mas_height);
+        make.centerY.equalTo(row1View.mas_centerY);
     }];
     
     //第二行
@@ -163,11 +166,12 @@
     _inputIdCard.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputIdCard.textAlignment = NSTextAlignmentRight;
     _inputIdCard.delegate = self;
-    [_inputIdCard addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+//    [_inputIdCard addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row2View addSubview:_inputIdCard];
     [_inputIdCard mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row2View);
         make.right.equalTo(row2View.mas_right).with.offset(-RESIZE_UI(20));
+        make.height.mas_equalTo(row2View.mas_height);
     }];
     
     //第三行
@@ -197,11 +201,12 @@
     _inputBankCard.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputBankCard.textAlignment = NSTextAlignmentRight;
     _inputBankCard.delegate = self;
-    [_inputBankCard addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+//    [_inputBankCard addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [row3View addSubview:_inputBankCard];
     [_inputBankCard mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(row3View);
         make.right.equalTo(row3View.mas_right).with.offset(-RESIZE_UI(20));
+        make.height.mas_equalTo(row3View.mas_height);
     }];
     
     //第四行
@@ -482,8 +487,21 @@
     }
 }
 
+#pragma mark - 所有恢复正常
+- (void)allRecoverNormal {
+    _inputName.textColor = defaultInputColor;
+    _inputName.text = _inputName.text;
+    _inputIdCard.textColor = defaultInputColor;
+    _inputIdCard.text = _inputIdCard.text;
+    _inputBankCard.textColor = defaultInputColor;
+    _inputBankCard.text = _inputBankCard.text;
+    _unselectTipId.hidden = YES;
+    _unselectTipBnak.hidden = YES;
+}
+
 #pragma mark - 提交申请
 - (void)netStepButtonMethod {
+    [self allRecoverNormal];
     if ([_inputName.text isEqualToString:@""]) {
         [self changgePlaceholderMethod:_inputName];
         _inputName.textColor = [UIColor redColor];
@@ -643,7 +661,7 @@
 
 #pragma mark - 监听textfield
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    textField.placeholder = @"";
+    [self recoverPlaceholderMethod:textField];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -658,22 +676,9 @@
     }
 }
 
--(void)textFieldDidChange :(UITextField *)theTextField {
-    
-    [self recoverPlaceholderMethod:theTextField];
-//    if ([theTextField isEqual:_inputPiaojuMoney]) {
-//        _inputPiaojuMoney.textColor = RGBA(60, 60, 60, 1.0);
-//        //        _inputPiaojuMoney.text = _inputPiaojuMoney.text;
-//        _piaojuUnitLabel.textColor = RGBA(60, 60, 60, 1.0);
-//    }
-//    if ([theTextField isEqual:_inputRate]) {
-//        _inputRate.textColor = RGBA(60, 60, 60, 1.0);
-//        //        _inputRate.text = _inputRate.text;
-//        _rateUnitLabel.textColor = RGBA(60, 60, 60, 1.0);
-//    }
-    theTextField.textColor = RGBA(60, 60, 60, 1.0);
-    
-}
+//-(void)textFieldDidChange :(UITextField *)theTextField {
+//
+//}
 
 #pragma mark - 修改placeholder字体
 - (void)changgePlaceholderMethod:(UITextField *)textField {
@@ -683,7 +688,9 @@
 
 #pragma mark - 恢复placeholder字体
 - (void)recoverPlaceholderMethod:(UITextField *)textField {
+    textField.placeholder = @"";
     [textField setValue:RGBA(207, 207, 207, 1.0) forKeyPath:@"_placeholderLabel.textColor"];
+    textField.textColor = RGBA(60, 60, 60, 1.0);
 }
 
 - (void)didReceiveMemoryWarning {

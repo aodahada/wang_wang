@@ -239,12 +239,6 @@
     UIView *row4View = [[UIView alloc]init];
     row4View.backgroundColor = [UIColor whiteColor];
     [viewMain addSubview:row4View];
-    [row4View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row3View.mas_bottom).with.offset(RESIZE_UI(1));
-        make.left.equalTo(viewMain.mas_left);
-        make.right.equalTo(viewMain.mas_right);
-        make.height.mas_offset(RESIZE_UI(50));
-    }];
     
     UILabel *chengduiTitle = [[UILabel alloc]init];
     chengduiTitle.text = @"承兑银行/承兑人";
@@ -256,8 +250,12 @@
         make.left.equalTo(row4View.mas_left).with.offset(RESIZE_UI(20));
     }];
     
-    UILabel *chengduiContent = [[UILabel alloc]init];
+    UILabel *chengduiContent = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, RESIZE_UI(160), RESIZE_UI(20))];
     chengduiContent.text = _applyRecordModel.acceptor;
+    chengduiContent.lineBreakMode = NSLineBreakByWordWrapping;
+    chengduiContent.numberOfLines = 0;
+    CGSize size = [chengduiContent sizeThatFits:CGSizeMake(chengduiContent.frame.size.width, MAXFLOAT)];
+    chengduiContent.frame =CGRectMake(0, 100, 300, size.height);
     chengduiContent.textColor = RGBA(60, 60, 60, 1.0);
     chengduiContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     chengduiContent.textAlignment = NSTextAlignmentRight;
@@ -266,6 +264,14 @@
         make.centerY.equalTo(row4View.mas_centerY);
         make.right.equalTo(row4View.mas_right).with.offset(-RESIZE_UI(20));
         make.width.mas_offset(RESIZE_UI(160));
+        make.height.mas_offset(size.height);
+    }];
+    
+    [row4View mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(row3View.mas_bottom).with.offset(RESIZE_UI(1));
+        make.left.equalTo(viewMain.mas_left);
+        make.right.equalTo(viewMain.mas_right);
+        make.height.mas_offset(size.height+RESIZE_UI(30));
     }];
     
     //第五行 联系人姓名
@@ -725,7 +731,11 @@
         UITextView *shenheTextView = [[UITextView alloc]init];
         shenheTextView.text = _applyRecordModel.audit;
         shenheTextView.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-        shenheTextView.textColor = [UIColor redColor];
+        if ([_applyRecordModel.status isEqualToString:@"1"]) {
+            shenheTextView.textColor = RGBA(0, 102, 177, 1.0);
+        } else {
+            shenheTextView.textColor = RGBA(243, 39, 68, 1.0);
+        }
         [row16View addSubview:shenheTextView];
         [shenheTextView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(row16View.mas_top).with.offset(RESIZE_UI(14));
