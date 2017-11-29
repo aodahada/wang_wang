@@ -63,5 +63,7 @@
 #import <SSKeychain.h>
 //友盟app使用情况统计
 #import "UMMobClick/MobClick.h"
+//获取真机机型
+#import "UIDeviceHardware.h"
 
 #endif

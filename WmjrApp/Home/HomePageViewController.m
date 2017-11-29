@@ -910,6 +910,13 @@
 
 - (void)setUpTableViewMethod {
     
+    CGFloat topDistance;
+    if ([[UIDeviceHardware platformString] isEqualToString:@"iPhone X"]) {
+        topDistance = -45;
+    } else {
+        topDistance = -20;
+    }
+    
     _homeTableView = [[UITableView alloc]init];
 //    _homeTableView.backgroundColor = [UIColor redColor];
     _homeTableView.delegate = self;
@@ -924,10 +931,10 @@
     [_homeTableView registerNib:[UINib nibWithNibName:@"HomeTableViewCellForth" bundle:nil] forCellReuseIdentifier:@"forthcell"];
     [self.view addSubview:_homeTableView];
     [_homeTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).with.offset(-20);
+        make.top.equalTo(self.view.mas_top).with.offset(topDistance);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_bottom).with.offset(0);
+        make.bottom.equalTo(self.view.mas_bottom);
     }];
     
     
@@ -1336,9 +1343,6 @@
     agVC.title = title;
     agVC.webUrl = url;
     [self.navigationController pushViewController:agVC animated:YES];
-//    BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
-//    [self presentViewController:baseNa animated:YES completion:^{
-//    }];
     
 }
 

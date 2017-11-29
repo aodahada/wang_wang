@@ -586,6 +586,13 @@
     self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginSuccessMethod) name:@"loginSuccess" object:nil];
     
+    CGFloat topDistance;
+    if ([[UIDeviceHardware platformString] isEqualToString:@"iPhone X"]) {
+        topDistance = -45;
+    } else {
+        topDistance = -20;
+    }
+    
     _tableView = [[UITableView alloc] init];
     _tableView.backgroundColor = RGBA(237, 240, 242, 1.0);
     _tableView.delegate = self;
@@ -596,7 +603,7 @@
     [self.view addSubview:_tableView];
     _tableView.tableHeaderView = [self setUpProfileHeadView];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).with.offset(-20);
+        make.top.equalTo(self.view.mas_top).with.offset(topDistance);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.bottom.equalTo(self.view.mas_bottom);
