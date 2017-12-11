@@ -21,7 +21,7 @@
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 //        SSL安全策略
-        manager.securityPolicy = [self customSecurityPolicy];
+//        manager.securityPolicy = [self customSecurityPolicy];
         
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         /*1.获取json字符串

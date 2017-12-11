@@ -3545,8 +3545,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 28Y6NMPTCR;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3568,8 +3568,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "37a7c057-02a0-4431-8542-641a46a93785";
-				PROVISIONING_PROFILE_SPECIFIER = wangmadevelop;
+				PROVISIONING_PROFILE = "286e119e-90a4-4c3c-9b30-75aa204add7b";
+				PROVISIONING_PROFILE_SPECIFIER = wangmadis;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Release;
