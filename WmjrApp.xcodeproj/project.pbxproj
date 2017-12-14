@@ -15,6 +15,7 @@
 		645889AD1F4C04BE00E69574 /* MyRedPackageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889AC1F4C04BE00E69574 /* MyRedPackageTableViewCell.m */; };
 		645889B01F4C0D4E00E69574 /* RedPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889AF1F4C0D4E00E69574 /* RedPackageModel.m */; };
 		645889B31F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */; };
+		646327571FDEC7FC00FA6A28 /* LotteryActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 646327561FDEC7FC00FA6A28 /* LotteryActivityViewController.m */; };
 		64755F491FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64755F481FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m */; };
 		648006001FCEA162001FE787 /* UIDeviceHardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 648005FF1FCEA161001FE787 /* UIDeviceHardware.m */; };
 		64880FCD1FBE92330011A1D3 /* MoneyOrderMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FCC1FBE92330011A1D3 /* MoneyOrderMainViewController.m */; };
@@ -559,6 +560,8 @@
 		645889AF1F4C0D4E00E69574 /* RedPackageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPackageModel.m; sourceTree = "<group>"; };
 		645889B11F4C2EDF00E69574 /* MyUnuseRedPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyUnuseRedPackageViewController.h; sourceTree = "<group>"; };
 		645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUnuseRedPackageViewController.m; sourceTree = "<group>"; };
+		646327551FDEC7FC00FA6A28 /* LotteryActivityViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LotteryActivityViewController.h; sourceTree = "<group>"; };
+		646327561FDEC7FC00FA6A28 /* LotteryActivityViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LotteryActivityViewController.m; sourceTree = "<group>"; };
 		64755F471FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyRedUnactivePackageTableViewCell.h; sourceTree = "<group>"; };
 		64755F481FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyRedUnactivePackageTableViewCell.m; sourceTree = "<group>"; };
 		648005FE1FCEA161001FE787 /* UIDeviceHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDeviceHardware.h; sourceTree = "<group>"; };
@@ -1339,6 +1342,39 @@
 			name = Category;
 			sourceTree = "<group>";
 		};
+		646327511FDEC75900FA6A28 /* 抽奖活动 */ = {
+			isa = PBXGroup;
+			children = (
+				646327521FDEC75900FA6A28 /* Controller */,
+				646327531FDEC75900FA6A28 /* Model */,
+				646327541FDEC75900FA6A28 /* View */,
+			);
+			path = "抽奖活动";
+			sourceTree = "<group>";
+		};
+		646327521FDEC75900FA6A28 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				646327551FDEC7FC00FA6A28 /* LotteryActivityViewController.h */,
+				646327561FDEC7FC00FA6A28 /* LotteryActivityViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		646327531FDEC75900FA6A28 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		646327541FDEC75900FA6A28 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		648005FD1FCEA13F001FE787 /* 判断真机机型 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1581,6 +1617,7 @@
 		C51B41AF1C784B02001679B5 /* WmjrApp */ = {
 			isa = PBXGroup;
 			children = (
+				646327511FDEC75900FA6A28 /* 抽奖活动 */,
 				64880FC71FBE91D50011A1D3 /* 我有汇票 */,
 				64CDE0C11F9627B0007F9449 /* 积分商城 */,
 				6425D3C81F163FD000D61F87 /* Category */,
@@ -3211,6 +3248,7 @@
 				8B1D23321E5DB5490035FD5E /* ShortListTopCell.m in Sources */,
 				C51B42391C784FD9001679B5 /* AdModel.m in Sources */,
 				6425D3D61F16450900D61F87 /* NSArray+HRUtil.m in Sources */,
+				646327571FDEC7FC00FA6A28 /* LotteryActivityViewController.m in Sources */,
 				64880FE81FC4A7E50011A1D3 /* ApplyRocrdModel.m in Sources */,
 				64CDE0E51F9788F5007F9449 /* IntegralProductDetailModel.m in Sources */,
 				64CDE0BF1F9623DF007F9449 /* IntegralOrderTableViewCell.m in Sources */,

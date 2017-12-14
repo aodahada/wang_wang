@@ -33,6 +33,8 @@
 #import "AppDelegate.h"
 #import "IntegralShopViewController.h"
 
+#import "LotteryActivityViewController.h"
+
 @interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, copy) NSString *balanceValue;
@@ -914,8 +916,10 @@
     switch (indexPath.row) {
         case 0:{
             /* 我的理财 */
-            MyselfManageFinanceController *myselfMFVC = [[MyselfManageFinanceController alloc] init];
-            [self.navigationController pushViewController:myselfMFVC animated:YES];
+//            MyselfManageFinanceController *myselfMFVC = [[MyselfManageFinanceController alloc] init];
+//            [self.navigationController pushViewController:myselfMFVC animated:YES];
+            LotteryActivityViewController *lotteryAcctivityVC = [[LotteryActivityViewController alloc]init];
+            [self.navigationController pushViewController:lotteryAcctivityVC animated:YES];
             break;
         }
         case 1:{

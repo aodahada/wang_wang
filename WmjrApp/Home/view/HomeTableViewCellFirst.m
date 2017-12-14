@@ -12,6 +12,7 @@
 @interface HomeTableViewCellFirst ()
 
 @property (nonatomic, strong) PersonInvestModel *personalModel;
+@property (nonatomic, strong) UIImageView *topImageView;
 
 @end
 
@@ -26,13 +27,13 @@
     self = [super init];
     if (self) {
         _personalModel = personModel;
-        UIImageView *imageView = [[UIImageView alloc]init];
-//        imageView.image = [UIImage imageNamed:@"image_top"];
-        NSString *imageUrl = @"http://api.wmjr888.com/Uploads/app-banner.png";
-        [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"image_top"]];
-        imageView.userInteractionEnabled = YES;
-        [self addSubview:imageView];
-        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        _topImageView = [[UIImageView alloc]init];
+        _topImageView.image = [UIImage imageNamed:@"image_top"];
+//        NSString *imageUrl = @"http://api.wmjr888.com/Uploads/app-banner.png";
+//        [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"image_top"]];
+        _topImageView.userInteractionEnabled = YES;
+        [self addSubview:_topImageView];
+        [_topImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
         
@@ -118,13 +119,14 @@
 
 - (void)dontLoginView {
     
-    UIImageView *backgroundImageView = [[UIImageView alloc]init];
-    backgroundImageView.image = [UIImage imageNamed:@"image_background2"];
-    backgroundImageView.userInteractionEnabled = YES;
-    [self addSubview:backgroundImageView];
-    [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self);
-    }];
+//    UIImageView *backgroundImageView = [[UIImageView alloc]init];
+//    backgroundImageView.image = [UIImage imageNamed:@"image_background2"];
+//    backgroundImageView.userInteractionEnabled = YES;
+//    [self addSubview:backgroundImageView];
+//    [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(self);
+//    }];
+    _topImageView.image = [UIImage imageNamed:@"image_top_youzi"];
     
     UIView *viewForConsult = [[UIView alloc]init];
     viewForConsult.backgroundColor = [UIColor clearColor];

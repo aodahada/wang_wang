@@ -272,7 +272,7 @@
     _earnOfPercent.text = [NSString stringWithFormat:@"%.2f", [segment.returnrate doubleValue] * 100];
     _earnOfPercent.font = [UIFont systemFontOfSize:RESIZE_UI(64)];
     [viewForTop addSubview:_earnOfPercent];
-    [_earnOfPercent mas_makeConstrgraints:^(MASConstraintMaker *make) {
+    [_earnOfPercent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).with.offset(RESIZE_UI(35+30));
         make.left.equalTo(viewForTop.mas_left);
         make.right.equalTo(viewForTop.mas_right);

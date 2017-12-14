@@ -31,7 +31,10 @@
 #import "AppDelegate.h"
 #import "ScordRecordViewController.h"
 
-@interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,CAAnimationDelegate,UICollisionBehaviorDelegate>
+{
+    UIDynamicAnimator *theAnimator;
+}
 
 @property (nonatomic, strong)UITableView *homeTableView;
 
@@ -74,6 +77,8 @@
 @property (nonatomic, assign) NSInteger enterViewNumber;//第几次进入界面
 
 @property (nonatomic, strong)UILabel *tipLabel;
+
+@property (nonatomic,strong)UIImageView * ballView;//自由落体的小球
 
 @end
 
@@ -177,7 +182,146 @@
 //            [[[UIAlertView alloc]initWithTitle:@"您没有开启推送通知" message:@"请去设置-通知中修改" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil] show];
 //        }
 //    }
+//    [self ziyouluoTiDemo];
+//    [self ziyounihao];
+}
+
+#pragma mark - 自有落体熄新的demo
+- (void)ziyounihao {
     
+    [self addDynamicBehaviour];
+    [self createBangImage];
+}
+
+- (void)addDynamicBehaviour {
+    theAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+    UIGravityBehavior *gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.ballView]];
+    [theAnimator addBehavior:gravityBehavior];
+    
+    UICollisionBehavior *collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.ballView]];
+    [collisionBehavior setTranslatesReferenceBoundsIntoBoundary:YES];
+    [theAnimator addBehavior:collisionBehavior];
+    
+    UIDynamicItemBehavior *itemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.ballView]];
+    [itemBehavior setElasticity:0.6];
+    [theAnimator addBehavior:itemBehavior];
+    [collisionBehavior setCollisionDelegate:self];
+}
+
+- (void)createBangImage {
+    UIImage * ballImage = [UIImage imageNamed:@"tab_btn_home_pre"];
+    
+    self.ballView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0, RESIZE_UI(60),RESIZE_UI(60))];
+    
+    self.ballView.center =CGPointMake(RESIZE_UI(30),RESIZE_UI(30));
+    
+    self.ballView.image = ballImage;
+    
+    self.ballView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    [self.view addSubview:self.ballView];
+}
+
+- (void)collisionBehavior:(UICollisionBehavior *)behavior
+      endedContactForItem:(id <UIDynamicItem>)item
+   withBoundaryIdentifier:(id <NSCopying>)identifier {
+    [self bang];
+}
+
+- (void)bang {
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"hidden"];
+    [animation setToValue:[NSNumber numberWithBool:NO]];
+    [animation setDuration:0.2];
+    [animation setRemovedOnCompletion:YES];
+    [self.ballView.layer addAnimation:animation forKey:nil];
+}
+
+#pragma mark - 自有落体demo
+- (void)ziyouluoTiDemo {
+    UIImage * ballImage = [UIImage imageNamed:@"tab_btn_home_pre"];
+    
+    self.ballView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0, RESIZE_UI(60),RESIZE_UI(60))];
+    
+    self.ballView.center =CGPointMake(RESIZE_UI(30),RESIZE_UI(30));
+    
+    self.ballView.image = ballImage;
+    
+    self.ballView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    [self.view addSubview:self.ballView];
+    
+    CAKeyframeAnimation * animation = [CAKeyframeAnimation animation];
+    
+    animation.keyPath =@"position";
+    
+    animation.duration =1.0;
+    
+    animation.delegate =self;
+    
+    animation.values =@[[NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(30),RESIZE_UI(30))],
+                        
+                        [NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(70),RESIZE_UI(150))],
+                        
+                        [NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(120),RESIZE_UI(300))],
+                        
+                        [NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(160),RESIZE_UI(450))],
+                        
+                        [NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(200),SCREEN_HEIGHT-RESIZE_UI(150))],
+                        
+                        [NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(270),SCREEN_HEIGHT-49-RESIZE_UI(30))],
+                        
+                        [NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(330),SCREEN_HEIGHT-RESIZE_UI(150))],
+                        
+                        [NSValue valueWithCGPoint:CGPointMake(SCREEN_WIDTH-RESIZE_UI(30),SCREEN_HEIGHT-49-RESIZE_UI(30))]];
+    
+    
+    
+    animation.timingFunctions =@[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn],
+                                 
+                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
+                                 
+                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn],
+                                 
+                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
+                                 
+                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn],
+                                 
+                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
+                                 
+                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+    
+    //  设置每个关键帧的时长
+    
+    //    animation.keyTimes =@[@0.0, @0.3,@0.5, @0.7,@0.8, @0.9,@0.95, @1.0];
+    animation.keyTimes =@[@0.0, @0.1,@0.2, @0.3,@0.4, @0.6,@0.8, @1.0];
+    
+    self.ballView.layer.position = CGPointMake(SCREEN_WIDTH-RESIZE_UI(30),SCREEN_HEIGHT-49-RESIZE_UI(30));
+    
+    CABasicAnimation * animation1 = [CABasicAnimation animation];
+    
+    animation1.keyPath =@"transform.rotation.z";
+    
+    animation1.repeatCount =100;
+    
+    animation1.duration =0.5;
+    
+    animation1.speed =1.5;
+    
+    animation1.toValue =@(M_PI*2);
+    
+    
+    
+    CAAnimationGroup * group = [CAAnimationGroup animation];
+    
+    group.animations =@[animation,animation1];
+    
+    group.duration = animation.duration;
+    
+    group.speed =0.2;
+    
+    
+    
+    [self.ballView.layer addAnimation:group forKey:nil];
     
 }
 
