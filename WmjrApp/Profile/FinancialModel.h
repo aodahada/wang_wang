@@ -21,5 +21,6 @@
 @property (nonatomic, copy) NSString *expirydate;
 @property (nonatomic, copy) NSString *createtime;
 @property (nonatomic, copy) NSString *redpacket;//"0为没用红包  其余为收益"
+@property (nonatomic, copy) NSString *returnrate_plus;
 
 @end

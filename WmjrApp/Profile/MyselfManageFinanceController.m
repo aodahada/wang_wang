@@ -324,6 +324,7 @@
     trandDetailVC.expirydate = model.expirydate;
     trandDetailVC.createtime = model.createtime;
     trandDetailVC.redpacket = model.redpacket;
+    trandDetailVC.returnrate_plus = model.returnrate_plus;
     [self.navigationController pushViewController:trandDetailVC animated:YES];
 }
 

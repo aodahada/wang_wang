@@ -30,10 +30,15 @@
 #import "MyRedPackageViewController.h"
 #import "AppDelegate.h"
 #import "ScordRecordViewController.h"
+#import "LotteryActivityViewController.h"//抽奖活动页
+#import "JiaXiActivityViewController.h"//加息活动页
+//礼包页面
+#import "LiBaoViewController.h"
 
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,CAAnimationDelegate,UICollisionBehaviorDelegate>
 {
     UIDynamicAnimator *theAnimator;
+    UIButton *ballView;
 }
 
 @property (nonatomic, strong)UITableView *homeTableView;
@@ -78,7 +83,9 @@
 
 @property (nonatomic, strong)UILabel *tipLabel;
 
-@property (nonatomic,strong)UIImageView * ballView;//自由落体的小球
+@property (nonatomic,strong)UIImageView * ballImageView;//自由落体的小球
+
+@property (nonatomic, strong) UIView *bottomView;//为了小球做的
 
 @end
 
@@ -134,6 +141,22 @@
     self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
     
     self.window = [[UIApplication sharedApplication].delegate window];
+    self.bottomView = [[UIView alloc]init];
+    self.bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.bottomView];
+    CGFloat bottomViewHeight;
+    if ([[UIDeviceHardware platformString] isEqualToString:@"iPhone X"]) {
+        bottomViewHeight = -49-33;
+    } else {
+        bottomViewHeight = -49;
+    }
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(bottomViewHeight);
+    }];
+    
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     BOOL isNull = [self isNullString:uid];
     if (!isNull) {
@@ -183,146 +206,42 @@
 //        }
 //    }
 //    [self ziyouluoTiDemo];
-//    [self ziyounihao];
+    [self ziyounihao];
 }
 
 #pragma mark - 自有落体熄新的demo
 - (void)ziyounihao {
     
     [self addDynamicBehaviour];
-    [self createBangImage];
+
 }
 
 - (void)addDynamicBehaviour {
-    theAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
-    UIGravityBehavior *gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.ballView]];
+    
+    ballView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, RESIZE_UI(50), RESIZE_UI(50))];
+    [ballView setBackgroundImage:[UIImage imageNamed:@"btn_dwyl"] forState:UIControlStateNormal];
+    ballView.center = CGPointMake(SCREEN_WIDTH-RESIZE_UI(25), RESIZE_UI(25));
+    [ballView addTarget:self action:@selector(jumpToLiBao) forControlEvents:UIControlEventTouchUpInside];
+    [self.bottomView addSubview:ballView];
+    theAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.bottomView];
+    UIGravityBehavior *gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[ballView]];
     [theAnimator addBehavior:gravityBehavior];
     
-    UICollisionBehavior *collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.ballView]];
+    UICollisionBehavior *collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[ballView]];
     [collisionBehavior setTranslatesReferenceBoundsIntoBoundary:YES];
     [theAnimator addBehavior:collisionBehavior];
     
-    UIDynamicItemBehavior *itemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.ballView]];
+    UIDynamicItemBehavior *itemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[ballView]];
     [itemBehavior setElasticity:0.6];
     [theAnimator addBehavior:itemBehavior];
     [collisionBehavior setCollisionDelegate:self];
+    
 }
 
-- (void)createBangImage {
-    UIImage * ballImage = [UIImage imageNamed:@"tab_btn_home_pre"];
-    
-    self.ballView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0, RESIZE_UI(60),RESIZE_UI(60))];
-    
-    self.ballView.center =CGPointMake(RESIZE_UI(30),RESIZE_UI(30));
-    
-    self.ballView.image = ballImage;
-    
-    self.ballView.contentMode = UIViewContentModeScaleAspectFill;
-    
-    [self.view addSubview:self.ballView];
-}
-
-- (void)collisionBehavior:(UICollisionBehavior *)behavior
-      endedContactForItem:(id <UIDynamicItem>)item
-   withBoundaryIdentifier:(id <NSCopying>)identifier {
-    [self bang];
-}
-
-- (void)bang {
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"hidden"];
-    [animation setToValue:[NSNumber numberWithBool:NO]];
-    [animation setDuration:0.2];
-    [animation setRemovedOnCompletion:YES];
-    [self.ballView.layer addAnimation:animation forKey:nil];
-}
-
-#pragma mark - 自有落体demo
-- (void)ziyouluoTiDemo {
-    UIImage * ballImage = [UIImage imageNamed:@"tab_btn_home_pre"];
-    
-    self.ballView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0, RESIZE_UI(60),RESIZE_UI(60))];
-    
-    self.ballView.center =CGPointMake(RESIZE_UI(30),RESIZE_UI(30));
-    
-    self.ballView.image = ballImage;
-    
-    self.ballView.contentMode = UIViewContentModeScaleAspectFill;
-    
-    [self.view addSubview:self.ballView];
-    
-    CAKeyframeAnimation * animation = [CAKeyframeAnimation animation];
-    
-    animation.keyPath =@"position";
-    
-    animation.duration =1.0;
-    
-    animation.delegate =self;
-    
-    animation.values =@[[NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(30),RESIZE_UI(30))],
-                        
-                        [NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(70),RESIZE_UI(150))],
-                        
-                        [NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(120),RESIZE_UI(300))],
-                        
-                        [NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(160),RESIZE_UI(450))],
-                        
-                        [NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(200),SCREEN_HEIGHT-RESIZE_UI(150))],
-                        
-                        [NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(270),SCREEN_HEIGHT-49-RESIZE_UI(30))],
-                        
-                        [NSValue valueWithCGPoint:CGPointMake(RESIZE_UI(330),SCREEN_HEIGHT-RESIZE_UI(150))],
-                        
-                        [NSValue valueWithCGPoint:CGPointMake(SCREEN_WIDTH-RESIZE_UI(30),SCREEN_HEIGHT-49-RESIZE_UI(30))]];
-    
-    
-    
-    animation.timingFunctions =@[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn],
-                                 
-                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
-                                 
-                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn],
-                                 
-                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
-                                 
-                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn],
-                                 
-                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
-                                 
-                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
-    
-    //  设置每个关键帧的时长
-    
-    //    animation.keyTimes =@[@0.0, @0.3,@0.5, @0.7,@0.8, @0.9,@0.95, @1.0];
-    animation.keyTimes =@[@0.0, @0.1,@0.2, @0.3,@0.4, @0.6,@0.8, @1.0];
-    
-    self.ballView.layer.position = CGPointMake(SCREEN_WIDTH-RESIZE_UI(30),SCREEN_HEIGHT-49-RESIZE_UI(30));
-    
-    CABasicAnimation * animation1 = [CABasicAnimation animation];
-    
-    animation1.keyPath =@"transform.rotation.z";
-    
-    animation1.repeatCount =100;
-    
-    animation1.duration =0.5;
-    
-    animation1.speed =1.5;
-    
-    animation1.toValue =@(M_PI*2);
-    
-    
-    
-    CAAnimationGroup * group = [CAAnimationGroup animation];
-    
-    group.animations =@[animation,animation1];
-    
-    group.duration = animation.duration;
-    
-    group.speed =0.2;
-    
-    
-    
-    [self.ballView.layer addAnimation:group forKey:nil];
-    
+#pragma mark - 跳转到礼包
+- (void)jumpToLiBao {
+    LiBaoViewController *libaoVC = [[LiBaoViewController alloc]init];
+    [self.navigationController pushViewController:libaoVC animated:YES];
 }
 
 - (void)logoutMethod{
@@ -701,6 +620,9 @@
         if ([obj[@"result"] isEqualToString:@"1"]) {
             NSArray *arrayTopAd = obj[@"data"];
             self.arrayForTopImage = [[NSMutableArray alloc]init];
+            [ImgHomeModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                return @{@"activity_id" : @"id"};
+            }];
             for (int i=0; i<arrayTopAd.count; i++) {
                 NSDictionary *dicForImage = arrayTopAd[i];
                 ImgHomeModel *imageModel = [ImgHomeModel mj_objectWithKeyValues:dicForImage];
@@ -1073,12 +995,12 @@
     [_homeTableView registerClass:[HomeTableViewCellThird class] forCellReuseIdentifier:@"HomeTableViewCellThird"];
     [_homeTableView registerClass:[HomeTableViewCellThirdFirst class] forCellReuseIdentifier:@"HomeTableViewCellThirdFirst"];
     [_homeTableView registerNib:[UINib nibWithNibName:@"HomeTableViewCellForth" bundle:nil] forCellReuseIdentifier:@"forthcell"];
-    [self.view addSubview:_homeTableView];
+    [self.bottomView addSubview:_homeTableView];
     [_homeTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).with.offset(topDistance);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_bottom);
+        make.top.equalTo(self.bottomView.mas_top).with.offset(topDistance);
+        make.left.equalTo(self.bottomView.mas_left);
+        make.right.equalTo(self.bottomView.mas_right);
+        make.bottom.equalTo(self.bottomView.mas_bottom);
     }];
     
     
@@ -1261,8 +1183,21 @@
         cell.cycleImage = ^(ImgHomeModel *imgModel) {
             NSString *productId = imgModel.product_id;
             NSString *url = imgModel.url;
+            NSString *activityId = [self convertNullString:imgModel.activity_id];
             productId = [self convertNullString:productId];
             url = [self convertNullString:url];
+            
+            if ([activityId isEqualToString:@"100"]) {
+                LotteryActivityViewController *lotteryAcctivityVC = [[LotteryActivityViewController alloc]init];
+                [self.navigationController pushViewController:lotteryAcctivityVC animated:YES];
+                return;
+            }
+            if ([activityId isEqualToString:@"101"]) {
+                JiaXiActivityViewController *jiaxiActivityVC = [[JiaXiActivityViewController alloc]init];
+                [self.navigationController pushViewController:jiaxiActivityVC animated:YES];
+                return;
+            }
+            
             if ([url isEqualToString:@""] && [productId isEqualToString:@""]) {
                 return;
             }
@@ -1275,9 +1210,6 @@
                 agVC.title = imgModel.title;
                 agVC.webUrl = url;
                 [self.navigationController pushViewController:agVC animated:YES];
-//                BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
-//                [self presentViewController:baseNa animated:YES completion:^{
-//                }];
                 return;
             }
             if (![productId isEqualToString:@""]) {
@@ -1291,9 +1223,10 @@
                     proIntroVC.getPro_id = productId;
                     proIntroVC.title = imgModel.title;
                     [self.navigationController pushViewController:proIntroVC animated:YES];
-                    return;
                 }
+                return;
             }
+            
         };
         return cell;
         
@@ -1439,7 +1372,8 @@
     {
         alpha = 0;
     }
-    self.naviView.backgroundColor = RGBA(0, 104, 178, alpha);
+//    self.naviView.backgroundColor = RGBA(0, 104, 178, alpha);
+    self.naviView.backgroundColor = RGBA(208, 17, 27, alpha);
     _imageViewForLeft.alpha = alpha;
     _imageForMess.alpha = alpha;
     _labelForLine.alpha = alpha;

@@ -39,5 +39,6 @@
 @property (nonatomic, copy) NSArray *segment;//数组：分段信息，已按从大到小排序
 @property (nonatomic, copy) NSString *duration;//距离到期日的天数
 @property (nonatomic, copy) NSString *surplus;//
+@property (nonatomic, copy) NSString *returnrate_plus;//产品加息值
 
 @end

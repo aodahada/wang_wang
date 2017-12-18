@@ -25,23 +25,14 @@
 - (void)setUpNavigationBar {
     /*  设置透明度 */
     self.navigationBar.translucent = NO;
-    
-    //    self.view.backgroundColor = VIEWBACKCOLOR;
+
     self.view.backgroundColor = RGBA(239, 239, 239, 1.0);
     /*  设置颜色 */
-//    self.navigationBar.barTintColor = VIEWBACKCOLOR;
-    self.navigationBar.barTintColor = RGBA(0, 108, 175, 1.0);
+    self.navigationBar.barTintColor = NAVBARCOLOR;
     /*  设置字体颜色 */
-//    self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:TITLE_COLOR};
     self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     /* 渲染颜色 */
-//    self.navigationBar.tintColor = TITLE_COLOR;
-    self.navigationBar.tintColor = RGBA(0, 108, 175, 1.0);
-    /*  去掉边线 */
-//    [self.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-//    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"navibar_color"] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"piggy"] forBarMetrics:UIBarMetricsDefault];
+    self.navigationBar.tintColor = NAVBARCOLOR;
 
 }
 

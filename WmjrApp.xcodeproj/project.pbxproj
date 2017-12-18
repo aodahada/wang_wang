@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6425D3D61F16450900D61F87 /* NSArray+HRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 6425D3D51F16450900D61F87 /* NSArray+HRUtil.m */; };
 		6431A4AC1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6431A4AB1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m */; };
+		64538A4A1FE4FB1800BC1F3F /* JiaXiActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64538A491FE4FB1800BC1F3F /* JiaXiActivityViewController.m */; };
 		6458892B1F457A8000E69574 /* UIAlertView+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 6458892A1F457A8000E69574 /* UIAlertView+Block.m */; };
 		645889A41F4BD70100E69574 /* RedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889A31F4BD70100E69574 /* RedPackageViewController.m */; };
 		645889A71F4BD9D900E69574 /* MyRedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889A61F4BD9D900E69574 /* MyRedPackageViewController.m */; };
@@ -16,6 +17,8 @@
 		645889B01F4C0D4E00E69574 /* RedPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889AF1F4C0D4E00E69574 /* RedPackageModel.m */; };
 		645889B31F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */; };
 		646327571FDEC7FC00FA6A28 /* LotteryActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 646327561FDEC7FC00FA6A28 /* LotteryActivityViewController.m */; };
+		6463275A1FE25AC800FA6A28 /* LotteryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 646327591FE25AC700FA6A28 /* LotteryModel.m */; };
+		6463275D1FE26FC700FA6A28 /* WinPrizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6463275C1FE26FC700FA6A28 /* WinPrizeView.m */; };
 		64755F491FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64755F481FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m */; };
 		648006001FCEA162001FE787 /* UIDeviceHardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 648005FF1FCEA161001FE787 /* UIDeviceHardware.m */; };
 		64880FCD1FBE92330011A1D3 /* MoneyOrderMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64880FCC1FBE92330011A1D3 /* MoneyOrderMainViewController.m */; };
@@ -59,6 +62,12 @@
 		64CDE1031F987A21007F9449 /* ScoreRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE1021F987A21007F9449 /* ScoreRecordCell.m */; };
 		64CDE1061F987DD3007F9449 /* ScoreModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE1051F987DD3007F9449 /* ScoreModel.m */; };
 		64DA5F511EFFFD5200CB10B1 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 64DA5F501EFFFD5200CB10B1 /* libc++.tbd */; };
+		64FF9F2B1FE2A890007B635C /* PrizeRecordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64FF9F2A1FE2A890007B635C /* PrizeRecordView.m */; };
+		64FF9F2E1FE2B17A007B635C /* PrizeRecordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64FF9F2D1FE2B17A007B635C /* PrizeRecordTableViewCell.m */; };
+		64FF9F311FE2BC4E007B635C /* PrizeRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64FF9F301FE2BC4E007B635C /* PrizeRecordModel.m */; };
+		64FF9F341FE2C398007B635C /* PaoMaDengModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64FF9F331FE2C398007B635C /* PaoMaDengModel.m */; };
+		64FF9F371FE2D7B5007B635C /* WatchActivityRuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64FF9F361FE2D7B5007B635C /* WatchActivityRuleViewController.m */; };
+		64FF9F3A1FE2E2AB007B635C /* LiBaoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64FF9F391FE2E2AB007B635C /* LiBaoViewController.m */; };
 		8025C340AF3BC04829866A39 /* libPods-WmjrApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D8A6E41F0CB7D2794DFD556 /* libPods-WmjrApp.a */; };
 		8B0167FE1DD00ED6000FA3DE /* 7day_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B0166F41DD00ED6000FA3DE /* 7day_btn.png */; };
 		8B0167FF1DD00ED6000FA3DE /* 7day_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B0166F51DD00ED6000FA3DE /* 7day_btn@2x.png */; };
@@ -548,6 +557,8 @@
 		6425D3D51F16450900D61F87 /* NSArray+HRUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+HRUtil.m"; path = "Category/NSArray+HRUtil.m"; sourceTree = "<group>"; };
 		6431A4AA1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPackageTableViewCellTwo.h; sourceTree = "<group>"; };
 		6431A4AB1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRedPackageTableViewCellTwo.m; sourceTree = "<group>"; };
+		64538A481FE4FB1800BC1F3F /* JiaXiActivityViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JiaXiActivityViewController.h; sourceTree = "<group>"; };
+		64538A491FE4FB1800BC1F3F /* JiaXiActivityViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JiaXiActivityViewController.m; sourceTree = "<group>"; };
 		645889291F457A8000E69574 /* UIAlertView+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Block.h"; sourceTree = "<group>"; };
 		6458892A1F457A8000E69574 /* UIAlertView+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Block.m"; sourceTree = "<group>"; };
 		645889A21F4BD70100E69574 /* RedPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPackageViewController.h; sourceTree = "<group>"; };
@@ -562,6 +573,10 @@
 		645889B21F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUnuseRedPackageViewController.m; sourceTree = "<group>"; };
 		646327551FDEC7FC00FA6A28 /* LotteryActivityViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LotteryActivityViewController.h; sourceTree = "<group>"; };
 		646327561FDEC7FC00FA6A28 /* LotteryActivityViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LotteryActivityViewController.m; sourceTree = "<group>"; };
+		646327581FE25AC700FA6A28 /* LotteryModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LotteryModel.h; sourceTree = "<group>"; };
+		646327591FE25AC700FA6A28 /* LotteryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LotteryModel.m; sourceTree = "<group>"; };
+		6463275B1FE26FC700FA6A28 /* WinPrizeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WinPrizeView.h; sourceTree = "<group>"; };
+		6463275C1FE26FC700FA6A28 /* WinPrizeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WinPrizeView.m; sourceTree = "<group>"; };
 		64755F471FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyRedUnactivePackageTableViewCell.h; sourceTree = "<group>"; };
 		64755F481FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyRedUnactivePackageTableViewCell.m; sourceTree = "<group>"; };
 		648005FE1FCEA161001FE787 /* UIDeviceHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDeviceHardware.h; sourceTree = "<group>"; };
@@ -646,6 +661,18 @@
 		64CDE1041F987DD3007F9449 /* ScoreModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScoreModel.h; sourceTree = "<group>"; };
 		64CDE1051F987DD3007F9449 /* ScoreModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScoreModel.m; sourceTree = "<group>"; };
 		64DA5F501EFFFD5200CB10B1 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		64FF9F291FE2A890007B635C /* PrizeRecordView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrizeRecordView.h; sourceTree = "<group>"; };
+		64FF9F2A1FE2A890007B635C /* PrizeRecordView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrizeRecordView.m; sourceTree = "<group>"; };
+		64FF9F2C1FE2B17A007B635C /* PrizeRecordTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrizeRecordTableViewCell.h; sourceTree = "<group>"; };
+		64FF9F2D1FE2B17A007B635C /* PrizeRecordTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrizeRecordTableViewCell.m; sourceTree = "<group>"; };
+		64FF9F2F1FE2BC4E007B635C /* PrizeRecordModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrizeRecordModel.h; sourceTree = "<group>"; };
+		64FF9F301FE2BC4E007B635C /* PrizeRecordModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrizeRecordModel.m; sourceTree = "<group>"; };
+		64FF9F321FE2C398007B635C /* PaoMaDengModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaoMaDengModel.h; sourceTree = "<group>"; };
+		64FF9F331FE2C398007B635C /* PaoMaDengModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaoMaDengModel.m; sourceTree = "<group>"; };
+		64FF9F351FE2D7B5007B635C /* WatchActivityRuleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WatchActivityRuleViewController.h; sourceTree = "<group>"; };
+		64FF9F361FE2D7B5007B635C /* WatchActivityRuleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WatchActivityRuleViewController.m; sourceTree = "<group>"; };
+		64FF9F381FE2E2AB007B635C /* LiBaoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LiBaoViewController.h; sourceTree = "<group>"; };
+		64FF9F391FE2E2AB007B635C /* LiBaoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiBaoViewController.m; sourceTree = "<group>"; };
 		8B0166F41DD00ED6000FA3DE /* 7day_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 7day_btn.png; path = images/7day_btn.png; sourceTree = "<group>"; };
 		8B0166F51DD00ED6000FA3DE /* 7day_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "7day_btn@2x.png"; path = "images/7day_btn@2x.png"; sourceTree = "<group>"; };
 		8B0166F61DD00ED6000FA3DE /* 7day_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "7day_btn@3x.png"; path = "images/7day_btn@3x.png"; sourceTree = "<group>"; };
@@ -1357,6 +1384,12 @@
 			children = (
 				646327551FDEC7FC00FA6A28 /* LotteryActivityViewController.h */,
 				646327561FDEC7FC00FA6A28 /* LotteryActivityViewController.m */,
+				64FF9F351FE2D7B5007B635C /* WatchActivityRuleViewController.h */,
+				64FF9F361FE2D7B5007B635C /* WatchActivityRuleViewController.m */,
+				64FF9F381FE2E2AB007B635C /* LiBaoViewController.h */,
+				64FF9F391FE2E2AB007B635C /* LiBaoViewController.m */,
+				64538A481FE4FB1800BC1F3F /* JiaXiActivityViewController.h */,
+				64538A491FE4FB1800BC1F3F /* JiaXiActivityViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1364,6 +1397,12 @@
 		646327531FDEC75900FA6A28 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				646327581FE25AC700FA6A28 /* LotteryModel.h */,
+				646327591FE25AC700FA6A28 /* LotteryModel.m */,
+				64FF9F2F1FE2BC4E007B635C /* PrizeRecordModel.h */,
+				64FF9F301FE2BC4E007B635C /* PrizeRecordModel.m */,
+				64FF9F321FE2C398007B635C /* PaoMaDengModel.h */,
+				64FF9F331FE2C398007B635C /* PaoMaDengModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1371,6 +1410,12 @@
 		646327541FDEC75900FA6A28 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6463275B1FE26FC700FA6A28 /* WinPrizeView.h */,
+				6463275C1FE26FC700FA6A28 /* WinPrizeView.m */,
+				64FF9F291FE2A890007B635C /* PrizeRecordView.h */,
+				64FF9F2A1FE2A890007B635C /* PrizeRecordView.m */,
+				64FF9F2C1FE2B17A007B635C /* PrizeRecordTableViewCell.h */,
+				64FF9F2D1FE2B17A007B635C /* PrizeRecordTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3230,6 +3275,7 @@
 				C51B434B1C7855AD001679B5 /* LoginViewController.m in Sources */,
 				C51B43041C7854C0001679B5 /* AvatorChangeView.m in Sources */,
 				64CDE0CA1F963554007F9449 /* AddressListViewController.m in Sources */,
+				6463275D1FE26FC700FA6A28 /* WinPrizeView.m in Sources */,
 				C51B42AB1C78531F001679B5 /* TrandDetailViewController.m in Sources */,
 				C51B43761C78564E001679B5 /* BaseNavigationController.m in Sources */,
 				64CDE0EB1F982B10007F9449 /* ScordRecordViewController.m in Sources */,
@@ -3242,8 +3288,10 @@
 				64880FE21FC424460011A1D3 /* ApplyDetailViewController.m in Sources */,
 				8B878B171E2B0A45007646C5 /* HomeTableViewCellThirdFirst.m in Sources */,
 				C51B43441C7855AD001679B5 /* RegisterViewController.m in Sources */,
+				64FF9F2B1FE2A890007B635C /* PrizeRecordView.m in Sources */,
 				C51B43881C78566B001679B5 /* TAAnimatedDotView.m in Sources */,
 				8B6E2B911DC984E8004E5C74 /* NewMoreViewController.m in Sources */,
+				64FF9F371FE2D7B5007B635C /* WatchActivityRuleViewController.m in Sources */,
 				8B1611531D8142FF00C9B954 /* ViewForScrollClass.m in Sources */,
 				8B1D23321E5DB5490035FD5E /* ShortListTopCell.m in Sources */,
 				C51B42391C784FD9001679B5 /* AdModel.m in Sources */,
@@ -3264,6 +3312,7 @@
 				C51B42FD1C7854B3001679B5 /* AddBankViewController.m in Sources */,
 				64CDE0D61F96FCB5007F9449 /* IntegralAddressModel.m in Sources */,
 				C51B43C01C78572F001679B5 /* ComfirmFastPayView.m in Sources */,
+				64FF9F2E1FE2B17A007B635C /* PrizeRecordTableViewCell.m in Sources */,
 				8B34020B1D7E52E100320072 /* KeychainItemWrapper.m in Sources */,
 				8BF3F84A1D8248BD00E669B2 /* AliPayItem.m in Sources */,
 				64CDE0DE1F974D6E007F9449 /* UIView+BlockGesture.m in Sources */,
@@ -3291,6 +3340,7 @@
 				64BB6A601F6B66C300AAD9EE /* GuideScrollViewController.m in Sources */,
 				C51B42EE1C785457001679B5 /* AccountSettingViewController.m in Sources */,
 				C51B43521C7855D6001679B5 /* BaseModel.m in Sources */,
+				64FF9F311FE2BC4E007B635C /* PrizeRecordModel.m in Sources */,
 				8B34021E1D7EAC1000320072 /* global.m in Sources */,
 				C51B42AA1C78531F001679B5 /* MyselfManageFinanceController.m in Sources */,
 				8B33430A1D8016A7004DB390 /* ViewForJianJie.m in Sources */,
@@ -3319,6 +3369,7 @@
 				C51B43511C7855D6001679B5 /* SingletonManager.m in Sources */,
 				64880FEB1FC569530011A1D3 /* ReleaseBankCardViewController.m in Sources */,
 				C51B42F81C7854AC001679B5 /* MyselfBankViewController.m in Sources */,
+				64FF9F341FE2C398007B635C /* PaoMaDengModel.m in Sources */,
 				C51B43231C785535001679B5 /* CapitalAccountViewController.m in Sources */,
 				C51B436E1C785641001679B5 /* SharedView.m in Sources */,
 				645889A71F4BD9D900E69574 /* MyRedPackageViewController.m in Sources */,
@@ -3370,9 +3421,11 @@
 				C51B42311C784FB3001679B5 /* HomeListViewCell.m in Sources */,
 				8B73F9841DC82E3200085BCD /* PersonInvestModel.m in Sources */,
 				64880FD31FC29A9E0011A1D3 /* DateSelectView.m in Sources */,
+				64FF9F3A1FE2E2AB007B635C /* LiBaoViewController.m in Sources */,
 				8B44467D1D98F60F00EDCDBC /* MyRecommendatViewController.m in Sources */,
 				8B3343071D80169A004DB390 /* ViewForShuoMing.m in Sources */,
 				8B44C4461DC6D9FF00DE0EA5 /* HomeTableViewCellFirst.m in Sources */,
+				64538A4A1FE4FB1800BC1F3F /* JiaXiActivityViewController.m in Sources */,
 				64880FD61FC2C21A0011A1D3 /* LoansContentFillViewController.m in Sources */,
 				64CDE0CD1F963660007F9449 /* AddressTableViewCell.m in Sources */,
 				8B592F431DF8F2E9001AD4B4 /* AFAppDotNetAPIClient.m in Sources */,
@@ -3408,6 +3461,7 @@
 				8B3401FA1D7E529100320072 /* AliGesturePasswordViewController.m in Sources */,
 				64CC8EFF1F7A70E500665BFE /* MainRedBallView.m in Sources */,
 				C51B43B71C78572F001679B5 /* OpenFastPaymentController.m in Sources */,
+				6463275A1FE25AC800FA6A28 /* LotteryModel.m in Sources */,
 				C5D3CE3A1C9808DF00C8B919 /* ShowBigImageView.m in Sources */,
 				C51B42B31C78532E001679B5 /* FinancialModel.m in Sources */,
 			);
@@ -3583,8 +3637,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 28Y6NMPTCR;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3606,8 +3660,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "286e119e-90a4-4c3c-9b30-75aa204add7b";
-				PROVISIONING_PROFILE_SPECIFIER = wangmadis;
+				PROVISIONING_PROFILE = "37a7c057-02a0-4431-8542-641a46a93785";
+				PROVISIONING_PROFILE_SPECIFIER = wangmadevelop;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Release;

@@ -33,8 +33,6 @@
 #import "AppDelegate.h"
 #import "IntegralShopViewController.h"
 
-#import "LotteryActivityViewController.h"
-
 @interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, copy) NSString *balanceValue;
@@ -611,7 +609,7 @@
         make.bottom.equalTo(self.view.mas_bottom);
     }];
     
-    [self setHeadView];
+//    [self setHeadView];
     
     
 //    UIScrollView *mainScrollView = [[UIScrollView alloc]init];
@@ -916,10 +914,8 @@
     switch (indexPath.row) {
         case 0:{
             /* 我的理财 */
-//            MyselfManageFinanceController *myselfMFVC = [[MyselfManageFinanceController alloc] init];
-//            [self.navigationController pushViewController:myselfMFVC animated:YES];
-            LotteryActivityViewController *lotteryAcctivityVC = [[LotteryActivityViewController alloc]init];
-            [self.navigationController pushViewController:lotteryAcctivityVC animated:YES];
+            MyselfManageFinanceController *myselfMFVC = [[MyselfManageFinanceController alloc] init];
+            [self.navigationController pushViewController:myselfMFVC animated:YES];
             break;
         }
         case 1:{
@@ -1160,6 +1156,7 @@
 - (void)setHeadView {
     UIView *topView = [[UIView alloc]init];
     topView.backgroundColor = RGBA(0, 104, 178, 1.0);
+//    topView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.0];
 //    topView.backgroundColor = [UIColor redColor];
     topView.alpha = 1.0;
     [self.view addSubview:topView];

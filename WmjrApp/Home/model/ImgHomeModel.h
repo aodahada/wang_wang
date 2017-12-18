@@ -11,6 +11,10 @@
 
 @interface ImgHomeModel : NSObject
 
+@property (nonatomic, copy) NSString *sort;
+@property (nonatomic, copy) NSString *location;
+@property (nonatomic, copy) NSString *isshow;
+@property (nonatomic, copy) NSString *activity_id;//用来判断双旦活动的id
 @property (nonatomic, copy) NSString *picurl;  /* 图片 */
 @property (nonatomic, copy) NSString *product_id;  /* 产品id */
 @property (nonatomic, copy) NSString *title;  /* 标题 */

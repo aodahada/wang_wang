@@ -43,7 +43,15 @@
     _isBottom = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIView *viewForNav = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 40)];
+    UIView *viewForNav = [[UIView alloc]initWithFrame:CGRectMake(0, 0, RESIZE_UI(200), RESIZE_UI(40))];
+    viewForNav.backgroundColor = NAVBARCOLOR;
+    [self.view addSubview:viewForNav];
+    [viewForNav mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).with.offset(-50);
+        make.width.mas_offset(RESIZE_UI(200));
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.height.mas_offset(RESIZE_UI(40));
+    }];
     
     _buttonForWangma = [[UIButton alloc]init];
     [_buttonForWangma setTitle:@"旺马平台" forState:UIControlStateNormal];

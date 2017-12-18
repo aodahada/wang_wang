@@ -237,7 +237,10 @@
 #pragma mark - 充值接口
 - (void)rechargeInterface {
     NetManager *manager = [[NetManager alloc] init];
+    _tradeArray = [[NSMutableArray alloc]init];
     [SVProgressHUD showWithStatus:@"正在加载"];
+    NSLog(@"开始时间;%@",_dateArray[1]);
+    NSLog(@"结束时间:%@",_dateArray[0]);
     [manager postDataWithUrlActionStr:@"Trade/deposit_query" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"page":@"", @"size":@"", @"start_time":_dateArray[1], @"end_time":_dateArray[0]} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];
@@ -266,6 +269,7 @@
 #pragma mark - 交易接口
 - (void)tradeInterface {
     NetManager *manager = [[NetManager alloc] init];
+    _tradeArray = [[NSMutableArray alloc]init];
     [SVProgressHUD showWithStatus:@"正在加载" maskType:(SVProgressHUDMaskTypeBlack)];
     [manager postDataWithUrlActionStr:@"Trade/trade_query" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"page":@"", @"size":@"", @"start_time":_dateArray[1], @"end_time":_dateArray[0]} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
@@ -296,6 +300,7 @@
 #pragma mark - 提现接口
 - (void)withDrawInterface {
     NetManager *manager = [[NetManager alloc] init];
+    _tradeArray = [[NSMutableArray alloc]init];
     [SVProgressHUD showWithStatus:@"正在加载"];
     [manager postDataWithUrlActionStr:@"Trade/withdraw_query" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"page":@"", @"size":@"", @"start_time":_dateArray[1], @"end_time":_dateArray[0]} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {

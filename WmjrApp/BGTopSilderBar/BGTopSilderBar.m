@@ -36,7 +36,7 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
 -(instancetype)init{
     self = [super init];
     if (self) {
-        self.backgroundColor = RGBA(0, 105, 173, 1.0);
+        self.backgroundColor = NAVBARCOLOR;
 //        itemNum = 5;
 //        NSArray *array = @[@"头条",@"军事哈",@"政务",@"热点",@"历史",@"漫画",@"搞笑",@"科技",@"本地",@"娱乐",@"小嘎秀"];
 //        _items = [[NSMutableArray alloc]initWithArray:array];
@@ -72,7 +72,7 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
     //初始化collectionView
     UICollectionView* collectView = [[UICollectionView alloc]initWithFrame:rect collectionViewLayout:layout];
 //    collectView.backgroundColor = [UIColor whiteColor];
-    collectView.backgroundColor = RGBA(0, 105, 173, 1.0);
+    collectView.backgroundColor = NAVBARCOLOR;
     //设置代理
     collectView.delegate = self;
     collectView.dataSource = self;

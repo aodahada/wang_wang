@@ -15,6 +15,8 @@
 @property (nonatomic, strong) ProgressView *progressView;
 @property (nonatomic, strong) ProductModel *productModelHa;
 @property (nonatomic, strong) UIImageView *endImageView;
+@property (nonatomic, strong) UIImageView *jiaxiImageView;
+@property (nonatomic, strong) UILabel *jiaxiLabel;
 
 @end
 
@@ -42,6 +44,26 @@
     [self.earnOfPercent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(31));
         make.left.equalTo(self.contentView.mas_left).with.offset(RESIZE_UI(37));
+    }];
+    
+    self.jiaxiImageView = [[UIImageView alloc]init];
+    self.jiaxiImageView.image = [UIImage imageNamed:@"icon_jx"];
+    [self addSubview:self.jiaxiImageView];
+    [self.jiaxiImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_offset(RESIZE_UI(33));
+        make.height.mas_offset(RESIZE_UI(19));
+        make.bottom.equalTo(self.earnOfPercent.mas_top).with.offset(RESIZE_UI(5));
+        make.left.equalTo(self.earnOfPercent.mas_right);
+    }];
+    
+    self.jiaxiLabel = [[UILabel alloc]init];
+    self.jiaxiLabel.textColor = [UIColor whiteColor];
+    self.jiaxiLabel.font = [UIFont systemFontOfSize:RESIZE_UI(9)];
+    self.jiaxiLabel.text = @"+1.0%";
+    [self.jiaxiImageView addSubview:self.jiaxiLabel];
+    [self.jiaxiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_jiaxiImageView.mas_centerX).with.offset(RESIZE_UI(2));
+        make.bottom.equalTo(self.jiaxiImageView.mas_bottom).with.offset(-RESIZE_UI(0));
     }];
     
     self.earnOfYearLable = [[UILabel alloc] init];
@@ -142,14 +164,33 @@
     if (_productModelHa.segment.count != 0) {
         LongProductSegment *longProduct = _productModelHa.segment[0];
 //            NSLog(@"我的利率:%@",longProduct.returnrate);
-        double longRateFloat = [longProduct.returnrate doubleValue] * 100;
+        double returnrate_plus = [_productModelHa.returnrate_plus doubleValue];
+        double returnrate_original = [longProduct.returnrate doubleValue];
+        double longRateFloat = (returnrate_original-returnrate_plus) * 100;
         NSNumber *longRateNumber = [NSNumber numberWithDouble:longRateFloat];
         NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
         formatter.roundingMode = NSNumberFormatterRoundFloor;
         formatter.minimumFractionDigits = 1;
         NSString *earnOfPercentStr = [NSString stringWithFormat:@"%@％",[formatter stringFromNumber:longRateNumber]];
         self.earnOfPercent.text = earnOfPercentStr;
-//        self.earnOfPercent.text = [NSString stringWithFormat:@"%.1f%%",longRateFloat];
+    
+        //加息的标志
+        if ([[SingletonManager convertNullString:_productModelHa.returnrate_plus] isEqualToString:@"0"]) {
+            self.jiaxiLabel.hidden = YES;
+            self.jiaxiImageView.hidden = YES;
+        } else {
+            self.jiaxiLabel.hidden = NO;
+            self.jiaxiImageView.hidden = NO;
+//            NSNumber *jiaxiNumber = [NSNumber numberWithDouble:returnrate_plus*100];
+            self.jiaxiLabel.text = [NSString stringWithFormat:@"+%g％",returnrate_plus*100];
+//            CGSize lblSize = [self.jiaxiLabel.text boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:RESIZE_UI(9)]} context:nil].size;
+//            //        NSLog(@"我的宽度:%.1f",lblSize.width);
+//            CGFloat imgWidth = lblSize.width+RESIZE_UI(10);
+//            [self.jiaxiImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.width.mas_offset(imgWidth);
+//                make.height.mas_equalTo(imgWidth/29*17);
+//            }];
+        }
         
         NSString *endTimeUnit = [NSString stringWithFormat:@"%@天",longProduct.duration];
         _labelForManageMoneyDay.attributedText =  [self changeStringWithString:endTimeUnit withFrontColor:RGBA(255, 86, 30, 1.0) WithBehindColor:RGBA(255, 86, 30, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(21)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(13)]];
@@ -163,7 +204,6 @@
             _endImageView.hidden = YES;
         }
     }
-    
     
 }
 

@@ -17,5 +17,8 @@ pod 'Bugly'
 pod 'UMengAnalytics'
 pod 'DZNEmptyDataSet'
 pod 'ZLPhotoBrowser'
+
+#跑马灯效果
+pod 'TXScrollLabelView'
 end
 

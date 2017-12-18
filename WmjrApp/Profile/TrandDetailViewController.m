@@ -69,6 +69,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     }
     if ([self.redpacket isEqualToString:@"0"]) {
         switch (indexPath.row) {
@@ -89,8 +90,34 @@
             case 2:
             {
                 cell.textLabel.text = @"预期年化收益  (%)";
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f", [self.earnP floatValue] * 100];
-                cell.detailTextLabel.textColor = AUXILY_COLOR;
+                UILabel *jiaxiLabel = [[UILabel alloc]init];
+                if ([[SingletonManager convertNullString:self.returnrate_plus] isEqualToString:@"0"]) {
+                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f", [self.earnP floatValue] * 100];
+                    cell.detailTextLabel.textColor = AUXILY_COLOR;
+                } else {
+                    double returnrate_plus = [self.returnrate_plus doubleValue];
+                    NSNumber *returnrate_plusNumber = [NSNumber numberWithDouble:returnrate_plus*100];
+                    NSString *returnrate_plusStr = [NSString stringWithFormat:@"%@％",returnrate_plusNumber];
+                    jiaxiLabel.text = [NSString stringWithFormat:@"+%@",returnrate_plusStr];
+                    jiaxiLabel.textColor = [UIColor redColor];
+                    jiaxiLabel.font = [UIFont systemFontOfSize:RESIZE_UI(13)];
+                    [cell addSubview:jiaxiLabel];
+                    [jiaxiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.centerY.equalTo(cell.mas_centerY);
+                        make.right.equalTo(cell.mas_right).with.offset(-RESIZE_UI(10));
+                    }];
+                    
+                    UILabel *yearEarn = [[UILabel alloc]init];
+                    yearEarn.text = [NSString stringWithFormat:@"%.2f", [self.earnP floatValue] * 100];
+                    yearEarn.textColor = AUXILY_COLOR;
+                    yearEarn.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                    [cell addSubview:yearEarn];
+                    [yearEarn mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.centerY.equalTo(cell.mas_centerY);
+                        make.right.equalTo(jiaxiLabel.mas_left).with.offset(-RESIZE_UI(5));
+                    }];
+                }
+                
             }
                 break;
             case 3:
