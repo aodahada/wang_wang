@@ -125,15 +125,16 @@
     }
     _holdNum.text = [NSString stringWithFormat:@"持有%@元", model.money];
     _ydayEarn.text = [NSString stringWithFormat:@"日收＋%.2f元", [model.day_income doubleValue]];
-    _weekOfYield.text = [NSString stringWithFormat:@"年化率%.2f%@", [model.returnrate doubleValue] *100, @"%"];
+    double returnratefloat = [model.returnrate doubleValue];
+    double returnrate_plus = [model.returnrate_plus doubleValue];
+    _weekOfYield.text = [NSString stringWithFormat:@"年化率%.2f%@", (returnratefloat-returnrate_plus) *100, @"%"];
     if ([[SingletonManager convertNullString:model.returnrate_plus] isEqualToString:@"0"]) {
         _jiaxiLabel.hidden = YES;
     } else {
         _jiaxiLabel.hidden = NO;
-        double returnrate_plus = [model.returnrate_plus doubleValue];
-        NSNumber *returnrate_plusNumber = [NSNumber numberWithDouble:returnrate_plus*100];
-        NSString *returnrate_plusStr = [NSString stringWithFormat:@"%@％",returnrate_plusNumber];
-        _jiaxiLabel.text = [NSString stringWithFormat:@"+%@",returnrate_plusStr];
+//        NSNumber *returnrate_plusNumber = [NSNumber numberWithDouble:returnrate_plus*100];
+//        NSString *returnrate_plusStr = [NSString stringWithFormat:@"%@％",returnrate_plusNumber];
+        _jiaxiLabel.text = [NSString stringWithFormat:@"+%g％",returnrate_plus*100];
     }
     _earnOfWan.text = [NSString stringWithFormat:@"万元收益%.2f元", [model.returnrate doubleValue] * 10000 / 365];
 }

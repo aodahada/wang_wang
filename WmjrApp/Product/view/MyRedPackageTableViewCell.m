@@ -109,10 +109,12 @@
         suitableLabel.text = [NSString stringWithFormat:@"适用产品:%@",typeString];
         suitableLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         suitableLabel.textColor = RGBA(153, 153, 153, 1.0);
+        suitableLabel.numberOfLines = 2;
         [self addSubview:suitableLabel];
         [suitableLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(newRedPackage.mas_bottom).with.offset(RESIZE_UI(4));
             make.left.equalTo(newRedPackage.mas_left);
+            make.width.mas_offset(RESIZE_UI(200));
         }];
         
         UILabel *useableDay = [[UILabel alloc]init];

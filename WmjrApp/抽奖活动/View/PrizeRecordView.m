@@ -52,7 +52,7 @@
         [_prizeRecordBottomView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(_backView.mas_centerX);
             make.centerY.equalTo(_backView.mas_centerY);
-            make.width.height.mas_offset(RESIZE_UI(280));
+            make.width.height.mas_offset(RESIZE_UI(320));
         }];
         
         _titleLabel = [[UILabel alloc]init];
@@ -91,7 +91,7 @@
         [_prizeWhiteView addSubview:_prizeName];
         [_prizeName mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(_xuhao.mas_centerY);
-            make.left.equalTo(_xuhao.mas_right).with.offset(RESIZE_UI(15));
+            make.left.equalTo(_xuhao.mas_right).with.offset(RESIZE_UI(10));
         }];
         
         _prizeTime = [[UILabel alloc]init];
@@ -100,7 +100,7 @@
         [_prizeWhiteView addSubview:_prizeTime];
         [_prizeTime mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(_xuhao.mas_centerY);
-            make.left.equalTo(_prizeName.mas_right).with.offset(RESIZE_UI(30));
+            make.left.equalTo(_prizeName.mas_right).with.offset(RESIZE_UI(40));
         }];
         
         if (prizeRecordArray.count == 0) {
@@ -162,12 +162,22 @@
 - (void)exchangePrizeMethod:(NSString *)prizeId {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"Raffle/my" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"id":prizeId} withBlock:^(id obj) {
+    NSLog(@"我兑换的：%@",prizeId);
+    [manager postDataWithUrlActionStr:@"Raffle/exchange" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"id":prizeId} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];
-            [UIAlertView alertWithCallBackBlock:^(NSInteger buttonIndex) {
-                
-            } title:@"兑换成功!" message:@"" cancelButtonName:@"好的" otherButtonTitles:nil, nil];
+//            [UIAlertView alertWithCallBackBlock:^(NSInteger buttonIndex) {
+//
+//            } title:@"兑换成功!" message:@"" cancelButtonName:@"好的" otherButtonTitles:nil, nil];
+            [[SingletonManager sharedManager] showHUDView:self title:@"兑换成功" content:@"" time:1.0 andCodes:^{
+                for (int i=0; i<_prizeArray.count; i++) {
+                    PrizeRecordModel *prizeRecordModel = _prizeArray[i];
+                    if ([prizeRecordModel.prizeRecordId isEqualToString:prizeId]) {
+                        prizeRecordModel.state = @"2";
+                        [self.recordTableView reloadData];
+                    }
+                }
+            }];
             
         } else {
             NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];

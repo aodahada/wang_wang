@@ -1188,8 +1188,15 @@
             url = [self convertNullString:url];
             
             if ([activityId isEqualToString:@"100"]) {
-                LotteryActivityViewController *lotteryAcctivityVC = [[LotteryActivityViewController alloc]init];
-                [self.navigationController pushViewController:lotteryAcctivityVC animated:YES];
+                NSString *uid = [self convertNullString:[SingletonManager sharedManager].uid];
+                if ([uid isEqualToString:@""]) {
+                    LoginViewController *loginVC = [[LoginViewController alloc] init];
+                    UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                    [self presentViewController:loginNa animated:YES completion:nil];
+                } else {
+                    LotteryActivityViewController *lotteryAcctivityVC = [[LotteryActivityViewController alloc]init];
+                    [self.navigationController pushViewController:lotteryAcctivityVC animated:YES];
+                }
                 return;
             }
             if ([activityId isEqualToString:@"101"]) {

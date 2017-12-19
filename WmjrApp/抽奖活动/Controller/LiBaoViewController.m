@@ -8,6 +8,7 @@
 
 #import "LiBaoViewController.h"
 #import "LotteryActivityViewController.h"
+#import "LoginViewController.h"
 
 @interface LiBaoViewController ()
 
@@ -94,8 +95,15 @@
 
 #pragma mark - 上半部分的按钮
 - (void)topButtonMethod {
-    LotteryActivityViewController *lotteryVC = [[LotteryActivityViewController alloc]init];
-    [self.navigationController pushViewController:lotteryVC animated:YES];
+    NSString *uid = [SingletonManager sharedManager].uid;
+    if ([[SingletonManager convertNullString:uid] isEqualToString:@""]) {
+        LoginViewController *loginVC = [[LoginViewController alloc] init];
+        UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
+        [self presentViewController:loginNa animated:YES completion:nil];
+    } else {
+        LotteryActivityViewController *lotteryAcctivityVC = [[LotteryActivityViewController alloc]init];
+        [self.navigationController pushViewController:lotteryAcctivityVC animated:YES];
+    }
 }
 
 #pragma mark - 下半部分的按钮

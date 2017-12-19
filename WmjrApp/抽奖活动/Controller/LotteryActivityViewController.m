@@ -17,9 +17,9 @@
 #import "PopMenu.h"
 #import "SharedView.h"
 
-#define ActivityButtonWidth 60
-#define ActivityButtonHeight 60*213/254
-#define ActivityButtonDistance 20
+#define ActivityButtonWidth 80
+#define ActivityButtonHeight 80*213/254
+#define ActivityButtonDistance 10
 
 @interface LotteryActivityViewController ()<TXScrollLabelViewDelegate>{
     PopMenu *_popMenu;
@@ -101,6 +101,7 @@
             for (int i=0; i<activityArray.count; i++) {
                 NSDictionary *dic = activityArray[i];
                 LotteryModel *lotteryModel = [LotteryModel mj_objectWithKeyValues:dic];
+//                NSLog(@"我饿奖品id：%@",lotteryModel.lotteryId);
                 [_lotteryArray addObject:lotteryModel];
             }
             
@@ -143,7 +144,7 @@
 #pragma mark - update兑奖次数
 - (void)updateExchangeNumberMethod {
     NetManager *manager = [[NetManager alloc] init];
-    [SVProgressHUD showWithStatus:@"加载中"];
+//    [SVProgressHUD showWithStatus:@"加载中"];
     [manager postDataWithUrlActionStr:@"Raffle/canHandle" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];
@@ -423,7 +424,7 @@
     _zhuanPanView.backgroundColor = [UIColor whiteColor];
     [_centerImageView addSubview:_zhuanPanView];
     [_zhuanPanView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_centerImageView.mas_top).with.offset(RESIZE_UI(130));
+        make.top.equalTo(_centerImageView.mas_top).with.offset(RESIZE_UI(120));
         make.left.equalTo(_centerImageView.mas_left).with.offset(RESIZE_UI(40));
         make.right.equalTo(_centerImageView.mas_right).with.offset(RESIZE_UI(-40));
         make.bottom.equalTo(_centerImageView.mas_bottom).with.offset(-RESIZE_UI(60));
@@ -437,7 +438,8 @@
     [_centerButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_zhuanPanView.mas_centerY);
         make.centerX.equalTo(_zhuanPanView.mas_centerX);
-        make.width.height.mas_offset(RESIZE_UI(ActivityButtonWidth));
+        make.height.mas_offset(RESIZE_UI(ActivityButtonHeight));
+        make.width.mas_offset(RESIZE_UI(ActivityButtonWidth));
     }];
     
     _button1 = [[UIButton alloc]init];
@@ -546,21 +548,30 @@
 #pragma mark - 抽奖接口
 - (void)chouJiangInterfaceMethod {
     NetManager *manager = [[NetManager alloc] init];
-    [SVProgressHUD showWithStatus:@"请稍后"];
-    //[SingletonManager sharedManager].uid
+//    [SVProgressHUD showWithStatus:@"请稍后"];
+    [_centerButton setUserInteractionEnabled:NO];
     [manager postDataWithUrlActionStr:@"Raffle/handle" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
+        [_centerButton setUserInteractionEnabled:YES];
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];
             NSDictionary *dic = obj[@"data"];
             NSString *lotteryId = dic[@"id"];
+            _randomSelectNumber = [lotteryId integerValue];
             for (int i=0; i<_lotteryArray.count; i++) {
                 LotteryModel *lotteryModel = _lotteryArray[i];
                 if ([lotteryModel.lotteryId isEqualToString:lotteryId]) {
                     //抽中的第几个
-                    _randomSelectNumber = i+1;
+//                    _randomSelectNumber = i+1;
                     _selectLotteryModel = lotteryModel;
-                    NSLog(@"抽中的第:%ld个",(long)i);
+                    NSLog(@"抽中的第:%ld个",(long)i+1);
                 }
+            }
+            if ([_exchangeNumber isEqualToString:@"1"]) {
+                _exchangeNumber = @"0";
+                if (_choujiangChanceLabel) {
+                    _choujiangChanceLabel.text = @"您还有0次抽奖机会";
+                }
+                [self canChouJiangMethod];
             }
             [self startChouJiangActivity];
             

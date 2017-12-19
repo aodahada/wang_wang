@@ -118,11 +118,19 @@
         make.width.mas_offset(RESIZE_UI(50));
     }];
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, RESIZE_UI(100), SCREEN_WIDTH, SCREEN_HEIGHT - BOTH_HEIGHT - RESIZE_UI(50)) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc] init];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.backgroundColor = RGBA(239, 239, 244, 1.0);
+    _tableView.tableFooterView = [[UIView alloc]init];
     [self.view addSubview:_tableView];
     [_tableView registerClass:[MyselfTransCell class] forCellReuseIdentifier:@"cell"];
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(dateView.mas_bottom);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.bottom.equalTo(self.view.mas_bottom);
+    }];
     
 //    //当tradeArray为空时
 //    [self tradeNilMethod];
@@ -388,10 +396,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return RESIZE_UI(70);
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 5;
 }
 
 - (void)showPickView:(UIButton *)btn {

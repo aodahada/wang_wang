@@ -27,7 +27,7 @@
     _imgView.layer.cornerRadius = RESIZE_UI(40) / 2;
     _imgView.layer.masksToBounds = YES;
     [self.contentView addSubview:_imgView];
-    _payBankLab = [[UILabel alloc] initWithFrame:RESIZE_FRAME(CGRectMake(65, 15, 120, 20))];
+    _payBankLab = [[UILabel alloc] initWithFrame:RESIZE_FRAME(CGRectMake(65, 15, RESIZE_UI(200), 20))];
     _payBankLab.textAlignment = NSTextAlignmentLeft;
     _payBankLab.textColor = TITLE_COLOR;
     _payBankLab.font = [UIFont systemFontOfSize:RESIZE_UI(15.0f)];
@@ -70,8 +70,10 @@
         if ([model.comment hasPrefix:@"购入"]) {
             _imgView.image = [UIImage imageNamed:@"icon_goumai"];
             _payMoney.text = [NSString stringWithFormat:@"-%@元", model.money];
-        }
-        if ([model.comment hasPrefix:@"发放"]||[model.comment hasPrefix:@"赎回"]) {
+        } else if ([model.comment hasPrefix:@"发放"]||[model.comment hasPrefix:@"赎回"]) {
+            _imgView.image = [UIImage imageNamed:@"icon_shuhui"];
+            _payMoney.text = [NSString stringWithFormat:@"+%@元", model.money];
+        } else {
             _imgView.image = [UIImage imageNamed:@"icon_shuhui"];
             _payMoney.text = [NSString stringWithFormat:@"+%@元", model.money];
         }
