@@ -127,7 +127,7 @@
     _ydayEarn.text = [NSString stringWithFormat:@"日收＋%.2f元", [model.day_income doubleValue]];
     double returnratefloat = [model.returnrate doubleValue];
     double returnrate_plus = [model.returnrate_plus doubleValue];
-    _weekOfYield.text = [NSString stringWithFormat:@"年化率%.2f%@", (returnratefloat-returnrate_plus) *100, @"%"];
+    _weekOfYield.text = [NSString stringWithFormat:@"年化率%g%@", (returnratefloat-returnrate_plus) *100, @"%"];
     if ([[SingletonManager convertNullString:model.returnrate_plus] isEqualToString:@"0"]) {
         _jiaxiLabel.hidden = YES;
     } else {

@@ -133,6 +133,7 @@
     [AppDelegate sharedInstance].redView = nil;
     [MobClick endLogPageView:@"HomePageViewController"];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [SVProgressHUD dismiss];
 }
 
 - (void)viewDidLoad {
