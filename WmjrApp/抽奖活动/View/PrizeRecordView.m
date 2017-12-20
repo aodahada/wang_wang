@@ -116,6 +116,7 @@
             _recordTableView = [[UITableView alloc]init];
             _recordTableView.delegate = self;
             _recordTableView.dataSource = self;
+            _recordTableView.tableFooterView = [[UIView alloc]init];
             [_recordTableView registerClass:[PrizeRecordTableViewCell class] forCellReuseIdentifier:@"PrizeRecordTableViewCell"];
             [_prizeWhiteView addSubview:_recordTableView];
             [_recordTableView mas_makeConstraints:^(MASConstraintMaker *make) {

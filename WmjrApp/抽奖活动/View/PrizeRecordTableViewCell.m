@@ -28,7 +28,7 @@
         [self addSubview:label1];
         [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.mas_centerY);
-            make.width.mas_offset(RESIZE_UI(15));
+            make.width.mas_offset(RESIZE_UI(20));
             make.left.equalTo(self.mas_left).with.offset(RESIZE_UI(10));
         }];
         

@@ -349,7 +349,7 @@
         [_popMenu dismissMenu];
         SharedManager *sharedManager = [[SharedManager alloc] init];
         if (![[SingletonManager convertNullString:_invitationcode] isEqualToString:@""]) {
-            NSString *contentStr = [NSString stringWithFormat:@"旺马圣诞红包雨 财友奖励8%%+疯狂加息1%%！立即投资既可获得，快使用我的旺马财富推荐码 %@", _invitationcode];
+            NSString *contentStr = [NSString stringWithFormat:@"戳→旺马圣诞财友奖励8%%+疯狂加息1%%！我的推荐码%@", _invitationcode];
             NSString *urlStr = [NSString stringWithFormat:@"http://m.wangmacaifu.com/#/register/wmcf-%@",[SingletonManager sharedManager].userModel.invitationcode];
             [sharedManager shareContent:sender withTitle:@"这是一个值得信赖的的投资理财平台" andContent:contentStr andUrl:urlStr];
             
