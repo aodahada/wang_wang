@@ -14,6 +14,7 @@
 #import "ExchangeRecordViewController.h"
 #import "ScordRecordViewController.h"
 #import "AgViewController.h"
+#import "LoginViewController.h"
 
 @interface IntegralShopViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -22,6 +23,9 @@
 @property (nonatomic, strong) UIView *viewForScroll;
 @property (nonatomic, strong) NSMutableArray *trueProductListArray;//实物array
 @property (nonatomic, strong) NSMutableArray *falseProductListArray;//非实物array
+
+@property (nonatomic, strong) UILabel *tip2Label;//剩余积分
+@property (nonatomic, strong) UILabel *intergralNumber;//总积分
 
 @end
 
@@ -43,13 +47,13 @@
     
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"积分说明" style:UIBarButtonItemStyleDone target:self action:@selector(watchRuleMethod)];
     
-    [self getProductListMethod];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
+    [self getDataWithLogin];
     [MobClick beginLogPageView:@"IntegralShopViewController"];
 }
 
@@ -126,12 +130,12 @@
         make.bottom.equalTo(headImage.mas_bottom);
     }];
     
-    UILabel *tip2Label = [[UILabel alloc]init];
-    tip2Label.text = [SingletonManager sharedManager].userModel.score_clear;
-    tip2Label.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
-    tip2Label.textColor = RGBA(252, 64, 22, 1.0);
-    [topView1 addSubview:tip2Label];
-    [tip2Label mas_makeConstraints:^(MASConstraintMaker *make) {
+    _tip2Label = [[UILabel alloc]init];
+    _tip2Label.text = [SingletonManager sharedManager].userModel.score_clear;
+    _tip2Label.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+    _tip2Label.textColor = RGBA(252, 64, 22, 1.0);
+    [topView1 addSubview:_tip2Label];
+    [_tip2Label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(tip1Label.mas_right);
         make.bottom.equalTo(tip1Label.mas_bottom);
     }];
@@ -142,7 +146,7 @@
     tip3Label.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [topView1 addSubview:tip3Label];
     [tip3Label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(tip2Label.mas_right);
+        make.left.equalTo(_tip2Label.mas_right);
         make.bottom.equalTo(tip1Label.mas_bottom);
     }];
     
@@ -156,13 +160,13 @@
         make.right.equalTo(topView1.mas_right).with.offset(-RESIZE_UI(15));
     }];
     
-    UILabel *intergralNumber = [[UILabel alloc]init];
-    intergralNumber.text = [SingletonManager sharedManager].userModel.score;
-    intergralNumber.textColor = RGBA(255, 88, 26, 1.0);
+    _intergralNumber = [[UILabel alloc]init];
+    _intergralNumber.text = [SingletonManager sharedManager].userModel.score;
+    _intergralNumber.textColor = RGBA(255, 88, 26, 1.0);
 //    intergralNumber.font = [UIFont systemFontOfSize:RESIZE_UI(22)];
-    intergralNumber.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(22)];
-    [topView1 addSubview:intergralNumber];
-    [intergralNumber mas_makeConstraints:^(MASConstraintMaker *make) {
+    _intergralNumber.font = [UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(22)];
+    [topView1 addSubview:_intergralNumber];
+    [_intergralNumber mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(topView1.mas_centerY);
         make.right.equalTo(intergralTitle.mas_left).with.offset(-RESIZE_UI(7));
     }];
@@ -303,6 +307,35 @@
     }];
 }
 
+#pragma mark - 获取个人信息
+- (void)getDataWithLogin {
+    NetManager *manager = [[NetManager alloc] init];
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *mobile = [userDefault objectForKey:@"mobile"];
+    NSString *pwd = [userDefault objectForKey:@"passWord"];
+    [manager postDataWithUrlActionStr:@"User/login" withParamDictionary:@{@"mobile":mobile, @"pwd":pwd} withBlock:^(id obj) {
+        if (obj) {
+            if ([obj[@"result"] isEqualToString:@"1"]) {
+                NSDictionary *dataDic = obj[@"data"];
+                [UserInfoModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                    return @{@"user_id" : @"id"};
+                }];
+                UserInfoModel *userModel = [UserInfoModel mj_objectWithKeyValues:dataDic];
+                [SingletonManager sharedManager].userModel = userModel;
+                [self getProductListMethod];
+                
+            } else {
+                [SVProgressHUD showInfoWithStatus:@"账号密码有误,请重新登录"];
+                LoginViewController *loginVC = [[LoginViewController alloc] init];
+                loginVC.loginIden = @"login";
+                loginVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNa animated:YES completion:nil];
+            }
+        }
+    }];
+}
+
 #pragma mark - 获取商品列表
 - (void)getProductListMethod {
     NetManager *manager = [[NetManager alloc] init];
@@ -332,7 +365,13 @@
                     }
                 }
             }
-            [self setUpViewSign];
+            if (_scrollViewForCollect) {
+                _tip2Label.text = [SingletonManager sharedManager].userModel.score_clear;
+                _intergralNumber.text = [SingletonManager sharedManager].userModel.score;
+                [_classCollectionView reloadData];
+            } else {
+                [self setUpViewSign];
+            }
             [SVProgressHUD dismiss];
         } else {
             NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
