@@ -702,6 +702,9 @@
     if (_labelForName) {
         _labelForName.text = [SingletonManager sharedManager].userModel.name;
     }
+    if (_integraLabel) {
+        _integraLabel.text = [NSString stringWithFormat:@"%@积分",[SingletonManager sharedManager].userModel.score];
+    }
     
     NSString *ballNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"redBallNumber"];
     NSInteger redBall = [ballNumber integerValue];

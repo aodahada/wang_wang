@@ -430,6 +430,16 @@
         make.bottom.equalTo(_centerImageView.mas_bottom).with.offset(-RESIZE_UI(60));
     }];
     
+    UILabel *tipLabel = [[UILabel alloc]init];
+    tipLabel.text = @"注:本抽奖活动与苹果公司无任何关系";
+    tipLabel.textColor = RGBA(232, 84, 101, 1.0);
+    [tipLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:RESIZE_UI(10)]];
+    [_zhuanPanView addSubview:tipLabel];
+    [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_zhuanPanView.mas_centerX);
+        make.top.equalTo(_zhuanPanView.mas_top).with.offset(RESIZE_UI(-25));
+    }];
+    
     _centerButton = [[UIButton alloc]init];
     //抽奖按钮样式
     [self canChouJiangMethod];
