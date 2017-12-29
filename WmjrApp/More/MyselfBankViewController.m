@@ -11,6 +11,8 @@
 #import "MMPopupWindow.h"
 #import "BankDetailViewController.h"
 #import "ReleaseBankCardViewController.h"
+#import "ReleaseCardDirectlyView.h"
+#import "ReleaseCardApplyforView.h"
 
 @interface MyselfBankViewController ()
 
@@ -30,6 +32,11 @@
 @property (nonatomic, strong) NSMutableArray *bankInfoArray;  /* 银行卡信息数组 */
 @property (nonatomic, strong) UIBarButtonItem *button;
 @property (weak, nonatomic) IBOutlet UIView *cardBottomView;
+
+@property (nonatomic, strong) UIWindow *window;
+
+@property (nonatomic, copy) NSString *bankName;//银行名称
+@property (nonatomic, copy) NSString *bankNumberTrail;//银行卡尾号
 
 @end
 
@@ -76,6 +83,8 @@
     _cardBottomView.layer.cornerRadius = 10;
     _bankInfoArray = [NSMutableArray array];
     
+    self.window = [[UIApplication sharedApplication].delegate window];
+    
     /* 获取数据 */
     [self loadRequestData];
     
@@ -109,9 +118,11 @@
                 _bankNameImg.image = [UIImage imageNamed:_bankInfoArray[1]];
                 /* 银行名称 */
                 NSString *bankName = [[dic objectForKey:_bankInfoArray[1]] firstObject];
+                _bankName = bankName;
                 /* 银行尾号 */
                 NSString *bankNum = _bankInfoArray[2];
                 NSString *bankTail = [bankNum substringWithRange:NSMakeRange(bankNum.length - 4, 4)];
+                _bankNumberTrail = bankTail;
                 _bankNameLab.text = [NSString stringWithFormat:@"%@尾号%@", bankName, bankTail];
                 /* 持卡人 */
                 _holdBankLab.text = _bankInfoArray[3];
@@ -148,12 +159,22 @@
             if ([balanceValue floatValue] > 0) {
                 [[SingletonManager sharedManager] alert1PromptInfo:@"余额不为零,不能解绑"];
                 //余额不为0解绑银行卡的方式
-                [SVProgressHUD dismiss];
-//                ReleaseBankCardViewController *releaseBankCardVC = [[ReleaseBankCardViewController alloc]init];
-//                [self.navigationController pushViewController:releaseBankCardVC animated:YES];
+//                @weakify(self)
+//                ReleaseCardApplyforView *releaseCardApplyforView = [[ReleaseCardApplyforView alloc]init];
+//                releaseCardApplyforView.confirmRelease = ^(){
+//                    @strongify(self)
+//                    ReleaseBankCardViewController *releaseBankCardVC = [[ReleaseBankCardViewController alloc]init];
+//                    [self.navigationController pushViewController:releaseBankCardVC animated:YES];
+//                };
+//                [self.window addSubview:releaseCardApplyforView];
+//                [releaseCardApplyforView mas_makeConstraints:^(MASConstraintMaker *make) {
+//                    make.edges.equalTo(self.window);
+//                }];
+                
                 return ;
             } else {
                 /* 点击确定,可解绑银行卡 */
+                
                 MMPopupItemHandler block = ^(NSInteger index){
                     if (index == 0) {
                         return ;
@@ -166,10 +187,10 @@
                         [manager postDataWithUrlActionStr:@"Card/unbind" withParamDictionary:paramDic withBlock:^(id obj) {
                             if ([obj[@"result"] isEqualToString:@"1"]) {
                                 [SVProgressHUD showSuccessWithStatus:@"解绑成功" maskType:(SVProgressHUDMaskTypeNone)];
-                                
+
                                 [SingletonManager sharedManager].userModel.card_id = @"0";
                                 [[NSUserDefaults standardUserDefaults] synchronize];
-                                
+
                                 [self.navigationController popToRootViewControllerAnimated:YES];
                             } else {
                                 [[SingletonManager sharedManager] alert1PromptInfo:[obj[@"data"] objectForKey:@"mes"]];
@@ -184,6 +205,32 @@
                                                                      detail:@"你确定解绑绑定银行卡?"
                                                                       items:items];
                 [alertView show];
+                
+//                ReleaseCardDirectlyView *releaseCardDirectView = [[ReleaseCardDirectlyView alloc]initWithBankName:_bankName withBankNumber:_bankNumberTrail];
+//                releaseCardDirectView.confirmRelease = ^(){
+//                    NSMutableDictionary *paramMutableDic = [NSMutableDictionary dictionary];
+//                    paramMutableDic[@"member_id"] = [SingletonManager sharedManager].uid;
+//                    paramMutableDic[@"card_id"] = self.card_id;
+//                    NSDictionary *paramDic = (NSDictionary *)paramMutableDic;
+//                    [SVProgressHUD showWithStatus:@"解绑中"];
+//                    [manager postDataWithUrlActionStr:@"Card/unbind" withParamDictionary:paramDic withBlock:^(id obj) {
+//                        if ([obj[@"result"] isEqualToString:@"1"]) {
+//                            [SVProgressHUD dismiss];
+//                            [SingletonManager sharedManager].userModel.card_id = @"0";
+//                            [[NSUserDefaults standardUserDefaults] synchronize];
+//                            [[SingletonManager sharedManager] showHUDView:self.view title:@"解绑成功" content:@"" time:1.0 andCodes:^{
+//                                [self.navigationController popToRootViewControllerAnimated:YES];
+//                            }];
+//                        } else {
+//                            [[SingletonManager sharedManager] alert1PromptInfo:[obj[@"data"] objectForKey:@"mes"]];
+//                        }
+//                    }];
+//                };
+//                [self.window addSubview:releaseCardDirectView];
+//                [releaseCardDirectView mas_makeConstraints:^(MASConstraintMaker *make) {
+//                    make.edges.equalTo(self.window);
+//                }];
+                
             }
         }
     }];

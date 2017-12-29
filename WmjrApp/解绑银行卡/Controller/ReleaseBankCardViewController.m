@@ -36,9 +36,9 @@
 @property (nonatomic, assign)NSInteger selectTag;//选择的哪个按钮
 
 @property (nonatomic, strong) UIView *blackView;
+@property (nonatomic, strong) UIView *whiteView;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) UIWindow *window;
-@property (nonatomic, strong) UIView *whiteView;
 @property (nonatomic, strong) UIImageView *rightImage;
 @property (nonatomic, strong) UILabel *tipLabel;
 
@@ -127,7 +127,6 @@
     
     _inputName = [[UITextField alloc]init];
     _inputName.placeholder = @"请输入用户姓名";
-    _inputName.keyboardType = UIKeyboardTypeDecimalPad;
     _inputName.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputName.textAlignment = NSTextAlignmentRight;
     _inputName.delegate = self;
@@ -162,7 +161,6 @@
     
     _inputIdCard = [[UITextField alloc]init];
     _inputIdCard.placeholder = @"请输入身份证号码";
-    _inputIdCard.keyboardType = UIKeyboardTypeDecimalPad;
     _inputIdCard.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _inputIdCard.textAlignment = NSTextAlignmentRight;
     _inputIdCard.delegate = self;
