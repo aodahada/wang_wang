@@ -207,7 +207,7 @@
 //        }
 //    }
 //    [self ziyouluoTiDemo];
-    [self ziyounihao];
+//    [self ziyounihao];
 }
 
 #pragma mark - 自有落体熄新的demo

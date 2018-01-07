@@ -13,6 +13,8 @@
 #import "ReleaseBankCardViewController.h"
 #import "ReleaseCardDirectlyView.h"
 #import "ReleaseCardApplyforView.h"
+#import "ReleaseSuccessCardView.h"
+#import "ReleaseBankCardModel.h"
 
 @interface MyselfBankViewController ()
 
@@ -24,7 +26,6 @@
 - (IBAction)comfirmBtnAction:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *unbindBtn;
-- (IBAction)unbindAction:(id)sender;  /* 解绑银行卡 */
 
 @property (nonatomic, copy) NSString *myBalance;  /* 我的余额 */
 @property (nonatomic, copy) NSString *mySavin_pot;   /* 我的存钱罐 */
@@ -37,6 +38,11 @@
 
 @property (nonatomic, copy) NSString *bankName;//银行名称
 @property (nonatomic, copy) NSString *bankNumberTrail;//银行卡尾号
+@property (weak, nonatomic) IBOutlet UIButton *watchBankDetail;
+
+@property (nonatomic, copy) NSString *bankCardState;//0 审核中，1 成功，2 失败
+
+@property (nonatomic, strong) ReleaseBankCardModel *releaseBankCardModel;
 
 @end
 
@@ -84,13 +90,19 @@
     _bankInfoArray = [NSMutableArray array];
     
     self.window = [[UIApplication sharedApplication].delegate window];
-    
     /* 获取数据 */
     [self loadRequestData];
     
-    
-    
 }
+
+#pragma mark - 查看审核详情
+- (void)watchBankState {
+    ReleaseBankCardViewController *releaseBankCardViewVC = [[ReleaseBankCardViewController alloc]init];
+    releaseBankCardViewVC.title = @"审核详情";
+    releaseBankCardViewVC.releaseBankModel = _releaseBankCardModel;
+    [self.navigationController pushViewController:releaseBankCardViewVC animated:YES];
+}
+
 - (IBAction)jumpToBankDetailMethod:(id)sender {
     
     BankDetailViewController *bankDeatailVC = [[BankDetailViewController alloc]init];
@@ -126,8 +138,10 @@
                 _bankNameLab.text = [NSString stringWithFormat:@"%@尾号%@", bankName, bankTail];
                 /* 持卡人 */
                 _holdBankLab.text = _bankInfoArray[3];
+                
             }
         }
+        [self checkBankCardState];
     }];
 }
 
@@ -148,7 +162,7 @@
 }
 
 /* 解绑银行卡 */
-- (IBAction)unbindAction:(id)sender {
+- (void)unbindAction {
     NetManager *manager = [[NetManager alloc] init];
     /* 余额不为零,不能解绑 */
     [SVProgressHUD showWithStatus:@"请稍等"];
@@ -157,95 +171,179 @@
             [SVProgressHUD dismiss];
             NSString *balanceValue = [obj[@"data"] objectForKey:@"available_balance"];
             if ([balanceValue floatValue] > 0) {
-                [[SingletonManager sharedManager] alert1PromptInfo:@"余额不为零,不能解绑"];
-                //余额不为0解绑银行卡的方式
-//                @weakify(self)
-//                ReleaseCardApplyforView *releaseCardApplyforView = [[ReleaseCardApplyforView alloc]init];
-//                releaseCardApplyforView.confirmRelease = ^(){
-//                    @strongify(self)
-//                    ReleaseBankCardViewController *releaseBankCardVC = [[ReleaseBankCardViewController alloc]init];
-//                    [self.navigationController pushViewController:releaseBankCardVC animated:YES];
-//                };
-//                [self.window addSubview:releaseCardApplyforView];
-//                [releaseCardApplyforView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                    make.edges.equalTo(self.window);
-//                }];
+//                [[SingletonManager sharedManager] alert1PromptInfo:@"余额不为零,不能解绑"];
+//                //余额不为0解绑银行卡的方式
+                @weakify(self)
+                ReleaseCardApplyforView *releaseCardApplyforView = [[ReleaseCardApplyforView alloc]init];
+                releaseCardApplyforView.confirmRelease = ^(){
+                    @strongify(self)
+                    ReleaseBankCardViewController *releaseBankCardVC = [[ReleaseBankCardViewController alloc]init];
+                    releaseBankCardVC.title = @"解绑银行卡";
+                    [self.navigationController pushViewController:releaseBankCardVC animated:YES];
+                };
+                [self.window addSubview:releaseCardApplyforView];
+                [releaseCardApplyforView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.edges.equalTo(self.window);
+                }];
                 
                 return ;
             } else {
                 /* 点击确定,可解绑银行卡 */
                 
-                MMPopupItemHandler block = ^(NSInteger index){
-                    if (index == 0) {
-                        return ;
-                    }
-                    if (index == 1) {
-                        NSMutableDictionary *paramMutableDic = [NSMutableDictionary dictionary];
-                        paramMutableDic[@"member_id"] = [SingletonManager sharedManager].uid;
-                        paramMutableDic[@"card_id"] = self.card_id;
-                        NSDictionary *paramDic = (NSDictionary *)paramMutableDic;
-                        [manager postDataWithUrlActionStr:@"Card/unbind" withParamDictionary:paramDic withBlock:^(id obj) {
-                            if ([obj[@"result"] isEqualToString:@"1"]) {
-                                [SVProgressHUD showSuccessWithStatus:@"解绑成功" maskType:(SVProgressHUDMaskTypeNone)];
-
-                                [SingletonManager sharedManager].userModel.card_id = @"0";
-                                [[NSUserDefaults standardUserDefaults] synchronize];
-
-                                [self.navigationController popToRootViewControllerAnimated:YES];
-                            } else {
-                                [[SingletonManager sharedManager] alert1PromptInfo:[obj[@"data"] objectForKey:@"mes"]];
-                            }
-                        }];
-                    }
-                };
-                NSArray *items =
-                @[MMItemMake(@"取消", MMItemTypeNormal, block),
-                  MMItemMake(@"确定", MMItemTypeNormal, block)];
-                MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
-                                                                     detail:@"你确定解绑绑定银行卡?"
-                                                                      items:items];
-                [alertView show];
+//                MMPopupItemHandler block = ^(NSInteger index){
+//                    if (index == 0) {
+//                        return ;
+//                    }
+//                    if (index == 1) {
+//                        NSMutableDictionary *paramMutableDic = [NSMutableDictionary dictionary];
+//                        paramMutableDic[@"member_id"] = [SingletonManager sharedManager].uid;
+//                        paramMutableDic[@"card_id"] = self.card_id;
+//                        NSDictionary *paramDic = (NSDictionary *)paramMutableDic;
+//                        [manager postDataWithUrlActionStr:@"Card/unbind" withParamDictionary:paramDic withBlock:^(id obj) {
+//                            if ([obj[@"result"] isEqualToString:@"1"]) {
+//                                [SVProgressHUD showSuccessWithStatus:@"解绑成功" maskType:(SVProgressHUDMaskTypeNone)];
+//
+//                                [SingletonManager sharedManager].userModel.card_id = @"0";
+//                                [[NSUserDefaults standardUserDefaults] synchronize];
+//
+//                                [self.navigationController popToRootViewControllerAnimated:YES];
+//                            } else {
+//                                [[SingletonManager sharedManager] alert1PromptInfo:[obj[@"data"] objectForKey:@"mes"]];
+//                            }
+//                        }];
+//                    }
+//                };
+//                NSArray *items =
+//                @[MMItemMake(@"取消", MMItemTypeNormal, block),
+//                  MMItemMake(@"确定", MMItemTypeNormal, block)];
+//                MMAlertView *alertView = [[MMAlertView alloc] initWithTitle:@"提示"
+//                                                                     detail:@"你确定解绑绑定银行卡?"
+//                                                                      items:items];
+//                [alertView show];
                 
-//                ReleaseCardDirectlyView *releaseCardDirectView = [[ReleaseCardDirectlyView alloc]initWithBankName:_bankName withBankNumber:_bankNumberTrail];
-//                releaseCardDirectView.confirmRelease = ^(){
-//                    NSMutableDictionary *paramMutableDic = [NSMutableDictionary dictionary];
-//                    paramMutableDic[@"member_id"] = [SingletonManager sharedManager].uid;
-//                    paramMutableDic[@"card_id"] = self.card_id;
-//                    NSDictionary *paramDic = (NSDictionary *)paramMutableDic;
-//                    [SVProgressHUD showWithStatus:@"解绑中"];
-//                    [manager postDataWithUrlActionStr:@"Card/unbind" withParamDictionary:paramDic withBlock:^(id obj) {
-//                        if ([obj[@"result"] isEqualToString:@"1"]) {
-//                            [SVProgressHUD dismiss];
-//                            [SingletonManager sharedManager].userModel.card_id = @"0";
-//                            [[NSUserDefaults standardUserDefaults] synchronize];
+                ReleaseCardDirectlyView *releaseCardDirectView = [[ReleaseCardDirectlyView alloc]initWithBankName:_bankName withBankNumber:_bankNumberTrail];
+                releaseCardDirectView.confirmRelease = ^(){
+                    NSMutableDictionary *paramMutableDic = [NSMutableDictionary dictionary];
+                    paramMutableDic[@"member_id"] = [SingletonManager sharedManager].uid;
+                    paramMutableDic[@"card_id"] = self.card_id;
+                    NSDictionary *paramDic = (NSDictionary *)paramMutableDic;
+                    [SVProgressHUD showWithStatus:@"解绑中"];
+                    [manager postDataWithUrlActionStr:@"Card/unbind" withParamDictionary:paramDic withBlock:^(id obj) {
+                        if ([obj[@"result"] isEqualToString:@"1"]) {
+                            [SVProgressHUD dismiss];
+                            [SingletonManager sharedManager].userModel.card_id = @"0";
+                            [[NSUserDefaults standardUserDefaults] synchronize];
 //                            [[SingletonManager sharedManager] showHUDView:self.view title:@"解绑成功" content:@"" time:1.0 andCodes:^{
 //                                [self.navigationController popToRootViewControllerAnimated:YES];
 //                            }];
-//                        } else {
-//                            [[SingletonManager sharedManager] alert1PromptInfo:[obj[@"data"] objectForKey:@"mes"]];
-//                        }
-//                    }];
-//                };
-//                [self.window addSubview:releaseCardDirectView];
-//                [releaseCardDirectView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                    make.edges.equalTo(self.window);
-//                }];
+                            ReleaseSuccessCardView *releaseSuccessCardView = [[ReleaseSuccessCardView alloc]init];
+                            releaseSuccessCardView.releaseSuccess = ^(){
+                                [self.navigationController popToRootViewControllerAnimated:YES];
+                            };
+                            [self.window addSubview:releaseSuccessCardView];
+                            [releaseSuccessCardView mas_makeConstraints:^(MASConstraintMaker *make) {
+                                make.edges.equalTo(self.window);
+                            }];
+                        } else {
+                            [[SingletonManager sharedManager] alert1PromptInfo:[obj[@"data"] objectForKey:@"mes"]];
+                        }
+                    }];
+                };
+                [self.window addSubview:releaseCardDirectView];
+                [releaseCardDirectView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.edges.equalTo(self.window);
+                }];
                 
             }
         }
     }];
     
-//    /* 存钱罐不为零,不能解绑 */
-//    [manager postDataWithUrlActionStr:@"User/queryBalance" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"} withBlock:^(id obj) {
-//        if (obj) {
-//            NSString *balanceValue = [obj[@"data"] objectForKey:@"available_balance"];
-//            if ([balanceValue floatValue] > 0) {
-//                [[SingletonManager sharedManager] alert1PromptInfo:@"存钱罐不为零,不能解绑"];
-//                return ;
-//            }
-//        }
-//    }];
-    
+}
+
+#pragma mark - 银行卡审核状态
+- (void)checkBankCardState {
+    NetManager *manager = [[NetManager alloc] init];
+    [manager postDataWithUrlActionStr:@"Bank/detail" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            NSDictionary *data = obj[@"data"];
+            [ReleaseBankCardModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                return @{@"release_id" : @"id"};
+            }];
+            
+            _releaseBankCardModel = [ReleaseBankCardModel mj_objectWithKeyValues:data];
+            _bankCardState = _releaseBankCardModel.status;
+//            _bankCardState = @"4";
+            if ([_bankCardState isEqualToString:@"0"]) {
+                //审核中
+                [_unbindBtn setTitle:@"审核中" forState:UIControlStateNormal];
+                [_unbindBtn addTarget:self action:@selector(doNothingMethod) forControlEvents:UIControlEventTouchUpInside];
+                UILabel *line1 = [[UILabel alloc]init];
+                line1.text = @"解绑申请已经提交成功,原银行卡将在3个工";
+                line1.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                line1.textColor = RGBA(102, 102, 102, 1.0);
+                [self.view addSubview:line1];
+                [line1 mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(_cardBottomView.mas_bottom).with.offset(RESIZE_UI(50));
+                    make.centerX.equalTo(self.view.mas_centerX);
+                }];
+                
+                UILabel *line2 = [[UILabel alloc]init];
+                line2.text = @"作日内完成解绑，请耐心等待；如有疑问";
+                line2.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                line2.textColor = RGBA(102, 102, 102, 1.0);
+                [self.view addSubview:line2];
+                [line2 mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(line1.mas_bottom);
+                    make.centerX.equalTo(self.view.mas_centerX);
+                }];
+                
+                UILabel *line3 = [[UILabel alloc]init];
+                line3.text = @"请联系客服热线:";
+                line3.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                line3.textColor = RGBA(102, 102, 102, 1.0);
+                [self.view addSubview:line3];
+                [line3 mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(line2.mas_bottom);
+                    make.left.equalTo(line2.mas_left).with.offset(RESIZE_UI(20));
+                }];
+                
+                UIButton *phoneButton = [[UIButton alloc]init];
+                [phoneButton setTitle:@"400-600-1169" forState:UIControlStateNormal];
+                [phoneButton setTitleColor:RGBA(0, 106, 179, 1.0) forState:UIControlStateNormal];
+                phoneButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                [phoneButton addTarget:self action:@selector(callPhoneMethod) forControlEvents:UIControlEventTouchUpInside];
+                [self.view addSubview:phoneButton];
+                [phoneButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.centerY.equalTo(line3.mas_centerY);
+                    make.left.equalTo(line3.mas_right);
+                }];
+                
+                [_watchBankDetail addTarget:self action:@selector(watchBankState) forControlEvents:UIControlEventTouchUpInside];
+            } else if ([_bankCardState isEqualToString:@"1"]) {
+                //审核成功
+                
+            } else if ([_bankCardState isEqualToString:@"2"]) {
+                //审核驳回
+                [_unbindBtn setTitle:@"审核驳回" forState:UIControlStateNormal];
+                [_unbindBtn setTitleColor:RGBA(243, 51, 81, 1.0) forState:UIControlStateNormal];
+                [_unbindBtn addTarget:self action:@selector(doNothingMethod) forControlEvents:UIControlEventTouchUpInside];
+                [_watchBankDetail addTarget:self action:@selector(watchBankState) forControlEvents:UIControlEventTouchUpInside];
+            } else {
+                [_unbindBtn addTarget:self action:@selector(unbindAction) forControlEvents:UIControlEventTouchUpInside];
+            }
+        }
+    }];
+}
+
+#pragma mark - 替代方法
+- (void)doNothingMethod {
+    NSLog(@"啥也不干");
+}
+
+#pragma mark - 打电话
+- (void)callPhoneMethod {
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",@"400-600-1169"];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 
 - (void)didReceiveMemoryWarning {

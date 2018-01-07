@@ -9,13 +9,20 @@
 #import "ReleaseBankCardViewController.h"
 #import "ZLPhotoActionSheet.h"
 #import "ZLPhotoConfiguration.h"
+#import "ZHPickView.h"
+#import "BankModel.h"
+#import "ConfirmReleaseCardView.h"
+#import "ReleaseSuccessCardView.h"
+#import "ReleaseBankCardModel.h"
 
 #define defaultInputColor RGBA(60, 60, 60, 1.0)
 
 @interface ReleaseBankCardViewController ()<UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic, strong)UITextField *inputName;
+@property (nonatomic, strong)UITextField *inputPhone;
 @property (nonatomic, strong)UITextField *inputIdCard;
+@property (nonatomic, strong)UITextField *inputBank;
 @property (nonatomic, strong)UITextField *inputBankCard;
 @property (nonatomic, strong)UIButton *idCardButton1;
 @property (nonatomic, strong)UIButton *idCardDeleteButton1;
@@ -42,6 +49,9 @@
 @property (nonatomic, strong) UIImageView *rightImage;
 @property (nonatomic, strong) UILabel *tipLabel;
 
+@property (nonatomic, strong) NSMutableArray *bankArray;
+@property (nonatomic, copy) NSString *bank_codeStr;//所属银行编号
+
 @end
 
 @implementation ReleaseBankCardViewController
@@ -56,7 +66,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"解绑银行卡";
     self.view.backgroundColor = [UIColor whiteColor];
     self.window = [[UIApplication sharedApplication].delegate window];
     _select1 = nil;
@@ -73,28 +82,36 @@
 
 #pragma mark - 界面布局
 - (void)setUpLayOut {
-    UIButton *nextStepButton = [[UIButton alloc]init];
-    [nextStepButton setTitle:@"提交申请" forState:UIControlStateNormal];
-    [nextStepButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [nextStepButton setBackgroundColor:RGBA(255, 88, 26, 1.0)];
-    [nextStepButton addTarget:self action:@selector(netStepButtonMethod) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:nextStepButton];
-    [nextStepButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view.mas_bottom);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.height.mas_offset(RESIZE_UI(49));
-    }];
     
     UIScrollView *mainScrollView = [[UIScrollView alloc]init];
     mainScrollView.backgroundColor = RGBA(240, 241, 243, 1.0);
     [self.view addSubview:mainScrollView];
-    [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(nextStepButton.mas_top);
-    }];
+    
+    if (![_releaseBankModel.status isEqualToString:@"0"] && ![_releaseBankModel.status isEqualToString:@"2"]) {
+        UIButton *nextStepButton = [[UIButton alloc]init];
+        [nextStepButton setTitle:@"提交申请" forState:UIControlStateNormal];
+        [nextStepButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [nextStepButton setBackgroundColor:RGBA(255, 88, 26, 1.0)];
+        [nextStepButton addTarget:self action:@selector(confirmSubmit) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:nextStepButton];
+        [nextStepButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view.mas_bottom);
+            make.left.equalTo(self.view.mas_left);
+            make.right.equalTo(self.view.mas_right);
+            make.height.mas_offset(RESIZE_UI(49));
+        }];
+        
+        [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.mas_top);
+            make.left.equalTo(self.view.mas_left);
+            make.right.equalTo(self.view.mas_right);
+            make.bottom.equalTo(nextStepButton.mas_top);
+        }];
+    } else {
+        [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+    }
     
     UIView *mainView = [[UIView alloc]init];
     mainView.backgroundColor = RGBA(237, 240, 242, 1.0);
@@ -108,12 +125,102 @@
     UIView *row1View = [[UIView alloc]init];
     row1View.backgroundColor = [UIColor whiteColor];
     [mainView addSubview:row1View];
-    [row1View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(mainView.mas_top);
-        make.left.equalTo(mainView.mas_left);
-        make.right.equalTo(mainView.mas_right);
-        make.height.mas_offset(RESIZE_UI(60));
-    }];
+    
+    if ([_releaseBankModel.status isEqualToString:@"0"] || [_releaseBankModel.status isEqualToString:@"2"]) {
+        UIView *currentStateView = [[UIView alloc]init];
+        currentStateView.backgroundColor = RGBA(237, 244, 247, 1.0);
+        [mainView addSubview:currentStateView];
+        [currentStateView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(mainView.mas_top);
+            make.left.equalTo(mainView.mas_left);
+            make.right.equalTo(mainView.mas_right);
+            make.height.mas_offset(RESIZE_UI(60));
+        }];
+        
+        UILabel *currentTitle = [[UILabel alloc]init];
+        currentTitle.text = @"当前状态";
+        currentTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        currentTitle.textColor = RGBA(102, 102, 102, 1.0);
+        [currentStateView addSubview:currentTitle];
+        [currentTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(currentStateView.mas_left).with.offset(RESIZE_UI(20));
+            make.centerY.equalTo(currentStateView.mas_centerY);
+        }];
+        
+        UILabel *currentContent = [[UILabel alloc]init];
+        if ([_releaseBankModel.status isEqualToString:@"0"]) {
+            currentContent.text = @"审核中";
+        } else {
+            currentContent.text = @"审核驳回";
+        }
+        currentContent.textColor = RGBA(255, 88, 26, 1.0);
+        currentContent.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        [currentStateView addSubview:currentContent];
+        [currentContent mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(currentStateView.mas_right).with.offset(-RESIZE_UI(12));
+            make.centerY.equalTo(currentStateView.mas_centerY);
+        }];
+        
+        if ([_releaseBankModel.status isEqualToString:@"0"]) {
+            [row1View mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(currentStateView.mas_bottom);
+                make.left.equalTo(mainView.mas_left);
+                make.right.equalTo(mainView.mas_right);
+                make.height.mas_offset(RESIZE_UI(60));
+            }];
+        } else {
+            UIView *checkResultView = [[UIView alloc]init];
+            checkResultView.backgroundColor = [UIColor whiteColor];
+            [mainView addSubview:checkResultView];
+            [checkResultView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(currentStateView.mas_bottom);
+                make.left.equalTo(mainView.mas_left);
+                make.right.equalTo(mainView.mas_right);
+                make.height.mas_offset(RESIZE_UI(60));
+            }];
+            
+            UILabel *checkResultTitle = [[UILabel alloc]init];
+            checkResultTitle.text = @"审核反馈";
+            checkResultTitle.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+            checkResultTitle.textColor = RGBA(102, 102, 102, 1.0);
+            [checkResultTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(checkResultView.mas_left).with.offset(RESIZE_UI(15));
+                make.centerY.equalTo(checkResultView.mas_centerY);
+            }];
+            
+            UIView *checkResultContentView = [[UIView alloc]init];
+            checkResultContentView.backgroundColor = [UIColor whiteColor];
+            [mainView addSubview:checkResultContentView];
+            [checkResultContentView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(checkResultView.mas_bottom).with.offset(RESIZE_UI(1));
+                make.left.equalTo(mainView.mas_left);
+                make.right.equalTo(mainView.mas_right);
+                make.height.mas_offset(RESIZE_UI(90));
+            }];
+            
+            UITextView *textViewCheckResult = [[UITextView alloc]init];
+//            textViewCheckResult.text = _releaseBankModel.audit;
+            textViewCheckResult.text = @"您的银行卡卡今年对方那里看见女款链接安康链接啊看见你疯狂乱收费，所以审核未通过。您可以重新申请.";
+            textViewCheckResult.textColor = RGBA(243, 39, 68, 1.0);
+            textViewCheckResult.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+            [checkResultContentView addSubview:textViewCheckResult];
+            [textViewCheckResult mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(checkResultContentView.mas_top).with.offset(RESIZE_UI(14));
+                make.left.equalTo(checkResultContentView.mas_left).with.offset(RESIZE_UI(20));
+                make.right.equalTo(checkResultContentView.mas_right).with.offset(-RESIZE_UI(20));
+                make.bottom.equalTo(checkResultContentView.mas_bottom).with.offset(-RESIZE_UI(14));
+            }];
+            
+            [row1View mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(checkResultContentView.mas_bottom).with.offset(RESIZE_UI(14));
+                make.left.equalTo(mainView.mas_left);
+                make.right.equalTo(mainView.mas_right);
+                make.height.mas_offset(RESIZE_UI(60));
+            }];
+            
+        }
+        
+    }
     
     UILabel *label1 = [[UILabel alloc]init];
     label1.text = @"用户姓名";
@@ -138,12 +245,47 @@
         make.centerY.equalTo(row1View.mas_centerY);
     }];
     
+    //第一行补充
+    UIView *row1PriView = [[UIView alloc]init];
+    row1PriView.backgroundColor = [UIColor whiteColor];
+    [mainView addSubview:row1PriView];
+    [row1PriView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(row1View.mas_bottom).with.offset(RESIZE_UI(1));
+        make.left.equalTo(mainView.mas_left);
+        make.right.equalTo(mainView.mas_right);
+        make.height.mas_offset(RESIZE_UI(60));
+    }];
+    
+    UILabel *label1Pri = [[UILabel alloc]init];
+    label1Pri.text = @"联系电话";
+    label1Pri.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    label1Pri.textColor = RGBA(102, 102, 102, 1.0);
+    [row1PriView addSubview:label1Pri];
+    [label1Pri mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(row1PriView);
+        make.left.equalTo(row1PriView.mas_left).with.offset(RESIZE_UI(20));
+    }];
+    
+    _inputPhone = [[UITextField alloc]init];
+    _inputPhone.placeholder = @"请输入联系电话";
+    _inputPhone.keyboardType = UIKeyboardTypeNumberPad;
+    _inputPhone.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    _inputPhone.textAlignment = NSTextAlignmentRight;
+    _inputPhone.delegate = self;
+    //    [_inputName addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [row1PriView addSubview:_inputPhone];
+    [_inputPhone mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(row1PriView.mas_right).with.offset(-RESIZE_UI(20));
+        make.height.mas_equalTo(row1PriView.mas_height);
+        make.centerY.equalTo(row1PriView.mas_centerY);
+    }];
+    
     //第二行
     UIView *row2View = [[UIView alloc]init];
     row2View.backgroundColor = [UIColor whiteColor];
     [mainView addSubview:row2View];
     [row2View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row1View.mas_bottom).with.offset(RESIZE_UI(1));
+        make.top.equalTo(row1PriView.mas_bottom).with.offset(RESIZE_UI(1));
         make.left.equalTo(mainView.mas_left);
         make.right.equalTo(mainView.mas_right);
         make.height.mas_offset(RESIZE_UI(60));
@@ -172,12 +314,54 @@
         make.height.mas_equalTo(row2View.mas_height);
     }];
     
+    //第二行补充
+    UIView *row2PriView = [[UIView alloc]init];
+    row2PriView.backgroundColor = [UIColor whiteColor];
+    [mainView addSubview:row2PriView];
+    [row2PriView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(row2View.mas_bottom).with.offset(RESIZE_UI(1));
+        make.left.equalTo(mainView.mas_left);
+        make.right.equalTo(mainView.mas_right);
+        make.height.mas_offset(RESIZE_UI(60));
+    }];
+    
+    UILabel *label2Pri = [[UILabel alloc]init];
+    label2Pri.text = @"原银行卡发卡行";
+    label2Pri.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    label2Pri.textColor = RGBA(102, 102, 102, 1.0);
+    [row2PriView addSubview:label2Pri];
+    [label2Pri mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(row2PriView);
+        make.left.equalTo(row2PriView.mas_left).with.offset(RESIZE_UI(20));
+    }];
+    
+    _inputBank = [[UITextField alloc]init];
+    _inputBank.placeholder = @"请选择发卡行";
+    _inputBank.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+    _inputBank.textAlignment = NSTextAlignmentRight;
+    _inputBank.delegate = self;
+    //    [_inputIdCard addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [row2PriView addSubview:_inputBank];
+    [_inputBank mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(row2PriView);
+        make.right.equalTo(row2PriView.mas_right).with.offset(-RESIZE_UI(20));
+        make.height.mas_equalTo(row2PriView.mas_height);
+    }];
+    
+    UIButton *selectBankButton = [[UIButton alloc]init];
+    [selectBankButton setBackgroundColor:[UIColor clearColor]];
+    [selectBankButton addTarget:self action:@selector(selectBankNameMethod) forControlEvents:UIControlEventTouchUpInside];
+    [row2PriView addSubview:selectBankButton];
+    [selectBankButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(row2PriView);
+    }];
+    
     //第三行
     UIView *row3View = [[UIView alloc]init];
     row3View.backgroundColor = [UIColor whiteColor];
     [mainView addSubview:row3View];
     [row3View mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(row2View.mas_bottom).with.offset(RESIZE_UI(1));
+        make.top.equalTo(row2PriView.mas_bottom).with.offset(RESIZE_UI(1));
         make.left.equalTo(mainView.mas_left);
         make.right.equalTo(mainView.mas_right);
         make.height.mas_offset(RESIZE_UI(60));
@@ -341,6 +525,51 @@
     
 }
 
+#pragma mark - 选择银行
+- (void)selectBankNameMethod {
+    
+    [_inputName resignFirstResponder];
+    [_inputPhone resignFirstResponder];
+    [_inputIdCard resignFirstResponder];
+    [_inputBankCard resignFirstResponder];
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"加载中"];
+    _bankArray = [[NSMutableArray alloc]init];
+    NSMutableArray *stringArray = [[NSMutableArray alloc]init];
+    [manager postDataWithUrlActionStr:@"Bank/index" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            NSMutableArray *array = obj[@"data"];
+            for (int i=0; i<array.count; i++) {
+                NSDictionary *dic = array[i];
+                BankModel *bankModel = [BankModel mj_objectWithKeyValues:dic];
+                NSString *bankString = [NSString stringWithFormat:@"%@-%@",bankModel.code,bankModel.name];
+                [stringArray addObject:bankString];
+                [_bankArray addObject:bankModel];
+            }
+            ZHPickView *pickView = [[ZHPickView alloc] init];
+            [pickView setBankViewWithItem:(NSArray *)stringArray title:@"银行名称"];
+            [pickView showPickView:self];
+            pickView.block = ^(NSString *selectedStr)
+            {
+                NSArray *bankArray = [selectedStr componentsSeparatedByString:@"-"];
+                _bank_codeStr = [bankArray firstObject];
+                _inputBank.textColor = [UIColor blackColor];
+                _inputBank.text = [bankArray lastObject];
+            };
+            
+            [SVProgressHUD dismiss];
+        } else {
+            NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+            alertConfig.defaultTextOK = @"确定";
+            [SVProgressHUD dismiss];
+            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+            [alertView show];
+        }
+    }];
+
+}
+
 #pragma mark - 选择图片
 - (IBAction)selectHeadImageMethod:(UIButton *)sender {
     
@@ -489,16 +718,21 @@
 - (void)allRecoverNormal {
     _inputName.textColor = defaultInputColor;
     _inputName.text = _inputName.text;
+    _inputPhone.textColor = defaultInputColor;
+    _inputPhone.text = _inputPhone.text;
     _inputIdCard.textColor = defaultInputColor;
     _inputIdCard.text = _inputIdCard.text;
+    _inputBank.textColor = defaultInputColor;
+    _inputBank.text = _inputBank.text;
     _inputBankCard.textColor = defaultInputColor;
     _inputBankCard.text = _inputBankCard.text;
     _unselectTipId.hidden = YES;
     _unselectTipBnak.hidden = YES;
 }
 
-#pragma mark - 提交申请
-- (void)netStepButtonMethod {
+#pragma mark - 点击提交按钮
+- (void)confirmSubmit {
+    
     [self allRecoverNormal];
     if ([_inputName.text isEqualToString:@""]) {
         [self changgePlaceholderMethod:_inputName];
@@ -508,6 +742,16 @@
         }];
         return;
     }
+    
+    if ([_inputPhone.text isEqualToString:@""]) {
+        [self changgePlaceholderMethod:_inputPhone];
+        _inputPhone.textColor = [UIColor redColor];
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请输入联系电话" content:@"" time:1.0 andCodes:^{
+            
+        }];
+        return;
+    }
+    
     if ([_inputIdCard.text isEqualToString:@""]) {
         [self changgePlaceholderMethod:_inputIdCard];
         _inputIdCard.textColor = [UIColor redColor];
@@ -516,6 +760,16 @@
         }];
         return;
     }
+    
+    if ([_inputBank.text isEqualToString:@""]) {
+        [self changgePlaceholderMethod:_inputBank];
+        _inputBank.textColor = [UIColor redColor];
+        [[SingletonManager sharedManager] showHUDView:self.view title:@"请选择发卡行" content:@"" time:1.0 andCodes:^{
+            
+        }];
+        return;
+    }
+    
     if ([_inputBankCard.text isEqualToString:@""]) {
         [self changgePlaceholderMethod:_inputBankCard];
         _inputBankCard.textColor = [UIColor redColor];
@@ -538,6 +792,20 @@
         }];
         return;
     }
+    
+    ConfirmReleaseCardView *confirmReleaseCardView = [[ConfirmReleaseCardView alloc]init];
+    confirmReleaseCardView.confirmRelease = ^(){
+        [self netStepButtonMethod];
+    };
+    [self.window addSubview:confirmReleaseCardView];
+    [confirmReleaseCardView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.window);
+    }];
+}
+
+#pragma mark - 提交申请
+- (void)netStepButtonMethod {
+    
     [SVProgressHUD showWithStatus:@"加载中"];
     NetManager *manager = [[NetManager alloc] init];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -545,6 +813,8 @@
     dict[@"name"] = _inputName.text;
     dict[@"cert_no"] = _inputIdCard.text;
     dict[@"card_no"] = _inputBankCard.text;
+    dict[@"mobile"] = _inputPhone.text;
+    dict[@"bank_name"] = _inputBank.text;
     
     NSArray *paramArray = @[@"cert_front[]",@"cert_front[]",@"cert_bg[]",@"cert_bg[]"];
     NSArray *imageArray = @[_select1,_select2,_select3,_select4];
@@ -582,6 +852,9 @@
         if (obj) {
             
             [SVProgressHUD dismiss];
+//            [[SingletonManager sharedManager] showHUDView:self.view title:@"提交成功" content:@"" time:1.0 andCodes:^{
+//                [self.navigationController popToRootViewControllerAnimated:YES];
+//            }];
             [self successTipWindow];
             
         }
@@ -603,7 +876,7 @@
     [_blackView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.window);
     }];
-    
+
     _whiteView = [[UIView alloc]init];
     _whiteView.backgroundColor = [UIColor whiteColor];
     _whiteView.layer.masksToBounds = YES;
@@ -615,7 +888,7 @@
         make.height.mas_offset(RESIZE_UI(160));
         make.width.mas_offset(RESIZE_UI(258));
     }];
-    
+
     _rightImage = [[UIImageView alloc]init];
     _rightImage.image = [UIImage imageNamed:@"icon_done"];
     [_whiteView addSubview:_rightImage];
@@ -624,7 +897,7 @@
         make.centerX.equalTo(_whiteView.mas_centerX);
         make.height.width.mas_offset(RESIZE_UI(60));
     }];
-    
+
     _tipLabel = [[UILabel alloc]init];
     _tipLabel.text = @"申请已提交，请耐心等候";
     _tipLabel.textColor = RGBA(102, 102, 102, 1.0);
@@ -634,10 +907,18 @@
         make.top.equalTo(_rightImage.mas_bottom).with.offset(RESIZE_UI(18));
         make.centerX.equalTo(_whiteView.mas_centerX);
     }];
-    
+
     //    _tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeBlackView)];
     //    [_blackView addGestureRecognizer:_tap];
-    [self performSelector:@selector(closeBlackView) withObject:nil afterDelay:2.0];
+    [self performSelector:@selector(closeBlackView) withObject:nil afterDelay:1.0];
+    
+//    ReleaseSuccessCardView *releaseSuccessCardView = [[ReleaseSuccessCardView alloc]init];
+//    @weakify(self)
+//    releaseSuccessCardView.releaseSuccess = ^(){
+//        @strongify(self)
+////        [self.navigationController popViewControllerAnimated:YES];
+//        [self.navigationController popToRootViewControllerAnimated:YES];
+//    };
     
 }
 
@@ -653,7 +934,7 @@
     [_tipLabel removeFromSuperview];
     _tipLabel = nil;
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 

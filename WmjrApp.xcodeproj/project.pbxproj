@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		6412EF101FF2277100BCAAC2 /* ReleaseCardDirectlyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6412EF0F1FF2277100BCAAC2 /* ReleaseCardDirectlyView.m */; };
 		6412EF131FF229F200BCAAC2 /* ReleaseCardApplyforView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6412EF121FF229F200BCAAC2 /* ReleaseCardApplyforView.m */; };
+		64259EC81FFC847000611ED9 /* ConfirmReleaseCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64259EC71FFC847000611ED9 /* ConfirmReleaseCardView.m */; };
+		64259ECB1FFCC1FB00611ED9 /* ReleaseSuccessCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64259ECA1FFCC1FB00611ED9 /* ReleaseSuccessCardView.m */; };
+		64259ED720021DDA00611ED9 /* ReleaseBankCardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64259ED620021DDA00611ED9 /* ReleaseBankCardModel.m */; };
 		6425D3D61F16450900D61F87 /* NSArray+HRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 6425D3D51F16450900D61F87 /* NSArray+HRUtil.m */; };
 		6431A4AC1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6431A4AB1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m */; };
 		64538A4A1FE4FB1800BC1F3F /* JiaXiActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64538A491FE4FB1800BC1F3F /* JiaXiActivityViewController.m */; };
@@ -559,6 +562,12 @@
 		6412EF0F1FF2277100BCAAC2 /* ReleaseCardDirectlyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseCardDirectlyView.m; sourceTree = "<group>"; };
 		6412EF111FF229F200BCAAC2 /* ReleaseCardApplyforView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReleaseCardApplyforView.h; sourceTree = "<group>"; };
 		6412EF121FF229F200BCAAC2 /* ReleaseCardApplyforView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseCardApplyforView.m; sourceTree = "<group>"; };
+		64259EC61FFC847000611ED9 /* ConfirmReleaseCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfirmReleaseCardView.h; sourceTree = "<group>"; };
+		64259EC71FFC847000611ED9 /* ConfirmReleaseCardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmReleaseCardView.m; sourceTree = "<group>"; };
+		64259EC91FFCC1FB00611ED9 /* ReleaseSuccessCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReleaseSuccessCardView.h; sourceTree = "<group>"; };
+		64259ECA1FFCC1FB00611ED9 /* ReleaseSuccessCardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseSuccessCardView.m; sourceTree = "<group>"; };
+		64259ED520021DDA00611ED9 /* ReleaseBankCardModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReleaseBankCardModel.h; sourceTree = "<group>"; };
+		64259ED620021DDA00611ED9 /* ReleaseBankCardModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseBankCardModel.m; sourceTree = "<group>"; };
 		6425D3D41F16450900D61F87 /* NSArray+HRUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+HRUtil.h"; path = "Category/NSArray+HRUtil.h"; sourceTree = "<group>"; };
 		6425D3D51F16450900D61F87 /* NSArray+HRUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+HRUtil.m"; path = "Category/NSArray+HRUtil.m"; sourceTree = "<group>"; };
 		6431A4AA1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPackageTableViewCellTwo.h; sourceTree = "<group>"; };
@@ -1383,6 +1392,10 @@
 				6412EF0F1FF2277100BCAAC2 /* ReleaseCardDirectlyView.m */,
 				6412EF111FF229F200BCAAC2 /* ReleaseCardApplyforView.h */,
 				6412EF121FF229F200BCAAC2 /* ReleaseCardApplyforView.m */,
+				64259EC61FFC847000611ED9 /* ConfirmReleaseCardView.h */,
+				64259EC71FFC847000611ED9 /* ConfirmReleaseCardView.m */,
+				64259EC91FFCC1FB00611ED9 /* ReleaseSuccessCardView.h */,
+				64259ECA1FFCC1FB00611ED9 /* ReleaseSuccessCardView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1399,6 +1412,8 @@
 		6412EF0D1FF219F100BCAAC2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				64259ED520021DDA00611ED9 /* ReleaseBankCardModel.h */,
+				64259ED620021DDA00611ED9 /* ReleaseBankCardModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2875,7 +2890,7 @@
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -3368,6 +3383,7 @@
 				C51B42341C784FC6001679B5 /* HomeModel.m in Sources */,
 				C51B439D1C7856F2001679B5 /* RealNameCertificationViewController.m in Sources */,
 				8B3E61141E5C4FCE00D9A6AC /* ProductLongClassViewController.m in Sources */,
+				64259ECB1FFCC1FB00611ED9 /* ReleaseSuccessCardView.m in Sources */,
 				C51B429B1C7852A7001679B5 /* RechargeViewController.m in Sources */,
 				C51B42DC1C7853C5001679B5 /* MyselfTransactionController.m in Sources */,
 				C51B43701C785641001679B5 /* SharedManager.m in Sources */,
@@ -3418,6 +3434,7 @@
 				C51B42561C78509C001679B5 /* ProductIntroViewController.m in Sources */,
 				645889A41F4BD70100E69574 /* RedPackageViewController.m in Sources */,
 				C51B42881C785247001679B5 /* MessageViewCell.m in Sources */,
+				64259EC81FFC847000611ED9 /* ConfirmReleaseCardView.m in Sources */,
 				C51B43911C785691001679B5 /* ZHPickView.m in Sources */,
 				BDD824F71D62E84400A31C21 /* RestPassWordViewController.m in Sources */,
 				648006001FCEA162001FE787 /* UIDeviceHardware.m in Sources */,
@@ -3498,6 +3515,7 @@
 				C51B43171C785528001679B5 /* NounExplanViewController.m in Sources */,
 				8BF3F84C1D8248BD00E669B2 /* AliPayViews.m in Sources */,
 				C51B42801C785236001679B5 /* MessageWViewController.m in Sources */,
+				64259ED720021DDA00611ED9 /* ReleaseBankCardModel.m in Sources */,
 				64880FDF1FC3F0E40011A1D3 /* ApplyRecordTableViewCell.m in Sources */,
 				6412EF131FF229F200BCAAC2 /* ReleaseCardApplyforView.m in Sources */,
 				648CE9AC1F988E3E007E4F74 /* LunBoImageModel.m in Sources */,
@@ -3646,9 +3664,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = WmjrApp/WmjrApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 28Y6NMPTCR;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3670,8 +3687,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "286e119e-90a4-4c3c-9b30-75aa204add7b";
-				PROVISIONING_PROFILE_SPECIFIER = wangmadis;
+				PROVISIONING_PROFILE = "37a7c057-02a0-4431-8542-641a46a93785";
+				PROVISIONING_PROFILE_SPECIFIER = wangmadevelop;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Debug;
@@ -3682,9 +3699,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = WmjrApp/WmjrApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wangma Financial Information Service(shanghai) Co., Ltd. (28Y6NMPTCR)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 28Y6NMPTCR;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3706,8 +3722,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "286e119e-90a4-4c3c-9b30-75aa204add7b";
-				PROVISIONING_PROFILE_SPECIFIER = wangmadis;
+				PROVISIONING_PROFILE = "37a7c057-02a0-4431-8542-641a46a93785";
+				PROVISIONING_PROFILE_SPECIFIER = wangmadevelop;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Release;

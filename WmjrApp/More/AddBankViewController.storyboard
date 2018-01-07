@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -182,7 +182,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手   机   号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uea-LS-82x">
-                                                    <rect key="frame" x="13" y="10" width="80" height="21"/>
+                                                    <rect key="frame" x="16" y="13" width="80" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="80" id="Qyy-xd-6lQ"/>
                                                     </constraints>
@@ -191,7 +191,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入银行预留手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H0r-xF-T2m">
-                                                    <rect key="frame" x="103" y="5" width="257" height="30"/>
+                                                    <rect key="frame" x="106" y="8" width="254" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                                 </textField>
@@ -204,7 +204,7 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="uea-LS-82x" firstAttribute="leading" secondItem="fn2-gE-vuI" secondAttribute="leadingMargin" constant="5" id="EWM-Lg-g7M"/>
+                                                <constraint firstItem="uea-LS-82x" firstAttribute="leading" secondItem="fn2-gE-vuI" secondAttribute="leadingMargin" id="EWM-Lg-g7M"/>
                                                 <constraint firstAttribute="trailing" secondItem="H0r-xF-T2m" secondAttribute="trailing" constant="15" id="FHl-n5-Uje"/>
                                                 <constraint firstItem="H0r-xF-T2m" firstAttribute="top" secondItem="fn2-gE-vuI" secondAttribute="topMargin" constant="-3" id="Gqh-gd-90B"/>
                                                 <constraint firstItem="H0r-xF-T2m" firstAttribute="leading" secondItem="uea-LS-82x" secondAttribute="trailing" constant="10" id="eTl-e9-c4K"/>

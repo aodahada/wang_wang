@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class ReleaseBankCardModel;
 @interface ReleaseBankCardViewController : UIViewController
+
+@property (nonatomic, strong) ReleaseBankCardModel *releaseBankModel;
 
 @end

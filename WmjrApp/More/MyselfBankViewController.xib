@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,6 +17,7 @@
                 <outlet property="holdBankLab" destination="o3m-MX-HhA" id="Bdl-W4-Pua"/>
                 <outlet property="unbindBtn" destination="kC6-hf-hvH" id="Tgc-tX-w0g"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="watchBankDetail" destination="17U-6d-CrH" id="gAZ-Hm-jQN"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -65,30 +66,35 @@
                             <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17U-6d-CrH">
+                            <rect key="frame" x="0.0" y="0.0" width="335" height="30"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kC6-hf-hvH">
-                            <rect key="frame" x="243" y="50" width="77" height="25"/>
+                            <rect key="frame" x="243" y="47" width="77" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="25" id="Csd-wz-feW"/>
+                                <constraint firstAttribute="width" constant="77" id="DYD-ut-LJu"/>
                             </constraints>
                             <state key="normal" title="解绑银行卡">
                                 <color key="titleColor" red="0.078431372549019607" green="0.45882352941176469" blue="0.71764705882352942" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
-                            <connections>
-                                <action selector="unbindAction:" destination="-1" eventType="touchUpInside" id="L5q-0c-OV9"/>
-                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="kvd-kV-qZz" firstAttribute="leading" secondItem="Olm-HF-NPD" secondAttribute="leading" constant="15" id="6i4-Wb-bPI"/>
                         <constraint firstItem="o3m-MX-HhA" firstAttribute="leading" secondItem="kvd-kV-qZz" secondAttribute="trailing" constant="5" id="96R-33-2uN"/>
+                        <constraint firstItem="17U-6d-CrH" firstAttribute="leading" secondItem="Olm-HF-NPD" secondAttribute="leading" id="Hdf-lb-1ZG"/>
                         <constraint firstItem="tRr-vc-XcJ" firstAttribute="top" secondItem="Olm-HF-NPD" secondAttribute="top" constant="12" id="IfA-Ze-agr"/>
+                        <constraint firstAttribute="trailing" secondItem="17U-6d-CrH" secondAttribute="trailing" id="Pvt-Et-QPj"/>
                         <constraint firstItem="kvd-kV-qZz" firstAttribute="top" secondItem="Olm-HF-NPD" secondAttribute="top" constant="12" id="Ty9-Yq-C8d"/>
                         <constraint firstAttribute="height" constant="80" id="UzF-fu-BJZ"/>
-                        <constraint firstAttribute="trailing" secondItem="kC6-hf-hvH" secondAttribute="trailing" constant="15" id="h58-Qw-0Cv"/>
                         <constraint firstItem="o3m-MX-HhA" firstAttribute="top" secondItem="tRr-vc-XcJ" secondAttribute="bottom" constant="5" id="i0i-zW-0TD"/>
-                        <constraint firstAttribute="bottom" secondItem="kC6-hf-hvH" secondAttribute="bottom" constant="5" id="kVs-8z-7fj"/>
+                        <constraint firstAttribute="trailing" secondItem="kC6-hf-hvH" secondAttribute="trailing" constant="15" id="jIJ-Me-xp3"/>
                         <constraint firstItem="tRr-vc-XcJ" firstAttribute="leading" secondItem="kvd-kV-qZz" secondAttribute="trailing" constant="5" id="scH-c5-urz"/>
+                        <constraint firstItem="17U-6d-CrH" firstAttribute="top" secondItem="Olm-HF-NPD" secondAttribute="top" id="uOd-dy-sak"/>
+                        <constraint firstAttribute="bottom" secondItem="kC6-hf-hvH" secondAttribute="bottom" constant="8" id="wNr-s7-TiT"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcW-t2-L9q">
@@ -148,7 +154,7 @@
                 <constraint firstAttribute="trailing" secondItem="Olm-HF-NPD" secondAttribute="trailing" constant="20" id="YBQ-6b-a7J"/>
                 <constraint firstItem="lcW-t2-L9q" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="xi0-Sf-yrm"/>
             </constraints>
-            <point key="canvasLocation" x="400.5" y="406.5"/>
+            <point key="canvasLocation" x="315" y="401"/>
         </view>
     </objects>
     <resources>
