@@ -329,6 +329,7 @@
                 [_unbindBtn addTarget:self action:@selector(doNothingMethod) forControlEvents:UIControlEventTouchUpInside];
                 [_watchBankDetail addTarget:self action:@selector(watchBankState) forControlEvents:UIControlEventTouchUpInside];
             } else {
+                [_unbindBtn setTitle:@"解绑银行卡" forState:UIControlStateNormal];
                 [_unbindBtn addTarget:self action:@selector(unbindAction) forControlEvents:UIControlEventTouchUpInside];
             }
         }

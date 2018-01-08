@@ -67,7 +67,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17U-6d-CrH">
-                            <rect key="frame" x="0.0" y="0.0" width="335" height="30"/>
+                            <rect key="frame" x="0.0" y="0.0" width="335" height="80"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kC6-hf-hvH">
@@ -76,7 +76,7 @@
                                 <constraint firstAttribute="height" constant="25" id="Csd-wz-feW"/>
                                 <constraint firstAttribute="width" constant="77" id="DYD-ut-LJu"/>
                             </constraints>
-                            <state key="normal" title="解绑银行卡">
+                            <state key="normal">
                                 <color key="titleColor" red="0.078431372549019607" green="0.45882352941176469" blue="0.71764705882352942" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                         </button>
@@ -85,15 +85,16 @@
                     <constraints>
                         <constraint firstItem="kvd-kV-qZz" firstAttribute="leading" secondItem="Olm-HF-NPD" secondAttribute="leading" constant="15" id="6i4-Wb-bPI"/>
                         <constraint firstItem="o3m-MX-HhA" firstAttribute="leading" secondItem="kvd-kV-qZz" secondAttribute="trailing" constant="5" id="96R-33-2uN"/>
-                        <constraint firstItem="17U-6d-CrH" firstAttribute="leading" secondItem="Olm-HF-NPD" secondAttribute="leading" id="Hdf-lb-1ZG"/>
                         <constraint firstItem="tRr-vc-XcJ" firstAttribute="top" secondItem="Olm-HF-NPD" secondAttribute="top" constant="12" id="IfA-Ze-agr"/>
-                        <constraint firstAttribute="trailing" secondItem="17U-6d-CrH" secondAttribute="trailing" id="Pvt-Et-QPj"/>
+                        <constraint firstItem="17U-6d-CrH" firstAttribute="leading" secondItem="Olm-HF-NPD" secondAttribute="leading" id="OgL-kx-ke3"/>
                         <constraint firstItem="kvd-kV-qZz" firstAttribute="top" secondItem="Olm-HF-NPD" secondAttribute="top" constant="12" id="Ty9-Yq-C8d"/>
                         <constraint firstAttribute="height" constant="80" id="UzF-fu-BJZ"/>
+                        <constraint firstItem="17U-6d-CrH" firstAttribute="top" secondItem="Olm-HF-NPD" secondAttribute="top" id="de3-PX-Bex"/>
+                        <constraint firstAttribute="bottom" secondItem="17U-6d-CrH" secondAttribute="bottom" id="hIG-Ol-XTe"/>
                         <constraint firstItem="o3m-MX-HhA" firstAttribute="top" secondItem="tRr-vc-XcJ" secondAttribute="bottom" constant="5" id="i0i-zW-0TD"/>
                         <constraint firstAttribute="trailing" secondItem="kC6-hf-hvH" secondAttribute="trailing" constant="15" id="jIJ-Me-xp3"/>
                         <constraint firstItem="tRr-vc-XcJ" firstAttribute="leading" secondItem="kvd-kV-qZz" secondAttribute="trailing" constant="5" id="scH-c5-urz"/>
-                        <constraint firstItem="17U-6d-CrH" firstAttribute="top" secondItem="Olm-HF-NPD" secondAttribute="top" id="uOd-dy-sak"/>
+                        <constraint firstAttribute="trailing" secondItem="17U-6d-CrH" secondAttribute="trailing" id="teG-gS-j8L"/>
                         <constraint firstAttribute="bottom" secondItem="kC6-hf-hvH" secondAttribute="bottom" constant="8" id="wNr-s7-TiT"/>
                     </constraints>
                 </view>
@@ -154,7 +155,7 @@
                 <constraint firstAttribute="trailing" secondItem="Olm-HF-NPD" secondAttribute="trailing" constant="20" id="YBQ-6b-a7J"/>
                 <constraint firstItem="lcW-t2-L9q" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="xi0-Sf-yrm"/>
             </constraints>
-            <point key="canvasLocation" x="315" y="401"/>
+            <point key="canvasLocation" x="314.5" y="400.5"/>
         </view>
     </objects>
     <resources>
