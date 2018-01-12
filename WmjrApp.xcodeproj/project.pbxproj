@@ -422,11 +422,9 @@
 		C51B42891C785247001679B5 /* MessageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C51B42851C785247001679B5 /* MessageViewCell.xib */; };
 		C51B428A1C785247001679B5 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42871C785247001679B5 /* MessageModel.m */; };
 		C51B42931C78528A001679B5 /* DrawalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B428E1C78528A001679B5 /* DrawalViewController.m */; };
-		C51B42941C78528A001679B5 /* DrawalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C51B428F1C78528A001679B5 /* DrawalViewController.xib */; };
 		C51B42951C78528A001679B5 /* ResultShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42911C78528A001679B5 /* ResultShowView.m */; };
 		C51B42961C78528A001679B5 /* ResultShowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C51B42921C78528A001679B5 /* ResultShowView.xib */; };
 		C51B429B1C7852A7001679B5 /* RechargeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42991C7852A7001679B5 /* RechargeViewController.m */; };
-		C51B429C1C7852A7001679B5 /* RechargeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C51B429A1C7852A7001679B5 /* RechargeViewController.xib */; };
 		C51B429F1C7852B4001679B5 /* SmartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B429E1C7852B4001679B5 /* SmartModel.m */; };
 		C51B42AA1C78531F001679B5 /* MyselfManageFinanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42A61C78531F001679B5 /* MyselfManageFinanceController.m */; };
 		C51B42AB1C78531F001679B5 /* TrandDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B42A81C78531F001679B5 /* TrandDetailViewController.m */; };
@@ -1123,13 +1121,11 @@
 		C51B42871C785247001679B5 /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
 		C51B428D1C78528A001679B5 /* DrawalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawalViewController.h; sourceTree = "<group>"; };
 		C51B428E1C78528A001679B5 /* DrawalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawalViewController.m; sourceTree = "<group>"; };
-		C51B428F1C78528A001679B5 /* DrawalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawalViewController.xib; sourceTree = "<group>"; };
 		C51B42901C78528A001679B5 /* ResultShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultShowView.h; sourceTree = "<group>"; };
 		C51B42911C78528A001679B5 /* ResultShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultShowView.m; sourceTree = "<group>"; };
 		C51B42921C78528A001679B5 /* ResultShowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultShowView.xib; sourceTree = "<group>"; };
 		C51B42981C7852A7001679B5 /* RechargeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeViewController.h; sourceTree = "<group>"; };
 		C51B42991C7852A7001679B5 /* RechargeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeViewController.m; sourceTree = "<group>"; };
-		C51B429A1C7852A7001679B5 /* RechargeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RechargeViewController.xib; sourceTree = "<group>"; };
 		C51B429D1C7852B4001679B5 /* SmartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartModel.h; sourceTree = "<group>"; };
 		C51B429E1C7852B4001679B5 /* SmartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmartModel.m; sourceTree = "<group>"; };
 		C51B42A51C78531F001679B5 /* MyselfManageFinanceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyselfManageFinanceController.h; sourceTree = "<group>"; };
@@ -2078,7 +2074,6 @@
 			children = (
 				C51B428D1C78528A001679B5 /* DrawalViewController.h */,
 				C51B428E1C78528A001679B5 /* DrawalViewController.m */,
-				C51B428F1C78528A001679B5 /* DrawalViewController.xib */,
 				C51B42901C78528A001679B5 /* ResultShowView.h */,
 				C51B42911C78528A001679B5 /* ResultShowView.m */,
 				C51B42921C78528A001679B5 /* ResultShowView.xib */,
@@ -2091,7 +2086,6 @@
 			children = (
 				C51B42981C7852A7001679B5 /* RechargeViewController.h */,
 				C51B42991C7852A7001679B5 /* RechargeViewController.m */,
-				C51B429A1C7852A7001679B5 /* RechargeViewController.xib */,
 			);
 			name = recharge;
 			sourceTree = "<group>";
@@ -2883,7 +2877,7 @@
 				TargetAttributes = {
 					C51B41AC1C784B02001679B5 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 28Y6NMPTCR;
+						DevelopmentTeam = E9DZ9T2VGD;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -2968,7 +2962,6 @@
 				C51B41BD1C784B02001679B5 /* Assets.xcassets in Resources */,
 				8B0168541DD00ED7000FA3DE /* fenxiang_icon@3x.png in Resources */,
 				8B0168291DD00ED7000FA3DE /* CCQTGB@2x.png in Resources */,
-				C51B429C1C7852A7001679B5 /* RechargeViewController.xib in Resources */,
 				8B0168B61DD00ED7000FA3DE /* NJCB@3x.png in Resources */,
 				8B01680E1DD00ED6000FA3DE /* BCCB@2x.png in Resources */,
 				8B0168931DD00ED7000FA3DE /* icon_tuijianhdpi1@2x.png in Resources */,
@@ -3220,7 +3213,6 @@
 				8B0168481DD00ED7000FA3DE /* CZB@3x.png in Resources */,
 				8B0168841DD00ED7000FA3DE /* ICBC@2x.png in Resources */,
 				8B0168D81DD00ED7000FA3DE /* SNXS@2x.png in Resources */,
-				C51B42941C78528A001679B5 /* DrawalViewController.xib in Resources */,
 				8B0168BA1DD00ED7000FA3DE /* placeholder@2x.png in Resources */,
 				8B0168661DD00ED7000FA3DE /* gouxuan_xuanzhong@3x.png in Resources */,
 				8B0168F61DD00ED7000FA3DE /* white_mid.png in Resources */,
@@ -3664,10 +3656,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 28Y6NMPTCR;
+				DEVELOPMENT_TEAM = E9DZ9T2VGD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK",
@@ -3685,10 +3677,10 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApppp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "37a7c057-02a0-4431-8542-641a46a93785";
-				PROVISIONING_PROFILE_SPECIFIER = wangmadevelop;
+				PROVISIONING_PROFILE = "37f00304-7f9d-48be-860f-710a96510753";
+				PROVISIONING_PROFILE_SPECIFIER = wangmainhouse;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Debug;
@@ -3699,10 +3691,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 28Y6NMPTCR;
+				DEVELOPMENT_TEAM = E9DZ9T2VGD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK",
@@ -3720,10 +3712,10 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApppp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "37a7c057-02a0-4431-8542-641a46a93785";
-				PROVISIONING_PROFILE_SPECIFIER = wangmadevelop;
+				PROVISIONING_PROFILE = "37f00304-7f9d-48be-860f-710a96510753";
+				PROVISIONING_PROFILE_SPECIFIER = wangmainhouse;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Release;
