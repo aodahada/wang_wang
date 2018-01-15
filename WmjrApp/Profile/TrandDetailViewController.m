@@ -7,6 +7,7 @@
 //
 
 #import "TrandDetailViewController.h"
+#import "AgViewController.h"
 
 @interface TrandDetailViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -58,9 +59,9 @@
 #pragma mark - uitableview -
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([self.redpacket isEqualToString:@"0"]) {
-        return 6;
-    } else {
         return 7;
+    } else {
+        return 8;
     }
 }
 
@@ -70,6 +71,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
         cell.detailTextLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     if ([self.redpacket isEqualToString:@"0"]) {
         switch (indexPath.row) {
@@ -139,6 +141,12 @@
                 cell.textLabel.text = @"最后还款日期";
                 cell.detailTextLabel.text = self.expirydate;
                 [cell.detailTextLabel setTextColor:RGBA(255, 100, 5, 1.0)];
+            }
+                break;
+            case 6:
+            {
+                cell.textLabel.text = @"电子合同";
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
                 break;
                 
@@ -227,6 +235,12 @@
                 [cell.detailTextLabel setTextColor:RGBA(255, 100, 5, 1.0)];
             }
                 break;
+            case 7:
+            {
+                cell.textLabel.text = @"电子合同";
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
+                break;
                 
             default:
                 break;
@@ -236,7 +250,6 @@
     cell.textLabel.textColor = TITLE_COLOR;
     cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:15.0f];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
@@ -269,6 +282,36 @@
     }];
     
     return aView;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self.redpacket isEqualToString:@"0"]) {
+        if (indexPath.row == 6) {
+            [self watchHeTongMethod];
+        }
+    } else {
+        if (indexPath.row == 7) {
+            [self watchHeTongMethod];
+        }
+    }
+}
+
+#pragma mark - 电子合同
+- (void)watchHeTongMethod {
+    NetManager *manager = [[NetManager alloc] init];
+    [manager postDataWithUrlActionStr:@"Contract/query" withParamDictionary:@{@"order_id":self.order_id} withBlock:^(id obj) {
+        NSDictionary *dic = obj[@"data"];
+        if ([obj[@"result"] isEqualToString:@"1"]) {
+            NSString *web_url = dic[@"viewpdf_url"];
+            AgViewController *agVC =[[AgViewController alloc] init];
+            agVC.title = @"电子合同";
+            agVC.webUrl = web_url;
+            [self.navigationController pushViewController:agVC animated:YES];
+            [SVProgressHUD dismiss];
+        } else {
+            [SVProgressHUD showErrorWithStatus:dic[@"mes"]];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

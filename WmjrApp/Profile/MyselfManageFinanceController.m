@@ -315,6 +315,7 @@
     FinancialModel *model = _financeArray[indexPath.row];
     /*跳转到产品介绍*/
     TrandDetailViewController *trandDetailVC = [[TrandDetailViewController alloc] init];
+    trandDetailVC.order_id = model.product_id;
     trandDetailVC.nameStr = model.name;
     trandDetailVC.earnToatl = [NSString stringWithFormat:@"%.2f", [model.money floatValue] *[model.returnrate floatValue] / 365 *[model.day intValue]];
     trandDetailVC.totalNum = model.money;
