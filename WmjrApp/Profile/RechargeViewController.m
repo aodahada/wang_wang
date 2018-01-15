@@ -32,6 +32,7 @@
 @property (nonatomic, copy) NSString *bankTail;
 @property (nonatomic, copy) NSString *currentMoney;//当前余额
 @property (nonatomic, strong) UILabel *yueContent;//余额
+@property (nonatomic, copy) NSString *bankMessage;//银行卡信息
 
 
 @end
@@ -91,6 +92,16 @@
     [bankNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(bankView.mas_top).with.offset(RESIZE_UI(15));
         make.left.equalTo(bankImageView.mas_right).with.offset(RESIZE_UI(20));
+    }];
+    
+    UILabel *bankMessLabel = [[UILabel alloc]init];
+    bankMessLabel.text = _bankMessage;
+    bankMessLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+    bankMessLabel.textColor = RGBA(153, 153, 153, 1.0);
+    [bankView addSubview:bankMessLabel];
+    [bankMessLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(bankImageView.mas_bottom);
+        make.left.equalTo(bankNameLabel.mas_left);
     }];
     
     //余额view
@@ -198,6 +209,7 @@
 //                _bankNameLab.text = [NSString stringWithFormat:@"%@尾号%@", bankName, bankTail];
 //                /* 持卡人 */
 //                _holdBankLab.text = _bankInfoArray[3];
+                _bankMessage = dataArray[9];
                 [self getPersonalMoney:NO];
                 
             }
