@@ -17,7 +17,6 @@
                 <outlet property="holdBankLab" destination="o3m-MX-HhA" id="Bdl-W4-Pua"/>
                 <outlet property="unbindBtn" destination="kC6-hf-hvH" id="Tgc-tX-w0g"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outlet property="watchBankDetail" destination="17U-6d-CrH" id="gAZ-Hm-jQN"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -66,10 +65,6 @@
                             <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17U-6d-CrH">
-                            <rect key="frame" x="0.0" y="0.0" width="335" height="80"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kC6-hf-hvH">
                             <rect key="frame" x="243" y="47" width="77" height="25"/>
                             <constraints>
@@ -86,15 +81,11 @@
                         <constraint firstItem="kvd-kV-qZz" firstAttribute="leading" secondItem="Olm-HF-NPD" secondAttribute="leading" constant="15" id="6i4-Wb-bPI"/>
                         <constraint firstItem="o3m-MX-HhA" firstAttribute="leading" secondItem="kvd-kV-qZz" secondAttribute="trailing" constant="5" id="96R-33-2uN"/>
                         <constraint firstItem="tRr-vc-XcJ" firstAttribute="top" secondItem="Olm-HF-NPD" secondAttribute="top" constant="12" id="IfA-Ze-agr"/>
-                        <constraint firstItem="17U-6d-CrH" firstAttribute="leading" secondItem="Olm-HF-NPD" secondAttribute="leading" id="OgL-kx-ke3"/>
                         <constraint firstItem="kvd-kV-qZz" firstAttribute="top" secondItem="Olm-HF-NPD" secondAttribute="top" constant="12" id="Ty9-Yq-C8d"/>
                         <constraint firstAttribute="height" constant="80" id="UzF-fu-BJZ"/>
-                        <constraint firstItem="17U-6d-CrH" firstAttribute="top" secondItem="Olm-HF-NPD" secondAttribute="top" id="de3-PX-Bex"/>
-                        <constraint firstAttribute="bottom" secondItem="17U-6d-CrH" secondAttribute="bottom" id="hIG-Ol-XTe"/>
                         <constraint firstItem="o3m-MX-HhA" firstAttribute="top" secondItem="tRr-vc-XcJ" secondAttribute="bottom" constant="5" id="i0i-zW-0TD"/>
                         <constraint firstAttribute="trailing" secondItem="kC6-hf-hvH" secondAttribute="trailing" constant="15" id="jIJ-Me-xp3"/>
                         <constraint firstItem="tRr-vc-XcJ" firstAttribute="leading" secondItem="kvd-kV-qZz" secondAttribute="trailing" constant="5" id="scH-c5-urz"/>
-                        <constraint firstAttribute="trailing" secondItem="17U-6d-CrH" secondAttribute="trailing" id="teG-gS-j8L"/>
                         <constraint firstAttribute="bottom" secondItem="kC6-hf-hvH" secondAttribute="bottom" constant="8" id="wNr-s7-TiT"/>
                     </constraints>
                 </view>

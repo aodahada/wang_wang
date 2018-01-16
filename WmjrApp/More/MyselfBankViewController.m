@@ -38,7 +38,7 @@
 
 @property (nonatomic, copy) NSString *bankName;//银行名称
 @property (nonatomic, copy) NSString *bankNumberTrail;//银行卡尾号
-@property (weak, nonatomic) IBOutlet UIButton *watchBankDetail;
+@property (strong, nonatomic) UIButton *watchBankDetail;
 
 @property (nonatomic, copy) NSString *bankCardState;//0 审核中，1 成功，2 失败
 
@@ -318,16 +318,41 @@
                     make.left.equalTo(line3.mas_right);
                 }];
                 
+                _watchBankDetail = [[UIButton alloc]init];
+                [_watchBankDetail setBackgroundColor:RGBA(255, 88, 26, 1.0)];
+                [_watchBankDetail setTitle:@"查看详情" forState:UIControlStateNormal];
+                [_watchBankDetail setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                _watchBankDetail.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+                [self.view addSubview:_watchBankDetail];
                 [_watchBankDetail addTarget:self action:@selector(watchBankState) forControlEvents:UIControlEventTouchUpInside];
+                [_watchBankDetail mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.bottom.equalTo(self.view.mas_bottom);
+                    make.left.equalTo(self.view.mas_left);
+                    make.right.equalTo(self.view.mas_right);
+                    make.height.mas_offset(RESIZE_UI(49));
+                }];
             } else if ([_bankCardState isEqualToString:@"1"]) {
                 //审核成功
+                NSLog(@"ww");
                 
             } else if ([_bankCardState isEqualToString:@"2"]) {
                 //审核驳回
                 [_unbindBtn setTitle:@"审核驳回" forState:UIControlStateNormal];
                 [_unbindBtn setTitleColor:RGBA(243, 51, 81, 1.0) forState:UIControlStateNormal];
                 [_unbindBtn addTarget:self action:@selector(doNothingMethod) forControlEvents:UIControlEventTouchUpInside];
+                _watchBankDetail = [[UIButton alloc]init];
+                [_watchBankDetail setBackgroundColor:RGBA(255, 88, 26, 1.0)];
+                [_watchBankDetail setTitle:@"查看详情" forState:UIControlStateNormal];
+                [_watchBankDetail setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                _watchBankDetail.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+                [self.view addSubview:_watchBankDetail];
                 [_watchBankDetail addTarget:self action:@selector(watchBankState) forControlEvents:UIControlEventTouchUpInside];
+                [_watchBankDetail mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.bottom.equalTo(self.view.mas_bottom);
+                    make.left.equalTo(self.view.mas_left);
+                    make.right.equalTo(self.view.mas_right);
+                    make.height.mas_offset(RESIZE_UI(49));
+                }];
             } else {
                 [_unbindBtn setTitle:@"解绑银行卡" forState:UIControlStateNormal];
                 [_unbindBtn addTarget:self action:@selector(unbindAction) forControlEvents:UIControlEventTouchUpInside];

@@ -74,7 +74,7 @@
     _select4 = nil;
 //    _releaseBankModel.status = @"2";
     
-    if ([_releaseBankModel.status isEqualToString:@"2"]) {
+    if ([_releaseBankModel.status isEqualToString:@"2"]||[_releaseBankModel.status isEqualToString:@"0"]) {
         NSArray *cert_frontArray = _releaseBankModel.cert_front;
         NSArray *cert_bgArray = _releaseBankModel.cert_bg;
         if (cert_frontArray.count>0) {
