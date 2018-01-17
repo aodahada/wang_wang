@@ -40,6 +40,14 @@
 @property (nonatomic, copy) NSString *bankNumberTrail;//银行卡尾号
 @property (strong, nonatomic) UIButton *watchBankDetail;
 
+@property (weak, nonatomic) IBOutlet UILabel *bankNormalTipLabel;//银行卡的默认提示信息
+@property (weak, nonatomic) IBOutlet UIView *watchbankview;
+@property (weak, nonatomic) IBOutlet UIImageView *watchbankimage;
+@property (weak, nonatomic) IBOutlet UILabel *watchbanklabel1;
+@property (weak, nonatomic) IBOutlet UILabel *watchbanklabel2;
+@property (weak, nonatomic) IBOutlet UIButton *watchbankbutton;
+
+
 @property (nonatomic, copy) NSString *bankCardState;//0 审核中，1 成功，2 失败
 
 @property (nonatomic, strong) ReleaseBankCardModel *releaseBankCardModel;
@@ -107,6 +115,10 @@
     
     BankDetailViewController *bankDeatailVC = [[BankDetailViewController alloc]init];
     [self.navigationController pushViewController:bankDeatailVC animated:YES];
+    
+//    ReleaseBankCardViewController *releaseBankCardVC = [[ReleaseBankCardViewController alloc]init];
+//    releaseBankCardVC.title = @"解绑银行卡";
+//    [self.navigationController pushViewController:releaseBankCardVC animated:YES];
     
 }
 
@@ -275,6 +287,13 @@
 //            _bankCardState = @"4";
             if ([_bankCardState isEqualToString:@"0"]) {
                 //审核中
+                _bankNormalTipLabel.hidden = YES;
+                _watchbankview.hidden = YES;
+                _watchbankimage.hidden = YES;
+                _watchbanklabel1.hidden = YES;
+                _watchbanklabel2.hidden = YES;
+                _watchbankbutton.hidden = YES;
+                
                 [_unbindBtn setTitle:@"审核中" forState:UIControlStateNormal];
                 [_unbindBtn addTarget:self action:@selector(doNothingMethod) forControlEvents:UIControlEventTouchUpInside];
                 UILabel *line1 = [[UILabel alloc]init];
@@ -283,7 +302,7 @@
                 line1.textColor = RGBA(102, 102, 102, 1.0);
                 [self.view addSubview:line1];
                 [line1 mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(_cardBottomView.mas_bottom).with.offset(RESIZE_UI(50));
+                    make.top.equalTo(_cardBottomView.mas_bottom).with.offset(RESIZE_UI(21));
                     make.centerX.equalTo(self.view.mas_centerX);
                 }];
                 
@@ -337,6 +356,14 @@
                 
             } else if ([_bankCardState isEqualToString:@"2"]) {
                 //审核驳回
+                
+                _bankNormalTipLabel.hidden = YES;
+                _watchbankview.hidden = YES;
+                _watchbankimage.hidden = YES;
+                _watchbanklabel1.hidden = YES;
+                _watchbanklabel2.hidden = YES;
+                _watchbankbutton.hidden = YES;
+                
                 [_unbindBtn setTitle:@"审核驳回" forState:UIControlStateNormal];
                 [_unbindBtn setTitleColor:RGBA(243, 51, 81, 1.0) forState:UIControlStateNormal];
                 [_unbindBtn addTarget:self action:@selector(doNothingMethod) forControlEvents:UIControlEventTouchUpInside];

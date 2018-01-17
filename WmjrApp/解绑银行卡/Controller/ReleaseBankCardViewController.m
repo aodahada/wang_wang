@@ -14,6 +14,7 @@
 #import "ConfirmReleaseCardView.h"
 #import "ReleaseSuccessCardView.h"
 #import "ReleaseBankCardModel.h"
+#import "ApplySuccessCardView.h"
 
 #define defaultInputColor RGBA(60, 60, 60, 1.0)
 
@@ -246,6 +247,13 @@
             
         }
         
+    } else {
+        [row1View mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(mainView.mas_top);
+            make.left.equalTo(mainView.mas_left);
+            make.right.equalTo(mainView.mas_right);
+            make.height.mas_offset(RESIZE_UI(60));
+        }];
     }
     
     UILabel *label1 = [[UILabel alloc]init];
@@ -981,10 +989,17 @@
         if (obj) {
             
             [SVProgressHUD dismiss];
-//            [[SingletonManager sharedManager] showHUDView:self.view title:@"提交成功" content:@"" time:1.0 andCodes:^{
-//                [self.navigationController popToRootViewControllerAnimated:YES];
-//            }];
-            [self successTipWindow];
+            
+            
+            ApplySuccessCardView *applySuccessView = [[ApplySuccessCardView alloc]init];
+            applySuccessView.releaseSuccess = ^() {
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            };
+            [self.view addSubview:applySuccessView];
+            [applySuccessView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(self.view);
+            }];
+//            [self successTipWindow];
             
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

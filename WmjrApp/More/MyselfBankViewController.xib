@@ -13,10 +13,16 @@
             <connections>
                 <outlet property="bankNameImg" destination="kvd-kV-qZz" id="Sug-aL-OZw"/>
                 <outlet property="bankNameLab" destination="tRr-vc-XcJ" id="Inu-tI-tzo"/>
+                <outlet property="bankNormalTipLabel" destination="FCR-vn-h0F" id="bZn-Ee-pfr"/>
                 <outlet property="cardBottomView" destination="Olm-HF-NPD" id="lR7-cb-ggm"/>
                 <outlet property="holdBankLab" destination="o3m-MX-HhA" id="Bdl-W4-Pua"/>
                 <outlet property="unbindBtn" destination="kC6-hf-hvH" id="Tgc-tX-w0g"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="watchbankbutton" destination="dYd-RC-G7X" id="9Gu-e8-vEE"/>
+                <outlet property="watchbankimage" destination="wWl-3H-090" id="G39-xb-5i3"/>
+                <outlet property="watchbanklabel1" destination="hN4-pG-jgH" id="yrl-Lf-d9C"/>
+                <outlet property="watchbanklabel2" destination="C2S-kd-Oh7" id="gbm-sf-KLc"/>
+                <outlet property="watchbankview" destination="lcW-t2-L9q" id="OD0-GG-7AL"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
