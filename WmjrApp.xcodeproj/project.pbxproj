@@ -67,6 +67,7 @@
 		64CDE1031F987A21007F9449 /* ScoreRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE1021F987A21007F9449 /* ScoreRecordCell.m */; };
 		64CDE1061F987DD3007F9449 /* ScoreModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CDE1051F987DD3007F9449 /* ScoreModel.m */; };
 		64D25A4F200F406900550AEB /* ApplySuccessCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D25A4E200F406900550AEB /* ApplySuccessCardView.m */; };
+		64D25A582010AB4A00550AEB /* ReleaseBankCardViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D25A572010AB4A00550AEB /* ReleaseBankCardViewController2.m */; };
 		64DA5F511EFFFD5200CB10B1 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 64DA5F501EFFFD5200CB10B1 /* libc++.tbd */; };
 		64FF9F2B1FE2A890007B635C /* PrizeRecordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64FF9F2A1FE2A890007B635C /* PrizeRecordView.m */; };
 		64FF9F2E1FE2B17A007B635C /* PrizeRecordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64FF9F2D1FE2B17A007B635C /* PrizeRecordTableViewCell.m */; };
@@ -676,6 +677,8 @@
 		64CDE1051F987DD3007F9449 /* ScoreModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScoreModel.m; sourceTree = "<group>"; };
 		64D25A4D200F406900550AEB /* ApplySuccessCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplySuccessCardView.h; sourceTree = "<group>"; };
 		64D25A4E200F406900550AEB /* ApplySuccessCardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplySuccessCardView.m; sourceTree = "<group>"; };
+		64D25A562010AB4A00550AEB /* ReleaseBankCardViewController2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReleaseBankCardViewController2.h; sourceTree = "<group>"; };
+		64D25A572010AB4A00550AEB /* ReleaseBankCardViewController2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseBankCardViewController2.m; sourceTree = "<group>"; };
 		64DA5F501EFFFD5200CB10B1 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		64FF9F291FE2A890007B635C /* PrizeRecordView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrizeRecordView.h; sourceTree = "<group>"; };
 		64FF9F2A1FE2A890007B635C /* PrizeRecordView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrizeRecordView.m; sourceTree = "<group>"; };
@@ -1406,6 +1409,8 @@
 			children = (
 				64880FE91FC569530011A1D3 /* ReleaseBankCardViewController.h */,
 				64880FEA1FC569530011A1D3 /* ReleaseBankCardViewController.m */,
+				64D25A562010AB4A00550AEB /* ReleaseBankCardViewController2.h */,
+				64D25A572010AB4A00550AEB /* ReleaseBankCardViewController2.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3523,6 +3528,7 @@
 				6412EF101FF2277100BCAAC2 /* ReleaseCardDirectlyView.m in Sources */,
 				6463275A1FE25AC800FA6A28 /* LotteryModel.m in Sources */,
 				C5D3CE3A1C9808DF00C8B919 /* ShowBigImageView.m in Sources */,
+				64D25A582010AB4A00550AEB /* ReleaseBankCardViewController2.m in Sources */,
 				C51B42B31C78532E001679B5 /* FinancialModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

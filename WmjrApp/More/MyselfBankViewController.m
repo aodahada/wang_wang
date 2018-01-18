@@ -284,7 +284,8 @@
             
             _releaseBankCardModel = [ReleaseBankCardModel mj_objectWithKeyValues:data];
             _bankCardState = _releaseBankCardModel.status;
-//            _bankCardState = @"4";
+//            _bankCardState = @"2";
+//            _releaseBankCardModel.status = @"2";
             if ([_bankCardState isEqualToString:@"0"]) {
                 //审核中
                 _bankNormalTipLabel.hidden = YES;

@@ -1,12 +1,12 @@
 //
-//  ReleaseBankCardViewController.m
+//  ReleaseBankCardViewController2.m
 //  WmjrApp
 //
-//  Created by 霍锐 on 2017/11/22.
-//  Copyright © 2017年 Baimifan. All rights reserved.
+//  Created by 霍锐 on 2018/1/18.
+//  Copyright © 2018年 Baimifan. All rights reserved.
 //
 
-#import "ReleaseBankCardViewController.h"
+#import "ReleaseBankCardViewController2.h"
 #import "ZLPhotoActionSheet.h"
 #import "ZLPhotoConfiguration.h"
 #import "ZHPickView.h"
@@ -15,11 +15,10 @@
 #import "ReleaseSuccessCardView.h"
 #import "ReleaseBankCardModel.h"
 #import "ApplySuccessCardView.h"
-#import "ReleaseBankCardViewController2.h"
 
 #define defaultInputColor RGBA(60, 60, 60, 1.0)
 
-@interface ReleaseBankCardViewController ()<UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UITextFieldDelegate>
+@interface ReleaseBankCardViewController2 ()<UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic, strong)UITextField *inputName;
 @property (nonatomic, strong)UITextField *inputPhone;
@@ -56,7 +55,7 @@
 
 @end
 
-@implementation ReleaseBankCardViewController
+@implementation ReleaseBankCardViewController2
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -93,11 +92,11 @@
         }
     }
     
-    if ([_releaseBankModel.status isEqualToString:@"2"]) {
-        UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"重新申请" style:UIBarButtonItemStylePlain target:self action:@selector(writeZiLiaoMethod)];
-        [rightBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:RESIZE_UI(15)], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
-        self.navigationItem.rightBarButtonItem = rightBarButtonItem;
-    }
+//    if ([_releaseBankModel.status isEqualToString:@"2"]) {
+//        UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"重新申请" style:UIBarButtonItemStylePlain target:self action:@selector(confirmSubmit)];
+//        [rightBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:RESIZE_UI(15)], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
+//        self.navigationItem.rightBarButtonItem = rightBarButtonItem;
+//    }
     
     [self setUpLayOut];
 }
@@ -107,13 +106,6 @@
     [MobClick endLogPageView:@"ReleaseBankCardViewController"];
 }
 
-#pragma mark - 跳转到填写资料界面
-- (void)writeZiLiaoMethod {
-    ReleaseBankCardViewController2 *releaseBankCardVC2 = [[ReleaseBankCardViewController2 alloc]init];
-    releaseBankCardVC2.releaseBankModel = _releaseBankModel;
-    [self.navigationController pushViewController:releaseBankCardVC2 animated:YES];
-}
-
 #pragma mark - 界面布局
 - (void)setUpLayOut {
     
@@ -121,7 +113,7 @@
     mainScrollView.backgroundColor = RGBA(240, 241, 243, 1.0);
     [self.view addSubview:mainScrollView];
     
-    if (![_releaseBankModel.status isEqualToString:@"0"] && ![_releaseBankModel.status isEqualToString:@"2"]) {
+    if (true) {
         UIButton *nextStepButton = [[UIButton alloc]init];
         [nextStepButton setTitle:@"提交申请" forState:UIControlStateNormal];
         [nextStepButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -160,7 +152,7 @@
     row1View.backgroundColor = [UIColor whiteColor];
     [mainView addSubview:row1View];
     
-    if ([_releaseBankModel.status isEqualToString:@"0"] || [_releaseBankModel.status isEqualToString:@"2"]) {
+    if (false) {
         UIView *currentStateView = [[UIView alloc]init];
         currentStateView.backgroundColor = RGBA(237, 244, 247, 1.0);
         [mainView addSubview:currentStateView];
@@ -235,6 +227,7 @@
             
             UITextView *textViewCheckResult = [[UITextView alloc]init];
             textViewCheckResult.text = _releaseBankModel.audit;
+            //            textViewCheckResult.text = @"您的银行卡卡今年对方那里看见女款链接安.";
             textViewCheckResult.textColor = RGBA(243, 39, 68, 1.0);
             textViewCheckResult.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
             [checkResultContentView addSubview:textViewCheckResult];
@@ -284,7 +277,7 @@
         if ([_releaseBankModel.status isEqualToString:@"0"]) {
             _inputName.userInteractionEnabled = NO;
         } else {
-            _inputName.userInteractionEnabled = NO;
+            _inputName.userInteractionEnabled = YES;
         }
     }
     [row1View addSubview:_inputName];
@@ -328,7 +321,7 @@
         if ([_releaseBankModel.status isEqualToString:@"0"]) {
             _inputPhone.userInteractionEnabled = NO;
         } else {
-            _inputPhone.userInteractionEnabled = NO;
+            _inputPhone.userInteractionEnabled = YES;
         }
     }
     [row1PriView addSubview:_inputPhone];
@@ -371,7 +364,7 @@
         if ([_releaseBankModel.status isEqualToString:@"0"]) {
             _inputIdCard.userInteractionEnabled = NO;
         } else {
-            _inputIdCard.userInteractionEnabled = NO;
+            _inputIdCard.userInteractionEnabled = YES;
         }
     }
     [row2View addSubview:_inputIdCard];
@@ -463,7 +456,7 @@
         if ([_releaseBankModel.status isEqualToString:@"0"]) {
             _inputBankCard.userInteractionEnabled = NO;
         } else {
-            _inputBankCard.userInteractionEnabled = NO;
+            _inputBankCard.userInteractionEnabled = YES;
         }
     }
     [row3View addSubview:_inputBankCard];
@@ -525,7 +518,7 @@
     } else {
         [_idCardButton1 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
     }
-    if (![_releaseBankModel.status isEqualToString:@"0"] && ![_releaseBankModel.status isEqualToString:@"2"]) {
+    if (![_releaseBankModel.status isEqualToString:@"0"]) {
         [_idCardButton1 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
     }
     [row4View addSubview:_idCardButton1];
@@ -543,7 +536,7 @@
     } else {
         [_idCardButton2 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
     }
-    if (![_releaseBankModel.status isEqualToString:@"0"] && ![_releaseBankModel.status isEqualToString:@"2"]) {
+    if (![_releaseBankModel.status isEqualToString:@"0"]) {
         [_idCardButton2 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
     }
     [row4View addSubview:_idCardButton2];
@@ -604,7 +597,7 @@
     } else {
         [_bankCardButton1 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
     }
-    if (![_releaseBankModel.status isEqualToString:@"0"] && ![_releaseBankModel.status isEqualToString:@"2"]) {
+    if (![_releaseBankModel.status isEqualToString:@"0"]) {
         [_bankCardButton1 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
     }
     [row5View addSubview:_bankCardButton1];
@@ -622,7 +615,7 @@
     } else {
         [_bankCardButton2 setBackgroundImage:[UIImage imageNamed:@"addpic"] forState:UIControlStateNormal];
     }
-    if (![_releaseBankModel.status isEqualToString:@"0"] && ![_releaseBankModel.status isEqualToString:@"2"]) {
+    if (![_releaseBankModel.status isEqualToString:@"0"]) {
         [_bankCardButton2 addTarget:self action:@selector(selectHeadImageMethod:) forControlEvents:UIControlEventTouchUpInside];
     }
     [row5View addSubview:_bankCardButton2];
@@ -633,44 +626,44 @@
     }];
     
     
-    //    if ([_releaseBankModel.status isEqualToString:@"2"]) {
-    //        _idCardDeleteButton1 = [[UIButton alloc]init];
-    //        _idCardDeleteButton1.tag = 1;
-    //        [_idCardDeleteButton1 setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
-    //        [_idCardDeleteButton1 addTarget:self action:@selector(deleteSelectImage:) forControlEvents:UIControlEventTouchUpInside];
-    //        [_idCardButton1 addSubview:_idCardDeleteButton1];
-    //        [_idCardDeleteButton1 mas_makeConstraints:^(MASConstraintMaker *make) {
-    //            make.edges.equalTo(_idCardButton1);
-    //        }];
-    //
-    //        _idCardDeleteButton2 = [[UIButton alloc]init];
-    //        _idCardDeleteButton2.tag = 2;
-    //        [_idCardDeleteButton2 setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
-    //        [_idCardDeleteButton2 addTarget:self action:@selector(deleteSelectImage:) forControlEvents:UIControlEventTouchUpInside];
-    //        [_idCardButton2 addSubview:_idCardDeleteButton2];
-    //        [_idCardDeleteButton2 mas_makeConstraints:^(MASConstraintMaker *make) {
-    //            make.edges.equalTo(_idCardButton2);
-    //        }];
-    //
-    //        _bankCardDeleteButton1 = [[UIButton alloc]init];
-    //        _bankCardDeleteButton1.tag = 3;
-    //        [_bankCardDeleteButton1 setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
-    //        [_bankCardDeleteButton1 addTarget:self action:@selector(deleteSelectImage:) forControlEvents:UIControlEventTouchUpInside];
-    //        [_bankCardButton1 addSubview:_bankCardDeleteButton1];
-    //        [_bankCardDeleteButton1 mas_makeConstraints:^(MASConstraintMaker *make) {
-    //            make.edges.equalTo(_bankCardButton1);
-    //        }];
-    //
-    //        _bankCardDeleteButton2 = [[UIButton alloc]init];
-    //        _bankCardDeleteButton2.tag = 4;
-    //        [_bankCardDeleteButton2 setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
-    //        [_bankCardDeleteButton2 addTarget:self action:@selector(deleteSelectImage:) forControlEvents:UIControlEventTouchUpInside];
-    //        [_bankCardButton2 addSubview:_bankCardDeleteButton2];
-    //        [_bankCardDeleteButton2 mas_makeConstraints:^(MASConstraintMaker *make) {
-    //            make.edges.equalTo(_bankCardButton2);
-    //        }];
-    //
-    //    }
+    if ([_releaseBankModel.status isEqualToString:@"2"]) {
+        _idCardDeleteButton1 = [[UIButton alloc]init];
+        _idCardDeleteButton1.tag = 1;
+        [_idCardDeleteButton1 setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
+        [_idCardDeleteButton1 addTarget:self action:@selector(deleteSelectImage:) forControlEvents:UIControlEventTouchUpInside];
+        [_idCardButton1 addSubview:_idCardDeleteButton1];
+        [_idCardDeleteButton1 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(_idCardButton1);
+        }];
+        
+        _idCardDeleteButton2 = [[UIButton alloc]init];
+        _idCardDeleteButton2.tag = 2;
+        [_idCardDeleteButton2 setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
+        [_idCardDeleteButton2 addTarget:self action:@selector(deleteSelectImage:) forControlEvents:UIControlEventTouchUpInside];
+        [_idCardButton2 addSubview:_idCardDeleteButton2];
+        [_idCardDeleteButton2 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(_idCardButton2);
+        }];
+        
+        _bankCardDeleteButton1 = [[UIButton alloc]init];
+        _bankCardDeleteButton1.tag = 3;
+        [_bankCardDeleteButton1 setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
+        [_bankCardDeleteButton1 addTarget:self action:@selector(deleteSelectImage:) forControlEvents:UIControlEventTouchUpInside];
+        [_bankCardButton1 addSubview:_bankCardDeleteButton1];
+        [_bankCardDeleteButton1 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(_bankCardButton1);
+        }];
+        
+        _bankCardDeleteButton2 = [[UIButton alloc]init];
+        _bankCardDeleteButton2.tag = 4;
+        [_bankCardDeleteButton2 setImage:[UIImage imageNamed:@"icon_del"] forState:UIControlStateNormal];
+        [_bankCardDeleteButton2 addTarget:self action:@selector(deleteSelectImage:) forControlEvents:UIControlEventTouchUpInside];
+        [_bankCardButton2 addSubview:_bankCardDeleteButton2];
+        [_bankCardDeleteButton2 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(_bankCardButton2);
+        }];
+        
+    }
     
     
     [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1149,5 +1142,4 @@
  */
 
 @end
-
 
