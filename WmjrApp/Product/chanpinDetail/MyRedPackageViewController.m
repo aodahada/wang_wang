@@ -13,10 +13,15 @@
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "AgViewController.h"
 #import "MyRedUnactivePackageTableViewCell.h"
+#import "MyReadyMoneyRedBallTableViewCell.h"
+#import "ActiveSuccessView.h"
+#import "MyReadyMoneyUnActiveTableViewCell.h"
 
-@interface MyRedPackageViewController ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+@interface MyRedPackageViewController ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,ActiveResponseDelegate>
 
 @property (nonatomic, strong)NSMutableArray *redPackageArray;
+
+@property (nonatomic, strong) UIWindow *window;
 
 @end
 
@@ -35,6 +40,8 @@
         [rightButton addTarget:self action:@selector(jumpToUseGuide) forControlEvents:UIControlEventTouchUpInside];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"使用说明" style:UIBarButtonItemStylePlain target:self action:@selector(jumpToUseGuide)];
+    
+    self.window = [[UIApplication sharedApplication].delegate window];
     
     [self getDataMethod];
     
@@ -58,7 +65,7 @@
 - (void)getDataMethod {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"Redpacket/my" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"status":@"2"} withBlock:^(id obj) {
+    [manager postDataWithUrlActionStr:@"Redpacket/lists" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"status":@"2"} withBlock:^(id obj) {
         _redPackageArray = [[NSMutableArray alloc]init];
         if (obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
@@ -125,7 +132,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     RedPackageModel *redModel = _redPackageArray[indexPath.section];
     if ([redModel.status isEqualToString:@"4"]) {
-        return RESIZE_UI(162);
+        if ([redModel.redpacket_type isEqualToString:@"3"]) {
+            return RESIZE_UI(177);
+        } else {
+            return RESIZE_UI(162);
+        }
     } else {
         return RESIZE_UI(130);
     }
@@ -143,14 +154,35 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     RedPackageModel *redPackageModel = _redPackageArray[indexPath.section];
-    if ([redPackageModel.status isEqualToString:@"4"]) {
-        MyRedUnactivePackageTableViewCell *cell = [[MyRedUnactivePackageTableViewCell alloc]initWithModel:redPackageModel andIsOut:NO];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
+    if ([redPackageModel.redpacket_type isEqualToString:@"3"]) {
+        if ([redPackageModel.status isEqualToString:@"4"]) {
+            MyReadyMoneyUnActiveTableViewCell *cell = [[MyReadyMoneyUnActiveTableViewCell alloc]initWithRedPackageModel:redPackageModel];
+            return cell;
+        } else {
+            MyReadyMoneyRedBallTableViewCell *cell = [[MyReadyMoneyRedBallTableViewCell alloc]initWithRedPackageModel:redPackageModel];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            @weakify(self)
+            cell.jihuoSuccess = ^(){
+                @strongify(self)
+                ActiveSuccessView *activeView = [[ActiveSuccessView alloc]init];
+                activeView.delegate = self;
+                [self.view addSubview:activeView];
+                [activeView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.edges.equalTo(self.view);
+                }];
+            };
+            return cell;
+        }
     } else {
-        MyRedPackageTableViewCell *cell = [[MyRedPackageTableViewCell alloc]initWithModel:redPackageModel andIsOut:NO];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
+        if ([redPackageModel.status isEqualToString:@"4"]) {
+            MyRedUnactivePackageTableViewCell *cell = [[MyRedUnactivePackageTableViewCell alloc]initWithModel:redPackageModel andIsOut:NO];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        } else {
+            MyRedPackageTableViewCell *cell = [[MyRedPackageTableViewCell alloc]initWithModel:redPackageModel andIsOut:NO];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }
     }
     
 }
@@ -167,6 +199,11 @@
 - (void)watchUnuseRed {
     MyUnuseRedPackageViewController *myUnuseVC = [[MyUnuseRedPackageViewController alloc]init];
     [self.navigationController pushViewController:myUnuseVC animated:YES];
+}
+
+#pragma mark - 激活成功代理方法
+- (void)backToRoot {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - DZNEmptyDataSetDelegate

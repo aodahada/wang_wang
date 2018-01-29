@@ -16,6 +16,7 @@
 #import "JPUSHService.h"
 #import "AliGesturePasswordViewController.h"
 #import "UserInfoModel.h"
+#import "GetContactPersonList.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 

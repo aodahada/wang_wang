@@ -9,10 +9,24 @@
 /* Begin PBXBuildFile section */
 		6412EF101FF2277100BCAAC2 /* ReleaseCardDirectlyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6412EF0F1FF2277100BCAAC2 /* ReleaseCardDirectlyView.m */; };
 		6412EF131FF229F200BCAAC2 /* ReleaseCardApplyforView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6412EF121FF229F200BCAAC2 /* ReleaseCardApplyforView.m */; };
+		64235736201887E700F2E799 /* CaiYouCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64235735201887E700F2E799 /* CaiYouCircleViewController.m */; };
 		64259EC81FFC847000611ED9 /* ConfirmReleaseCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64259EC71FFC847000611ED9 /* ConfirmReleaseCardView.m */; };
 		64259ECB1FFCC1FB00611ED9 /* ReleaseSuccessCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64259ECA1FFCC1FB00611ED9 /* ReleaseSuccessCardView.m */; };
 		64259ED720021DDA00611ED9 /* ReleaseBankCardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64259ED620021DDA00611ED9 /* ReleaseBankCardModel.m */; };
 		6425D3D61F16450900D61F87 /* NSArray+HRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 6425D3D51F16450900D61F87 /* NSArray+HRUtil.m */; };
+		642EF75B201DD1FB00031AE0 /* GetContactPersonList.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF75A201DD1FB00031AE0 /* GetContactPersonList.m */; };
+		642EF75E201E010700031AE0 /* AssetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF75D201E010700031AE0 /* AssetModel.m */; };
+		642EF761201E111F00031AE0 /* InvestCaiYouViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF760201E111F00031AE0 /* InvestCaiYouViewController.m */; };
+		642EF764201E174C00031AE0 /* CaiYouTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF763201E174C00031AE0 /* CaiYouTableViewCell.m */; };
+		642EF767201E206800031AE0 /* SortCaiYouViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF766201E206800031AE0 /* SortCaiYouViewController.m */; };
+		642EF76A201E2A6700031AE0 /* SortCaiYouTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF769201E2A6700031AE0 /* SortCaiYouTableViewCell.m */; };
+		642EF76D201EE30100031AE0 /* CalculateShouYiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF76C201EE30100031AE0 /* CalculateShouYiView.m */; };
+		642EF770201EF6E300031AE0 /* MyReadyMoneyRedBallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF76F201EF6E300031AE0 /* MyReadyMoneyRedBallTableViewCell.m */; };
+		642EF773201F09F300031AE0 /* ActiveSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF772201F09F300031AE0 /* ActiveSuccessView.m */; };
+		642EF776201F145600031AE0 /* MyReadyMoneyUnActiveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF775201F145600031AE0 /* MyReadyMoneyUnActiveTableViewCell.m */; };
+		642EF779201F27E700031AE0 /* NewYearActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF778201F27E700031AE0 /* NewYearActivityViewController.m */; };
+		642EF77C201F303B00031AE0 /* NewYearActivityViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF77B201F303B00031AE0 /* NewYearActivityViewController2.m */; };
+		642EF77F201F304500031AE0 /* NewYearActivityViewController3.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF77E201F304500031AE0 /* NewYearActivityViewController3.m */; };
 		6431A4AC1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6431A4AB1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m */; };
 		64538A4A1FE4FB1800BC1F3F /* JiaXiActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64538A491FE4FB1800BC1F3F /* JiaXiActivityViewController.m */; };
 		6458892B1F457A8000E69574 /* UIAlertView+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 6458892A1F457A8000E69574 /* UIAlertView+Block.m */; };
@@ -562,6 +576,8 @@
 		6412EF0F1FF2277100BCAAC2 /* ReleaseCardDirectlyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseCardDirectlyView.m; sourceTree = "<group>"; };
 		6412EF111FF229F200BCAAC2 /* ReleaseCardApplyforView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReleaseCardApplyforView.h; sourceTree = "<group>"; };
 		6412EF121FF229F200BCAAC2 /* ReleaseCardApplyforView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseCardApplyforView.m; sourceTree = "<group>"; };
+		64235734201887E700F2E799 /* CaiYouCircleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaiYouCircleViewController.h; sourceTree = "<group>"; };
+		64235735201887E700F2E799 /* CaiYouCircleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaiYouCircleViewController.m; sourceTree = "<group>"; };
 		64259EC61FFC847000611ED9 /* ConfirmReleaseCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfirmReleaseCardView.h; sourceTree = "<group>"; };
 		64259EC71FFC847000611ED9 /* ConfirmReleaseCardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmReleaseCardView.m; sourceTree = "<group>"; };
 		64259EC91FFCC1FB00611ED9 /* ReleaseSuccessCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReleaseSuccessCardView.h; sourceTree = "<group>"; };
@@ -570,6 +586,32 @@
 		64259ED620021DDA00611ED9 /* ReleaseBankCardModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseBankCardModel.m; sourceTree = "<group>"; };
 		6425D3D41F16450900D61F87 /* NSArray+HRUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+HRUtil.h"; path = "Category/NSArray+HRUtil.h"; sourceTree = "<group>"; };
 		6425D3D51F16450900D61F87 /* NSArray+HRUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+HRUtil.m"; path = "Category/NSArray+HRUtil.m"; sourceTree = "<group>"; };
+		642EF759201DD1FB00031AE0 /* GetContactPersonList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetContactPersonList.h; sourceTree = "<group>"; };
+		642EF75A201DD1FB00031AE0 /* GetContactPersonList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetContactPersonList.m; sourceTree = "<group>"; };
+		642EF75C201E010700031AE0 /* AssetModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetModel.h; sourceTree = "<group>"; };
+		642EF75D201E010700031AE0 /* AssetModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetModel.m; sourceTree = "<group>"; };
+		642EF75F201E111F00031AE0 /* InvestCaiYouViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InvestCaiYouViewController.h; sourceTree = "<group>"; };
+		642EF760201E111F00031AE0 /* InvestCaiYouViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InvestCaiYouViewController.m; sourceTree = "<group>"; };
+		642EF762201E174C00031AE0 /* CaiYouTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaiYouTableViewCell.h; sourceTree = "<group>"; };
+		642EF763201E174C00031AE0 /* CaiYouTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaiYouTableViewCell.m; sourceTree = "<group>"; };
+		642EF765201E206800031AE0 /* SortCaiYouViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SortCaiYouViewController.h; sourceTree = "<group>"; };
+		642EF766201E206800031AE0 /* SortCaiYouViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SortCaiYouViewController.m; sourceTree = "<group>"; };
+		642EF768201E2A6700031AE0 /* SortCaiYouTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SortCaiYouTableViewCell.h; sourceTree = "<group>"; };
+		642EF769201E2A6700031AE0 /* SortCaiYouTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SortCaiYouTableViewCell.m; sourceTree = "<group>"; };
+		642EF76B201EE30100031AE0 /* CalculateShouYiView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculateShouYiView.h; sourceTree = "<group>"; };
+		642EF76C201EE30100031AE0 /* CalculateShouYiView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculateShouYiView.m; sourceTree = "<group>"; };
+		642EF76E201EF6E300031AE0 /* MyReadyMoneyRedBallTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyReadyMoneyRedBallTableViewCell.h; sourceTree = "<group>"; };
+		642EF76F201EF6E300031AE0 /* MyReadyMoneyRedBallTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyReadyMoneyRedBallTableViewCell.m; sourceTree = "<group>"; };
+		642EF771201F09F300031AE0 /* ActiveSuccessView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActiveSuccessView.h; sourceTree = "<group>"; };
+		642EF772201F09F300031AE0 /* ActiveSuccessView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActiveSuccessView.m; sourceTree = "<group>"; };
+		642EF774201F145600031AE0 /* MyReadyMoneyUnActiveTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyReadyMoneyUnActiveTableViewCell.h; sourceTree = "<group>"; };
+		642EF775201F145600031AE0 /* MyReadyMoneyUnActiveTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyReadyMoneyUnActiveTableViewCell.m; sourceTree = "<group>"; };
+		642EF777201F27E700031AE0 /* NewYearActivityViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewYearActivityViewController.h; sourceTree = "<group>"; };
+		642EF778201F27E700031AE0 /* NewYearActivityViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewYearActivityViewController.m; sourceTree = "<group>"; };
+		642EF77A201F303B00031AE0 /* NewYearActivityViewController2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewYearActivityViewController2.h; sourceTree = "<group>"; };
+		642EF77B201F303B00031AE0 /* NewYearActivityViewController2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewYearActivityViewController2.m; sourceTree = "<group>"; };
+		642EF77D201F304500031AE0 /* NewYearActivityViewController3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewYearActivityViewController3.h; sourceTree = "<group>"; };
+		642EF77E201F304500031AE0 /* NewYearActivityViewController3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewYearActivityViewController3.m; sourceTree = "<group>"; };
 		6431A4AA1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPackageTableViewCellTwo.h; sourceTree = "<group>"; };
 		6431A4AB1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRedPackageTableViewCellTwo.m; sourceTree = "<group>"; };
 		64538A481FE4FB1800BC1F3F /* JiaXiActivityViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JiaXiActivityViewController.h; sourceTree = "<group>"; };
@@ -1424,6 +1466,59 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		642357302018879A00F2E799 /* 财友圈 */ = {
+			isa = PBXGroup;
+			children = (
+				64235731201887C700F2E799 /* Controller */,
+				64235732201887C700F2E799 /* Model */,
+				64235733201887C700F2E799 /* View */,
+			);
+			path = "财友圈";
+			sourceTree = "<group>";
+		};
+		64235731201887C700F2E799 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				64235734201887E700F2E799 /* CaiYouCircleViewController.h */,
+				64235735201887E700F2E799 /* CaiYouCircleViewController.m */,
+				642EF75F201E111F00031AE0 /* InvestCaiYouViewController.h */,
+				642EF760201E111F00031AE0 /* InvestCaiYouViewController.m */,
+				642EF765201E206800031AE0 /* SortCaiYouViewController.h */,
+				642EF766201E206800031AE0 /* SortCaiYouViewController.m */,
+				642EF777201F27E700031AE0 /* NewYearActivityViewController.h */,
+				642EF778201F27E700031AE0 /* NewYearActivityViewController.m */,
+				642EF77A201F303B00031AE0 /* NewYearActivityViewController2.h */,
+				642EF77B201F303B00031AE0 /* NewYearActivityViewController2.m */,
+				642EF77D201F304500031AE0 /* NewYearActivityViewController3.h */,
+				642EF77E201F304500031AE0 /* NewYearActivityViewController3.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		64235732201887C700F2E799 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				642EF759201DD1FB00031AE0 /* GetContactPersonList.h */,
+				642EF75A201DD1FB00031AE0 /* GetContactPersonList.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		64235733201887C700F2E799 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				642EF768201E2A6700031AE0 /* SortCaiYouTableViewCell.h */,
+				642EF769201E2A6700031AE0 /* SortCaiYouTableViewCell.m */,
+				642EF762201E174C00031AE0 /* CaiYouTableViewCell.h */,
+				642EF763201E174C00031AE0 /* CaiYouTableViewCell.m */,
+				642EF76B201EE30100031AE0 /* CalculateShouYiView.h */,
+				642EF76C201EE30100031AE0 /* CalculateShouYiView.m */,
+				642EF771201F09F300031AE0 /* ActiveSuccessView.h */,
+				642EF772201F09F300031AE0 /* ActiveSuccessView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		6425D3C81F163FD000D61F87 /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -1697,6 +1792,10 @@
 				64755F481FA89F5E00272935 /* MyRedUnactivePackageTableViewCell.m */,
 				6431A4AA1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.h */,
 				6431A4AB1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m */,
+				642EF76E201EF6E300031AE0 /* MyReadyMoneyRedBallTableViewCell.h */,
+				642EF76F201EF6E300031AE0 /* MyReadyMoneyRedBallTableViewCell.m */,
+				642EF774201F145600031AE0 /* MyReadyMoneyUnActiveTableViewCell.h */,
+				642EF775201F145600031AE0 /* MyReadyMoneyUnActiveTableViewCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1726,6 +1825,7 @@
 		C51B41AF1C784B02001679B5 /* WmjrApp */ = {
 			isa = PBXGroup;
 			children = (
+				642357302018879A00F2E799 /* 财友圈 */,
 				6412EF0A1FF2194700BCAAC2 /* 解绑银行卡 */,
 				646327511FDEC75900FA6A28 /* 抽奖活动 */,
 				64880FC71FBE91D50011A1D3 /* 我有汇票 */,
@@ -2220,6 +2320,8 @@
 			children = (
 				C51B43081C7854CB001679B5 /* UserInfoModel.h */,
 				C51B43091C7854CB001679B5 /* UserInfoModel.m */,
+				642EF75C201E010700031AE0 /* AssetModel.h */,
+				642EF75D201E010700031AE0 /* AssetModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -3335,20 +3437,27 @@
 				C51B43041C7854C0001679B5 /* AvatorChangeView.m in Sources */,
 				64CDE0CA1F963554007F9449 /* AddressListViewController.m in Sources */,
 				6463275D1FE26FC700FA6A28 /* WinPrizeView.m in Sources */,
+				642EF75E201E010700031AE0 /* AssetModel.m in Sources */,
 				C51B42AB1C78531F001679B5 /* TrandDetailViewController.m in Sources */,
 				C51B43761C78564E001679B5 /* BaseNavigationController.m in Sources */,
 				64CDE0EB1F982B10007F9449 /* ScordRecordViewController.m in Sources */,
 				64880FD91FC340D70011A1D3 /* LoansFilledSuccessViewController.m in Sources */,
 				C51B429F1C7852B4001679B5 /* SmartModel.m in Sources */,
 				C51B435C1C785600001679B5 /* NSString+StringCode.m in Sources */,
+				64235736201887E700F2E799 /* CaiYouCircleViewController.m in Sources */,
 				645889AD1F4C04BE00E69574 /* MyRedPackageTableViewCell.m in Sources */,
 				6431A4AC1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m in Sources */,
+				642EF75B201DD1FB00031AE0 /* GetContactPersonList.m in Sources */,
+				642EF767201E206800031AE0 /* SortCaiYouViewController.m in Sources */,
+				642EF77C201F303B00031AE0 /* NewYearActivityViewController2.m in Sources */,
 				8B44C4561DC7281A00DE0EA5 /* HomeTableViewCellThird.m in Sources */,
 				64880FE21FC424460011A1D3 /* ApplyDetailViewController.m in Sources */,
 				8B878B171E2B0A45007646C5 /* HomeTableViewCellThirdFirst.m in Sources */,
 				C51B43441C7855AD001679B5 /* RegisterViewController.m in Sources */,
 				64FF9F2B1FE2A890007B635C /* PrizeRecordView.m in Sources */,
 				C51B43881C78566B001679B5 /* TAAnimatedDotView.m in Sources */,
+				642EF779201F27E700031AE0 /* NewYearActivityViewController.m in Sources */,
+				642EF764201E174C00031AE0 /* CaiYouTableViewCell.m in Sources */,
 				8B6E2B911DC984E8004E5C74 /* NewMoreViewController.m in Sources */,
 				64FF9F371FE2D7B5007B635C /* WatchActivityRuleViewController.m in Sources */,
 				8B1611531D8142FF00C9B954 /* ViewForScrollClass.m in Sources */,
@@ -3357,6 +3466,7 @@
 				6425D3D61F16450900D61F87 /* NSArray+HRUtil.m in Sources */,
 				646327571FDEC7FC00FA6A28 /* LotteryActivityViewController.m in Sources */,
 				64880FE81FC4A7E50011A1D3 /* ApplyRocrdModel.m in Sources */,
+				642EF773201F09F300031AE0 /* ActiveSuccessView.m in Sources */,
 				64CDE0E51F9788F5007F9449 /* IntegralProductDetailModel.m in Sources */,
 				64CDE0BF1F9623DF007F9449 /* IntegralOrderTableViewCell.m in Sources */,
 				8B1611501D81384E00C9B954 /* HomeProductCatModel.m in Sources */,
@@ -3392,6 +3502,7 @@
 				C51B42931C78528A001679B5 /* DrawalViewController.m in Sources */,
 				8B1D232C1E5D5AC90035FD5E /* ProductLongTopCell.m in Sources */,
 				C51B435B1C785600001679B5 /* Base64Secret.m in Sources */,
+				642EF776201F145600031AE0 /* MyReadyMoneyUnActiveTableViewCell.m in Sources */,
 				C5F15EDD1EC97D8C001422D4 /* PersonalCategoryCollectionViewCell.m in Sources */,
 				64CDE0D31F96FC9F007F9449 /* IntegralProductModel.m in Sources */,
 				8B592F461DF96553001AD4B4 /* ModifyPhoneView.m in Sources */,
@@ -3429,6 +3540,7 @@
 				C51B43511C7855D6001679B5 /* SingletonManager.m in Sources */,
 				64880FEB1FC569530011A1D3 /* ReleaseBankCardViewController.m in Sources */,
 				C51B42F81C7854AC001679B5 /* MyselfBankViewController.m in Sources */,
+				642EF77F201F304500031AE0 /* NewYearActivityViewController3.m in Sources */,
 				64FF9F341FE2C398007B635C /* PaoMaDengModel.m in Sources */,
 				C51B43231C785535001679B5 /* CapitalAccountViewController.m in Sources */,
 				C51B436E1C785641001679B5 /* SharedView.m in Sources */,
@@ -3443,6 +3555,7 @@
 				8B34020A1D7E52E100320072 /* KeychainData.m in Sources */,
 				645889B01F4C0D4E00E69574 /* RedPackageModel.m in Sources */,
 				64CDE1031F987A21007F9449 /* ScoreRecordCell.m in Sources */,
+				642EF76A201E2A6700031AE0 /* SortCaiYouTableViewCell.m in Sources */,
 				C51B43011C7854BA001679B5 /* AvatorSettingCell.m in Sources */,
 				C51B43461C7855AD001679B5 /* RegisterAgreeViewController.m in Sources */,
 				C507C9501ECD84F500875459 /* StoreClassCollectionReusableView.m in Sources */,
@@ -3473,6 +3586,7 @@
 				64CDE0EE1F983E91007F9449 /* IntegralOrderModel.m in Sources */,
 				8B76662C1E53EA66002FC5F2 /* LongProductDetailViewController.m in Sources */,
 				C51B438C1C78566B001679B5 /* SDCycleScrollView.m in Sources */,
+				642EF76D201EE30100031AE0 /* CalculateShouYiView.m in Sources */,
 				645889B31F4C2EDF00E69574 /* MyUnuseRedPackageViewController.m in Sources */,
 				8B4446821D990EB100EDCDBC /* MyRecommandTableViewCell.m in Sources */,
 				8B44C4431DC6D5DB00DE0EA5 /* HomePageViewController.m in Sources */,
@@ -3493,6 +3607,7 @@
 				8B592F431DF8F2E9001AD4B4 /* AFAppDotNetAPIClient.m in Sources */,
 				8B266FB71DDC5296000DCE69 /* SafeEnsureViewController.m in Sources */,
 				64CDE0F71F984149007F9449 /* DeliverInfoObject.m in Sources */,
+				642EF761201E111F00031AE0 /* InvestCaiYouViewController.m in Sources */,
 				C51B41B21C784B02001679B5 /* main.m in Sources */,
 				C51B425C1C7850BF001679B5 /* SepcialModel.m in Sources */,
 				BDE0EF7F1D61BD8800729C15 /* WebViewForPayViewController.m in Sources */,
@@ -3512,6 +3627,7 @@
 				C51B43341C785593001679B5 /* FeedbackViewController.m in Sources */,
 				8B1D232F1E5D8EE00035FD5E /* ShortListViewController.m in Sources */,
 				C51B438D1C78566B001679B5 /* UIView+SDExtension.m in Sources */,
+				642EF770201EF6E300031AE0 /* MyReadyMoneyRedBallTableViewCell.m in Sources */,
 				64CDE1001F985991007F9449 /* OrderAddressTableViewCell.m in Sources */,
 				64CDE0FD1F9853C5007F9449 /* OrderDetailViewController.m in Sources */,
 				C51B438A1C78566B001679B5 /* TAPageControl.m in Sources */,
@@ -3668,8 +3784,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = E9DZ9T2VGD;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3689,10 +3805,11 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApppp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "37f00304-7f9d-48be-860f-710a96510753";
-				PROVISIONING_PROFILE_SPECIFIER = wangmainhouse;
+				PROVISIONING_PROFILE = "37a7c057-02a0-4431-8542-641a46a93785";
+				PROVISIONING_PROFILE_SPECIFIER = wangmadevelop;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Debug;
@@ -3703,8 +3820,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Baimifan Network Technology Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = E9DZ9T2VGD;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3724,10 +3841,11 @@
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/WmjrApp/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApppp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baimifan.wmjrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "37f00304-7f9d-48be-860f-710a96510753";
-				PROVISIONING_PROFILE_SPECIFIER = wangmainhouse;
+				PROVISIONING_PROFILE = "37a7c057-02a0-4431-8542-641a46a93785";
+				PROVISIONING_PROFILE_SPECIFIER = wangmadevelop;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WmjrApp/JPush";
 			};
 			name = Release;

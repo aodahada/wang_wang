@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AssetModel.h"
 
 @interface UserInfoModel : NSObject
 
@@ -23,5 +24,6 @@
 @property (nonatomic, copy) NSString *is_newer;/* 是否是新人 1是新人，0不是新人*/
 @property (nonatomic, copy) NSString *score;//积分
 @property (nonatomic, copy) NSString *score_clear;//剩余积分
+@property (nonatomic, strong) AssetModel *asset;
 
 @end

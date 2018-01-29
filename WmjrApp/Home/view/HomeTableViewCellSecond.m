@@ -32,7 +32,7 @@
             ImgHomeModel *imageModel = imageArray[i];
             [imagesURLStrings addObject:imageModel.picurl];
         }
-        SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, RESIZE_UI(109)) imageURLStringsGroup:nil]; // 模拟网络延时情景
+        SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, RESIZE_UI(229)) imageURLStringsGroup:nil]; // 模拟网络延时情景
         cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
         cycleScrollView.delegate = self;
         if (imageArray.count == 1) {

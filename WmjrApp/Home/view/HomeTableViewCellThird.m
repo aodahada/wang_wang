@@ -47,23 +47,23 @@
     }];
     
     self.jiaxiImageView = [[UIImageView alloc]init];
-    self.jiaxiImageView.image = [UIImage imageNamed:@"icon_jx"];
+    self.jiaxiImageView.image = [UIImage imageNamed:@"tab_syhl"];
     [self addSubview:self.jiaxiImageView];
     [self.jiaxiImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_offset(RESIZE_UI(33));
-        make.height.mas_offset(RESIZE_UI(19));
-        make.bottom.equalTo(self.earnOfPercent.mas_top).with.offset(RESIZE_UI(5));
-        make.left.equalTo(self.earnOfPercent.mas_right);
+        make.width.mas_offset(RESIZE_UI(24));
+        make.height.mas_offset(RESIZE_UI(29));
+        make.top.equalTo(self.mas_top);
+        make.left.equalTo(self.mas_left).with.offset(RESIZE_UI(103));
     }];
     
     self.jiaxiLabel = [[UILabel alloc]init];
-    self.jiaxiLabel.textColor = [UIColor whiteColor];
+    self.jiaxiLabel.textColor = [UIColor blackColor];
     self.jiaxiLabel.font = [UIFont systemFontOfSize:RESIZE_UI(9)];
-    self.jiaxiLabel.text = @"+1.0%";
+    self.jiaxiLabel.text = @"+1.0";
     [self.jiaxiImageView addSubview:self.jiaxiLabel];
     [self.jiaxiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(_jiaxiImageView.mas_centerX).with.offset(RESIZE_UI(2));
-        make.bottom.equalTo(self.jiaxiImageView.mas_bottom).with.offset(-RESIZE_UI(0));
+        make.centerX.equalTo(_jiaxiImageView.mas_centerX);
+        make.centerY.equalTo(self.jiaxiImageView.mas_centerY).with.offset(-2);
     }];
     
     self.earnOfYearLable = [[UILabel alloc] init];
@@ -102,8 +102,11 @@
     }];
     
     _progressView = [[ProgressView alloc]init];
-    _progressView.arcFinishColor = RGBA(0, 108, 175, 1.0);
-    _progressView.arcUnfinishColor = RGBA(0, 108, 175, 1.0);
+//    _progressView.arcFinishColor = RGBA(0, 108, 175, 1.0);
+//    _progressView.arcUnfinishColor = RGBA(0, 108, 175, 1.0);
+    
+    _progressView.arcFinishColor = NEWYEARCOLOR;
+    _progressView.arcUnfinishColor = NEWYEARCOLOR;
     _progressView.centerColor = [UIColor whiteColor];
     _progressView.arcBackColor = RGBA(246, 246, 246, 1.0);
     _progressView.width = RESIZE_UI(6);
@@ -182,7 +185,8 @@
             self.jiaxiLabel.hidden = NO;
             self.jiaxiImageView.hidden = NO;
 //            NSNumber *jiaxiNumber = [NSNumber numberWithDouble:returnrate_plus*100];
-            self.jiaxiLabel.text = [NSString stringWithFormat:@"+%g％",returnrate_plus*100];
+//            self.jiaxiLabel.text = [NSString stringWithFormat:@"+%g％",returnrate_plus*100];
+            self.jiaxiLabel.text = [NSString stringWithFormat:@"+%g",returnrate_plus*100];
 //            CGSize lblSize = [self.jiaxiLabel.text boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:RESIZE_UI(9)]} context:nil].size;
 //            //        NSLog(@"我的宽度:%.1f",lblSize.width);
 //            CGFloat imgWidth = lblSize.width+RESIZE_UI(10);
@@ -198,10 +202,15 @@
             self.earnOfPercent.textColor = RGBA(237, 237, 237, 1.0);
             _labelForManageMoneyDay.textColor = RGBA(237, 237, 237, 1.0);
             _endImageView.hidden = NO;
+            self.jiaxiImageView.image = [UIImage imageNamed:@"tab_syhl_grey"];
+            self.jiaxiLabel.textColor = RGBA(161, 161, 161, 1.0);
         } else {
-            self.earnOfPercent.textColor = RGBA(255, 88, 26, 1.0);
+//            self.earnOfPercent.textColor = RGBA(255, 88, 26, 1.0);
+            self.earnOfPercent.textColor = NEWYEARCOLOR;
             _labelForManageMoneyDay.textColor = RGBA(3, 3, 3, 1.0);
             _endImageView.hidden = YES;
+            self.jiaxiImageView.image = [UIImage imageNamed:@"tab_syhl"];
+            self.jiaxiLabel.textColor = [UIColor blackColor];
         }
     }
     

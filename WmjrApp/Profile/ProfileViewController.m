@@ -32,6 +32,9 @@
 #import "RedPackageModel.h"
 #import "AppDelegate.h"
 #import "IntegralShopViewController.h"
+#import "CaiYouCircleViewController.h"
+#import "UserInfoModel.h"
+#import "AssetModel.h"
 
 @interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -60,24 +63,39 @@
 
 @property (nonatomic, strong)UILabel *labelForPhone;//电话
 
+@property (nonatomic, strong)UILabel *zongZiChanContent;//总资产
+@property (nonatomic, strong)UILabel *keYongYuEContent;//可用余额
+@property (nonatomic, strong)UILabel *jianglijineContent;//奖励金额
+@property (nonatomic, strong)UILabel *leijishouyiContent;//累计收益
+
 @end
 
 @implementation ProfileViewController
 
 //头视图
 - (UIView *)setUpProfileHeadView {
-    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,RESIZE_UI(187+49+12))];
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,RESIZE_UI(285+49))];
     headView.backgroundColor = RGBA(237, 240, 242, 1.0);
 //    headView.backgroundColor = [UIColor redColor];
     UIImageView *imageViewForBackground = [[UIImageView alloc]init];
-    imageViewForBackground.image = [UIImage imageNamed:@"image_me_bg"];
+    imageViewForBackground.image = [UIImage imageNamed:@"image_bg"];
     [headView addSubview:imageViewForBackground];
     [imageViewForBackground mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(headView.mas_top);
         make.left.equalTo(headView.mas_left);
         make.right.equalTo(headView.mas_right);
-        make.height.mas_offset(RESIZE_UI(187));
+        make.height.mas_offset(RESIZE_UI(285));
     }];
+    
+//    UIView *imageViewForBackground = [[UIView alloc]init];
+//    imageViewForBackground.backgroundColor = YEARCOLOR;
+//    [headView addSubview:imageViewForBackground];
+//    [imageViewForBackground mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(headView.mas_top);
+//        make.left.equalTo(headView.mas_left);
+//        make.right.equalTo(headView.mas_right);
+//        make.height.mas_offset(RESIZE_UI(285));
+//    }];
     
     UIImageView *imageViewForLeft = [[UIImageView alloc]init];
     imageViewForLeft.image = [UIImage imageNamed:@"icon_more"];
@@ -114,31 +132,15 @@
     
     /*  消息  */
     UIButton *buttonForMessCenter = [[UIButton alloc]init];
-//    [buttonForMessCenter setBackgroundImage:[UIImage imageNamed:@"notific"] forState:UIControlStateNormal];
     [buttonForMessCenter setImage:[UIImage imageNamed:@"icon_xx"] forState:UIControlStateNormal];
     [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:buttonForMessCenter];
     [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(33));
         make.centerY.equalTo(lableForMore.mas_centerY);
         make.right.equalTo(headView.mas_right).with.offset(RESIZE_UI(-15));
         make.height.mas_offset(RESIZE_UI(30));
         make.width.mas_offset(RESIZE_UI(30));
     }];
-    
-//    UIButton *buttonForMessCenter = [[UIButton alloc]init];
-//    [buttonForMessCenter setTitle:@"消息中心" forState:UIControlStateNormal];
-////    [buttonForMessCenter setBackgroundColor:[UIColor redColor]];
-//    [buttonForMessCenter setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    buttonForMessCenter.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
-//    [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
-//    [headView addSubview:buttonForMessCenter];
-//    [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(lableForMore.mas_centerY);
-//        make.right.equalTo(headView.mas_right).with.offset(RESIZE_UI(-12));
-//        make.width.mas_offset(RESIZE_UI(80));
-//        make.height.mas_offset(RESIZE_UI(18));
-//    }];
     
     //二维码
     UIButton *codeButton = [[UIButton alloc]init];
@@ -154,22 +156,12 @@
     _imageViewForHead = [[UIImageView alloc]init];
     [_imageViewForHead sd_setImageWithURL:[NSURL URLWithString:[SingletonManager sharedManager].userModel.photourl] placeholderImage:[UIImage imageNamed:@"image_head"]];
     _imageViewForHead.layer.masksToBounds = YES;
-    _imageViewForHead.layer.cornerRadius = RESIZE_UI(44)/2;
+    _imageViewForHead.layer.cornerRadius = RESIZE_UI(55)/2;
     [headView addSubview:_imageViewForHead];
     [_imageViewForHead mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headView.mas_left).with.offset(RESIZE_UI(15));
-        make.centerY.equalTo(headView.mas_centerY);
-        make.width.height.mas_offset(RESIZE_UI(44));
-    }];
-    
-    UILabel *labelForPhone = [[UILabel alloc]init];
-    labelForPhone.text = [SingletonManager sharedManager].userModel.mobile;
-    labelForPhone.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
-    labelForPhone.textColor = [UIColor whiteColor];
-    [headView addSubview:labelForPhone];
-    [labelForPhone mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_imageViewForHead.mas_top);
-        make.left.equalTo(_imageViewForHead.mas_right).with.offset(RESIZE_UI(15));
+        make.centerX.equalTo(headView.mas_centerX);
+        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(70));
+        make.width.height.mas_offset(RESIZE_UI(55));
     }];
     
     _labelForName = [[UILabel alloc]init];
@@ -178,18 +170,18 @@
     _labelForName.textColor = [UIColor whiteColor];
     [headView addSubview:_labelForName];
     [_labelForName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(_imageViewForHead.mas_bottom).with.offset(RESIZE_UI(6));
+        make.top.equalTo(_imageViewForHead.mas_bottom).with.offset(RESIZE_UI(5));
         make.centerX.equalTo(headView.mas_centerX);
-        make.left.equalTo(labelForPhone.mas_left);
     }];
     
-    UIImageView *jianImageView = [[UIImageView alloc]init];
-    jianImageView.image = [UIImage imageNamed:@"icon_arrow_white"];
-    [headView addSubview:jianImageView];
-    [jianImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(headView.mas_centerY);
-        make.right.equalTo(headView.mas_right).with.offset(-RESIZE_UI(12));
-        make.width.height.mas_offset(RESIZE_UI(22));
+    UILabel *labelForPhone = [[UILabel alloc]init];
+    labelForPhone.text = [SingletonManager sharedManager].userModel.mobile;
+    labelForPhone.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    labelForPhone.textColor = [UIColor whiteColor];
+    [headView addSubview:labelForPhone];
+    [labelForPhone mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_labelForName.mas_bottom).with.offset(RESIZE_UI(5));
+        make.centerX.equalTo(headView.mas_centerX);
     }];
     
     UIButton *buttonForPersonal = [[UIButton alloc]init];
@@ -203,11 +195,151 @@
         make.bottom.equalTo(_imageViewForHead.mas_bottom).with.offset(RESIZE_UI(10));
     }];
     
+    //总资产
+    UIView *zongZiChanView = [[UIView alloc]init];
+    zongZiChanView.backgroundColor = NEWYEARCOLOR;
+    zongZiChanView.layer.masksToBounds = YES;
+    zongZiChanView.layer.cornerRadius = 8.0f;
+    [headView addSubview:zongZiChanView];
+    [zongZiChanView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(labelForPhone.mas_bottom).with.offset(RESIZE_UI(20));
+        make.left.equalTo(headView.mas_left).with.offset(RESIZE_UI(10));
+        make.width.mas_offset(SCREEN_WIDTH/2-RESIZE_UI(10)-RESIZE_UI(2));
+        make.height.mas_offset(RESIZE_UI(50));
+    }];
+    
+    UILabel *zongZiChanLabel = [[UILabel alloc]init];
+    zongZiChanLabel.text = @"总资产(元)";
+    zongZiChanLabel.textColor = [UIColor whiteColor];
+    zongZiChanLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+    [zongZiChanView addSubview:zongZiChanLabel];
+    [zongZiChanLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(zongZiChanView.mas_centerX);
+        make.top.equalTo(zongZiChanView.mas_top).with.offset(RESIZE_UI(5));
+    }];
+    
+    _zongZiChanContent = [[UILabel alloc]init];
+    _zongZiChanContent.text = [SingletonManager sharedManager].userModel.asset.total;
+    _zongZiChanContent.textColor = [UIColor whiteColor];
+    _zongZiChanContent.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+    [zongZiChanView addSubview:_zongZiChanContent];
+    [_zongZiChanContent mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(zongZiChanView.mas_centerX);
+        make.top.equalTo(zongZiChanLabel.mas_bottom);
+    }];
+    
+    //可用余额
+    UIView *keYongYuEView = [[UIView alloc]init];
+    keYongYuEView.backgroundColor = NEWYEARCOLOR;
+    keYongYuEView.layer.masksToBounds = YES;
+    keYongYuEView.layer.cornerRadius = 8.0f;
+    [headView addSubview:keYongYuEView];
+    [keYongYuEView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(zongZiChanView.mas_top);
+        make.right.equalTo(headView.mas_right).with.offset(-RESIZE_UI(10));
+        make.width.mas_equalTo(zongZiChanView.mas_width);
+        make.height.mas_equalTo(zongZiChanView.mas_height);
+    }];
+    
+    UILabel *keyongyueLabel = [[UILabel alloc]init];
+    keyongyueLabel.text = @"可用余额(元)";
+    keyongyueLabel.textColor = [UIColor whiteColor];
+    keyongyueLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+    [keYongYuEView addSubview:keyongyueLabel];
+    [keyongyueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(keYongYuEView.mas_centerX);
+        make.top.equalTo(keYongYuEView.mas_top).with.offset(RESIZE_UI(5));
+    }];
+    
+    _keYongYuEContent = [[UILabel alloc]init];
+    _keYongYuEContent.text = _balanceValue;
+    _keYongYuEContent.textColor = [UIColor whiteColor];
+    _keYongYuEContent.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+    [keYongYuEView addSubview:_keYongYuEContent];
+    [_keYongYuEContent mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(keYongYuEView.mas_centerX);
+        make.top.equalTo(keyongyueLabel.mas_bottom);
+    }];
+    
+    //奖励金额，投资收益
+    UIView *twoSumView = [[UIView alloc]init];
+    twoSumView.backgroundColor = NEWYEARCOLOR;
+    twoSumView.layer.masksToBounds = YES;
+    twoSumView.layer.cornerRadius = 6.0f;
+    [headView addSubview:twoSumView];
+    [twoSumView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(keYongYuEView.mas_bottom).with.offset(RESIZE_UI(5));
+        make.height.mas_offset(RESIZE_UI(34));
+        make.left.equalTo(zongZiChanView.mas_left);
+        make.right.equalTo(keYongYuEView.mas_right);
+    }];
+    
+    UIView *twoLeftView = [[UIView alloc]init];
+    twoSumView.backgroundColor = NEWYEARCOLOR;
+    [twoSumView addSubview:twoLeftView];
+    [twoLeftView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(twoSumView.mas_left);
+        make.top.equalTo(twoSumView.mas_top);
+        make.bottom.equalTo(twoSumView.mas_bottom);
+        make.width.mas_offset((SCREEN_WIDTH-RESIZE_UI(20))/2);
+    }];
+    
+    UILabel *leijijiangliLabel = [[UILabel alloc]init];
+    leijijiangliLabel.text = @"累计奖励金额(元)";
+    leijijiangliLabel.textColor = [UIColor whiteColor];
+    leijijiangliLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+    [twoLeftView addSubview:leijijiangliLabel];
+    [leijijiangliLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(twoLeftView.mas_top).with.offset(RESIZE_UI(5));
+        make.centerX.equalTo(twoLeftView.mas_centerX);
+    }];
+
+    _jianglijineContent = [[UILabel alloc]init];
+    _jianglijineContent.text = [NSString stringWithFormat:@"¥%@",[SingletonManager sharedManager].userModel.asset.award];
+    _jianglijineContent.textColor = [UIColor whiteColor];
+    _jianglijineContent.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+    [twoLeftView addSubview:_jianglijineContent];
+    [_jianglijineContent mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(leijijiangliLabel.mas_bottom);
+        make.centerX.equalTo(twoLeftView.mas_centerX);
+    }];
+
+    UIView *twoRightView = [[UIView alloc]init];
+    twoRightView.backgroundColor = NEWYEARCOLOR;
+    [twoSumView addSubview:twoRightView];
+    [twoRightView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(twoSumView.mas_right);
+        make.top.equalTo(twoSumView.mas_top);
+        make.bottom.equalTo(twoSumView.mas_bottom);
+        make.width.mas_offset((SCREEN_WIDTH-RESIZE_UI(30))/2);
+    }];
+
+    UILabel *leijitouziLabel = [[UILabel alloc]init];
+    leijitouziLabel.text = @"累计投资收益(元)";
+    leijitouziLabel.textColor = [UIColor whiteColor];
+    leijitouziLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+    [twoRightView addSubview:leijitouziLabel];
+    [leijitouziLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(twoRightView.mas_top).with.offset(RESIZE_UI(5));
+        make.centerX.equalTo(twoRightView.mas_centerX);
+    }];
+
+    _leijishouyiContent = [[UILabel alloc]init];
+    _leijishouyiContent.text = [NSString stringWithFormat:@"¥%@",[SingletonManager sharedManager].userModel.asset.invest];
+    _leijishouyiContent.textColor = [UIColor whiteColor];
+    _leijishouyiContent.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
+    [twoRightView addSubview:_leijishouyiContent];
+    [_leijishouyiContent mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(leijitouziLabel.mas_bottom);
+        make.centerX.equalTo(twoRightView.mas_centerX);
+    }];
+
     UIView *viewForHeadButtom = [[UIView alloc]init];
-    viewForHeadButtom.backgroundColor = RGBA(220, 223, 225, 1.0);
+//    viewForHeadButtom.backgroundColor = RGBA(220, 223, 225, 1.0);
+    viewForHeadButtom.backgroundColor = [UIColor whiteColor];
     [headView addSubview:viewForHeadButtom];
     [viewForHeadButtom mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(187));
+        make.top.equalTo(imageViewForBackground.mas_bottom);
         make.left.equalTo(headView.mas_left);
         make.right.equalTo(headView.mas_right);
         make.height.mas_offset(RESIZE_UI(49));
@@ -234,24 +366,23 @@
         make.centerX.equalTo(viewForRecharge.mas_centerX);
     }];
     
-    UIImageView *rechargeImageView = [[UIImageView alloc]init];
-    rechargeImageView.image = [UIImage imageNamed:@"icon_chzh"];
-    [viewBottomForRecharge addSubview:rechargeImageView];
-    [rechargeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(viewBottomForRecharge.mas_left);
-        make.centerY.equalTo(viewForRecharge.mas_centerY);
-        make.height.width.mas_offset(RESIZE_UI(28));
-    }];
+//    UIImageView *rechargeImageView = [[UIImageView alloc]init];
+//    rechargeImageView.image = [UIImage imageNamed:@"icon_chzh"];
+//    [viewBottomForRecharge addSubview:rechargeImageView];
+//    [rechargeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(viewBottomForRecharge.mas_left);
+//        make.centerY.equalTo(viewForRecharge.mas_centerY);
+//        make.height.width.mas_offset(RESIZE_UI(28));
+//    }];
     
     UILabel *rechargeLabel = [[UILabel alloc]init];
     rechargeLabel.text = @"我要充值";
-    rechargeLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+    rechargeLabel.font = [UIFont systemFontOfSize:RESIZE_UI(19)];
     rechargeLabel.textColor = RGBA(20, 20, 23, 1.0);
     [viewBottomForRecharge addSubview:rechargeLabel];
     [rechargeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(rechargeImageView.mas_right).with.offset(RESIZE_UI(12));
-        make.centerY.equalTo(viewForRecharge.mas_centerY);
-        make.height.mas_offset(RESIZE_UI(24));
+        make.centerX.equalTo(viewBottomForRecharge.mas_centerX);
+        make.centerY.equalTo(viewBottomForRecharge.mas_centerY);
     }];
     
     UIButton *rechargeButton = [[UIButton alloc]init];
@@ -282,25 +413,24 @@
         make.centerY.equalTo(viewForWithdraw.mas_centerY);
     }];
     
-    UIImageView *withDrawImageView = [[UIImageView alloc]init];
-    withDrawImageView.image = [UIImage imageNamed:@"icon_tixian"];
-    [viewBottomForWithdraw addSubview:withDrawImageView];
-    [withDrawImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(viewBottomForWithdraw.mas_left);
-        make.centerY.equalTo(viewBottomForWithdraw.mas_centerY);
-        make.width.mas_offset(RESIZE_UI(28));
-        make.height.mas_offset(RESIZE_UI(23.2));
-    }];
+//    UIImageView *withDrawImageView = [[UIImageView alloc]init];
+//    withDrawImageView.image = [UIImage imageNamed:@"icon_tixian"];
+//    [viewBottomForWithdraw addSubview:withDrawImageView];
+//    [withDrawImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(viewBottomForWithdraw.mas_left);
+//        make.centerY.equalTo(viewBottomForWithdraw.mas_centerY);
+//        make.width.mas_offset(RESIZE_UI(28));
+//        make.height.mas_offset(RESIZE_UI(23.2));
+//    }];
     
     UILabel *withDrawLabel = [[UILabel alloc]init];
     withDrawLabel.text = @"我要提现";
-    withDrawLabel.textColor = RGBA(20, 20, 23, 1.0);
-    withDrawLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
+    withDrawLabel.textColor = NEWYEARCOLOR;
+    withDrawLabel.font = [UIFont systemFontOfSize:RESIZE_UI(19)];
     [viewBottomForWithdraw addSubview:withDrawLabel];
     [withDrawLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(withDrawImageView.mas_right).with.offset(RESIZE_UI(12));
         make.centerY.equalTo(viewBottomForWithdraw.mas_centerY);
-        make.height.mas_offset(RESIZE_UI(24));
+        make.centerX.equalTo(viewBottomForWithdraw.mas_centerX);
     }];
     
     UIButton *withDrawButton = [[UIButton alloc]init];
@@ -609,60 +739,6 @@
         make.bottom.equalTo(self.view.mas_bottom);
     }];
     
-//    [self setHeadView];
-    
-    
-//    UIScrollView *mainScrollView = [[UIScrollView alloc]init];
-//    [self.view addSubview:mainScrollView];
-//    [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.view.mas_top).with.offset(-20);
-//        make.left.equalTo(self.view.mas_left);
-//        make.right.equalTo(self.view.mas_right);
-//        make.bottom.equalTo(self.view.mas_bottom);
-//    }];
-//    
-//    UIView *mainView = [[UIView alloc]init];
-//    mainScrollView.backgroundColor = RGBA(231, 234, 236, 1.0);
-//    [mainScrollView addSubview:mainView];
-//    [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.equalTo(mainScrollView);
-//        make.width.mas_equalTo(self.view.mas_width);
-//    }];
-//    
-//    UIView *headView = [self setUpProfileHeadView];
-//    [mainView addSubview:headView];
-//    [headView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(mainView.mas_top);
-//        make.left.equalTo(mainView.mas_left);
-//        make.right.equalTo(mainView.mas_right);
-//        make.height.mas_equalTo(RESIZE_UI(187+76));
-//    }];
-//    
-//    UICollectionViewFlowLayout *flowLayout= [[UICollectionViewFlowLayout alloc]init];
-//    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-//    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:flowLayout];
-//    self.classCollectionView = collectionView;
-//    self.classCollectionView.scrollEnabled = NO;
-//    [self.classCollectionView registerNib:[UINib nibWithNibName:@"PersonalCategoryCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"PersonalCategoryCollectionViewCell"];
-//    [self.classCollectionView registerClass:[StoreClassCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"StoreClassCollectionReusableView"];
-//    self.classCollectionView.delegate = self;
-//    self.classCollectionView.dataSource = self;
-//    self.classCollectionView.backgroundColor = RGBA(231, 234, 236, 1.0);
-////    self.classCollectionView.backgroundColor = [UIColor whiteColor];
-//    self.classCollectionView.showsVerticalScrollIndicator = NO;
-//    self.classCollectionView.showsHorizontalScrollIndicator = NO;
-//    [mainView addSubview:self.classCollectionView];
-//    [self.classCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.equalTo(headView.mas_bottom).with.offset(0);
-//            make.left.equalTo(mainView.mas_left);
-//            make.right.equalTo(mainView.mas_right);
-////            make.bottom.equalTo(mainView.mas_bottom);
-//            make.height.mas_equalTo(RESIZE_UI(80)*4+RESIZE_UI(24));
-//    }];
-//    
-//    [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.bottom.equalTo(self.classCollectionView.mas_bottom);
-//    }];
 }
 
 - (void)loginSuccessMethod {
@@ -691,6 +767,7 @@
     [manager postDataWithUrlActionStr:@"User/queryBalance" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"account_type":@"SAVING_POT"} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             _balanceValue = [obj[@"data"] objectForKey:@"available_balance"];
+            _keYongYuEContent.text = _balanceValue;
         } else {
             [SVProgressHUD showErrorWithStatus:@"请求失败"];
         }
@@ -714,6 +791,7 @@
         _numberLabel.hidden = NO;
     }
     
+    [self getDataWithNetManager];
     [self getRedBallMethod];
     
 }
@@ -765,6 +843,32 @@
     }];
 }
 
+#pragma mark - 获取个人信息
+- (void)getDataWithNetManager {
+    //查询用户信息
+    NetManager *manager = [[NetManager alloc] init];
+    [SVProgressHUD showWithStatus:@"加载中"];
+    NSDictionary *paramDic4 = @{@"member_id":[SingletonManager sharedManager].uid};
+    [manager postDataWithUrlActionStr:@"User/que" withParamDictionary:paramDic4 withBlock:^(id obj) {
+        if (obj) {
+            UserInfoModel *userModel = [UserInfoModel mj_objectWithKeyValues:obj[@"data"]];
+            [SingletonManager sharedManager].userModel = userModel;
+            _zongZiChanContent.text = userModel.asset.total;
+            _jianglijineContent.text = [NSString stringWithFormat:@"¥%@",userModel.asset.award];
+            _leijishouyiContent.text = [NSString stringWithFormat:@"¥%@",userModel.asset.invest];
+            [SVProgressHUD dismiss];
+        } else {
+            NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+            MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+            alertConfig.defaultTextOK = @"确定";
+            [SVProgressHUD dismiss];
+            MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+            [alertView show];
+        }
+        //        [_tableView reloadData];
+    }];
+}
+
 
 #pragma mark - UITableView dataSource delegate -
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -775,44 +879,11 @@
     return 8;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    return RESIZE_UI(12);
-//}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return RESIZE_UI(60);
     
 }
-
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    
-//    UIView *viewForHeader = [[UIView alloc]init];
-//    viewForHeader.backgroundColor = RGBA(237, 240, 242, 1.0);
-//    if (section == 1) {
-//        UILabel *labelForLine = [[UILabel alloc]init];
-//        labelForLine.backgroundColor = RGBA(255, 82, 37, 1.0);
-//        [viewForHeader addSubview:labelForLine];
-//        [labelForLine mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerY.equalTo(viewForHeader.mas_centerY);
-//            make.left.equalTo(viewForHeader.mas_left);
-//            make.height.mas_offset(17);
-//            make.width.mas_offset(5);
-//        }];
-//        
-//        UILabel *labelForTitle = [[UILabel alloc]init];
-//        labelForTitle.text = @"新浪账户中心";
-//        labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
-//        labelForTitle.textColor = RGBA(153, 153, 153, 1.0);
-//        [viewForHeader addSubview:labelForTitle];
-//        [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerY.equalTo(viewForHeader.mas_centerY);
-//            make.left.equalTo(viewForHeader.mas_left).with.offset(13);
-//        }];
-//    }
-//    return viewForHeader;
-//    
-//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier  = @"cell";
@@ -869,22 +940,37 @@
             }
                 break;
             case 3:
+            {
+                cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
+                cell.textLabel.text = @"财友圈";
+                UILabel *newLabel = [[UILabel alloc]init];
+                newLabel.text = @"n e w";
+                newLabel.textColor = RGBA(239, 180, 77, 1.0);
+                newLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                [cell addSubview:newLabel];
+                [newLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(cell.mas_top).with.offset(RESIZE_UI(10));
+                    make.left.equalTo(cell.textLabel.mas_right).with.offset(RESIZE_UI(5));
+                }];
+            }
+                break;
+            case 4:
                 cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
                 cell.textLabel.text = @"好友推荐";
                 break;
-            case 4:
+            case 5:
                 cell.imageView.image = [UIImage imageNamed:@"icon_yhk"];
                 cell.textLabel.text = @"我的银行卡";
                 break;
-            case 5:
+            case 6:
                 cell.imageView.image = [UIImage imageNamed:@"icon_zhmm"];
                 cell.textLabel.text = @"账号和密码";
                 break;
-            case 6:
+            case 7:
                 cell.imageView.image = [UIImage imageNamed:@"icon_jyjl"];
                 cell.textLabel.text = @"交易记录";
                 break;
-            case 7:
+            case 8:
             {
                 cell.imageView.image = [UIImage imageNamed:@"icon_lxkf"];
                 cell.textLabel.text = @"联系客服";
@@ -934,12 +1020,18 @@
             break;
         }
         case 3: {
+            /* 财友圈 */
+            CaiYouCircleViewController *caiyouVC = [[CaiYouCircleViewController alloc]init];
+            [self.navigationController pushViewController:caiyouVC animated:YES];
+            break;
+        }
+        case 4: {
             /* 我的推荐 */
             MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]init];
             [self.navigationController pushViewController:myrecommendVC animated:YES];
             break;
         }
-        case 4: {
+        case 5: {
             /* 我的银行卡 */
             if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
                 /*  我的银行卡 */
@@ -954,19 +1046,19 @@
             }
             break;
         }
-        case 5: {
+        case 6: {
             /* 账号和密码 */
             AccountAndPasswordViewController *accountAndPassVC = [[AccountAndPasswordViewController alloc]init];
             [self.navigationController pushViewController:accountAndPassVC animated:YES];
             break;
         }
-        case 6: {
+        case 7: {
             /** 交易记录*/
             MyselfTransactionController *mySelfTrans = [[MyselfTransactionController alloc]init];
             [self.navigationController pushViewController:mySelfTrans animated:YES];
             break;
         }
-        case 7:{
+        case 8:{
             //联系客服
             NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",[SingletonManager sharedManager].companyTel];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
@@ -978,258 +1070,6 @@
     }
 
 }
-
-//#pragma mark - collectionview - delegate
-//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-//    
-//    return 2;
-//    
-//}
-//
-//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-//    
-//    if (section == 0) {
-//        return 4;
-//    } else {
-//        return 4;
-//    }
-//    
-//}
-//
-////Header 方法
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-//    return CGSizeMake(self.classCollectionView.frame.size.width, RESIZE_UI(12));
-//}
-//
-////Header布局
-//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-//    if ([kind isEqual:UICollectionElementKindSectionHeader]) {
-//        StoreClassCollectionReusableView *headerView = (StoreClassCollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"StoreClassCollectionReusableView" forIndexPath:indexPath];
-//        return headerView;
-//    }
-//    return nil;
-//}
-//
-//- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    static NSString *CellIdentifier = @"PersonalCategoryCollectionViewCell";
-//    PersonalCategoryCollectionViewCell *cell = (PersonalCategoryCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-//    if (indexPath.section == 0) {
-//        switch (indexPath.row) {
-//            case 0:
-//                cell.headImageView.image = [UIImage imageNamed:@"icon_licai"];
-//                cell.titleLabel.text = @"我的理财";
-//                break;
-//            case 1:
-//                cell.headImageView.image = [UIImage imageNamed:@"icon_haoyou"];
-//                cell.titleLabel.text = @"好友推荐";
-//                break;
-//            case 2:
-//                cell.headImageView.image = [UIImage imageNamed:@"icon_yhk"];
-//                cell.titleLabel.text = @"我的银行卡";
-//                break;
-//            case 3:
-//                cell.headImageView.image = [UIImage imageNamed:@"icon_jiaoyi"];
-//                cell.titleLabel.text = @"交易记录";
-//                break;
-//                
-//            default:
-//                break;
-//        }
-//    } else {
-//        switch (indexPath.row) {
-//            case 0:
-//                cell.headImageView.image = [UIImage imageNamed:@"icon_zhanghu"];
-//                cell.titleLabel.text = @"账户管理";
-//                break;
-//            case 1:
-//                cell.headImageView.image = [UIImage imageNamed:@"icon_anquan"];
-//                cell.titleLabel.text = @"安全中心";
-//                break;
-//            case 2:
-//                cell.headImageView.image = [UIImage imageNamed:@"icon_wdsq"];
-//                cell.titleLabel.text = @"我的授权";
-//                break;
-//                
-//            default:
-//                break;
-//        }
-//    }
-//    return cell;
-//    
-//}
-//
-//#pragma mark --UICollectionViewDelegateFlowLayout
-////定义每个UICollectionView 的大小
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    float width = (collectionView.frame.size.width-1)/2;
-//    if (indexPath.section == 1) {
-//        if (indexPath.row>2) {
-//            width = collectionView.frame.size.width/2;
-//        }
-//    }
-//    return CGSizeMake(width , RESIZE_UI(80));
-//}
-//
-////定义每个UICollectionView 的 margin
-//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-//    return UIEdgeInsetsMake(0,0,0,0);
-//}
-//
-//// 定义上下cell的最小间距
-//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-//    return 1.0f;
-//}
-//
-//// 定义cell间的最小间距
-//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-//    return 0.0f;
-//}
-//
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    if (indexPath.section == 0) {
-//        switch (indexPath.row) {
-//            case 0:{
-//                /* 我的理财 */
-//                MyselfManageFinanceController *myselfMFVC = [[MyselfManageFinanceController alloc] init];
-//                [self.navigationController pushViewController:myselfMFVC animated:YES];
-//                break;
-//            }
-//            case 1: {
-//                /* 我的推荐 */
-//                MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]init];
-//                [self.navigationController pushViewController:myrecommendVC animated:YES];
-//                break;
-//            }
-//            case 2: {
-//                /* 我的银行卡 */
-//                if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
-//                    /*  我的银行卡 */
-//                    UIStoryboard *addbank = [UIStoryboard storyboardWithName:@"AddBankViewController" bundle:[NSBundle mainBundle]];
-//                    AddBankViewController *addBankVC = [addbank instantiateViewControllerWithIdentifier:@"AddBank"];
-//                    addBankVC.hidesBottomBarWhenPushed = YES;
-//                    [self.navigationController pushViewController:addBankVC animated:YES];
-//                } else {
-//                    MyselfBankViewController *myselfBankVC = [[MyselfBankViewController alloc] init];
-//                    myselfBankVC.card_id = [SingletonManager sharedManager].userModel.card_id;
-//                    [self.navigationController pushViewController:myselfBankVC animated:YES];
-//                }
-//                break;
-//            }
-//            case 3: {
-//                /** 交易记录*/
-//                MyselfTransactionController *mySelfTrans = [[MyselfTransactionController alloc]init];
-//                [self.navigationController pushViewController:mySelfTrans animated:YES];
-//                break;
-//            }
-//            default:
-//                break;
-//        }
-//    } else {
-//        switch (indexPath.row) {
-//            case 0:{
-//                //账户管理
-//                [self jumpToXinLangMethod:@"DEFAULT" andTitle:@"账户管理"];
-//            }
-//                break;
-//            case 1:{
-//                //安全中心
-//                [self jumpToXinLangMethod:@"SAFETY_CENTER" andTitle:@"安全中心"];
-//            }
-//                break;
-//            case 2:{
-//                //我的授权
-//                [self jumpToXinLangMethod:@"WITHHOLD" andTitle:@"我的授权"];
-//            }
-//                break;
-//                
-//            default:
-//                break;
-//        }
-//    }
-//}
-//
-////返回这个UICollectionView是否可以被选择
-//- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    return YES;
-//}
-//
-
-- (void)setHeadView {
-    UIView *topView = [[UIView alloc]init];
-    topView.backgroundColor = RGBA(0, 104, 178, 1.0);
-//    topView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.0];
-//    topView.backgroundColor = [UIColor redColor];
-    topView.alpha = 1.0;
-    [self.view addSubview:topView];
-    [topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.height.mas_offset(64);
-    }];
-    
-    UIImageView *imageViewForLeft = [[UIImageView alloc]init];
-    imageViewForLeft.image = [UIImage imageNamed:@"icon_more"];
-    [topView addSubview:imageViewForLeft];
-    [imageViewForLeft mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(topView.mas_top).with.offset(RESIZE_UI(34));
-        make.left.equalTo(topView.mas_left).with.offset(RESIZE_UI(15));
-        make.height.mas_offset(RESIZE_UI(16));
-        make.width.mas_offset(RESIZE_UI(6));
-    }];
-    
-    UILabel *lableForMore = [[UILabel alloc] init];
-    lableForMore.text = @"更多";
-    lableForMore.textAlignment = NSTextAlignmentLeft;
-    lableForMore.textColor = [UIColor whiteColor];
-    lableForMore.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
-    [topView addSubview:lableForMore];
-    [lableForMore mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(topView.mas_top).with.offset(RESIZE_UI(34));
-        make.left.equalTo(topView.mas_left).with.offset(RESIZE_UI(34));
-        make.height.mas_offset(RESIZE_UI(16));
-    }];
-    
-    UIButton *buttonForMore = [[UIButton alloc]init];
-    buttonForMore.backgroundColor = [UIColor clearColor];
-    [buttonForMore addTarget:self action:@selector(jumpToMoreMethod) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:buttonForMore];
-    [buttonForMore mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(imageViewForLeft.mas_top).with.offset(-20);
-        make.bottom.equalTo(imageViewForLeft.mas_bottom).with.offset(20);
-        make.left.equalTo(topView.mas_left);
-        make.right.equalTo(lableForMore.mas_right).with.offset(20);
-    }];
-    
-    /*  消息  */
-    UIButton *buttonForMessCenter = [[UIButton alloc]init];
-    //    [buttonForMessCenter setBackgroundImage:[UIImage imageNamed:@"notific"] forState:UIControlStateNormal];
-    [buttonForMessCenter setImage:[UIImage imageNamed:@"icon_xx"] forState:UIControlStateNormal];
-    [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:buttonForMessCenter];
-    [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(topView.mas_top).with.offset(RESIZE_UI(33));
-        make.centerY.equalTo(lableForMore.mas_centerY);
-        make.right.equalTo(topView.mas_right).with.offset(RESIZE_UI(-15));
-        make.height.mas_offset(RESIZE_UI(30));
-        make.width.mas_offset(RESIZE_UI(30));
-    }];
-    
-    //二维码
-    UIButton *codeButton = [[UIButton alloc]init];
-    [codeButton setBackgroundImage:[UIImage imageNamed:@"icon_ewm"] forState:UIControlStateNormal];
-    [codeButton addTarget:self action:@selector(watchCodeMethod) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:codeButton];
-    [codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(buttonForMessCenter.mas_centerY);
-        make.width.height.mas_offset(RESIZE_UI(30));
-        make.right.equalTo(buttonForMessCenter.mas_left).with.offset(RESIZE_UI(-15));
-    }];
-    
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

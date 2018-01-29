@@ -35,6 +35,14 @@
 //礼包页面
 #import "LiBaoViewController.h"
 
+//获取通讯录
+#import "GetContactPersonList.h"
+
+//新年活动页
+#import "NewYearActivityViewController.h"
+#import "NewYearActivityViewController2.h"
+#import "NewYearActivityViewController3.h"
+
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,CAAnimationDelegate,UICollisionBehaviorDelegate>
 {
     UIDynamicAnimator *theAnimator;
@@ -208,6 +216,7 @@
 //    }
 //    [self ziyouluoTiDemo];
 //    [self ziyounihao];
+    
 }
 
 #pragma mark - 自有落体熄新的demo
@@ -894,7 +903,8 @@
 - (void)setReplaceNavMethod {
     
     self.naviView = [[UIView alloc] init];
-    self.naviView.backgroundColor = RGBA(0, 104, 178, 0.0);
+//    self.naviView.backgroundColor = RGBA(0, 104, 178, 1.0);
+    self.naviView.backgroundColor = RGBA(189, 39, 27, 1.0);
     [self.view addSubview:self.naviView];
     [self.naviView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top);
@@ -905,7 +915,7 @@
     
     _imageViewForLeft = [[UIImageView alloc]init];
     _imageViewForLeft.image = [UIImage imageNamed:@"navi_bar"];
-    _imageViewForLeft.alpha = 0;
+//    _imageViewForLeft.alpha = 0;
     [self.naviView addSubview:_imageViewForLeft];
     [_imageViewForLeft mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.naviView.mas_top).with.offset(35);
@@ -917,7 +927,7 @@
     //新浪平台
     _buttonSinaCenter = [[UIButton alloc]init];
     [_buttonSinaCenter setTitle:@"安全保障" forState:UIControlStateNormal];
-    _buttonSinaCenter.alpha = 0.05;
+//    _buttonSinaCenter.alpha = 0.05;
     _buttonSinaCenter.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     [_buttonSinaCenter setTitleColor:RGBA(255, 255, 255, 1.0) forState:UIControlStateNormal];
     [_buttonSinaCenter addTarget:self action:@selector(sinaMethod) forControlEvents:UIControlEventTouchUpInside];
@@ -931,7 +941,7 @@
     //竖线
     _labelForLine = [[UILabel alloc]init];
     _labelForLine.backgroundColor = [UIColor whiteColor];
-    _labelForLine.alpha = 0;
+//    _labelForLine.alpha = 0;
     [self.naviView addSubview:_labelForLine];
     [_labelForLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_buttonSinaCenter.mas_top);
@@ -943,7 +953,7 @@
     //消息中心
     _imageForMess = [[UIImageView alloc]init];
     _imageForMess.image = [UIImage imageNamed:@"notific"];
-    _imageForMess.alpha = 0;
+//    _imageForMess.alpha = 0;
     [self.naviView addSubview:_imageForMess];
     [_imageForMess mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.naviView.mas_right).with.offset(-12);
@@ -953,7 +963,7 @@
     }];
     
     _buttonForMess = [[UIButton alloc]init];
-    _buttonForMess.alpha = 0.05;
+//    _buttonForMess.alpha = 0.05;
     _buttonForMess.backgroundColor = [UIColor clearColor];
     [_buttonForMess addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.naviView addSubview:_buttonForMess];
@@ -998,7 +1008,8 @@
     [_homeTableView registerNib:[UINib nibWithNibName:@"HomeTableViewCellForth" bundle:nil] forCellReuseIdentifier:@"forthcell"];
     [self.bottomView addSubview:_homeTableView];
     [_homeTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.bottomView.mas_top).with.offset(topDistance);
+//        make.top.equalTo(self.bottomView.mas_top).with.offset(topDistance);
+        make.top.equalTo(self.view.mas_top).with.offset(64);
         make.left.equalTo(self.bottomView.mas_left);
         make.right.equalTo(self.bottomView.mas_right);
         make.bottom.equalTo(self.bottomView.mas_bottom);
@@ -1069,7 +1080,8 @@
     if (section == 0) {
         return 0;
     } else if(section == 1) {
-        return RESIZE_UI(12);
+//        return RESIZE_UI(12);
+        return 0;
     } else if (section == 5) {
         return 0;
     } else {
@@ -1141,10 +1153,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
-        CGFloat height = RESIZE_UI(202);
+//        CGFloat height = RESIZE_UI(202);
+        CGFloat height = 0;
         return height;
     } else if (indexPath.section == 1) {
-        CGFloat height = RESIZE_UI(109);
+//        CGFloat height = RESIZE_UI(109);
+        CGFloat height = RESIZE_UI(230);
         return height;
     } else if (indexPath.section == 2){
         return RESIZE_UI(109);
@@ -1161,20 +1175,26 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section==0) {
-        HomeTableViewCellFirst *cell = [[HomeTableViewCellFirst alloc]initWithDic:_personInvestModel];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.learnWangma = ^(){
-            [self sinaMethod];
-        };
-        
-        cell.contactWangma = ^(){
-            NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",[SingletonManager sharedManager].companyTel];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-        };
-        
-        cell.jumpToMessageCenter = ^(){
-            [self messageBtnAction];
-        };
+//        HomeTableViewCellFirst *cell = [[HomeTableViewCellFirst alloc]initWithDic:_personInvestModel];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        cell.learnWangma = ^(){
+//            [self sinaMethod];
+//        };
+//
+//        cell.contactWangma = ^(){
+//            NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",[SingletonManager sharedManager].companyTel];
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+//        };
+//
+//        cell.jumpToMessageCenter = ^(){
+//            [self messageBtnAction];
+//        };
+        static NSString *Cellindentifier = @"Cellindentifier";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Cellindentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Cellindentifier];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
         return cell;
         
     } else if(indexPath.section == 1) {
@@ -1187,6 +1207,22 @@
             NSString *activityId = [self convertNullString:imgModel.activity_id];
             productId = [self convertNullString:productId];
             url = [self convertNullString:url];
+            
+            if ([activityId isEqualToString:@"201"]) {
+                NewYearActivityViewController *newyearVC = [[NewYearActivityViewController alloc]init];
+                [self.navigationController pushViewController:newyearVC animated:YES];
+                return ;
+            }
+            if ([activityId isEqualToString:@"202"]) {
+                NewYearActivityViewController2 *newyearVC2 = [[NewYearActivityViewController2 alloc]init];
+                [self.navigationController pushViewController:newyearVC2 animated:YES];
+                return ;
+            }
+            if ([activityId isEqualToString:@"203"]) {
+                NewYearActivityViewController3 *newyearVC3 = [[NewYearActivityViewController3 alloc]init];
+                [self.navigationController pushViewController:newyearVC3 animated:YES];
+                return ;
+            }
             
             if ([activityId isEqualToString:@"100"]) {
                 NSString *uid = [self convertNullString:[SingletonManager sharedManager].uid];
@@ -1373,25 +1409,25 @@
     } else {
         _homeTableView.bounces = YES;
     }
-    CGFloat alpha = (RESIZE_UI(scrollView.contentOffset.y)-RESIZE_UI(18)) / 100;
-    if (alpha >= 1) {
-        alpha = 1;
-    }else if (alpha <= 0)
-    {
-        alpha = 0;
-    }
-//    self.naviView.backgroundColor = RGBA(0, 104, 178, alpha);
-    self.naviView.backgroundColor = RGBA(208, 17, 27, alpha);
-    _imageViewForLeft.alpha = alpha;
-    _imageForMess.alpha = alpha;
-    _labelForLine.alpha = alpha;
-    if (alpha<0.05) {
-        _buttonForMess.alpha = 0.05;
-        _buttonSinaCenter.alpha = 0.05;
-    }else {
-        _buttonForMess.alpha = alpha;
-        _buttonSinaCenter.alpha = alpha;
-    }
+    
+//    CGFloat alpha = (RESIZE_UI(scrollView.contentOffset.y)-RESIZE_UI(18)) / 100;
+//    if (alpha >= 1) {
+//        alpha = 1;
+//    }else if (alpha <= 0)
+//    {
+//        alpha = 0;
+//    }
+//    self.naviView.backgroundColor = RGBA(208, 17, 27, alpha);
+//    _imageViewForLeft.alpha = alpha;
+//    _imageForMess.alpha = alpha;
+//    _labelForLine.alpha = alpha;
+//    if (alpha<0.05) {
+//        _buttonForMess.alpha = 0.05;
+//        _buttonSinaCenter.alpha = 0.05;
+//    }else {
+//        _buttonForMess.alpha = alpha;
+//        _buttonSinaCenter.alpha = alpha;
+//    }
 //    CGFloat sectionHeaderHeight=0;
 //    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
 //        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);

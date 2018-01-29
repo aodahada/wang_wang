@@ -10,6 +10,7 @@
 
 @interface ReleaseCardDirectlyView : UIView
 
+
 - (instancetype)initWithBankName:(NSString *)bankName withBankNumber:(NSString *)bankNumber;
 @property (nonatomic, strong)void (^confirmRelease)();
 

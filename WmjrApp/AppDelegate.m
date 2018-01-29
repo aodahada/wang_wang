@@ -65,6 +65,9 @@
 //动态广告
 #define ImgUrlString2 @"http://c.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a6a943c180b3b5bb5c8eab8e7.jpg"
 
+//获取通讯录
+#import <Contacts/Contacts.h>
+
 @interface AppDelegate ()<UITabBarControllerDelegate,JPUSHRegisterDelegate>
 
 @property (nonatomic, strong) GuideScrollViewController *guideVC;
@@ -115,6 +118,8 @@
                           channel:@"AppStore"
                  apsForProduction:1
             advertisingIdentifier:nil];
+    
+    
     
     
     [self example];
