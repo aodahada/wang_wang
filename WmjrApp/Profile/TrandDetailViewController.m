@@ -145,8 +145,15 @@
                 break;
             case 6:
             {
-                cell.textLabel.text = @"电子合同";
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                UITableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+                if (cell2 == nil) {
+                    cell2 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell2"];
+                    cell2.detailTextLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                    cell2.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                cell2.textLabel.text = @"电子合同";
+                cell2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                return cell2;
             }
                 break;
                 
@@ -237,8 +244,18 @@
                 break;
             case 7:
             {
-                cell.textLabel.text = @"电子合同";
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//                cell.textLabel.text = @"电子合同";
+//                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                
+                UITableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+                if (cell2 == nil) {
+                    cell2 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell2"];
+                    cell2.detailTextLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                    cell2.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                cell2.textLabel.text = @"电子合同";
+                cell2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                return cell2;
             }
                 break;
                 
@@ -299,6 +316,7 @@
 #pragma mark - 电子合同
 - (void)watchHeTongMethod {
     NetManager *manager = [[NetManager alloc] init];
+    NSString *ID= self.order_id;
     [manager postDataWithUrlActionStr:@"Contract/query" withParamDictionary:@{@"order_id":self.order_id} withBlock:^(id obj) {
         NSDictionary *dic = obj[@"data"];
         if ([obj[@"result"] isEqualToString:@"1"]) {

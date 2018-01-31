@@ -149,20 +149,33 @@
 }
 
 - (id)paramUnCodeStr:(NSString *)encodeStr {
+    
     NSData *unComData = [Base64Secret dataWithBase64Encoding:encodeStr];
     NSData *uncompressData = [unComData zlibInflate];
     id string = [self jsonValueDecoded:uncompressData];
     
     return string;
+
 }
 
 - (id)jsonValueDecoded:(NSData *)encode {
+
     NSError *error = nil;
-    id value = [NSJSONSerialization JSONObjectWithData:encode options:kNilOptions error:&error];
-    if (error) {
-        NSLog(@"jsonValueDecoded error:%@", error);
+    id value;
+    @try {
+        value = [NSJSONSerialization JSONObjectWithData:encode options:kNilOptions error:&error];
+        if (error) {
+            NSLog(@"jsonValueDecoded error:%@", error);
+        }
+        return value;
+    } @catch (NSException *exception) {
+        NSException *error = exception;
+        NSLog(@"我的错误:%@",error);
+        [[[UIAlertView alloc]initWithTitle:@"服务器出现错误" message:@"请退出app稍后重试" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil]show];
+        value = @{@"result":@"10000"};
+    } @finally {
+        return value;
     }
-    return value;
 }
 
 //获取当前的时间戳

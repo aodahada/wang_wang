@@ -146,7 +146,7 @@
     }];
     
     _viewForHead = [[UIView alloc]init];
-    _viewForHead.backgroundColor = RGBA(0, 108, 175, 1.0);
+    _viewForHead.backgroundColor = NAVBARCOLOR;
     [mainView addSubview:_viewForHead];
     [_viewForHead mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mainView.mas_top);
@@ -189,7 +189,7 @@
     }];
     
     UIView *middleView = [[UIView alloc]init];
-    middleView.backgroundColor = RGBA(0, 80, 134, 1.0);
+    middleView.backgroundColor = NEWYEARCOLOR;
     [mainView addSubview:middleView];
     [middleView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_viewForHead.mas_bottom);
@@ -210,7 +210,7 @@
     
     _labelForMidOne = [[UILabel alloc]init];
     _labelForMidOne.text = @"即将获得的奖励";
-    _labelForMidOne.textColor = RGBA(129, 170, 197, 1.0);
+    _labelForMidOne.textColor = [UIColor whiteColor];
     _labelForMidOne.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     [_viewForMidOne addSubview:_labelForMidOne];
     [_labelForMidOne mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -228,7 +228,7 @@
     }];
     
     UILabel *labelLine = [[UILabel alloc]init];
-    labelLine.backgroundColor = RGBA(99, 163, 204, 1.0);
+    labelLine.backgroundColor = NAVBARCOLOR;
     [middleView addSubview:labelLine];
     [labelLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(middleView.mas_centerX);
@@ -249,7 +249,7 @@
     
     _labelForMidTwo = [[UILabel alloc]init];
     _labelForMidTwo.text = @"已经获得的奖励";
-    _labelForMidTwo.textColor = RGBA(129, 170, 197, 1.0);
+    _labelForMidTwo.textColor = [UIColor whiteColor];
     _labelForMidTwo.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     [_viewForMidTwo addSubview:_labelForMidTwo];
     [_labelForMidTwo mas_makeConstraints:^(MASConstraintMaker *make) {

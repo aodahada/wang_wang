@@ -231,7 +231,7 @@
     
     //最上方的篮框
     UIView *viewForTop = [[UIView alloc]init];
-    viewForTop.backgroundColor = RGBA(0, 108, 175, 1.0);
+    viewForTop.backgroundColor = NAVBARCOLOR;
     [bottomView addSubview:viewForTop];
     [viewForTop mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(bottomView.mas_top);
@@ -404,7 +404,7 @@
     [_buttonForShuoMing setBackgroundColor:[UIColor whiteColor]];
     [_buttonForShuoMing setTitle:@"产品信息" forState:UIControlStateNormal];
     [_buttonForShuoMing addTarget:self action:@selector(buttonShuoMingMethod) forControlEvents:UIControlEventTouchUpInside];
-    [_buttonForShuoMing setTitleColor:RGBA(0, 102, 177, 1.0) forState:UIControlStateNormal];
+    [_buttonForShuoMing setTitleColor:NAVBARCOLOR forState:UIControlStateNormal];
     _buttonForShuoMing.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(18)];
     [bottomView addSubview:_buttonForShuoMing];
     [_buttonForShuoMing mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -415,7 +415,7 @@
     }];
     
     _labelForShuoMing = [[UILabel alloc]init];
-    _labelForShuoMing.backgroundColor = RGBA(0, 102, 177, 1.0);
+    _labelForShuoMing.backgroundColor = NAVBARCOLOR;
     [bottomView addSubview:_labelForShuoMing];
     [_labelForShuoMing mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_buttonForShuoMing.mas_bottom);
@@ -440,7 +440,7 @@
     }];
     
     _labelForJianJie = [[UILabel alloc]init];
-    _labelForJianJie.backgroundColor = RGBA(0, 102, 177, 1.0);
+    _labelForJianJie.backgroundColor = NAVBARCOLOR;
     _labelForJianJie.hidden = YES;
     [bottomView addSubview:_labelForJianJie];
     [_labelForJianJie mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -529,7 +529,7 @@
     
     _labelForJianJie.hidden = YES;
     _labelForShuoMing.hidden = NO;
-    [_buttonForShuoMing setTitleColor:RGBA(0, 102, 177, 1.0) forState:UIControlStateNormal];
+    [_buttonForShuoMing setTitleColor:NAVBARCOLOR forState:UIControlStateNormal];
     [_buttonForJianJie setTitleColor:RGBA(102, 102, 102, 1.0) forState:UIControlStateNormal];
     if (_viewForJianJie) {
         [_viewForJianJie removeFromSuperview];
@@ -544,7 +544,7 @@
     
     _labelForShuoMing.hidden = YES;
     _labelForJianJie.hidden = NO;
-    [_buttonForJianJie setTitleColor:RGBA(0, 102, 177, 1.0) forState:UIControlStateNormal];
+    [_buttonForJianJie setTitleColor:NAVBARCOLOR forState:UIControlStateNormal];
     [_buttonForShuoMing setTitleColor:RGBA(102, 102, 102, 1.0) forState:UIControlStateNormal];
     if (_viewForShuoMing) {
         [_viewForShuoMing removeFromSuperview];

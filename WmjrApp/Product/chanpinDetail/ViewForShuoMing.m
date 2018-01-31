@@ -201,7 +201,7 @@
     [checkAgree addGestureRecognizer:tap];
     NSMutableAttributedString *nickStr = [[NSMutableAttributedString alloc] initWithString: @"已查看风险揭示书"];
     [nickStr addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
-    [nickStr addAttribute:NSForegroundColorAttributeName value:RGBA(0, 102, 177, 1.0) range:NSMakeRange(3, 5)];
+    [nickStr addAttribute:NSForegroundColorAttributeName value:NAVBARCOLOR range:NSMakeRange(3, 5)];
     checkAgree.attributedText = nickStr;
     [checkAgree mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(checkBtn.mas_centerY);

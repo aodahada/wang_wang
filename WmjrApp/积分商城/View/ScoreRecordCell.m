@@ -43,7 +43,7 @@
         UILabel *scoreLabel = [[UILabel alloc]init];
         NSString *score = scoreModel.score;
         if ([score rangeOfString:@"-"].location !=NSNotFound) {
-            scoreLabel.textColor = RGBA(0, 102, 177, 1.0);
+            scoreLabel.textColor = NAVBARCOLOR;
             scoreLabel.text = score;
         } else {
             scoreLabel.textColor = RGBA(255, 86, 30, 1.0);

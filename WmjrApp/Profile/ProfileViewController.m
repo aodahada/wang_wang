@@ -35,6 +35,7 @@
 #import "CaiYouCircleViewController.h"
 #import "UserInfoModel.h"
 #import "AssetModel.h"
+#import "EarningsViewController.h"
 
 @interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -285,7 +286,7 @@
     }];
     
     UILabel *leijijiangliLabel = [[UILabel alloc]init];
-    leijijiangliLabel.text = @"累计奖励金额(元)";
+    leijijiangliLabel.text = @"累计财友奖励(元)";
     leijijiangliLabel.textColor = [UIColor whiteColor];
     leijijiangliLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [twoLeftView addSubview:leijijiangliLabel];
@@ -295,7 +296,7 @@
     }];
 
     _jianglijineContent = [[UILabel alloc]init];
-    _jianglijineContent.text = [NSString stringWithFormat:@"¥%@",[SingletonManager sharedManager].userModel.asset.award];
+    _jianglijineContent.text = [NSString stringWithFormat:@"¥%@",[SingletonManager sharedManager].userModel.asset.invite_money];
     _jianglijineContent.textColor = [UIColor whiteColor];
     _jianglijineContent.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [twoLeftView addSubview:_jianglijineContent];
@@ -332,6 +333,14 @@
     [_leijishouyiContent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(leijitouziLabel.mas_bottom);
         make.centerX.equalTo(twoRightView.mas_centerX);
+    }];
+    
+    UIButton *earningsButton = [[UIButton alloc]init];
+    [earningsButton addTarget:self action:@selector(earingsJumpMethod) forControlEvents:UIControlEventTouchUpInside];
+    earningsButton.backgroundColor = [UIColor clearColor];
+    [twoSumView addSubview:earningsButton];
+    [earningsButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(twoSumView);
     }];
 
     UIView *viewForHeadButtom = [[UIView alloc]init];
@@ -441,6 +450,13 @@
     }];
     
     return headView;
+}
+
+#pragma mark - 跳转到收益明细
+- (void)earingsJumpMethod {
+    EarningsViewController *earningVC = [[EarningsViewController alloc]init];
+    [earningVC setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:earningVC animated:YES];
 }
 
 #pragma mark - 查看二维码
@@ -768,6 +784,7 @@
         if ([obj[@"result"] isEqualToString:@"1"]) {
             _balanceValue = [obj[@"data"] objectForKey:@"available_balance"];
             _keYongYuEContent.text = _balanceValue;
+            [self getDataWithNetManager];
         } else {
             [SVProgressHUD showErrorWithStatus:@"请求失败"];
         }
@@ -791,7 +808,6 @@
         _numberLabel.hidden = NO;
     }
     
-    [self getDataWithNetManager];
     [self getRedBallMethod];
     
 }
@@ -853,9 +869,23 @@
         if (obj) {
             UserInfoModel *userModel = [UserInfoModel mj_objectWithKeyValues:obj[@"data"]];
             [SingletonManager sharedManager].userModel = userModel;
-            _zongZiChanContent.text = userModel.asset.total;
-            _jianglijineContent.text = [NSString stringWithFormat:@"¥%@",userModel.asset.award];
-            _leijishouyiContent.text = [NSString stringWithFormat:@"¥%@",userModel.asset.invest];
+            CGFloat balance = [_balanceValue floatValue];
+            CGFloat total = [userModel.asset.total floatValue];
+            _zongZiChanContent.text = [NSString stringWithFormat:@"%.2f",balance+total];
+            NSString *investMoney;
+            if (userModel.asset.invite_money) {
+                investMoney = userModel.asset.invite_money;
+            } else {
+                investMoney = @"0.00";
+            }
+            _jianglijineContent.text = [NSString stringWithFormat:@"¥%@",investMoney];
+            NSString *invest;
+            if (userModel.asset.invest) {
+                invest = userModel.asset.invest;
+            } else {
+                invest = @"0.00";
+            }
+            _leijishouyiContent.text = [NSString stringWithFormat:@"¥%@",invest];
             [SVProgressHUD dismiss];
         } else {
             NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
@@ -881,7 +911,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return RESIZE_UI(60);
+    if (indexPath.row == 3) {
+        return 0;
+    } else {
+        return RESIZE_UI(60);
+    }
     
 }
 
@@ -941,17 +975,18 @@
                 break;
             case 3:
             {
-                cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
-                cell.textLabel.text = @"财友圈";
-                UILabel *newLabel = [[UILabel alloc]init];
-                newLabel.text = @"n e w";
-                newLabel.textColor = RGBA(239, 180, 77, 1.0);
-                newLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-                [cell addSubview:newLabel];
-                [newLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(cell.mas_top).with.offset(RESIZE_UI(10));
-                    make.left.equalTo(cell.textLabel.mas_right).with.offset(RESIZE_UI(5));
-                }];
+//                cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
+//                cell.textLabel.text = @"财友圈";
+//                UILabel *newLabel = [[UILabel alloc]init];
+//                newLabel.text = @"n e w";
+//                newLabel.textColor = RGBA(239, 180, 77, 1.0);
+//                newLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+//                [cell addSubview:newLabel];
+//                [newLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//                    make.top.equalTo(cell.mas_top).with.offset(RESIZE_UI(10));
+//                    make.left.equalTo(cell.textLabel.mas_right).with.offset(RESIZE_UI(5));
+//                }];
+                cell.accessoryType = UITableViewCellAccessoryNone;
             }
                 break;
             case 4:

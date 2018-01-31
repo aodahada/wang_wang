@@ -1,29 +1,24 @@
 //
-//  NewYearActivityViewController3.m
+//  NewYearRuleViewController.m
 //  WmjrApp
 //
-//  Created by 霍锐 on 2018/1/29.
+//  Created by 霍锐 on 2018/1/30.
 //  Copyright © 2018年 Baimifan. All rights reserved.
 //
 
-#import "NewYearActivityViewController3.h"
+#import "NewYearRuleViewController.h"
 
-@interface NewYearActivityViewController3 ()
+@interface NewYearRuleViewController ()
 
 @end
 
-@implementation NewYearActivityViewController3
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = YES;
-}
+@implementation NewYearRuleViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"别动我的压岁钱";
+    self.title = @"活动规则";
     
     UIScrollView *mainScrollView = [[UIScrollView alloc]init];
     mainScrollView.backgroundColor = [UIColor whiteColor];
@@ -42,35 +37,19 @@
     }];
     
     UIImageView *imageView = [[UIImageView alloc]init];
-    imageView.image = [UIImage imageNamed:@"别动我的压岁钱-详情页"];
+    imageView.image = [UIImage imageNamed:@"年终奖活动细则"];
     [mainView addSubview:imageView];
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mainView.mas_top);
         make.left.equalTo(mainView.mas_left);
         make.right.equalTo(mainView.mas_right);
-        make.height.mas_offset(RESIZE_UI(667));
+        make.height.mas_offset(RESIZE_UI(1231));
     }];
     
     [mainView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(imageView.mas_bottom);
     }];
     
-    UIButton *backButton = [[UIButton alloc]init];
-    [backButton setBackgroundColor:[UIColor clearColor]];
-    [backButton addTarget:self action:@selector(investMethod) forControlEvents:UIControlEventTouchUpInside];
-    [mainView addSubview:backButton];
-    [backButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(mainView.mas_bottom);
-        make.left.equalTo(mainView.mas_left);
-        make.right.equalTo(mainView.mas_right);
-        make.height.mas_equalTo(RESIZE_UI(50));
-    }];
-    
-}
-
-- (void)investMethod {
-    self.tabBarController.selectedIndex = 1;
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

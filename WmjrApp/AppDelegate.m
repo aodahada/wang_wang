@@ -347,7 +347,8 @@
     
     self.tabbarC = [[UITabBarController alloc] init];
     self.tabbarC.viewControllers = @[homeNa, productNa, moneyOrderNav, profileNa];
-    self.tabbarC.tabBar.tintColor = RGBA(0, 102, 177, 1.0);
+//    self.tabbarC.tabBar.tintColor = RGBA(0, 102, 177, 1.0);
+    self.tabbarC.tabBar.tintColor = NAVBARCOLOR;
     self.tabbarC.delegate = self;
     self.window.rootViewController = self.tabbarC;
     

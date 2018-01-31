@@ -15,21 +15,22 @@
     self = [super init];
     if (self) {
         self.backgroundColor = RGBA(243, 244, 246, 1.0);
-        UIImageView *lineImage = [[UIImageView alloc]init];
-        lineImage.image = [UIImage imageNamed:@"image_hbbj"];
-        lineImage.userInteractionEnabled = YES;
-        [self addSubview:lineImage];
-        [lineImage mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self);
-        }];
+//        UIImageView *lineImage = [[UIImageView alloc]init];
+//        lineImage.image = [UIImage imageNamed:@"image_hbbj"];
+//        lineImage.userInteractionEnabled = YES;
+//        [self addSubview:lineImage];
+//        [lineImage mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(self);
+//        }];
         
-        UIView *topView = [[UIView alloc]init];
-        topView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.0];
-        [lineImage addSubview:topView];
+        UIImageView *topView = [[UIImageView alloc]init];
+//        topView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.0];
+        topView.image = [UIImage imageNamed:@"image_hbbj"];
+        [self addSubview:topView];
         [topView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(lineImage.mas_top);
-            make.left.equalTo(lineImage.mas_left);
-            make.right.equalTo(lineImage.mas_right);
+            make.top.equalTo(self.mas_top);
+            make.left.equalTo(self.mas_left);
+            make.right.equalTo(self.mas_right);
             make.height.mas_offset(RESIZE_UI(130));
         }];
         
@@ -82,18 +83,20 @@
             make.width.height.mas_offset(RESIZE_UI(68));
         }];
         
-        UIView *bottomView = [[UIView alloc]init];
-        bottomView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.0];
-        [lineImage addSubview:bottomView];
+        UIImageView *bottomView = [[UIImageView alloc]init];
+//        bottomView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.0];
+        bottomView.image = [UIImage imageNamed:@"Combined Shape Copy 4"];
+        [self addSubview:bottomView];
         [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(topView.mas_bottom);
-            make.left.equalTo(lineImage.mas_left);
-            make.right.equalTo(lineImage.mas_right);
-            make.bottom.equalTo(lineImage.mas_bottom);
+            make.left.equalTo(self.mas_left);
+            make.right.equalTo(self.mas_right);
+            make.bottom.equalTo(self.mas_bottom);
         }];
         
         UILabel *tipLabel = [[UILabel alloc]init];
-        tipLabel.text = [NSString stringWithFormat:@"未激活红包将在出借产品到期后（%@）自动激活，激活后点击“领取”即可立即领取红包到账户余额",redModel.end_date];
+        tipLabel.numberOfLines = 2;
+        tipLabel.text = [NSString stringWithFormat:@"未激活红包将在出借产品到期后（%@）自动激活，激活后点击“领取”即可立即领取红包到账户余额",redModel.end_time];
         tipLabel.textColor = RGBA(153, 153, 153, 1.0);
         tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
         [bottomView addSubview:tipLabel];

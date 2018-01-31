@@ -1456,6 +1456,14 @@
     {
         _tipLabel.hidden = NO;
     }
+    
+    //去黏性
+    CGFloat sectionHeaderHeight = RESIZE_UI(54);
+    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+    }
 
 }
 
@@ -1514,8 +1522,6 @@
     }
     return NO;
 }
-
-
 
 
 /**

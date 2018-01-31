@@ -37,7 +37,7 @@
 
     _fundWealth = [[UILabel alloc] init];
     _fundWealth.textAlignment = NSTextAlignmentLeft;
-    _fundWealth.textColor = [UIColor colorWithRed:0.17f green:0.45f blue:0.82f alpha:1.00f];
+    _fundWealth.textColor = NAVBARCOLOR;
     _fundWealth.font = [UIFont boldSystemFontOfSize:RESIZE_UI(18.0f)];
     [self.contentView addSubview:_fundWealth];
     [_fundWealth mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -27,6 +27,10 @@
 		642EF779201F27E700031AE0 /* NewYearActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF778201F27E700031AE0 /* NewYearActivityViewController.m */; };
 		642EF77C201F303B00031AE0 /* NewYearActivityViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF77B201F303B00031AE0 /* NewYearActivityViewController2.m */; };
 		642EF77F201F304500031AE0 /* NewYearActivityViewController3.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF77E201F304500031AE0 /* NewYearActivityViewController3.m */; };
+		642EF78220204B3300031AE0 /* EarningsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF78120204B3300031AE0 /* EarningsViewController.m */; };
+		642EF78520204F8000031AE0 /* EarningListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF78420204F8000031AE0 /* EarningListModel.m */; };
+		642EF788202055C100031AE0 /* EarnTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF787202055C100031AE0 /* EarnTableViewCell.m */; };
+		642EF78B20205A4200031AE0 /* NewYearRuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 642EF78A20205A4200031AE0 /* NewYearRuleViewController.m */; };
 		6431A4AC1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6431A4AB1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m */; };
 		64538A4A1FE4FB1800BC1F3F /* JiaXiActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64538A491FE4FB1800BC1F3F /* JiaXiActivityViewController.m */; };
 		6458892B1F457A8000E69574 /* UIAlertView+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 6458892A1F457A8000E69574 /* UIAlertView+Block.m */; };
@@ -612,6 +616,14 @@
 		642EF77B201F303B00031AE0 /* NewYearActivityViewController2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewYearActivityViewController2.m; sourceTree = "<group>"; };
 		642EF77D201F304500031AE0 /* NewYearActivityViewController3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewYearActivityViewController3.h; sourceTree = "<group>"; };
 		642EF77E201F304500031AE0 /* NewYearActivityViewController3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewYearActivityViewController3.m; sourceTree = "<group>"; };
+		642EF78020204B3300031AE0 /* EarningsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EarningsViewController.h; sourceTree = "<group>"; };
+		642EF78120204B3300031AE0 /* EarningsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EarningsViewController.m; sourceTree = "<group>"; };
+		642EF78320204F8000031AE0 /* EarningListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EarningListModel.h; sourceTree = "<group>"; };
+		642EF78420204F8000031AE0 /* EarningListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EarningListModel.m; sourceTree = "<group>"; };
+		642EF786202055C100031AE0 /* EarnTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EarnTableViewCell.h; sourceTree = "<group>"; };
+		642EF787202055C100031AE0 /* EarnTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EarnTableViewCell.m; sourceTree = "<group>"; };
+		642EF78920205A4200031AE0 /* NewYearRuleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewYearRuleViewController.h; sourceTree = "<group>"; };
+		642EF78A20205A4200031AE0 /* NewYearRuleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewYearRuleViewController.m; sourceTree = "<group>"; };
 		6431A4AA1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPackageTableViewCellTwo.h; sourceTree = "<group>"; };
 		6431A4AB1F56B23900B4FC1C /* MyRedPackageTableViewCellTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRedPackageTableViewCellTwo.m; sourceTree = "<group>"; };
 		64538A481FE4FB1800BC1F3F /* JiaXiActivityViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JiaXiActivityViewController.h; sourceTree = "<group>"; };
@@ -1491,6 +1503,10 @@
 				642EF77B201F303B00031AE0 /* NewYearActivityViewController2.m */,
 				642EF77D201F304500031AE0 /* NewYearActivityViewController3.h */,
 				642EF77E201F304500031AE0 /* NewYearActivityViewController3.m */,
+				642EF78020204B3300031AE0 /* EarningsViewController.h */,
+				642EF78120204B3300031AE0 /* EarningsViewController.m */,
+				642EF78920205A4200031AE0 /* NewYearRuleViewController.h */,
+				642EF78A20205A4200031AE0 /* NewYearRuleViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1500,6 +1516,8 @@
 			children = (
 				642EF759201DD1FB00031AE0 /* GetContactPersonList.h */,
 				642EF75A201DD1FB00031AE0 /* GetContactPersonList.m */,
+				642EF78320204F8000031AE0 /* EarningListModel.h */,
+				642EF78420204F8000031AE0 /* EarningListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1515,6 +1533,8 @@
 				642EF76C201EE30100031AE0 /* CalculateShouYiView.m */,
 				642EF771201F09F300031AE0 /* ActiveSuccessView.h */,
 				642EF772201F09F300031AE0 /* ActiveSuccessView.m */,
+				642EF786202055C100031AE0 /* EarnTableViewCell.h */,
+				642EF787202055C100031AE0 /* EarnTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2989,7 +3009,7 @@
 				TargetAttributes = {
 					C51B41AC1C784B02001679B5 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = E9DZ9T2VGD;
+						DevelopmentTeam = 28Y6NMPTCR;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -3436,6 +3456,7 @@
 				C51B434B1C7855AD001679B5 /* LoginViewController.m in Sources */,
 				C51B43041C7854C0001679B5 /* AvatorChangeView.m in Sources */,
 				64CDE0CA1F963554007F9449 /* AddressListViewController.m in Sources */,
+				642EF78220204B3300031AE0 /* EarningsViewController.m in Sources */,
 				6463275D1FE26FC700FA6A28 /* WinPrizeView.m in Sources */,
 				642EF75E201E010700031AE0 /* AssetModel.m in Sources */,
 				C51B42AB1C78531F001679B5 /* TrandDetailViewController.m in Sources */,
@@ -3468,6 +3489,7 @@
 				64880FE81FC4A7E50011A1D3 /* ApplyRocrdModel.m in Sources */,
 				642EF773201F09F300031AE0 /* ActiveSuccessView.m in Sources */,
 				64CDE0E51F9788F5007F9449 /* IntegralProductDetailModel.m in Sources */,
+				642EF78B20205A4200031AE0 /* NewYearRuleViewController.m in Sources */,
 				64CDE0BF1F9623DF007F9449 /* IntegralOrderTableViewCell.m in Sources */,
 				8B1611501D81384E00C9B954 /* HomeProductCatModel.m in Sources */,
 				8B4446861D990EC500EDCDBC /* MyReCommandModel.m in Sources */,
@@ -3479,6 +3501,7 @@
 				C51B43261C785535001679B5 /* CapitalAccountViewCell.m in Sources */,
 				C51B42591C7850A3001679B5 /* proIntroModel.m in Sources */,
 				C51B42FD1C7854B3001679B5 /* AddBankViewController.m in Sources */,
+				642EF788202055C100031AE0 /* EarnTableViewCell.m in Sources */,
 				64CDE0D61F96FCB5007F9449 /* IntegralAddressModel.m in Sources */,
 				C51B43C01C78572F001679B5 /* ComfirmFastPayView.m in Sources */,
 				64FF9F2E1FE2B17A007B635C /* PrizeRecordTableViewCell.m in Sources */,
@@ -3633,6 +3656,7 @@
 				C51B438A1C78566B001679B5 /* TAPageControl.m in Sources */,
 				C51B43171C785528001679B5 /* NounExplanViewController.m in Sources */,
 				8BF3F84C1D8248BD00E669B2 /* AliPayViews.m in Sources */,
+				642EF78520204F8000031AE0 /* EarningListModel.m in Sources */,
 				C51B42801C785236001679B5 /* MessageWViewController.m in Sources */,
 				64259ED720021DDA00611ED9 /* ReleaseBankCardModel.m in Sources */,
 				64880FDF1FC3F0E40011A1D3 /* ApplyRecordTableViewCell.m in Sources */,
@@ -3787,7 +3811,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = E9DZ9T2VGD;
+				DEVELOPMENT_TEAM = 28Y6NMPTCR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK",
@@ -3823,7 +3847,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xuan luo (7CU5BGJ9C4)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = E9DZ9T2VGD;
+				DEVELOPMENT_TEAM = 28Y6NMPTCR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WmjrApp/ShareSDK",

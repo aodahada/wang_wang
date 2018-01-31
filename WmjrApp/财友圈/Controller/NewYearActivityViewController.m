@@ -7,6 +7,7 @@
 //
 
 #import "NewYearActivityViewController.h"
+#import "NewYearRuleViewController.h"
 
 @interface NewYearActivityViewController ()
 
@@ -22,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"新年要畅想 来领年终奖";
     
     UIScrollView *mainScrollView = [[UIScrollView alloc]init];
     mainScrollView.backgroundColor = [UIColor whiteColor];
@@ -54,16 +57,30 @@
     }];
     
     UIButton *backButton = [[UIButton alloc]init];
-    [backButton setBackgroundColor:[UIColor clearColor]];
     [backButton addTarget:self action:@selector(investMethod) forControlEvents:UIControlEventTouchUpInside];
     [mainView addSubview:backButton];
     [backButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(mainView.mas_bottom);
         make.left.equalTo(mainView.mas_left);
         make.right.equalTo(mainView.mas_right);
-        make.height.mas_equalTo(RESIZE_UI(50));
+        make.height.mas_equalTo(RESIZE_UI(40));
     }];
     
+    UIButton *ruleButton = [[UIButton alloc]init];
+    [ruleButton addTarget:self action:@selector(watchRule) forControlEvents:UIControlEventTouchUpInside];
+    [mainView addSubview:ruleButton];
+    [ruleButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(mainView.mas_bottom).with.offset(-RESIZE_UI(50));
+        make.right.equalTo(mainView.mas_right);
+        make.width.mas_offset(RESIZE_UI(200));
+        make.height.mas_offset(RESIZE_UI(40));
+    }];
+    
+}
+
+- (void)watchRule {
+    NewYearRuleViewController *newYearVC = [[NewYearRuleViewController alloc]init];
+    [self.navigationController pushViewController:newYearVC animated:YES];
 }
 
 - (void)investMethod {

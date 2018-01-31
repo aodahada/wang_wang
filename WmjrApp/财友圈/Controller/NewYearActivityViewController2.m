@@ -22,6 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"工作可以停 加薪不能停";
     
     UIScrollView *mainScrollView = [[UIScrollView alloc]init];
     mainScrollView.backgroundColor = [UIColor whiteColor];

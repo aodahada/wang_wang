@@ -9,11 +9,18 @@
 #import "MyReadyMoneyRedBallTableViewCell.h"
 #import "RedPackageModel.h"
 
+@interface MyReadyMoneyRedBallTableViewCell ()
+
+@property (nonatomic, strong)RedPackageModel *remodel;
+
+@end
+
 @implementation MyReadyMoneyRedBallTableViewCell
 
 - (instancetype)initWithRedPackageModel:(RedPackageModel *)redModel {
     self = [super init];
     if (self) {
+        _remodel = redModel;
         self.backgroundColor = RGBA(243, 244, 246, 1.0);
         UIImageView *lineImage = [[UIImageView alloc]init];
         lineImage.image = [UIImage imageNamed:@"image_hbbj"];
@@ -80,7 +87,7 @@
             [jihuoButton setBackgroundImage:[UIImage imageNamed:@"btn_ylq"] forState:UIControlStateNormal];
         } else {
             [jihuoButton setBackgroundImage:[UIImage imageNamed:@"btn_ljlq"] forState:UIControlStateNormal];
-            [jihuoButton addTarget:self action:@selector(jihuoMethod:) forControlEvents:UIControlEventTouchUpInside];
+            [jihuoButton addTarget:self action:@selector(jihuoMethod) forControlEvents:UIControlEventTouchUpInside];
         }
         [lineImage addSubview:jihuoButton];
         [jihuoButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -94,12 +101,16 @@
     return self;
 }
 
-- (void)jihuoMethod:(RedPackageModel *)remodel {
+- (void)jihuoMethod {
     
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-    [manager postDataWithUrlActionStr:@"Redpacket/doCash" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"redpacket_member_id":remodel.redpacket_member_id} withBlock:^(id obj) {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"member_id"] = [SingletonManager sharedManager].uid;
+    dict[@"redpacket_member_id"] = _remodel.redpacket_member_id;
+    [manager postDataWithUrlActionStr:@"Redpacket/doCash" withParamDictionary:dict withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
+            [SVProgressHUD dismiss];
             if (self.jihuoSuccess) {
                 self.jihuoSuccess();
             }

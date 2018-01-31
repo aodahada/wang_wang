@@ -73,7 +73,7 @@
 //头视图
 - (UIView *)setUpProfileHeadView {
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, RESIZE_UI(204+49))];
-    headView.backgroundColor = RGBA(0, 108, 175, 1.0);
+    headView.backgroundColor = NAVBARCOLOR;
     UILabel *lable = [[UILabel alloc] init];
     lable.text = @"今日预计收益(元)";
     lable.textAlignment = NSTextAlignmentCenter;
@@ -98,7 +98,7 @@
     
     
     UIView *viewForLeft = [[UIView alloc]init];
-    viewForLeft.backgroundColor = RGBA(0, 81, 125, 1.0);
+    viewForLeft.backgroundColor = NEWYEARCOLOR;
     [headView addSubview:viewForLeft];
     [viewForLeft mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(140));
@@ -109,7 +109,7 @@
     
     UILabel *labelForFinalAmount = [[UILabel alloc]init];
     labelForFinalAmount.text = @"理财金额(元)";
-    labelForFinalAmount.textColor = COLOR_WITH_HEX(0xABC7D6);
+    labelForFinalAmount.textColor = [UIColor whiteColor];
     labelForFinalAmount.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     [viewForLeft addSubview:labelForFinalAmount];
     [labelForFinalAmount mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -130,7 +130,7 @@
     }];
     
     UIView *viewForRight = [[UIView alloc]init];
-    viewForRight.backgroundColor = RGBA(0, 81, 125, 1.0);
+    viewForRight.backgroundColor = NEWYEARCOLOR;
     [headView addSubview:viewForRight];
     [viewForRight mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(140));
@@ -141,7 +141,7 @@
     
     UILabel *labelForRaiseAmount = [[UILabel alloc]init];
     labelForRaiseAmount.text = @"累计收益(元)";
-    labelForRaiseAmount.textColor = COLOR_WITH_HEX(0xABC7D6);
+    labelForRaiseAmount.textColor = [UIColor whiteColor];
     labelForRaiseAmount.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     [viewForRight addSubview:labelForRaiseAmount];
     [labelForRaiseAmount mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -177,7 +177,7 @@
         button.tag = 101 + i;
         [button setTitle:titArray[i] forState:UIControlStateNormal];
         if (i == 0) {
-            [button setTitleColor:RGBA(0, 108, 175, 1.0) forState:UIControlStateNormal];
+            [button setTitleColor:NAVBARCOLOR forState:UIControlStateNormal];
         } else {
             [button setTitleColor:AUXILY_COLOR forState:UIControlStateNormal];
         }
@@ -186,7 +186,7 @@
         [_aView addSubview:button];
     }
     _redLine = [[UIView alloc] initWithFrame:CGRectMake(0, RESIZE_UI(204+47), SCREEN_WIDTH / 2, RESIZE_UI(2))];
-    _redLine.backgroundColor = RGBA(0, 108, 175, 1.0);
+    _redLine.backgroundColor = NAVBARCOLOR;
     [headView addSubview:_redLine];
     
     return headView;
@@ -194,7 +194,7 @@
 
 - (void)buttonAction:(UIButton *)btn {
     NSString *stateStr = nil;
-    [btn setTitleColor:RGBA(0, 108, 175, 1.0) forState:UIControlStateNormal];
+    [btn setTitleColor:NAVBARCOLOR forState:UIControlStateNormal];
     if ([btn.titleLabel.text isEqualToString:@"持有中"]) {
         stateStr = @"4";
         [UIView animateWithDuration:.3 animations:^{
@@ -218,6 +218,9 @@
     [manager postDataWithUrlActionStr:@"Product/myProduct" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"page":@"", @"size":@"",@"state":stateStr} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];
+            [FinancialModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                return @{@"order_id" : @"id"};
+            }];
             NSArray *array = [FinancialModel mj_keyValuesArrayWithObjectArray:obj[@"data"]];
             for (NSDictionary *dic in array) {
                 FinancialModel *model = [[FinancialModel alloc] init];
@@ -250,6 +253,9 @@
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];
              [_financeArray removeAllObjects];
+            [FinancialModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                return @{@"order_id" : @"id"};
+            }];
             NSArray *array = [FinancialModel mj_keyValuesArrayWithObjectArray:obj[@"data"]];
             for (NSDictionary *dic in array) {
                 FinancialModel *model = [[FinancialModel alloc] init];
@@ -315,7 +321,7 @@
     FinancialModel *model = _financeArray[indexPath.row];
     /*跳转到产品介绍*/
     TrandDetailViewController *trandDetailVC = [[TrandDetailViewController alloc] init];
-    trandDetailVC.order_id = model.product_id;
+    trandDetailVC.order_id = model.order_id;
     trandDetailVC.nameStr = model.name;
     trandDetailVC.earnToatl = [NSString stringWithFormat:@"%.2f", [model.money floatValue] *[model.returnrate floatValue] / 365 *[model.day intValue]];
     trandDetailVC.totalNum = model.money;

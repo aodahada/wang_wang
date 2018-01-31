@@ -732,7 +732,7 @@
         shenheTextView.text = _applyRecordModel.audit;
         shenheTextView.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
         if ([_applyRecordModel.status isEqualToString:@"1"]) {
-            shenheTextView.textColor = RGBA(0, 102, 177, 1.0);
+            shenheTextView.textColor = NAVBARCOLOR;
         } else {
             shenheTextView.textColor = RGBA(243, 39, 68, 1.0);
         }

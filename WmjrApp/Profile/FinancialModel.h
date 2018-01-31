@@ -11,6 +11,7 @@
 @interface FinancialModel : NSObject
 
 @property (nonatomic, copy) NSString *product_id;
+@property (nonatomic, copy) NSString *order_id;
 @property (nonatomic, copy) NSString *money;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *returnrate;
