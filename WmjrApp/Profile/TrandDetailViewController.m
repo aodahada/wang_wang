@@ -59,11 +59,11 @@
 #pragma mark - uitableview -
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([self.redpacket isEqualToString:@"0"]) {
-//        return 7;
-        return 6;
-    } else {
-//        return 8;
         return 7;
+//        return 6;
+    } else {
+        return 8;
+//        return 7;
     }
 }
 

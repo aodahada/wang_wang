@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SortContaceModel.h"
 
 @interface SortCaiYouTableViewCell : UITableViewCell
+
+- (instancetype)initWithType:(NSInteger)type withRow:(NSInteger)row WithModel:(SortContaceModel *)sortModel;
 
 @end

@@ -81,4 +81,7 @@
  */
 + (BOOL)isPureInt:(NSString *)string;
 
+//保留position位小数，不四舍五入
++ (NSString *)notRounding:(float)price afterPoint:(int)position;
+
 @end

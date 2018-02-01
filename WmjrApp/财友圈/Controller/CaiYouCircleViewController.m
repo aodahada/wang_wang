@@ -10,8 +10,15 @@
 #import "InvestCaiYouViewController.h"
 #import "SortCaiYouViewController.h"
 #import "CalculateShouYiView.h"
+#import "AgViewController.h"
+#import "PopMenu.h"
+#import "SharedView.h"
+#import "TotalRewardViewController.h"
 
-@interface CaiYouCircleViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface CaiYouCircleViewController ()<UITableViewDelegate,UITableViewDataSource>{
+    PopMenu *_popMenu;
+    SharedView *_sharedView;
+}
 
 @property (nonatomic, strong)UIView *blackBottomView;//二维码黑背景
 @property (nonatomic, strong)UIView *whiteBottomView;//二维码白背景
@@ -44,7 +51,10 @@
 
 #pragma mark - 规则说明
 - (void)ruleShowMethod {
-    
+    AgViewController *agVC =[[AgViewController alloc] init];
+    agVC.title = @"规则说明";
+    agVC.webUrl = @"http://api.wmjr888.com/home/page/app/id/17";
+    [self.navigationController pushViewController:agVC animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -70,6 +80,7 @@
     [bottomView setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     bottomView.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [bottomView setBackgroundColor:YEARCOLOR];
+    [bottomView addTarget:self action:@selector(clickSharedBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bottomView];
     [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.mas_bottom);
@@ -130,10 +141,7 @@
     CalculateShouYiView *calculateView = [[CalculateShouYiView alloc]init];
     [self.view addSubview:calculateView];
     [calculateView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view.mas_bottom);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.height.mas_offset(RESIZE_UI(375));
+        make.edges.equalTo(self.view);
     }];
 }
 
@@ -419,7 +427,8 @@
     switch (indexPath.row) {
         case 1:
         {
-            
+            TotalRewardViewController *totalRewardVC = [[TotalRewardViewController alloc]init];
+            [self.navigationController pushViewController:totalRewardVC animated:YES];
         }
             break;
         case 2:
@@ -439,6 +448,41 @@
             break;
     }
 }
+
+//响应点击分享的方法
+- (void)clickSharedBtnAction {
+    //    NSLog(@"-------点击分享----");
+    _popMenu = [[PopMenu alloc] init];
+    _popMenu.dimBackground = YES;
+    _popMenu.coverNavigationBar = YES;
+    _sharedView = [[SharedView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-RESIZE_UI(168), SCREEN_WIDTH, RESIZE_UI(168))];
+    [_popMenu addSubview:_sharedView];
+    [_popMenu showInRect:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    //    _sharedView.center = _popMenu.center;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPopAction)];
+    [_popMenu addGestureRecognizer:tap];
+    
+    [_sharedView callSharedBtnEventBlock:^(UIButton *sender) {
+        [_popMenu dismissMenu];
+        SharedManager *sharedManager = [[SharedManager alloc] init];
+        if ([SingletonManager sharedManager].userModel.invitationcode) {
+            NSString *contentStr = [NSString stringWithFormat:@"大吉大利，春节来“息”！工资不够，年终来凑！快快使用我的旺马财富推荐码%@立即出借吧！", [SingletonManager sharedManager].userModel.invitationcode];
+            //            NSString *urlStr = [NSString stringWithFormat:@"http://m.wmjr888.com/?invitationcode=%@#login-register",_invitationcode];
+            NSString *urlStr = [NSString stringWithFormat:@"http://m.wangmacaifu.com/#/register/wmcf-%@",[SingletonManager sharedManager].userModel.invitationcode];
+            [sharedManager shareContent:sender withTitle:@"速来！你的年终奖已到达战场！" andContent:contentStr andUrl:urlStr];
+            
+        } else {
+            [[SingletonManager sharedManager] alert1PromptInfo:@"推荐码获取失败,请重新分享"];
+        }
+    }];
+}
+
+/*遮盖消失*/
+- (void)tapPopAction {
+    [_popMenu dismissMenu];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

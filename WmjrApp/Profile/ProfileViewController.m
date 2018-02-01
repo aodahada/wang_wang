@@ -911,11 +911,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.row == 3) {
-        return 0;
-    } else {
+//    if (indexPath.row == 3) {
+//        return 0;
+//    } else {
         return RESIZE_UI(60);
-    }
+//    }
     
 }
 
@@ -975,37 +975,36 @@
                 break;
             case 3:
             {
-//                cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
-//                cell.textLabel.text = @"财友圈";
-//                UILabel *newLabel = [[UILabel alloc]init];
-//                newLabel.text = @"n e w";
-//                newLabel.textColor = RGBA(239, 180, 77, 1.0);
-//                newLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-//                [cell addSubview:newLabel];
-//                [newLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//                    make.top.equalTo(cell.mas_top).with.offset(RESIZE_UI(10));
-//                    make.left.equalTo(cell.textLabel.mas_right).with.offset(RESIZE_UI(5));
-//                }];
-                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
+                cell.textLabel.text = @"财友圈";
+                UILabel *newLabel = [[UILabel alloc]init];
+                newLabel.text = @"n e w";
+                newLabel.textColor = RGBA(239, 180, 77, 1.0);
+                newLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                [cell addSubview:newLabel];
+                [newLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(cell.mas_top).with.offset(RESIZE_UI(10));
+                    make.left.equalTo(cell.textLabel.mas_right).with.offset(RESIZE_UI(5));
+                }];
             }
                 break;
+//            case 4:
+//                cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
+//                cell.textLabel.text = @"好友推荐";
+//                break;
             case 4:
-                cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
-                cell.textLabel.text = @"好友推荐";
-                break;
-            case 5:
                 cell.imageView.image = [UIImage imageNamed:@"icon_yhk"];
                 cell.textLabel.text = @"我的银行卡";
                 break;
-            case 6:
+            case 5:
                 cell.imageView.image = [UIImage imageNamed:@"icon_zhmm"];
                 cell.textLabel.text = @"账号和密码";
                 break;
-            case 7:
+            case 6:
                 cell.imageView.image = [UIImage imageNamed:@"icon_jyjl"];
                 cell.textLabel.text = @"交易记录";
                 break;
-            case 8:
+            case 7:
             {
                 cell.imageView.image = [UIImage imageNamed:@"icon_lxkf"];
                 cell.textLabel.text = @"联系客服";
@@ -1060,13 +1059,13 @@
             [self.navigationController pushViewController:caiyouVC animated:YES];
             break;
         }
+//        case 4: {
+//            /* 我的推荐 */
+//            MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]init];
+//            [self.navigationController pushViewController:myrecommendVC animated:YES];
+//            break;
+//        }
         case 4: {
-            /* 我的推荐 */
-            MyRecommendatViewController *myrecommendVC = [[MyRecommendatViewController alloc]init];
-            [self.navigationController pushViewController:myrecommendVC animated:YES];
-            break;
-        }
-        case 5: {
             /* 我的银行卡 */
             if ([[SingletonManager sharedManager].userModel.card_id isEqualToString:@"0"]) {
                 /*  我的银行卡 */
@@ -1081,19 +1080,19 @@
             }
             break;
         }
-        case 6: {
+        case 5: {
             /* 账号和密码 */
             AccountAndPasswordViewController *accountAndPassVC = [[AccountAndPasswordViewController alloc]init];
             [self.navigationController pushViewController:accountAndPassVC animated:YES];
             break;
         }
-        case 7: {
+        case 6: {
             /** 交易记录*/
             MyselfTransactionController *mySelfTrans = [[MyselfTransactionController alloc]init];
             [self.navigationController pushViewController:mySelfTrans animated:YES];
             break;
         }
-        case 8:{
+        case 7:{
             //联系客服
             NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",[SingletonManager sharedManager].companyTel];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];

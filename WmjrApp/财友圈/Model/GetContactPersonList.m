@@ -12,7 +12,6 @@
 @interface GetContactPersonList()
 
 @property (nonatomic, strong)NSMutableArray *personList;
-@property (nonatomic, copy)NSString *personString;
 
 @end
 
@@ -30,11 +29,6 @@
 - (NSString *)getPeronListMethod {
     
     _personList = [[NSMutableArray alloc]init];
-//    _personString = [NSMutableString stringWithFormat:@"["];
-    _personString = @"[";
-    
-    //初始字符串
-    
     
     // 1.获取授权状态
 //    CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
@@ -75,28 +69,15 @@
 //            NSLog(@"%@ %@", phoneLabel, phoneValue);
             phoneNumber = phoneValue;
         }
-//        NSDictionary *dict = @{@"mobile":phoneNumber,@"name":personName};
-//        [_personList addObject:dict];
-        
-        NSString *addModel = [NSString stringWithFormat:@"{\"mobile\":%@,@\"name\":%@},",phoneNumber,personName];
-        _personString = [NSString stringWithFormat:@"%@%@",_personString,addModel];
+        NSDictionary *dict = @{@"mobile":phoneNumber,@"name":personName};
+        [_personList addObject:dict];
         
     }];
     
-    _personString = [_personString substringToIndex:[_personString length]-1];
-    _personString = [_personString stringByAppendingString:@"]"];
+    NSData *data=[NSJSONSerialization dataWithJSONObject:_personList options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *personListString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     
-    return _personString;
-    
-    
-//    NSString *personListString = [NSString stringWithFormat:@"%@",_personList];
-//    personListString = [personListString stringByReplacingOccurrencesOfString:@"(" withString:@"["];
-//    personListString = [personListString stringByReplacingOccurrencesOfString:@")" withString:@"]"];
-    
-//    NSData *data=[NSJSONSerialization dataWithJSONObject:_personList options:NSJSONWritingPrettyPrinted error:nil];
-//    NSString *personListString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-    
-//    return personListString;
+    return personListString;
     
 }
 
