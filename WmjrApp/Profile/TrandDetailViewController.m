@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *earnTotal;
 @property (weak, nonatomic) IBOutlet UILabel *hongbaoBenXi;//top红包本息
 @property (weak, nonatomic) IBOutlet UILabel *hongbaoLabel;//top红包label
+@property (nonatomic, copy) NSString *web_url;
 
 
 @end
@@ -48,6 +49,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"TrandDetailViewController"];
+    [self watchHeTongMethod];
 
 }
 
@@ -59,11 +61,17 @@
 #pragma mark - uitableview -
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([self.redpacket isEqualToString:@"0"]) {
-        return 7;
-//        return 6;
+        if ([_web_url isEqualToString:@""]) {
+            return 6;
+        } else {
+            return 7;
+        }
     } else {
-        return 8;
-//        return 7;
+        if ([_web_url isEqualToString:@""]) {
+            return 7;
+        } else {
+            return 8;
+        }
     }
 }
 
@@ -306,30 +314,36 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.redpacket isEqualToString:@"0"]) {
         if (indexPath.row == 6) {
-            [self watchHeTongMethod];
+            AgViewController *agVC =[[AgViewController alloc] init];
+            agVC.title = @"电子合同";
+            agVC.webUrl = _web_url;
+            [self.navigationController pushViewController:agVC animated:YES];
         }
     } else {
         if (indexPath.row == 7) {
-            [self watchHeTongMethod];
+            AgViewController *agVC =[[AgViewController alloc] init];
+            agVC.title = @"电子合同";
+            agVC.webUrl = _web_url;
+            [self.navigationController pushViewController:agVC animated:YES];
         }
     }
 }
 
 #pragma mark - 电子合同
 - (void)watchHeTongMethod {
+    _web_url = @"";
     NetManager *manager = [[NetManager alloc] init];
     NSString *ID= self.order_id;
     [manager postDataWithUrlActionStr:@"Contract/query" withParamDictionary:@{@"order_id":self.order_id} withBlock:^(id obj) {
         NSDictionary *dic = obj[@"data"];
         if ([obj[@"result"] isEqualToString:@"1"]) {
-            NSString *web_url = dic[@"viewpdf_url"];
-            AgViewController *agVC =[[AgViewController alloc] init];
-            agVC.title = @"电子合同";
-            agVC.webUrl = web_url;
-            [self.navigationController pushViewController:agVC animated:YES];
+            _web_url = dic[@"viewpdf_url"];
+            _web_url = [SingletonManager convertNullString:_web_url];
             [SVProgressHUD dismiss];
+            [_trandDetailTable reloadData];
         } else {
-            [SVProgressHUD showErrorWithStatus:dic[@"mes"]];
+            NSLog(@"%@",dic[@"mes"]);
+//            [SVProgressHUD showErrorWithStatus:dic[@"mes"]];
         }
     }];
 }

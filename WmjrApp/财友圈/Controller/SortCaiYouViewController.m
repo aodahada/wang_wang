@@ -47,6 +47,7 @@
     
     
     [self setUpLayout];
+    _contactListArray = [[NSMutableArray alloc]init];
     [self qianchengBangMethod:1];
     
 }
@@ -54,7 +55,11 @@
 #pragma mark - 未授权获取通讯录
 - (void)showWhenRejectMethod {
     _showWhenReject = [[UIButton alloc]init];
-    [_showWhenReject setBackgroundImage:[UIImage imageNamed:@"您还未授权访问通讯录 无法查看 点击“立即授权”查看我的人脉榜吧～"] forState:UIControlStateNormal];
+    if (_type == 0) {
+        [_showWhenReject setBackgroundImage:[UIImage imageNamed:@"您还未授权访问通讯录 点击“立即授权”查看我的钱程榜吧～"] forState:UIControlStateNormal];
+    } else {
+        [_showWhenReject setBackgroundImage:[UIImage imageNamed:@"您还未授权访问通讯录 点击“立即授权”查看我的富豪榜吧～"] forState:UIControlStateNormal];
+    }
     [_showWhenReject addTarget:self action:@selector(getContactMethod) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_showWhenReject];
     [_showWhenReject mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -252,6 +257,7 @@
 - (void)qianchengBangMethod:(NSInteger)qianchengPage {
     NetManager *manager = [[NetManager alloc] init];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    NSString *ss = _contactListString;
     dict[@"member_id"] = [SingletonManager sharedManager].uid;
     dict[@"contact"] = _contactListString;
     dict[@"page"] = @(qianchengPage);
@@ -259,7 +265,13 @@
     [manager postDataWithUrlActionStr:@"Focus/prospect" withParamDictionary:dict withBlock:^(id obj) {
         [SVProgressHUD dismiss];
         if ([obj[@"result"] isEqualToString:@"1"]) {
-            _contactListArray = [SortContaceModel mj_objectArrayWithKeyValuesArray:obj[@"data"]];
+//            _contactListArray = [SortContaceModel mj_objectArrayWithKeyValuesArray:obj[@"data"]];
+            NSArray *dataArray = obj[@"data"];
+            for (int i=0; i<dataArray.count; i++) {
+                NSDictionary *dict = dataArray[i];
+                SortContaceModel *stortModel = [SortContaceModel mj_objectWithKeyValues:dict];
+                [_contactListArray addObject:stortModel];
+            }
             [_mainTableView reloadData];
             // 1.获取授权状态
             CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
@@ -304,7 +316,13 @@
     [manager postDataWithUrlActionStr:@"Focus/rich" withParamDictionary:dict withBlock:^(id obj) {
         [SVProgressHUD dismiss];
         if ([obj[@"result"] isEqualToString:@"1"]) {
-            _contactListArray = [SortContaceModel mj_objectArrayWithKeyValuesArray:obj[@"data"]];
+//            _contactListArray = [SortContaceModel mj_objectArrayWithKeyValuesArray:obj[@"data"]];
+            NSArray *dataArray = obj[@"data"];
+            for (int i=0; i<dataArray.count; i++) {
+                NSDictionary *dict = dataArray[i];
+                SortContaceModel *stortModel = [SortContaceModel mj_objectWithKeyValues:dict];
+                [_contactListArray addObject:stortModel];
+            }
             [_mainTableView reloadData];
             // 1.获取授权状态
             CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
@@ -338,7 +356,7 @@
     }];
 }
 
-#pragma mark - 当没数据时显示的图片
+#pragma mark - 当富豪榜没数据时显示的图片
 - (void)showWhenEmptyMethod {
     _showWhenEmpty = [[UIButton alloc]init];
     [_showWhenEmpty setBackgroundImage:[UIImage imageNamed:@"您当前的财友圈为空 赶紧点击“邀请财友”扩大财友圈吧！"] forState:UIControlStateNormal];
@@ -347,7 +365,7 @@
     [_showWhenEmpty mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
         make.centerY.equalTo(self.view.mas_centerY);
-        make.width.mas_offset(RESIZE_UI(249.5));
+        make.width.mas_offset(RESIZE_UI(258));
         make.height.mas_offset(RESIZE_UI(37));
     }];
 }

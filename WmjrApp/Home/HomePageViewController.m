@@ -42,6 +42,7 @@
 #import "NewYearActivityViewController.h"
 #import "NewYearActivityViewController2.h"
 #import "NewYearActivityViewController3.h"
+#import "DaFuWengActivityViewController.h"
 
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,CAAnimationDelegate,UICollisionBehaviorDelegate>
 {
@@ -1222,6 +1223,11 @@
                 NewYearActivityViewController3 *newyearVC3 = [[NewYearActivityViewController3 alloc]init];
                 [self.navigationController pushViewController:newyearVC3 animated:YES];
                 return ;
+            }
+            if ([activityId isEqualToString:@"204"]) {
+                DaFuWengActivityViewController *dafuwengActivityVC = [[DaFuWengActivityViewController alloc]init];
+                [self.navigationController pushViewController:dafuwengActivityVC animated:YES];
+                return;
             }
             
             if ([activityId isEqualToString:@"100"]) {
