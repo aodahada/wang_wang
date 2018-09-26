@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.7.5</string>
+	<string>2.8.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -43,7 +43,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>QQ41D881C7</string>
+				<string>QQ4201D261</string>
 			</array>
 		</dict>
 	</array>
@@ -68,6 +68,10 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MOBAppKey</key>
+	<string>8dfe2246f9f7</string>
+	<key>MOBAppSecret</key>
+	<string></string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -81,6 +85,39 @@
 				<key>NSIncludesSubdomains</key>
 				<true/>
 			</dict>
+			<key>weibo.cn</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.0</string>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>weibo.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.0</string>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>weibo.com.cn</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.0</string>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 		</dict>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
@@ -90,9 +127,9 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>App需要您的同意,才能访问日历</string>
 	<key>NSCameraUsageDescription</key>
-	<string>App需要您的同意,才能访问相机</string>
+	<string>App需要您的同意,才能访问相机进行拍摄图片的功能</string>
 	<key>NSContactsUsageDescription</key>
-	<string>App需要您的同意,才能访问通讯录</string>
+	<string>旺马财富APP需要您的同意,才能访问通讯录,如果您同意，通讯录信息将上传到我方服务器</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>App需要您的同意,才能访问健康分享</string>
 	<key>NSHealthUpdateUsageDescription</key>
@@ -123,6 +160,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

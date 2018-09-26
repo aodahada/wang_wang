@@ -95,8 +95,7 @@
                 [self.navigationController pushViewController:restPassVC animated:YES];
                 [SVProgressHUD dismiss];
                 return ;
-            }
-            if ([obj[@"result"] isEqualToString:@"1000"]) {
+            } else {
                 NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
                 MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
                 alertConfig.defaultTextOK = @"确定";

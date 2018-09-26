@@ -19,7 +19,7 @@
 @property (nonatomic, copy) NSString *name;//产品名称
 @property (nonatomic, copy) NSString *purchasable;//
 @property (nonatomic, copy) NSString *repay;//偿还方式
-@property (nonatomic, copy) NSString *returnrate;//预期年化收益
+@property (nonatomic, copy) NSString *returnrate;//历史年化收益
 @property (nonatomic, copy) NSString *risk;//风险
 @property (nonatomic, copy) NSString *is_down;
 @property (nonatomic, copy) NSString *duedate; /* 到期日 */

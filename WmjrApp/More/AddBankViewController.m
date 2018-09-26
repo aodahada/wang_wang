@@ -18,6 +18,7 @@
 //    NSTimer *_timer;
 }
 
+@property (strong, nonatomic) IBOutlet UITableView *mainTableVIew;
 @property (weak, nonatomic) IBOutlet UITextField *holdCardField; /* 持卡人 */
 @property (weak, nonatomic) IBOutlet UITextField *bankNumField; /* 银行卡号 */
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumField; /*  手机号码 */
@@ -26,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *bank_PC;  /* 银行卡所在省市 */
 - (IBAction)bankNameTap:(UITapGestureRecognizer *)sender;
 - (IBAction)bank_PCTap:(UITapGestureRecognizer *)sender;
-
 
 @property (weak, nonatomic) IBOutlet UITextField *yanzhengNum; /* 输入验证码 */
 @property (weak, nonatomic) IBOutlet UIButton *yanzhengBtn;/*  获取验证码 */
@@ -67,6 +67,7 @@
     _cityStr  =nil;
     _ticket = nil;
     
+    _mainTableVIew.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [_bankNumField addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
     [_phoneNumField addTarget:self action:@selector(limitedNumberOfWords) forControlEvents:(UIControlEventEditingChanged)];
 }
@@ -179,7 +180,8 @@
     } else if ([_phoneNumField.text isEqualToString:@""]) {
         [[SingletonManager sharedManager] alert1PromptInfo:@"请输入银行预留手机号"];
         return NO;
-    } else {
+    }
+    else {
         return YES;
     }
 }
@@ -228,7 +230,7 @@
         dict[@"valid_code"] = _yanzhengNum.text;
         dict[@"ticket"] = _ticket;
         NSDictionary *param = (NSDictionary *)dict;
-        
+        //Card/advance
         [manager postDataWithUrlActionStr:@"Card/advance" withParamDictionary:param withBlock:^(id obj) {
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 [SVProgressHUD showSuccessWithStatus:@"银行卡绑定成功" maskType:(SVProgressHUDMaskTypeNone)];

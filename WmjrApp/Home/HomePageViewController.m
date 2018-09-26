@@ -44,6 +44,20 @@
 #import "NewYearActivityViewController3.h"
 #import "DaFuWengActivityViewController.h"
 
+//4月9日活动
+#import "CaiYouActivityViewController.h"
+#import "TaQingActivityViewController.h"
+
+//wkwebview活动页
+#import "WkActivityWebViewController.h"
+#import "WebViewForActivityViewController.h"
+
+//中秋活动
+#import "ZhongQiuActivityViewController.h"
+//国庆活动
+#import "NationalDayViewController.h"
+#import "NationalActivityView.h"
+
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,CAAnimationDelegate,UICollisionBehaviorDelegate>
 {
     UIDynamicAnimator *theAnimator;
@@ -67,7 +81,7 @@
 
 @property (nonatomic, strong) NSMutableArray *arrayForNewsList;//新闻列表
 
-@property (nonatomic, strong) PersonInvestModel *personInvestModel;//个人投资信息
+@property (nonatomic, strong) PersonInvestModel *personInvestModel;//个人出借信息
 
 @property (nonatomic, assign) BOOL isSave;//是否保存手势了
 
@@ -95,6 +109,7 @@
 @property (nonatomic,strong)UIImageView * ballImageView;//自由落体的小球
 
 @property (nonatomic, strong) UIView *bottomView;//为了小球做的
+@property (nonatomic, strong) UIButton *fanXianButton;//悬浮可拖动返现图标
 
 @end
 
@@ -105,6 +120,7 @@
     
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"HomePageViewController"];
+    
     //程序复活了
     [[NSUserDefaults standardUserDefaults] setObject:@"alive" forKey:@"death"];
     
@@ -133,6 +149,7 @@
         [self getRedBallMethod2];
     }
 }
+
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -217,8 +234,98 @@
 //    }
 //    [self ziyouluoTiDemo];
 //    [self ziyounihao];
+    [self fanXianPicFloat];
+    [self navtionalActivityMethod];
     
 }
+
+#pragma mark - 悬浮并可随意拖动的返现图标
+- (void)fanXianPicFloat {
+    NSInteger widthHeight = RESIZE_UI(90);
+    CGFloat topDistance = 0;
+    if ([[UIDeviceHardware platformString] isEqualToString:@"iPhone X"]) {
+        topDistance = -RESIZE_UI(60);
+    } else {
+        topDistance = RESIZE_UI(20);
+    }
+    _fanXianButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-widthHeight, SCREEN_HEIGHT/2-widthHeight+topDistance, widthHeight, widthHeight)];
+    [_fanXianButton setBackgroundImage:[UIImage imageNamed:@"唤醒好友"] forState:UIControlStateNormal];
+    [_fanXianButton addTarget:self action:@selector(jumpToWkActivityView) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_fanXianButton];
+    
+    UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
+    [_fanXianButton addGestureRecognizer:pan];
+    
+}
+
+#pragma mark - 国庆活动
+- (void)navtionalActivityMethod {
+    NationalActivityView *nationalView = [[NationalActivityView alloc]init];
+    [self.window addSubview:nationalView];
+    [nationalView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.window);
+    }];
+}
+
+//跳转到活动页
+- (void)jumpToWkActivityView {
+    WebViewForActivityViewController *wkActivityVC = [[WebViewForActivityViewController alloc]init];
+    wkActivityVC.title = @"唤醒活动";
+    wkActivityVC.webUrl = @"https://7hg.oss-cn-shanghai.aliyuncs.com/huanxing.html";
+    [self.navigationController pushViewController:wkActivityVC animated:YES];
+    
+    
+//    NSString *uid = [self convertNullString:[SingletonManager sharedManager].uid];
+//    if ([uid isEqualToString:@""]) {
+//        LoginViewController *loginVC = [[LoginViewController alloc] init];
+//        UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
+//        [self presentViewController:loginNa animated:YES completion:nil];
+//    } else {
+//        ZhongQiuActivityViewController *zhongqiuVC = [[ZhongQiuActivityViewController alloc]init];
+//        [zhongqiuVC setHidesBottomBarWhenPushed:YES];
+//        [self.navigationController pushViewController:zhongqiuVC animated:YES];
+//    }
+    
+}
+
+-(void)handlePan:(UIPanGestureRecognizer *)rec{
+    
+    CGFloat KWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat KHeight = [UIScreen mainScreen].bounds.size.height;
+    
+    //返回在横坐标上、纵坐标上拖动了多少像素
+    CGPoint point=[rec translationInView:self.view];
+    NSLog(@"%f,%f",point.x,point.y);
+    
+    CGFloat centerX = rec.view.center.x+point.x;
+    CGFloat centerY = rec.view.center.y+point.y;
+    
+    CGFloat viewHalfH = rec.view.frame.size.height/2;
+    CGFloat viewhalfW = rec.view.frame.size.width/2;
+    
+    //确定特殊的centerY
+    if (centerY - viewHalfH < 0 ) {
+        centerY = viewHalfH;
+    }
+    if (centerY + viewHalfH > KHeight ) {
+        centerY = KHeight - viewHalfH;
+    }
+    
+    //确定特殊的centerX
+    if (centerX - viewhalfW < 0){
+        centerX = viewhalfW;
+    }
+    if (centerX + viewhalfW > KWidth){
+        centerX = KWidth - viewhalfW;
+    }
+    
+    rec.view.center=CGPointMake(centerX, centerY);
+    
+    //拖动完之后，每次都要用setTranslation:方法制0这样才不至于不受控制般滑动出视图
+    [rec setTranslation:CGPointMake(0, 0) inView:self.view];
+    
+}
+
 
 #pragma mark - 自有落体熄新的demo
 - (void)ziyounihao {
@@ -773,7 +880,6 @@
 #pragma mark - 获取新闻列表2
 - (void)getNewsListMethodTwo:(NSInteger)page {
     
-//    NSLog(@"当前页数:%ld",page);
     NetManager *manager = [[NetManager alloc] init];
     [manager postDataWithUrlActionStr:@"Page/news" withParamDictionary:@{@"page":@(page),@"size":@""} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
@@ -905,7 +1011,8 @@
     
     self.naviView = [[UIView alloc] init];
 //    self.naviView.backgroundColor = RGBA(0, 104, 178, 1.0);
-    self.naviView.backgroundColor = RGBA(189, 39, 27, 1.0);
+//    self.naviView.backgroundColor = RGBA(189, 39, 27, 1.0);
+    self.naviView.backgroundColor = NAVBARCOLOR;
     [self.view addSubview:self.naviView];
     [self.naviView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top);
@@ -930,7 +1037,8 @@
     [_buttonSinaCenter setTitle:@"安全保障" forState:UIControlStateNormal];
 //    _buttonSinaCenter.alpha = 0.05;
     _buttonSinaCenter.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
-    [_buttonSinaCenter setTitleColor:RGBA(255, 255, 255, 1.0) forState:UIControlStateNormal];
+    [_buttonSinaCenter setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [_buttonSinaCenter setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_buttonSinaCenter addTarget:self action:@selector(sinaMethod) forControlEvents:UIControlEventTouchUpInside];
     [self.naviView addSubview:_buttonSinaCenter];
     [_buttonSinaCenter mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1081,8 +1189,9 @@
     if (section == 0) {
         return 0;
     } else if(section == 1) {
-//        return RESIZE_UI(12);
         return 0;
+    }else if (section == 2) {
+        return RESIZE_UI(43);
     } else if (section == 5) {
         return 0;
     } else {
@@ -1108,14 +1217,23 @@
             make.height.mas_offset(RESIZE_UI(42));
         }];
         
-        UILabel *labelForLine = [[UILabel alloc]init];
-        labelForLine.backgroundColor = RGBA(255, 82, 37, 1.0);
+//        UILabel *labelForLine = [[UILabel alloc]init];
+//        labelForLine.backgroundColor = RGBA(255, 82, 37, 1.0);
+//        [whiteView addSubview:labelForLine];
+//        [labelForLine mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.centerY.equalTo(whiteView.mas_centerY);
+//            make.left.equalTo(whiteView.mas_left);
+//            make.height.mas_offset(17);
+//            make.width.mas_offset(5);
+//        }];
+        
+        UIImageView *labelForLine = [[UIImageView alloc]init];
+        labelForLine.image = [UIImage imageNamed:@"zhongguojie"];
         [whiteView addSubview:labelForLine];
         [labelForLine mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(whiteView.mas_centerY);
-            make.left.equalTo(whiteView.mas_left);
-            make.height.mas_offset(17);
-            make.width.mas_offset(5);
+            make.left.equalTo(whiteView.mas_left).with.offset(-RESIZE_UI(11));
+            make.height.width.mas_offset(RESIZE_UI(22));
         }];
         
         UILabel *labelForTitle = [[UILabel alloc]init];
@@ -1125,7 +1243,7 @@
         [whiteView addSubview:labelForTitle];
         [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(whiteView.mas_centerY);
-            make.left.equalTo(whiteView.mas_left).with.offset(13);
+            make.left.equalTo(labelForLine.mas_right).with.offset(RESIZE_UI(10));
         }];
         switch (section) {
             case 2:
@@ -1208,6 +1326,47 @@
             NSString *activityId = [self convertNullString:imgModel.activity_id];
             productId = [self convertNullString:productId];
             url = [self convertNullString:url];
+            //国庆活动
+            if ([activityId isEqualToString:@"219"]) {
+                NSString *uid = [self convertNullString:[SingletonManager sharedManager].uid];
+                if ([uid isEqualToString:@""]) {
+                    LoginViewController *loginVC = [[LoginViewController alloc] init];
+                    UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                    [self presentViewController:loginNa animated:YES completion:nil];
+                } else {
+                    NationalDayViewController *nationalDayVC = [[NationalDayViewController alloc]init];
+                    [nationalDayVC setHidesBottomBarWhenPushed:YES];
+                    [self.navigationController pushViewController:nationalDayVC animated:YES];
+                }
+                return ;
+            }
+            //中秋活动
+            if ([activityId isEqualToString:@"180924"]) {
+                NSString *uid = [self convertNullString:[SingletonManager sharedManager].uid];
+                if ([uid isEqualToString:@""]) {
+                    LoginViewController *loginVC = [[LoginViewController alloc] init];
+                    UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                    [self presentViewController:loginNa animated:YES completion:nil];
+                } else {
+                    ZhongQiuActivityViewController *zhongqiuVC = [[ZhongQiuActivityViewController alloc]init];
+                    [zhongqiuVC setHidesBottomBarWhenPushed:YES];
+                    [self.navigationController pushViewController:zhongqiuVC animated:YES];
+                }
+                return ;
+            }
+            //踏青活动
+            if ([activityId isEqualToString:@"206"]) {
+                TaQingActivityViewController *taqingActivityVC = [[TaQingActivityViewController alloc]init];
+                [self.navigationController pushViewController:taqingActivityVC animated:YES];
+                return ;
+            }
+            
+            //财友活动
+            if ([activityId isEqualToString:@"204"]) {
+                CaiYouActivityViewController *caiyouActivityVC = [[CaiYouActivityViewController alloc]init];
+                [self.navigationController pushViewController:caiyouActivityVC animated:YES];
+                return ;
+            }
             
             if ([activityId isEqualToString:@"201"]) {
                 NewYearActivityViewController *newyearVC = [[NewYearActivityViewController alloc]init];
@@ -1229,7 +1388,7 @@
                 [self.navigationController pushViewController:dafuwengActivityVC animated:YES];
                 return;
             }
-            
+
             if ([activityId isEqualToString:@"100"]) {
                 NSString *uid = [self convertNullString:[SingletonManager sharedManager].uid];
                 if ([uid isEqualToString:@""]) {
@@ -1247,7 +1406,7 @@
                 [self.navigationController pushViewController:jiaxiActivityVC animated:YES];
                 return;
             }
-            
+
             if ([url isEqualToString:@""] && [productId isEqualToString:@""]) {
                 return;
             }
@@ -1256,8 +1415,9 @@
                 return;
             }
             if (![url isEqualToString:@""]) {
-                AgViewController *agVC =[[AgViewController alloc] init];
+                WebViewForActivityViewController *agVC =[[WebViewForActivityViewController alloc] init];
                 agVC.title = imgModel.title;
+                NSLog(@"我的地址:%@",url);
                 agVC.webUrl = url;
                 [self.navigationController pushViewController:agVC animated:YES];
                 return;
@@ -1409,7 +1569,6 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-//    NSLog(@"我的尺寸:%.2f",scrollView.contentOffset.y);
     if (scrollView.contentOffset.y <= -20) {
         _homeTableView.bounces = NO;
     } else {
@@ -1445,15 +1604,7 @@
     CGFloat height = _homeTableView.frame.size.height;
     CGFloat contentOffsetY = _homeTableView.contentOffset.y;
     CGFloat bottomOffset = _homeTableView.contentSize.height - contentOffsetY;
-//    if (bottomOffset <= height)
-//    {
-//        //在最底部
-//        NSLog(@"在");
-//    }
-//    else
-//    {
-//        NSLog(@"不在");
-//    }
+
     if (bottomOffset >= height)
     {
         _tipLabel.hidden = YES;

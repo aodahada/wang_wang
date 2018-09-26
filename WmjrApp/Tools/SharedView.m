@@ -108,7 +108,7 @@
 
 /*点击分享按钮事件响应*/
 - (void)clickSharedBtnAction:(UIButton *)sender  {
-    NSLog(@"－－－点击了分享按妞－－－");
+
     self.block(sender);
 }
 

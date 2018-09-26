@@ -65,8 +65,6 @@
             type = @"尊享积分";
         }
         NSString *huodeLabelContent = [NSString stringWithFormat:@"获得%@%@",lotteryModel.value,type];
-        NSLog(@"啥奖励:%@",huodeLabelContent);
-        NSLog(@"奖励对象内容:%@",lotteryModel.value);
         huodeLabel.attributedText =  [self changeStringWithString:huodeLabelContent withFrontColor:[UIColor whiteColor] WithBehindColor:RGBA(252, 232, 78, 1.0) withFrontFont:[UIFont systemFontOfSize:RESIZE_UI(20)] WithBehindFont:[UIFont systemFontOfSize:RESIZE_UI(28)]];
         [_prizeImageView addSubview:huodeLabel];
         [huodeLabel mas_makeConstraints:^(MASConstraintMaker *make) {

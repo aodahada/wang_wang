@@ -15,7 +15,6 @@
     self = [super init];
     if (self) {
         UIImageView *imageView = [[UIImageView alloc]init];
-//        NSLog(@"我的图片:%@",adModel.picurl);
         [imageView sd_setImageWithURL:[NSURL URLWithString:adModel.picurl]];
         [self addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {

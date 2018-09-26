@@ -17,7 +17,7 @@
         UILabel *bankName = [[UILabel alloc]init];
         bankName.text = bankModel.name;
         bankName.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
-        bankName.textColor = [UIColor whiteColor];
+        bankName.textColor = [UIColor blackColor];
         [self addSubview:bankName];
         [bankName mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.mas_left).with.offset(RESIZE_UI(24));
@@ -26,7 +26,7 @@
         
         UILabel *firstPay = [[UILabel alloc]init];
         firstPay.text = bankModel.first_pay;
-        firstPay.textColor  = [UIColor whiteColor];
+        firstPay.textColor  = [UIColor blackColor];
         firstPay.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
         [self addSubview:firstPay];
         [firstPay mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -36,7 +36,7 @@
         
         UILabel *alreadyPay = [[UILabel alloc]init];
         alreadyPay.text = bankModel.day_pay;
-        alreadyPay.textColor = [UIColor whiteColor];
+        alreadyPay.textColor = [UIColor blackColor];
         alreadyPay.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
         [self addSubview:alreadyPay];
         [alreadyPay mas_makeConstraints:^(MASConstraintMaker *make) {

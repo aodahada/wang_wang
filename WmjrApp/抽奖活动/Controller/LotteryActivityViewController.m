@@ -45,7 +45,7 @@
 
 @property (nonatomic, assign) NSInteger circleTime;//循环次数
 
-@property (nonatomic, assign) NSInteger randomSelectNumber;
+@property (nonatomic, assign) NSInteger suijiSelectNumber;
 
 @property (nonatomic, strong) UIScrollView *ScrollViewMain;
 @property (nonatomic, strong) UIView *viewMain;
@@ -101,7 +101,6 @@
             for (int i=0; i<activityArray.count; i++) {
                 NSDictionary *dic = activityArray[i];
                 LotteryModel *lotteryModel = [LotteryModel mj_objectWithKeyValues:dic];
-//                NSLog(@"我饿奖品id：%@",lotteryModel.lotteryId);
                 [_lotteryArray addObject:lotteryModel];
             }
             
@@ -332,7 +331,6 @@
 #pragma mark - 立即邀请
 //响应点击分享的方法
 - (void)immediatelyInvite {
-    //    NSLog(@"-------点击分享----");
     _invitationcode = [SingletonManager sharedManager].userModel.invitationcode;
     _popMenu = [[PopMenu alloc] init];
     _popMenu.dimBackground = YES;
@@ -351,7 +349,7 @@
         if (![[SingletonManager convertNullString:_invitationcode] isEqualToString:@""]) {
             NSString *contentStr = [NSString stringWithFormat:@"戳→旺马圣诞财友奖励8%%+疯狂加息1%%！我的推荐码%@", _invitationcode];
             NSString *urlStr = [NSString stringWithFormat:@"http://m.wangmacaifu.com/#/register/wmcf-%@",[SingletonManager sharedManager].userModel.invitationcode];
-            [sharedManager shareContent:sender withTitle:@"这是一个值得信赖的的投资理财平台" andContent:contentStr andUrl:urlStr];
+            [sharedManager shareContent:sender withTitle:@"这是一个值得信赖的的出借平台" andContent:contentStr andUrl:urlStr];
             
         } else {
             [[SingletonManager sharedManager] alert1PromptInfo:@"推荐码获取失败,请重新分享"];
@@ -393,7 +391,6 @@
             type = @"尊享积分";
         }
         NSString *tipMessage = [NSString stringWithFormat:@"恭喜%@获得%@%@",mobileNumber,paomadengModel.value,type];
-//        NSLog(@"我的跑马灯:%@",tipMessage);
         [titeArray addObject:tipMessage];
     }
     NSArray *scrollTexts = [titeArray copy];
@@ -551,8 +548,6 @@
     }
     
     
-//    _randomSelectNumber = 6;
-    
 }
 
 #pragma mark - 抽奖接口
@@ -566,14 +561,12 @@
             [SVProgressHUD dismiss];
             NSDictionary *dic = obj[@"data"];
             NSString *lotteryId = dic[@"id"];
-            _randomSelectNumber = [lotteryId integerValue];
+            _suijiSelectNumber = [lotteryId integerValue];
             for (int i=0; i<_lotteryArray.count; i++) {
                 LotteryModel *lotteryModel = _lotteryArray[i];
                 if ([lotteryModel.lotteryId isEqualToString:lotteryId]) {
                     //抽中的第几个
-//                    _randomSelectNumber = i+1;
                     _selectLotteryModel = lotteryModel;
-                    NSLog(@"抽中的第:%ld个",(long)i+1);
                 }
             }
             if ([_exchangeNumber isEqualToString:@"1"]) {
@@ -612,7 +605,7 @@
     _count--;
     
     if (_circleTime == 4) {
-        if (_count == 7-_randomSelectNumber) {
+        if (_count == 7-_suijiSelectNumber) {
             [_timer invalidate];
             _timer = nil;
             //中奖框
@@ -652,7 +645,6 @@
 
 #pragma mark - 弹出奖励框
 - (void)showRegardView {
-    NSLog(@"中奖啦");
     WinPrizeView *winprizeView = [[WinPrizeView alloc]initWithLotteryModel:_selectLotteryModel];
     [self.view addSubview:winprizeView];
     [winprizeView mas_makeConstraints:^(MASConstraintMaker *make) {

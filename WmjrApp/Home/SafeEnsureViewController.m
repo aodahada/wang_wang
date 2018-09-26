@@ -155,35 +155,36 @@
     }];
     
     _imageView1 = [[UIImageView alloc]init];
-    _imageView1.image = [UIImage imageNamed:@"image_wangma1"];
+    _imageView1.image = [UIImage imageNamed:@"image_wangma"];
     [_mainView addSubview:_imageView1];
     [_imageView1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_mainView.mas_top);
         make.left.equalTo(_mainView.mas_left);
         make.right.equalTo(_mainView.mas_right);
-        make.height.mas_offset(RESIZE_UI(667));
+        make.height.mas_offset(SCREEN_WIDTH*4001/1080);
+        make.bottom.equalTo(_mainView.mas_bottom);
     }];
     
-    _imageView2 = [[UIImageView alloc]init];
-    _imageView2.image = [UIImage imageNamed:@"image_wangma2"];
-    [_mainView addSubview:_imageView2];
-    [_imageView2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_imageView1.mas_bottom);
-        make.left.equalTo(_mainView.mas_left);
-        make.right.equalTo(_mainView.mas_right);
-        make.height.mas_offset(RESIZE_UI(667));
-    }];
-    
-    _imageView3 = [[UIImageView alloc]init];
-    _imageView3.image = [UIImage imageNamed:@"image_wangma3"];
-    [_mainView addSubview:_imageView3];
-    [_imageView3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_imageView2.mas_bottom);
-        make.left.equalTo(_mainView.mas_left);
-        make.right.equalTo(_mainView.mas_right);
-        make.height.mas_offset(RESIZE_UI(614));
-        make.bottom.equalTo(_mainView.mas_bottom).with.offset(49);
-    }];
+//    _imageView2 = [[UIImageView alloc]init];
+//    _imageView2.image = [UIImage imageNamed:@"image_wangma2"];
+//    [_mainView addSubview:_imageView2];
+//    [_imageView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(_imageView1.mas_bottom);
+//        make.left.equalTo(_mainView.mas_left);
+//        make.right.equalTo(_mainView.mas_right);
+//        make.height.mas_offset(RESIZE_UI(667));
+//    }];
+//
+//    _imageView3 = [[UIImageView alloc]init];
+//    _imageView3.image = [UIImage imageNamed:@"image_wangma3"];
+//    [_mainView addSubview:_imageView3];
+//    [_imageView3 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(_imageView2.mas_bottom);
+//        make.left.equalTo(_mainView.mas_left);
+//        make.right.equalTo(_mainView.mas_right);
+//        make.height.mas_offset(RESIZE_UI(614));
+//        make.bottom.equalTo(_mainView.mas_bottom).with.offset(49);
+//    }];
 }
 
 #pragma mark - 新浪界面
@@ -253,38 +254,34 @@
 -(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
     //开始加载的时候，让加载进度条显示
     self.ProgressView.hidden = NO;
-    //    NSLog(@"开始加载的时候调用。。");
-    //    NSLog(@"%lf",   self.webView.estimatedProgress);
     
 }
 
 //内容返回时调用
 -(void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation{
-    //    NSLog(@"当内容返回的时候调用");
-    //    NSLog(@"%lf",   self.webView.estimatedProgress);
+    
+    
     
 }
 -(void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation{
-    //    NSLog(@"这是服务器请求跳转的时候调用");
+    
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    //    NSLog(@"加载完成");
+    
 }
 
 -(void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error{
     // 内容加载失败时候调用
-    //    NSLog(@"这是加载失败时候调用");
-    //    NSLog(@"错误信息：%@",error);
 }
 -(void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error{
-    //    NSLog(@"通过导航跳转失败的时候调用");
+    
 }
 -(void)webViewDidClose:(WKWebView *)webView{
-    //    NSLog(@"网页关闭的时候调用");
+    
 }
 -(void)webViewWebContentProcessDidTerminate:(WKWebView *)webView{
-    //    NSLog(@"%lf",   webView.estimatedProgress);
+    
     
 }
 -(void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
@@ -317,7 +314,6 @@
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
         // 判断是哪个对象
         if (object == self.webView) {
-            //            NSLog(@"进度信息：%lf",self.webView.estimatedProgress);
             if (self.webView.estimatedProgress == 1.0) {
                 //隐藏
                 self.ProgressView.hidden = YES;

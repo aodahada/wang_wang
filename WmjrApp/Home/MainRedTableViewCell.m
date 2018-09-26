@@ -125,7 +125,6 @@
         }];
         
         NSString *status = model.status;
-        //        NSLog(@"我的状态：%@",status);
         if (isOut) {
             _imageViewForStatus = [[UIImageView alloc]init];
             if ([status isEqualToString:@"1"]) {

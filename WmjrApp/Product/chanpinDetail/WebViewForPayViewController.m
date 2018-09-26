@@ -23,6 +23,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 //    self.title = @"支付界面";
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     _webView = [[UIWebView alloc]init];
     _webView.delegate = self;
@@ -31,6 +32,8 @@
         make.edges.equalTo(self.view);
     }];
     [_webView loadHTMLString:_htmlString baseURL:nil];
+    NSLog(@"我的请求地址:%@",_htmlString);
+//    [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_htmlString]]];
     [_webView sizeToFit];
     
 }
@@ -49,7 +52,7 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-    NSLog(@"我拦截的超链接请求:%@",request.URL);
+    
     
     NSString *url = request.URL.absoluteString;
     
@@ -57,10 +60,10 @@
     
     
     if ([url hasPrefix:scheme]) {
-        NSLog(@"想调用OC的方法");
+        
         
         NSString *path = [url substringFromIndex:scheme.length];
-//        NSLog(@"我的路径:%@",path);
+
         //不带参数的情况
 //        NSString *methodName = [url substringFromIndex:scheme.length];
 //        [self performSelector:NSSelectorFromString(methodName) withObject:nil];
@@ -69,7 +72,7 @@
                 NSArray * ctrlArray = self.navigationController.viewControllers;
                 for (UIViewController *ctrl in ctrlArray) {
                     
-//                    NSLog(@"ctrl ---- %@", ctrl);
+
                     if ([ctrl isKindOfClass:[HRBuyViewController class]]) {
                         [self.navigationController popToViewController:ctrl animated:YES];
                     }
@@ -134,7 +137,6 @@
         
         return NO;
     }
-//    NSLog(@"想加载其他请求，不是调用OC方法");
     
     return YES;
     

@@ -21,13 +21,23 @@
     self = [super init];
     if (self) {
         _pcModel = productCategoryModel;
+        
+        UIImageView *labelForLine = [[UIImageView alloc]init];
+        labelForLine.image = [UIImage imageNamed:@"zhongguojie"];
+        [self addSubview:labelForLine];
+        [labelForLine mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.mas_centerY);
+            make.left.equalTo(self.mas_left).with.offset(-RESIZE_UI(11));
+            make.height.width.mas_offset(RESIZE_UI(22));
+        }];
+        
         UILabel *labelForTitle = [[UILabel alloc]init];
         labelForTitle.text = productCategoryModel.name;
         labelForTitle.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
         [self addSubview:labelForTitle];
         [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.mas_centerY);
-            make.left.equalTo(self.mas_left).with.offset(RESIZE_UI(15));
+            make.left.equalTo(labelForLine.mas_right).with.offset(RESIZE_UI(10));
         }];
         
         UILabel  *labelForTag = [[UILabel alloc]init];
@@ -39,10 +49,14 @@
         }
         labelForTag.text = labeltitle;
         labelForTag.font = [UIFont systemFontOfSize:RESIZE_UI(10)];
-        labelForTag.textColor = RGBA(48, 100, 172, 1.0);
+//        labelForTag.textColor = RGBA(48, 100, 172, 1.0);
+        labelForTag.textColor = [UIColor whiteColor];
+        labelForTag.backgroundColor = RGBA(4, 189, 253, 1.0);
         labelForTag.textAlignment = NSTextAlignmentCenter;
-        labelForTag.layer.borderColor = RGBA(48, 100, 172, 1.0).CGColor;
-        labelForTag.layer.borderWidth = 1.0f;
+        labelForTag.layer.masksToBounds = YES;
+        labelForTag.layer.cornerRadius = 7.0f;
+//        labelForTag.layer.borderColor = RGBA(48, 100, 172, 1.0).CGColor;
+//        labelForTag.layer.borderWidth = 1.0f;
         [self addSubview:labelForTag];
         [labelForTag mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.mas_centerY);
@@ -64,7 +78,7 @@
         UILabel *labelForWatch = [[UILabel alloc]init];
         labelForWatch.text = @"查看更多";
         labelForWatch.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
-        labelForWatch.textColor = RGBA(0, 100, 176, 1.0);
+        labelForWatch.textColor = FOURNAVBARCOLOR;
         [self addSubview:labelForWatch];
         [labelForWatch mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.mas_centerY);

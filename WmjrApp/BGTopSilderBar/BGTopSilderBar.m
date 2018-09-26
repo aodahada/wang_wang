@@ -37,6 +37,7 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
     self = [super init];
     if (self) {
         self.backgroundColor = NAVBARCOLOR;
+//        self.backgroundColor = [UIColor whiteColor];
 //        itemNum = 5;
 //        NSArray *array = @[@"头条",@"军事哈",@"政务",@"热点",@"历史",@"漫画",@"搞笑",@"科技",@"本地",@"娱乐",@"小嘎秀"];
 //        _items = [[NSMutableArray alloc]initWithArray:array];
@@ -98,7 +99,8 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
     [self scrollToWithIndexPath:[NSIndexPath indexPathForRow:toIndex inSection:0]];
     BGTopSilderBarCell* fromCell = (BGTopSilderBarCell*)[_collectView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:fromIndex inSection:0]];
     BGTopSilderBarCell* toCell = (BGTopSilderBarCell*)[_collectView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:toIndex inSection:0]];
-    [fromCell setTitleColor:[UIColor whiteColor]];
+//    [fromCell setTitleColor:[UIColor whiteColor]];
+    [fromCell setTitleColor:[UIColor blackColor]];
     [fromCell setFontScale:NO];
     fromCell.BGTitleFont = [UIFont fontWithName:@"Arial" size:RESIZE_UI(17)];
     [toCell setTitleColor:SelectedColor];
@@ -223,7 +225,6 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
             [self setUnderlineX:X];
             [self setUnderlineWidth:titleSize.width+16];
         }];
-//        NSLog(@"item = %d",whichItem);
     }
 
     if (_contentCollectionView.isDragging) {
@@ -236,7 +237,7 @@ static NSString* ALCELLID = @"BGTopSilderBarCell";
         }];
     }
     _currentBarIndex = whichItem;
-    //NSLog(@"x=%f , y=%f",_collectView.contentOffset.x,_collectView.contentOffset.y);
+
 }
 
 - (void)setArrayForCategory:(NSMutableArray *)arrayForCategory {

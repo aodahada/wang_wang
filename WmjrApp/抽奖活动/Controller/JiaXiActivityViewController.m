@@ -80,7 +80,7 @@
     [MobClick endLogPageView:@"JiaXiActivityViewController"];
 }
 
-#pragma mark - 立即投资
+#pragma mark - 立即出借
 - (void)investMethod {
     self.tabBarController.selectedIndex = 1;
     [self.navigationController popViewControllerAnimated:YES];

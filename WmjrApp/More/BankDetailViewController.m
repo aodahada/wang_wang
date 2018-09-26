@@ -49,8 +49,8 @@
             }
             
             UITableView *listTableView = [[UITableView alloc]init];
-            listTableView.backgroundColor = RGBA(37, 108, 175, 1.0);
-            listTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            listTableView.backgroundColor = [UIColor whiteColor];
+//            listTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             listTableView.delegate  = self;
             listTableView.dataSource = self;
             [listTableView registerClass:[ListBankTableViewCell class] forCellReuseIdentifier:@"ListBankTableViewCell"];
@@ -78,11 +78,11 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc]init];
-    headerView.backgroundColor = RGBA(37, 108, 175, 1.0);
+    headerView.backgroundColor = [UIColor whiteColor];
     UILabel *bankLabel = [[UILabel alloc]init];
     bankLabel.text = @"银行(借记卡)";
     bankLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
-    bankLabel.textColor = RGBA(167, 210, 238, 1.0);
+    bankLabel.textColor = FOURNAVBARCOLOR;
     [headerView addSubview:bankLabel];
     [bankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headerView.mas_left).with.offset(RESIZE_UI(20));
@@ -92,7 +92,7 @@
     UILabel *firstLabel = [[UILabel alloc]init];
     firstLabel.text = @"首次绑卡支付";
     firstLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
-    firstLabel.textColor = RGBA(167, 210, 238, 1.0);
+    firstLabel.textColor = FOURNAVBARCOLOR;
     [headerView addSubview:firstLabel];
     [firstLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(headerView.mas_centerY).with.offset(RESIZE_UI(10));
@@ -102,7 +102,7 @@
     UILabel *alreadyLabel = [[UILabel alloc]init];
     alreadyLabel.text = @"已绑卡支付";
     alreadyLabel.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
-    alreadyLabel.textColor = RGBA(167, 210, 238, 1.0);
+    alreadyLabel.textColor = FOURNAVBARCOLOR;
     [headerView addSubview:alreadyLabel];
     [alreadyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(headerView.mas_centerY).with.offset(RESIZE_UI(10));
@@ -126,7 +126,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ListBankTableViewCell *cell = [[ListBankTableViewCell alloc]initWithBankModel:_bankArray[indexPath.row]];
-    cell.backgroundColor = RGBA(37, 108, 175, 1.0);
+    cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }

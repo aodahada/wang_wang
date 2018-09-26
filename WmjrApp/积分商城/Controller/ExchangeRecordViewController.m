@@ -67,7 +67,6 @@
 - (void)getExchangeRecordMethod {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-//    NSLog(@"我的id：%@",[SingletonManager sharedManager].uid);
     [manager postDataWithUrlActionStr:@"Goods/my" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"page":@(self.currentPage)} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             NSArray *orderList = obj[@"data"];

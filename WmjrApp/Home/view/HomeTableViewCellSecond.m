@@ -32,7 +32,7 @@
             ImgHomeModel *imageModel = imageArray[i];
             [imagesURLStrings addObject:imageModel.picurl];
         }
-        SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, RESIZE_UI(229)) imageURLStringsGroup:nil]; // 模拟网络延时情景
+        SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, RESIZE_UI(230)) imageURLStringsGroup:nil]; // 模拟网络延时情景
         cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
         cycleScrollView.delegate = self;
         if (imageArray.count == 1) {
@@ -43,6 +43,7 @@
         cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleClassic;
         cycleScrollView.dotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
         cycleScrollView.placeholderImage = [UIImage imageNamed:@"placeholder"];
+        cycleScrollView.autoScrollTimeInterval = 6;
         //             --- 模拟加载延迟
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             cycleScrollView.imageURLStringsGroup = imagesURLStrings;

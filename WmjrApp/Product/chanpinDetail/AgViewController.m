@@ -75,7 +75,22 @@
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"AgViewController"];
     [SVProgressHUD dismiss];
+    
+//    /* 返回 */
+//    UIImage *image = [[UIImage imageNamed:@"arrow_icon_black"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backMethod)];
+//    self.navigationItem.leftBarButtonItem = backButton;
+//    /*  设置颜色 */
+//    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+//    /*  设置字体颜色 */
+//    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor]};
+//    /* 渲染颜色 */
+//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
+
+//- (void)backMethod {
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
 
 - (void)backAction {
     [self dismissViewControllerAnimated:YES completion:^{

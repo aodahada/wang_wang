@@ -10,13 +10,11 @@
 #import "MyselfManageFinanceController.h"
 #import "MyRecommendatViewController.h"
 #import "MyselfTransactionController.h"
-#import "MyselfAccountController.h"
 #import "MessageWViewController.h"
 #import "LoginViewController.h"
 #import "DrawalViewController.h"
 #import "RechargeViewController.h"
 #import "MMPopupWindow.h"
-#import "RealNameCertificationViewController.h"
 #import "MMPopupItem.h"
 #import "MyRecommendatViewController.h"
 #import "MyselfBankViewController.h"
@@ -36,6 +34,7 @@
 #import "UserInfoModel.h"
 #import "AssetModel.h"
 #import "EarningsViewController.h"
+#import "RealNameCertificationViewController.h"
 
 @interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -44,6 +43,7 @@
 @property (nonatomic, strong) UIImageView *imageViewForHead;
 
 @property (nonatomic, strong) UILabel *labelForName;
+@property (nonatomic, strong) UILabel *labelForPersonPhone;
 
 @property (nonatomic, weak) UICollectionView *classCollectionView;
 @property (nonatomic, strong)UITableView *tableView;
@@ -76,16 +76,16 @@
 //头视图
 - (UIView *)setUpProfileHeadView {
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,RESIZE_UI(285+49))];
-    headView.backgroundColor = RGBA(237, 240, 242, 1.0);
-//    headView.backgroundColor = [UIColor redColor];
+//    headView.backgroundColor = RGBA(237, 240, 242, 1.0);
+    headView.backgroundColor = NAVBARCOLOR;
     UIImageView *imageViewForBackground = [[UIImageView alloc]init];
     imageViewForBackground.image = [UIImage imageNamed:@"image_bg"];
     [headView addSubview:imageViewForBackground];
     [imageViewForBackground mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headView.mas_top);
+        make.top.equalTo(headView.mas_top).with.offset(59);
         make.left.equalTo(headView.mas_left);
         make.right.equalTo(headView.mas_right);
-        make.height.mas_offset(RESIZE_UI(285));
+        make.height.mas_offset(RESIZE_UI(285)-59);
     }];
     
 //    UIView *imageViewForBackground = [[UIView alloc]init];
@@ -150,7 +150,7 @@
     [headView addSubview:codeButton];
     [codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(buttonForMessCenter.mas_centerY);
-        make.width.height.mas_offset(RESIZE_UI(30));
+        make.width.height.mas_offset(RESIZE_UI(20));
         make.right.equalTo(buttonForMessCenter.mas_left).with.offset(RESIZE_UI(-15));
     }];
     
@@ -161,7 +161,7 @@
     [headView addSubview:_imageViewForHead];
     [_imageViewForHead mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(headView.mas_centerX);
-        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(70));
+        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(80));
         make.width.height.mas_offset(RESIZE_UI(55));
     }];
     
@@ -175,12 +175,12 @@
         make.centerX.equalTo(headView.mas_centerX);
     }];
     
-    UILabel *labelForPhone = [[UILabel alloc]init];
-    labelForPhone.text = [SingletonManager sharedManager].userModel.mobile;
-    labelForPhone.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
-    labelForPhone.textColor = [UIColor whiteColor];
-    [headView addSubview:labelForPhone];
-    [labelForPhone mas_makeConstraints:^(MASConstraintMaker *make) {
+    _labelForPersonPhone = [[UILabel alloc]init];
+    _labelForPersonPhone.text = [SingletonManager sharedManager].userModel.mobile;
+    _labelForPersonPhone.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
+    _labelForPersonPhone.textColor = [UIColor whiteColor];
+    [headView addSubview:_labelForPersonPhone];
+    [_labelForPersonPhone mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_labelForName.mas_bottom).with.offset(RESIZE_UI(5));
         make.centerX.equalTo(headView.mas_centerX);
     }];
@@ -198,12 +198,12 @@
     
     //总资产
     UIView *zongZiChanView = [[UIView alloc]init];
-    zongZiChanView.backgroundColor = NEWYEARCOLOR;
+    zongZiChanView.backgroundColor = [UIColor whiteColor];
     zongZiChanView.layer.masksToBounds = YES;
     zongZiChanView.layer.cornerRadius = 8.0f;
     [headView addSubview:zongZiChanView];
     [zongZiChanView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(labelForPhone.mas_bottom).with.offset(RESIZE_UI(20));
+        make.top.equalTo(_labelForPersonPhone.mas_bottom).with.offset(RESIZE_UI(5));
         make.left.equalTo(headView.mas_left).with.offset(RESIZE_UI(10));
         make.width.mas_offset(SCREEN_WIDTH/2-RESIZE_UI(10)-RESIZE_UI(2));
         make.height.mas_offset(RESIZE_UI(50));
@@ -211,7 +211,7 @@
     
     UILabel *zongZiChanLabel = [[UILabel alloc]init];
     zongZiChanLabel.text = @"总资产(元)";
-    zongZiChanLabel.textColor = [UIColor whiteColor];
+    zongZiChanLabel.textColor = [UIColor blackColor];
     zongZiChanLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [zongZiChanView addSubview:zongZiChanLabel];
     [zongZiChanLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -221,7 +221,7 @@
     
     _zongZiChanContent = [[UILabel alloc]init];
     _zongZiChanContent.text = [SingletonManager sharedManager].userModel.asset.total;
-    _zongZiChanContent.textColor = [UIColor whiteColor];
+    _zongZiChanContent.textColor = [UIColor blackColor];
     _zongZiChanContent.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [zongZiChanView addSubview:_zongZiChanContent];
     [_zongZiChanContent mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -231,7 +231,7 @@
     
     //可用余额
     UIView *keYongYuEView = [[UIView alloc]init];
-    keYongYuEView.backgroundColor = NEWYEARCOLOR;
+    keYongYuEView.backgroundColor = [UIColor whiteColor];
     keYongYuEView.layer.masksToBounds = YES;
     keYongYuEView.layer.cornerRadius = 8.0f;
     [headView addSubview:keYongYuEView];
@@ -244,7 +244,7 @@
     
     UILabel *keyongyueLabel = [[UILabel alloc]init];
     keyongyueLabel.text = @"可用余额(元)";
-    keyongyueLabel.textColor = [UIColor whiteColor];
+    keyongyueLabel.textColor = [UIColor blackColor];
     keyongyueLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [keYongYuEView addSubview:keyongyueLabel];
     [keyongyueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -254,7 +254,7 @@
     
     _keYongYuEContent = [[UILabel alloc]init];
     _keYongYuEContent.text = _balanceValue;
-    _keYongYuEContent.textColor = [UIColor whiteColor];
+    _keYongYuEContent.textColor = [UIColor blackColor];
     _keYongYuEContent.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [keYongYuEView addSubview:_keYongYuEContent];
     [_keYongYuEContent mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -262,9 +262,9 @@
         make.top.equalTo(keyongyueLabel.mas_bottom);
     }];
     
-    //奖励金额，投资收益
+    //奖励金额，出借收益
     UIView *twoSumView = [[UIView alloc]init];
-    twoSumView.backgroundColor = NEWYEARCOLOR;
+    twoSumView.backgroundColor = [UIColor whiteColor];
     twoSumView.layer.masksToBounds = YES;
     twoSumView.layer.cornerRadius = 6.0f;
     [headView addSubview:twoSumView];
@@ -276,7 +276,7 @@
     }];
     
     UIView *twoLeftView = [[UIView alloc]init];
-    twoSumView.backgroundColor = NEWYEARCOLOR;
+    twoSumView.backgroundColor = [UIColor whiteColor];
     [twoSumView addSubview:twoLeftView];
     [twoLeftView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(twoSumView.mas_left);
@@ -287,7 +287,7 @@
     
     UILabel *leijijiangliLabel = [[UILabel alloc]init];
     leijijiangliLabel.text = @"累计财友奖励(元)";
-    leijijiangliLabel.textColor = [UIColor whiteColor];
+    leijijiangliLabel.textColor = [UIColor blackColor];
     leijijiangliLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [twoLeftView addSubview:leijijiangliLabel];
     [leijijiangliLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -297,7 +297,7 @@
 
     _jianglijineContent = [[UILabel alloc]init];
     _jianglijineContent.text = [NSString stringWithFormat:@"¥%@",[SingletonManager sharedManager].userModel.asset.invite_money];
-    _jianglijineContent.textColor = [UIColor whiteColor];
+    _jianglijineContent.textColor = [UIColor blackColor];
     _jianglijineContent.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [twoLeftView addSubview:_jianglijineContent];
     [_jianglijineContent mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -306,7 +306,7 @@
     }];
 
     UIView *twoRightView = [[UIView alloc]init];
-    twoRightView.backgroundColor = NEWYEARCOLOR;
+    twoRightView.backgroundColor = [UIColor whiteColor];
     [twoSumView addSubview:twoRightView];
     [twoRightView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(twoSumView.mas_right);
@@ -316,8 +316,8 @@
     }];
 
     UILabel *leijitouziLabel = [[UILabel alloc]init];
-    leijitouziLabel.text = @"累计投资收益(元)";
-    leijitouziLabel.textColor = [UIColor whiteColor];
+    leijitouziLabel.text = @"累计收益(元)";
+    leijitouziLabel.textColor = [UIColor blackColor];
     leijitouziLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [twoRightView addSubview:leijitouziLabel];
     [leijitouziLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -327,7 +327,7 @@
 
     _leijishouyiContent = [[UILabel alloc]init];
     _leijishouyiContent.text = [NSString stringWithFormat:@"¥%@",[SingletonManager sharedManager].userModel.asset.invest];
-    _leijishouyiContent.textColor = [UIColor whiteColor];
+    _leijishouyiContent.textColor = [UIColor blackColor];
     _leijishouyiContent.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     [twoRightView addSubview:_leijishouyiContent];
     [_leijishouyiContent mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -755,6 +755,79 @@
         make.bottom.equalTo(self.view.mas_bottom);
     }];
     
+//    [self makeNavgationBar];
+    
+}
+
+#pragma mark - navgationbar
+- (void)makeNavgationBar {
+    UIView *topView = [[UIView alloc]init];
+    topView.backgroundColor = NAVBARCOLOR;
+    [self.view addSubview:topView];
+    [topView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.height.mas_offset(59);
+    }];
+    _naviView = topView;
+    
+    UIImageView *imageViewForLeft = [[UIImageView alloc]init];
+    imageViewForLeft.image = [UIImage imageNamed:@"icon_more"];
+    [topView addSubview:imageViewForLeft];
+    [imageViewForLeft mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topView.mas_top).with.offset(RESIZE_UI(34));
+        make.left.equalTo(topView.mas_left).with.offset(RESIZE_UI(15));
+        make.height.mas_offset(RESIZE_UI(16));
+        make.width.mas_offset(RESIZE_UI(6));
+    }];
+    
+    UILabel *lableForMore = [[UILabel alloc] init];
+    lableForMore.text = @"更多";
+    lableForMore.textAlignment = NSTextAlignmentLeft;
+    lableForMore.textColor = [UIColor whiteColor];
+    lableForMore.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+    [topView addSubview:lableForMore];
+    [lableForMore mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topView.mas_top).with.offset(RESIZE_UI(34));
+        make.left.equalTo(topView.mas_left).with.offset(RESIZE_UI(34));
+        make.height.mas_offset(RESIZE_UI(16));
+    }];
+    
+    UIButton *buttonForMore = [[UIButton alloc]init];
+    buttonForMore.backgroundColor = [UIColor clearColor];
+    [buttonForMore addTarget:self action:@selector(jumpToMoreMethod) forControlEvents:UIControlEventTouchUpInside];
+    [topView addSubview:buttonForMore];
+    [buttonForMore mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(imageViewForLeft.mas_top).with.offset(-20);
+        make.bottom.equalTo(imageViewForLeft.mas_bottom).with.offset(20);
+        make.left.equalTo(topView.mas_left);
+        make.right.equalTo(lableForMore.mas_right).with.offset(20);
+    }];
+    
+    /*  消息  */
+    UIButton *buttonForMessCenter = [[UIButton alloc]init];
+    [buttonForMessCenter setImage:[UIImage imageNamed:@"icon_xx"] forState:UIControlStateNormal];
+    [buttonForMessCenter addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [topView addSubview:buttonForMessCenter];
+    [buttonForMessCenter mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(lableForMore.mas_centerY);
+        make.right.equalTo(topView.mas_right).with.offset(RESIZE_UI(-15));
+        make.height.mas_offset(RESIZE_UI(30));
+        make.width.mas_offset(RESIZE_UI(30));
+    }];
+    
+    //二维码
+    UIButton *codeButton = [[UIButton alloc]init];
+    [codeButton setBackgroundImage:[UIImage imageNamed:@"icon_ewm"] forState:UIControlStateNormal];
+    [codeButton addTarget:self action:@selector(watchCodeMethod) forControlEvents:UIControlEventTouchUpInside];
+    [topView addSubview:codeButton];
+    [codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(buttonForMessCenter.mas_centerY);
+        make.width.height.mas_offset(RESIZE_UI(20));
+        make.right.equalTo(buttonForMessCenter.mas_left).with.offset(RESIZE_UI(-15));
+    }];
+    
 }
 
 - (void)loginSuccessMethod {
@@ -795,6 +868,7 @@
     }
     if (_labelForName) {
         _labelForName.text = [SingletonManager sharedManager].userModel.name;
+        _labelForPersonPhone.text = [SingletonManager sharedManager].userModel.mobile;
     }
     if (_integraLabel) {
         _integraLabel.text = [NSString stringWithFormat:@"%@积分",[SingletonManager sharedManager].userModel.score];
@@ -920,19 +994,37 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *identifier  = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-        cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
+//    static NSString *identifier  = @"cell";
         switch (indexPath.row) {
-            case 0:
+            case 0:{
+                NSString *identifier = @"cell1";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+                    cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+                cell.textLabel.textColor = TITLE_COLOR;
+                
+                cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.imageView.image = [UIImage imageNamed:@"icon_licai"];
-                cell.textLabel.text = @"我的理财";
+                cell.textLabel.text = @"我的优选";
+                return cell;
+            }
                 break;
             case 1:{
+                NSString *identifier = @"cell2";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+                    cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+                cell.textLabel.textColor = TITLE_COLOR;
+                
+                cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.imageView.image = [UIImage imageNamed:@"icon_wdhb"];
                 cell.textLabel.text = @"我的红包";
                 NSInteger redBall = _redPackageArray.count;
@@ -955,9 +1047,21 @@
                         make.width.height.mas_offset(RESIZE_UI(20));
                     }];
                 }
+                return cell;
             }
                 break;
             case 2:{
+                NSString *identifier = @"cell3";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+                    cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+                cell.textLabel.textColor = TITLE_COLOR;
+                
+                cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.imageView.image = [UIImage imageNamed:@"icon_jfsc"];
                 cell.textLabel.text = @"积分商城";
                 if (!_integraLabel) {
@@ -971,10 +1075,22 @@
                         make.centerY.equalTo(cell.mas_centerY);
                     }];
                 }
+                return cell;
             }
                 break;
             case 3:
             {
+                NSString *identifier = @"cell4";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+                    cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+                cell.textLabel.textColor = TITLE_COLOR;
+                
+                cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.imageView.image = [UIImage imageNamed:@"icon_haoyou"];
                 cell.textLabel.text = @"财友圈";
                 UILabel *newLabel = [[UILabel alloc]init];
@@ -986,6 +1102,7 @@
                     make.top.equalTo(cell.mas_top).with.offset(RESIZE_UI(10));
                     make.left.equalTo(cell.textLabel.mas_right).with.offset(RESIZE_UI(5));
                 }];
+                return cell;
             }
                 break;
 //            case 4:
@@ -993,19 +1110,72 @@
 //                cell.textLabel.text = @"好友推荐";
 //                break;
             case 4:
+            {
+                NSString *identifier = @"cell5";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+                    cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+                cell.textLabel.textColor = TITLE_COLOR;
+                
+                cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.imageView.image = [UIImage imageNamed:@"icon_yhk"];
                 cell.textLabel.text = @"我的银行卡";
+                return cell;
+            }
                 break;
             case 5:
+            {
+                NSString *identifier = @"cell6";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+                    cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+                cell.textLabel.textColor = TITLE_COLOR;
+                
+                cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.imageView.image = [UIImage imageNamed:@"icon_zhmm"];
                 cell.textLabel.text = @"账号和密码";
+                return cell;
+            }
                 break;
             case 6:
+            {
+                NSString *identifier = @"cell7";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+                    cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+                cell.textLabel.textColor = TITLE_COLOR;
+                
+                cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.imageView.image = [UIImage imageNamed:@"icon_jyjl"];
                 cell.textLabel.text = @"交易记录";
+                return cell;
+            }
                 break;
             case 7:
             {
+                NSString *identifier = @"cell8";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+                    cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+                cell.textLabel.textColor = TITLE_COLOR;
+                
+                cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.imageView.image = [UIImage imageNamed:@"icon_lxkf"];
                 cell.textLabel.text = @"联系客服";
                 cell.accessoryType = UITableViewCellAccessoryNone;
@@ -1020,23 +1190,19 @@
                         make.centerY.equalTo(cell.mas_centerY);
                     }];
                 }
+                return cell;
             }
             default:
                 break;
         }
-    cell.textLabel.textColor = TITLE_COLOR;
-
-    cell.textLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    return cell;
+    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch (indexPath.row) {
         case 0:{
-            /* 我的理财 */
+            /* 我的出借 */
             MyselfManageFinanceController *myselfMFVC = [[MyselfManageFinanceController alloc] init];
             [self.navigationController pushViewController:myselfMFVC animated:YES];
             break;

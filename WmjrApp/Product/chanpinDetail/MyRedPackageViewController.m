@@ -53,6 +53,7 @@
     [MobClick beginLogPageView:@"MyRedPackageViewController"];
     self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBar.hidden = NO;
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -80,7 +81,7 @@
                 UIButton *watchButotn = [[UIButton alloc]init];
                 [watchButotn setTitle:@"查看失效红包>>" forState:UIControlStateNormal];
                 watchButotn.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-                [watchButotn setTitleColor:RGBA(0, 104, 178, 1.0) forState:UIControlStateNormal];
+                [watchButotn setTitleColor:FOURNAVBARCOLOR forState:UIControlStateNormal];
                 [watchButotn addTarget:self action:@selector(watchUnuseRed) forControlEvents:UIControlEventTouchUpInside];
                 [self.view addSubview:watchButotn];
                 [watchButotn mas_makeConstraints:^(MASConstraintMaker *make) {

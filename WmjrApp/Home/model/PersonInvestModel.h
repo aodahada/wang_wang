@@ -12,13 +12,13 @@
 
 /**今日预期收益*/
 @property (nonatomic, copy) NSString *today_income;
-/**累计投资*/
+/**累计出借*/
 @property (nonatomic, copy) NSString *total_invest;
 /** 累计收益*/
 @property (nonatomic, copy) NSString *total_income;
 
 /**
- 当前投资
+ 当前出借
  */
 @property (nonatomic, copy) NSString *current_invest;
 

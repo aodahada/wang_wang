@@ -91,7 +91,7 @@
         if ([SingletonManager sharedManager].userModel.invitationcode) {
             NSString *contentStr = [NSString stringWithFormat:@"使用我的旺马财富推荐码 %@", [SingletonManager sharedManager].userModel.invitationcode];
             NSString *urlStr = [NSString stringWithFormat:@"http://m.wangmacaifu.com/#/register/wmcf-%@",[SingletonManager sharedManager].userModel.invitationcode];
-            [sharedManager shareContent:sender withTitle:@"这是一个值得信赖的的投资理财平台" andContent:contentStr andUrl:urlStr];
+            [sharedManager shareContent:sender withTitle:@"这是一个值得信赖的的出借平台" andContent:contentStr andUrl:urlStr];
             
         } else {
             [[SingletonManager sharedManager] alert1PromptInfo:@"推荐码获取失败,请重新分享"];

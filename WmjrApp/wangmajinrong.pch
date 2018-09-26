@@ -16,8 +16,9 @@
 
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
-#define NAVBARCOLOR [UIColor colorWithRed:206/255.0 green:0/255.0 blue:2/255.0 alpha:1.0]
+#define NAVBARCOLOR [UIColor colorWithRed:255/255.0 green:84/255.0 blue:40/255.0 alpha:1.0]
 //#define NAVBARCOLOR [UIColor colorWithRed:0/255.0 green:105/255.0 blue:173/255.0 alpha:1.0]
+#define FOURNAVBARCOLOR [UIColor colorWithRed:255/255.0 green:84/255.0 blue:40/255.0 alpha:1.0]
 
 #define YEARCOLOR [UIColor colorWithRed:172/255.0 green:53/255.0 blue:39/255.0 alpha:1.0]
 //#define NEWYEARCOLOR [UIColor colorWithRed:219/255.0 green:66/255.0 blue:60/255.0 alpha:1.0]

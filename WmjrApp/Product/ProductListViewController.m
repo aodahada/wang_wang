@@ -15,7 +15,6 @@
 #import "ProductIntroViewController.h"
 #import "ProductModel.h"
 #import "LoginViewController.h"
-#import "RealNameCertificationViewController.h"
 //#import "MMPopupItem.h"
 //#import "MMPopupWindow.h"
 #import "HRBuyViewController.h"
@@ -53,8 +52,6 @@
     
     /* 模态登录界面 */
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentVCAction) name:PRESENTLOGINVCNOTIFICATION object:nil];
-    /* 实名认证 */
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushRealNameAuthVCAction) name:PUSHREALNAMEAUTHVCNOTIFICATION object:nil];
     /* 进入购买界面 */
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushFundBuyViewController:) name:PUSHTOFUNDBUYVCNOTIFICATION object:nil];
     /* 进入产品详情 */
@@ -163,7 +160,7 @@
 //                    [_arrayForTypeName addObject:productCategoryModel];
 //                }
                 ProductCategoryModel *productCategoryModel1 = [[ProductCategoryModel alloc]init];
-                productCategoryModel1.name = @"理财";
+                productCategoryModel1.name = @"优选";
                 ProductCategoryModel *productCategoryModel2 = [[ProductCategoryModel alloc]init];
                 productCategoryModel2.name = @"旺马长存";
 //                _arrayForTypeName = [[NSMutableArray alloc]initWithArray:@[productCategoryModel1,productCategoryModel2]];
@@ -274,20 +271,6 @@
     ProductModel *productModel = noti.object;
     fundBuyVC.productModel = productModel;
     [self.navigationController pushViewController:fundBuyVC animated:YES];
-}
-
-/* 实名认证 */
-- (void)pushRealNameAuthVCAction {
-    RealNameCertificationViewController *realNameAuth = [[RealNameCertificationViewController alloc] init];
-    realNameAuth.isShowAlert = YES;
-    realNameAuth.block = ^() {
-        MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
-        alertConfig.defaultTextOK = @"好的";
-        MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"请前往个人界面绑定银行卡" detail:nil];
-        [alertView show];
-        return;
-    };
-    [self.navigationController pushViewController:realNameAuth animated:YES];
 }
 
 /* 模态出现登录页面 */

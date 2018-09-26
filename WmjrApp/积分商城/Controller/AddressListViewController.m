@@ -148,7 +148,7 @@
         
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        NSLog(@"da");
+        
     }
     
 }

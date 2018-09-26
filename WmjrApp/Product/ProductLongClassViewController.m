@@ -195,7 +195,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-//        NSLog(@"点击广告");
         AgViewController *agVC =[[AgViewController alloc] init];
         agVC.title = _adModel.title;
         agVC.webUrl = _adModel.url;

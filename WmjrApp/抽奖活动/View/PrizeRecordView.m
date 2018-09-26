@@ -163,7 +163,6 @@
 - (void)exchangePrizeMethod:(NSString *)prizeId {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];
-    NSLog(@"我兑换的：%@",prizeId);
     [manager postDataWithUrlActionStr:@"Raffle/exchange" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid,@"id":prizeId} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];

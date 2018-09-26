@@ -50,7 +50,7 @@
     self.jiaxiImageView.image = [UIImage imageNamed:@"tab_syhl"];
     [self addSubview:self.jiaxiImageView];
     [self.jiaxiImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_offset(RESIZE_UI(24));
+        make.width.mas_offset(RESIZE_UI(25));
         make.height.mas_offset(RESIZE_UI(29));
         make.top.equalTo(self.mas_top);
         make.left.equalTo(self.mas_left).with.offset(RESIZE_UI(103));
@@ -67,7 +67,7 @@
     }];
     
     self.earnOfYearLable = [[UILabel alloc] init];
-    self.earnOfYearLable.text = @"预期年化收益";
+    self.earnOfYearLable.text = @"历史年化收益";
     self.earnOfYearLable.textAlignment = NSTextAlignmentLeft;
 //    self.earnOfYearLable.backgroundColor = [UIColor redColor];
     self.earnOfYearLable.textColor = RGBA(153, 153, 153, 1.0) ;
@@ -105,8 +105,8 @@
 //    _progressView.arcFinishColor = RGBA(0, 108, 175, 1.0);
 //    _progressView.arcUnfinishColor = RGBA(0, 108, 175, 1.0);
     
-    _progressView.arcFinishColor = NEWYEARCOLOR;
-    _progressView.arcUnfinishColor = NEWYEARCOLOR;
+    _progressView.arcFinishColor = RGBA(247, 215, 72, 1.0);
+    _progressView.arcUnfinishColor = RGBA(247, 215, 72, 1.0);
     _progressView.centerColor = [UIColor whiteColor];
     _progressView.arcBackColor = RGBA(246, 246, 246, 1.0);
     _progressView.width = RESIZE_UI(6);
@@ -166,7 +166,6 @@
     _progressView.percent = [model.buyrate floatValue];
     if (_productModelHa.segment.count != 0) {
         LongProductSegment *longProduct = _productModelHa.segment[0];
-//            NSLog(@"我的利率:%@",longProduct.returnrate);
         double returnrate_plus = [_productModelHa.returnrate_plus doubleValue];
         double returnrate_original = [longProduct.returnrate doubleValue];
         double longRateFloat = (returnrate_original-returnrate_plus) * 100;
@@ -188,7 +187,6 @@
 //            self.jiaxiLabel.text = [NSString stringWithFormat:@"+%g％",returnrate_plus*100];
             self.jiaxiLabel.text = [NSString stringWithFormat:@"+%g",returnrate_plus*100];
 //            CGSize lblSize = [self.jiaxiLabel.text boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:RESIZE_UI(9)]} context:nil].size;
-//            //        NSLog(@"我的宽度:%.1f",lblSize.width);
 //            CGFloat imgWidth = lblSize.width+RESIZE_UI(10);
 //            [self.jiaxiImageView mas_updateConstraints:^(MASConstraintMaker *make) {
 //                make.width.mas_offset(imgWidth);
@@ -210,7 +208,7 @@
             _labelForManageMoneyDay.textColor = RGBA(3, 3, 3, 1.0);
             _endImageView.hidden = YES;
             self.jiaxiImageView.image = [UIImage imageNamed:@"tab_syhl"];
-            self.jiaxiLabel.textColor = [UIColor blackColor];
+            self.jiaxiLabel.textColor = [UIColor whiteColor];
         }
     }
     

@@ -59,7 +59,7 @@
         }];
         
         UILabel *labelForRateTitle = [[UILabel alloc]init];
-        labelForRateTitle.text = @"预期年化收益率";
+        labelForRateTitle.text = @"历史年化收益率";
         labelForRate.textAlignment = NSTextAlignmentCenter;
         labelForRateTitle.textColor = RGBA(153, 153, 153, 1.0);
         labelForRateTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
@@ -90,7 +90,7 @@
         }];
         
         UILabel *sumInvestLabel = [[UILabel alloc]init];
-        sumInvestLabel.text = [NSString stringWithFormat:@"%@投资额",productModel.purchasable];
+        sumInvestLabel.text = [NSString stringWithFormat:@"%@出借额",productModel.purchasable];
         sumInvestLabel.textAlignment = NSTextAlignmentCenter;
         sumInvestLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
         if ([productModel.isdown isEqualToString:@"0"]) {
@@ -116,7 +116,7 @@
         }];
         
         UILabel *durationLabel = [[UILabel alloc]init];
-        durationLabel.text = [NSString stringWithFormat:@"理财期限%@-%@天",segFirst.duration,segLast.duration];
+        durationLabel.text = [NSString stringWithFormat:@"出借期限%@-%@天",segFirst.duration,segLast.duration];
         if ([productModel.isdown isEqualToString:@"0"]) {
             durationLabel.textColor = RGBA(0, 104, 178, 1.0);
         } else {

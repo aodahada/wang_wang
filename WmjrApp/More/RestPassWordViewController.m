@@ -40,7 +40,6 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-//    NSLog(@"我拦截的超链接请求:%@",request.URL);
     
     NSString *url = request.URL.absoluteString;
     
@@ -50,7 +49,6 @@
     if ([url hasPrefix:scheme]) {
         
         NSString *path = [url substringFromIndex:scheme.length];
-        //        NSLog(@"我的路径:%@",path);
         //不带参数的情况
         //        NSString *methodName = [url substringFromIndex:scheme.length];
         //        [self performSelector:NSSelectorFromString(methodName) withObject:nil];
@@ -61,7 +59,6 @@
         
         return NO;
     }
-    //    NSLog(@"想加载其他请求，不是调用OC方法");
     
     return YES;
     

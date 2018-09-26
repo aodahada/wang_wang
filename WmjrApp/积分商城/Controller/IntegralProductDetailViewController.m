@@ -102,7 +102,6 @@
         NSDictionary *dic = slideArray[i];
         [imagesURLStrings addObject:dic[@"pic"]];
     }
-//    NSLog(@"我的图片:%@",_integralProductDetailModel.slide);
     SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, RESIZE_UI(280)) imageURLStringsGroup:nil]; // 模拟网络延时情景
     cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
     cycleScrollView.delegate = self;
@@ -261,21 +260,18 @@
 //
 //    frame.size.height = webView.scrollView.contentSize.height;
 //
-//    NSLog(@"frame = %.2f", frame.size.height);
 //    webView.frame = frame;
 //    [webView mas_updateConstraints:^(MASConstraintMaker *make) {
 //        make.height.mas_offset(frame.size.height);
 //    }];
     
     CGSize fittingSize = [webView sizeThatFits:CGSizeZero];
-//    NSLog(@"我的高度:%.2f",fittingSize.height);
     [webView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_offset(fittingSize.height-20);
     }];
     
 //    CGFloat documentWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.getElementById('content').offsetWidth"] floatValue];
 //    CGFloat documentHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"content\").offsetHeight;"] floatValue];
-//    NSLog(@"documentSize = {%f, %f}", documentWidth, documentHeight);
 //    [webView mas_updateConstraints:^(MASConstraintMaker *make) {
 //        make.height.mas_offset(documentHeight);
 //    }];

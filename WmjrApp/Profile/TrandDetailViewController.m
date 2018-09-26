@@ -44,6 +44,10 @@
         _hongbaoLabel.hidden = NO;
         _hongbaoBenXi.text = [NSString stringWithFormat:@"+%@(元)",self.redpacket];
     }
+    if ([_redpacket_type isEqualToString:@"2"]) {
+        _hongbaoBenXi.hidden = YES;
+        _hongbaoLabel.hidden = YES;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -55,12 +59,13 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
     [MobClick endLogPageView:@"TrandDetailViewController"];
 }
 
 #pragma mark - uitableview -
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([self.redpacket isEqualToString:@"0"]) {
+    if ([self.redpacket isEqualToString:@"0"]||[self.redpacket_type isEqualToString:@"2"]) {
         if ([_web_url isEqualToString:@""]) {
             return 6;
         } else {
@@ -83,11 +88,11 @@
         cell.detailTextLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    if ([self.redpacket isEqualToString:@"0"]) {
+    if ([self.redpacket isEqualToString:@"0"]||[self.redpacket_type isEqualToString:@"2"]) {
         switch (indexPath.row) {
             case 0:
             {
-                cell.textLabel.text = @"投资金额  (元)";
+                cell.textLabel.text = @"出借金额  (元)";
                 cell.detailTextLabel.text = self.totalNum;
                 cell.detailTextLabel.textColor = AUXILY_COLOR;
             }
@@ -101,16 +106,24 @@
                 break;
             case 2:
             {
-                cell.textLabel.text = @"预期年化收益  (%)";
+                cell.textLabel.text = @"历史年化收益  (%)";
                 UILabel *jiaxiLabel = [[UILabel alloc]init];
                 double returnrate_plus = [self.returnrate_plus doubleValue];
                 if ([[SingletonManager convertNullString:self.returnrate_plus] isEqualToString:@"0"]) {
-                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%g", [self.earnP floatValue] * 100];
+                    if ([_redpacket_type isEqualToString:@"2"]) {
+                        cell.detailTextLabel.text = [NSString stringWithFormat:@"%g+%g", [self.earnP floatValue] * 100,[_redpacket_returnrate_plus floatValue]*100];
+                    } else {
+                        cell.detailTextLabel.text = [NSString stringWithFormat:@"%g", [self.earnP floatValue] * 100];
+                    }
                     cell.detailTextLabel.textColor = AUXILY_COLOR;
                 } else {
 //                    NSNumber *returnrate_plusNumber = [NSNumber numberWithDouble:returnrate_plus*100];
 //                    NSString *returnrate_plusStr = [NSString stringWithFormat:@"%@％",returnrate_plusNumber];
-                    jiaxiLabel.text = [NSString stringWithFormat:@"+%g",returnrate_plus*100];
+                    if ([_redpacket_type isEqualToString:@"2"]) {
+                        jiaxiLabel.text = [NSString stringWithFormat:@"+%g +%g",returnrate_plus*100,[_redpacket_returnrate_plus floatValue]*100];
+                    } else {
+                        jiaxiLabel.text = [NSString stringWithFormat:@"+%g",returnrate_plus*100];
+                    }
                     jiaxiLabel.textColor = [UIColor redColor];
                     jiaxiLabel.font = [UIFont systemFontOfSize:RESIZE_UI(13)];
                     [cell addSubview:jiaxiLabel];
@@ -175,7 +188,7 @@
         switch (indexPath.row) {
             case 0:
             {
-                cell.textLabel.text = @"投资金额  (元)";
+                cell.textLabel.text = @"出借金额  (元)";
                 cell.detailTextLabel.text = self.totalNum;
                 cell.detailTextLabel.textColor = AUXILY_COLOR;
             }
@@ -196,20 +209,29 @@
                 break;
             case 3:
 //            {
-//                cell.textLabel.text = @"预期年化收益  (%)";
+//                cell.textLabel.text = @"历史年化收益  (%)";
 //                cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f", [self.earnP floatValue] * 100];
 //                cell.detailTextLabel.textColor = AUXILY_COLOR;
 //            }
 //                break;
             {
-                cell.textLabel.text = @"预期年化收益  (%)";
+                cell.textLabel.text = @"历史年化收益  (%)";
                 UILabel *jiaxiLabel = [[UILabel alloc]init];
                 double returnrate_plus = [self.returnrate_plus doubleValue];
                 if ([[SingletonManager convertNullString:self.returnrate_plus] isEqualToString:@"0"]) {
-                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%g", [self.earnP floatValue] * 100];
+                    if ([_redpacket_type isEqualToString:@"2"]) {
+                        cell.detailTextLabel.text = [NSString stringWithFormat:@"%g+%g", [self.earnP floatValue] * 100,[_redpacket_returnrate_plus floatValue]*100];
+                    } else {
+                        cell.detailTextLabel.text = [NSString stringWithFormat:@"%g", [self.earnP floatValue] * 100];
+                    }
+                    
                     cell.detailTextLabel.textColor = AUXILY_COLOR;
                 } else {
-                    jiaxiLabel.text = [NSString stringWithFormat:@"+%g",returnrate_plus*100];
+                    if ([_redpacket_type isEqualToString:@"2"]) {
+                        jiaxiLabel.text = [NSString stringWithFormat:@"+%g +%g",returnrate_plus*100,[_redpacket_returnrate_plus floatValue]*100];
+                    } else {
+                        jiaxiLabel.text = [NSString stringWithFormat:@"+%g",returnrate_plus*100];
+                    }
                     jiaxiLabel.textColor = [UIColor redColor];
                     jiaxiLabel.font = [UIFont systemFontOfSize:RESIZE_UI(13)];
                     [cell addSubview:jiaxiLabel];
@@ -317,6 +339,7 @@
             AgViewController *agVC =[[AgViewController alloc] init];
             agVC.title = @"电子合同";
             agVC.webUrl = _web_url;
+            agVC.isWhite = YES;
             [self.navigationController pushViewController:agVC animated:YES];
         }
     } else {
@@ -342,7 +365,6 @@
             [SVProgressHUD dismiss];
             [_trandDetailTable reloadData];
         } else {
-            NSLog(@"%@",dic[@"mes"]);
 //            [SVProgressHUD showErrorWithStatus:dic[@"mes"]];
         }
     }];

@@ -39,7 +39,8 @@
         case 502:
         {
             // 定制新浪微博的分享内容
-            [shareParams SSDKSetupSinaWeiboShareParamsByText:content title:title image:nil url:nil latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//            [shareParams SSDKSetupSinaWeiboShareParamsByText:content title:title image:nil url:[NSURL URLWithString:url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+            [shareParams SSDKSetupShareParamsByText:content images:nil url:[NSURL URLWithString:url] title:title type:SSDKContentTypeAuto];
             type = SSDKPlatformTypeSinaWeibo;
         }
             break;
@@ -56,7 +57,8 @@
     }
     
     [ShareSDK share:type parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
-        
+        NSError *errors = error;
+        NSLog(@"我的错误：%@",errors);
     }];
 
 

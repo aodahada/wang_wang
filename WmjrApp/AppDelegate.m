@@ -41,6 +41,7 @@
 #import "LoginViewController.h"
 #import "RegisterViewController.h"
 
+#import <ShareSDK/ShareSDK.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/TencentOAuth.h>
@@ -136,8 +137,7 @@
     
     //在这里处理界面跳转，didFinishLaunchingWithOptions这个方法不论是程序被杀死了，进入前台都会调用这个方法,从无到有进会走这个方法
     if (launchOptions[UIApplicationLaunchOptionsLocalNotificationKey]) {
-        NSLog(@"%@",launchOptions[UIApplicationLaunchOptionsLocalNotificationKey]);
-        NSLog(@"进行界面跳转");
+
         //        UILabel *view = [[UILabel alloc]init];
         //        view.numberOfLines = 0;
         //        view.text = [NSString stringWithFormat:@"%@",launchOptions[UIApplicationLaunchOptionsLocalNotificationKey]];
@@ -264,7 +264,8 @@
 
 /* 分享 */
 - (void)shareContent {
-    [ShareSDK registerApp:@"8dfe2246f9f7" activePlatforms:@[@(SSDKPlatformTypeSinaWeibo), @(SSDKPlatformSubTypeWechatSession), @(SSDKPlatformSubTypeQQFriend), @(SSDKPlatformSubTypeWechatTimeline)] onImport:^(SSDKPlatformType platformType) {
+    
+    [ShareSDK registerActivePlatforms:@[@(SSDKPlatformTypeSinaWeibo), @(SSDKPlatformSubTypeWechatSession), @(SSDKPlatformSubTypeQQFriend), @(SSDKPlatformSubTypeWechatTimeline)] onImport:^(SSDKPlatformType platformType) {
         switch (platformType)
         {
             case SSDKPlatformTypeWechat:
@@ -276,7 +277,6 @@
             case SSDKPlatformTypeSinaWeibo:
                 [ShareSDKConnector connectWeibo:[WeiboSDK class]];
                 break;
-
             default:
                 break;
         }
@@ -287,7 +287,7 @@
                 //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
                 [appInfo SSDKSetupSinaWeiboByAppKey:@"3234818096"
                                           appSecret:@"28d3ef9811c622ae4ceca516285fbf66"
-                                        redirectUri:@"http://www.sharesdk.cn"
+                                        redirectUri:@"https://www.wangmacaifu.com"
                                            authType:SSDKAuthTypeBoth];
                 break;
             case SSDKPlatformTypeWechat:
@@ -295,29 +295,19 @@
                                       appSecret:@"0b41f59c0600acd4c61f4343a76c2e86"];
                 break;
             case SSDKPlatformTypeQQ:
-                [appInfo SSDKSetupQQByAppId:@"1104708039"
-                                     appKey:@"usR1ASaS5dxq01Zh"
+//                [appInfo SSDKSetupQQByAppId:@"1104708039"
+//                                     appKey:@"usR1ASaS5dxq01Zh"
+//                                   authType:SSDKAuthTypeBoth];// url scheme QQ41D881C7
+                [appInfo SSDKSetupQQByAppId:@"1107415649"
+                                     appKey:@"073Jy9pBvUJwJ2b9"
                                    authType:SSDKAuthTypeBoth];
                 break;
-
+                
             default:
                 break;
         }
     }];
-//    [ShareSDK registerApp:@"8dfe2246f9f7"];
     
-//    /* 微博 */
-//    [ShareSDK  connectSinaWeiboWithAppKey:@"3234818096"
-//                                appSecret:@"28d3ef9811c622ae4ceca516285fbf66"
-//                              redirectUri:@"http://www.sharesdk.cn"
-//                              weiboSDKCls:[WeiboSDK class]];
-//    /* QQ应用 */
-//    [ShareSDK connectQQWithQZoneAppKey:@"1104708039"
-//                     qqApiInterfaceCls:[QQApiInterface class]
-//                       tencentOAuthCls:[TencentOAuth class]];
-//    /*  微信/朋友圈 */
-//    [ShareSDK connectWeChatSessionWithAppId:@"wx6b9c884ac57e29bf" appSecret:@"0b41f59c0600acd4c61f4343a76c2e86" wechatCls:[WXApi class]];
-//    [ShareSDK connectWeChatTimelineWithAppId:@"wx6b9c884ac57e29bf" appSecret:@"0b41f59c0600acd4c61f4343a76c2e86" wechatCls:[WXApi class]];
 }
 
 - (void)initTabbarCWithControllers {
@@ -331,14 +321,14 @@
 //    ProductViewController *productVC = [ProductViewController sharedManager];
     ProductListViewController *productVC = [[ProductListViewController alloc]init];
     BaseNavigationController *productNa = [[BaseNavigationController alloc] initWithRootViewController:productVC];
-    UITabBarItem *productTab = [[UITabBarItem alloc] initWithTitle:@"理财" image:[[UIImage imageNamed:@"tab_btn_licai_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_licai_pre"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
+    UITabBarItem *productTab = [[UITabBarItem alloc] initWithTitle:@"优选" image:[[UIImage imageNamed:@"tab_btn_licai_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_licai_pre"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
     productVC.tabBarItem = productTab;
     
     
-    MoneyOrderMainViewController *moneyOrderMainVC = [[MoneyOrderMainViewController alloc]init];
-    BaseNavigationController *moneyOrderNav = [[BaseNavigationController alloc]initWithRootViewController:moneyOrderMainVC];
-    UITabBarItem *moneyOrderTab = [[UITabBarItem alloc] initWithTitle:@"我有汇票" image:[[UIImage imageNamed:@"tab_btn_wyjd_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_wyjd_sel"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
-    moneyOrderMainVC.tabBarItem = moneyOrderTab;
+//    MoneyOrderMainViewController *moneyOrderMainVC = [[MoneyOrderMainViewController alloc]init];
+//    BaseNavigationController *moneyOrderNav = [[BaseNavigationController alloc]initWithRootViewController:moneyOrderMainVC];
+//    UITabBarItem *moneyOrderTab = [[UITabBarItem alloc] initWithTitle:@"我有汇票" image:[[UIImage imageNamed:@"tab_btn_wyjd_nor"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] selectedImage:[[UIImage imageNamed:@"tab_btn_wyjd_sel"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]];
+//    moneyOrderMainVC.tabBarItem = moneyOrderTab;
     
     ProfileViewController *profileVC = [[ProfileViewController alloc] init];
     BaseNavigationController *profileNa = [[BaseNavigationController alloc] initWithRootViewController:profileVC];
@@ -346,9 +336,10 @@
     profileVC.tabBarItem = profileTab;
     
     self.tabbarC = [[UITabBarController alloc] init];
-    self.tabbarC.viewControllers = @[homeNa, productNa, moneyOrderNav, profileNa];
+//    self.tabbarC.viewControllers = @[homeNa, productNa, moneyOrderNav, profileNa];
+    self.tabbarC.viewControllers = @[homeNa, productNa, profileNa];
 //    self.tabbarC.tabBar.tintColor = RGBA(0, 102, 177, 1.0);
-    self.tabbarC.tabBar.tintColor = NAVBARCOLOR;
+    self.tabbarC.tabBar.tintColor = RGBA(249, 124, 6, 1.0);
     self.tabbarC.delegate = self;
     self.window.rootViewController = self.tabbarC;
     
@@ -461,7 +452,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
 - (void)application:(UIApplication *)application
 didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
+    
 //    [[[UIAlertView alloc] initWithTitle:@"推送连接错误" message:haha delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil] show];
 }
 
@@ -497,7 +488,7 @@ forRemoteNotification:(NSDictionary *)userInfo
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [JPUSHService handleRemoteNotification:userInfo];
-    NSLog(@"iOS6及以下系统，收到通知:%@", [self logDic:userInfo]);
+    
 }
 
 - (void)application:(UIApplication *)application
@@ -505,7 +496,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
     [JPUSHService handleRemoteNotification:userInfo];
-    NSLog(@"iOS7及以上系统，收到通知:%@", [self logDic:userInfo]);
+    
     
     if ([[UIDevice currentDevice].systemVersion floatValue]<10.0 || application.applicationState>0) {
     }
@@ -534,17 +525,20 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
-        NSLog(@"iOS10 前台收到远程通知:%@", [self logDic:userInfo]);
-        [UIAlertView alertWithCallBackBlock:^(NSInteger buttonIndex) {
-            if (buttonIndex == 1) {
-                [self jumpToAdVC:userInfo[@"title"] andUrl:userInfo[@"url"]];
-//                [self jumpToAdVC:@"年后" andUrl:@"http://www.baidu.com"];
-            }
-        } title:@"收到新消息" message:@"点击前往查看详情" cancelButtonName:@"取消" otherButtonTitles:@"前往", nil];
+        NSString *url = [SingletonManager convertNullString:userInfo[@"url"]];
+        if ([url isEqualToString:@""]) {
+            NSLog(@"收到推送消息");
+        } else {
+            [UIAlertView alertWithCallBackBlock:^(NSInteger buttonIndex) {
+                if (buttonIndex == 1) {
+                    [self jumpToAdVC:userInfo[@"title"] andUrl:userInfo[@"url"]];
+                    //                [self jumpToAdVC:@"年后" andUrl:@"http://www.baidu.com"];
+                }
+            } title:@"收到新消息" message:@"点击前往查看详情" cancelButtonName:@"取消" otherButtonTitles:@"前往", nil];
+        }
     }
     else {
         // 判断为本地通知
-        NSLog(@"iOS10 前台收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
     }
     completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
 }
@@ -563,7 +557,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
-        NSLog(@"iOS10 收到远程通知:%@", [self logDic:userInfo]);
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"death"] isEqualToString:@"death"]) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -578,7 +571,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     }
     else {
         // 判断为本地通知
-        NSLog(@"iOS10 收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
     }
     
     completionHandler();  // 系统要求执行这个方法

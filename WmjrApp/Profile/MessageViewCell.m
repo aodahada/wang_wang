@@ -28,7 +28,7 @@
     self = [super init];
     if (self) {
         _cerLab = [[UILabel alloc]init];
-        _cerLab.textColor = RGBA(0, 104, 178, 1.0);
+        _cerLab.textColor = FOURNAVBARCOLOR;
         _cerLab.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
         _cerLab.text = model.message_title;
         [self addSubview:_cerLab];
@@ -97,7 +97,7 @@
             _watchLabel = [[UILabel alloc]init];
             _watchLabel.text = @"展开详情";
             _watchLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-            _watchLabel.textColor = RGBA(0, 104, 178, 1.0);
+            _watchLabel.textColor = FOURNAVBARCOLOR;
             [_bottomView addSubview:_watchLabel];
             [_watchLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(_jiantouImage.mas_centerY);

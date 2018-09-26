@@ -61,17 +61,10 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
-//    CGSize fittingSize = [webView sizeThatFits:CGSizeZero];
-//    //    NSLog(@"我的高度:%.2f",fittingSize.height);
-//    if (_transHight) {
-//        _transHight(fittingSize.height);
-//    }
     
     NSInteger height = [[webView stringByEvaluatingJavaScriptFromString:
                          @"document.body.scrollHeight"] integerValue];
     
-//    NSLog(@"我的高度1:%ld",(long)fittingSize.height);
-//    NSLog(@"我的高度2:%ld",(long)height);
     [_webView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_offset(height);
         make.bottom.equalTo(self.mas_bottom);

@@ -77,7 +77,7 @@
         }];
         
         _haoyoutouziLabel = [[UILabel alloc]init];
-        _haoyoutouziLabel.text = @"好友投资金额";
+        _haoyoutouziLabel.text = @"好友出借金额";
         _haoyoutouziLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
         [_bottomView addSubview:_haoyoutouziLabel];
         [_haoyoutouziLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -100,7 +100,7 @@
         }];
         
         _yujitouziLabel = [[UILabel alloc]init];
-        _yujitouziLabel.text = @"预计投资天数";
+        _yujitouziLabel.text = @"预计出借天数";
         _yujitouziLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
         [_bottomView addSubview:_yujitouziLabel];
         [_yujitouziLabel mas_makeConstraints:^(MASConstraintMaker *make) {

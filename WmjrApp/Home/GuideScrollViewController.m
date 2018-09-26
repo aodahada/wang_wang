@@ -19,7 +19,7 @@
     // Do any additional setup after loading the view.
     UIScrollView *mainScrollView = [[UIScrollView alloc]init];
     mainScrollView.backgroundColor = [UIColor redColor];
-    mainScrollView.contentSize = CGSizeMake(SCREEN_WIDTH*3, SCREEN_HEIGHT);
+    mainScrollView.contentSize = CGSizeMake(SCREEN_WIDTH*2, SCREEN_HEIGHT);
     mainScrollView.pagingEnabled = YES;
     mainScrollView.bounces = NO;
     mainScrollView.showsHorizontalScrollIndicator = NO;
@@ -29,7 +29,7 @@
     }];
     
     UIImageView *imageView1 = [[UIImageView alloc] init];
-    imageView1.image = [UIImage imageNamed:@"引导2"];
+    imageView1.image = [UIImage imageNamed:@"引导页2"];
     imageView1.userInteractionEnabled = YES;
     imageView1.exclusiveTouch = YES;
     [mainScrollView addSubview:imageView1];
@@ -41,7 +41,7 @@
     }];
     
     UIImageView *imageView2 = [[UIImageView alloc]init];
-    imageView2.image = [UIImage imageNamed:@"引导3"];
+    imageView2.image = [UIImage imageNamed:@"引导页3"];
     imageView2.userInteractionEnabled = YES;
     imageView2.exclusiveTouch = YES;
     [mainScrollView addSubview:imageView2];
@@ -52,17 +52,17 @@
         make.height.mas_offset(SCREEN_HEIGHT);
     }];
     
-    UIImageView *imageView3 = [[UIImageView alloc]init];
-    imageView3.image = [UIImage imageNamed:@"引导4"];
-    imageView3.userInteractionEnabled = YES;
-    imageView3.exclusiveTouch = YES;
-    [mainScrollView addSubview:imageView3];
-    [imageView3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(mainScrollView.mas_top);
-        make.left.equalTo(mainScrollView.mas_left).with.offset(SCREEN_WIDTH*2);
-        make.width.mas_offset(SCREEN_WIDTH);
-        make.height.mas_offset(SCREEN_HEIGHT);
-    }];
+//    UIImageView *imageView3 = [[UIImageView alloc]init];
+//    imageView3.image = [UIImage imageNamed:@"引导页3"];
+//    imageView3.userInteractionEnabled = YES;
+//    imageView3.exclusiveTouch = YES;
+//    [mainScrollView addSubview:imageView3];
+//    [imageView3 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(mainScrollView.mas_top);
+//        make.left.equalTo(mainScrollView.mas_left).with.offset(SCREEN_WIDTH*2);
+//        make.width.mas_offset(SCREEN_WIDTH);
+//        make.height.mas_offset(SCREEN_HEIGHT);
+//    }];
     
 //    UIImageView *imageView4 = [[UIImageView alloc]init];
 //    imageView4.image = [UIImage imageNamed:@"引导4"];
@@ -77,14 +77,15 @@
 //    }];
     
     UIButton *button = [[UIButton alloc]init];
-    [button setBackgroundImage:[UIImage imageNamed:@"按钮"] forState:UIControlStateNormal];
+//    [button setBackgroundImage:[UIImage imageNamed:@"按钮"] forState:UIControlStateNormal];
+    [button setBackgroundColor:[UIColor clearColor]];
     [button addTarget:self action:@selector(closeGuideMethod) forControlEvents:UIControlEventTouchUpInside];
-    [imageView3 addSubview:button];
+    [imageView2 addSubview:button];
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(imageView3.mas_bottom).with.offset(-RESIZE_UI(60));
+        make.bottom.equalTo(imageView2.mas_bottom).with.offset(-RESIZE_UI(30));
         make.width.mas_offset(RESIZE_UI(157));
-        make.height.mas_offset(RESIZE_UI(50));
-        make.centerX.equalTo(imageView3.mas_centerX);
+        make.height.mas_offset(RESIZE_UI(90));
+        make.centerX.equalTo(imageView2.mas_centerX);
     }];
     
 //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(nihao)];
@@ -93,7 +94,6 @@
 }
 
 - (void)closeGuideMethod {
-//    NSLog(@"你好");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"closeGuide" object:nil];
 }
 

@@ -247,8 +247,6 @@
     NetManager *manager = [[NetManager alloc] init];
     _tradeArray = [[NSMutableArray alloc]init];
     [SVProgressHUD showWithStatus:@"正在加载"];
-    NSLog(@"开始时间;%@",_dateArray[1]);
-    NSLog(@"结束时间:%@",_dateArray[0]);
     [manager postDataWithUrlActionStr:@"Trade/deposit_query" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid, @"page":@"", @"size":@"", @"start_time":_dateArray[1], @"end_time":_dateArray[0]} withBlock:^(id obj) {
         if ([obj[@"result"] isEqualToString:@"1"]) {
             [SVProgressHUD dismiss];
@@ -357,7 +355,7 @@
             tipLabel = [[UILabel alloc]init];
             tipLabel.text = @"没有数据";
             tipLabel.textColor = RGBA(128, 128, 128, 1.0);
-            tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(25)];
+            tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(23)];
             [_tableView addSubview:tipLabel];
             [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(_tableView.mas_centerX);
@@ -439,7 +437,6 @@
 
 #pragma DatePickSelectView Delegate
 - (void)confirmSelectDate:(NSString *)date {
-//    NSLog(@"我的日子：%@",date);
     NSString *dateString = [self updateDateStyle:date];
     if (_isStart) {
         NSString *startDate = [self conbineStartDate:dateString];

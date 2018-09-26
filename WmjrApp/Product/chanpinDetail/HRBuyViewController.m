@@ -80,11 +80,10 @@
     LongProductSegment *longProductSegment = _productModel.segment[0];
     CGFloat returnRate = [longProductSegment.returnrate floatValue];
     
-    _labelForYearRate.text = [NSString stringWithFormat:@"预期年化率%.2f%%",returnRate*100];
+    _labelForYearRate.text = [NSString stringWithFormat:@"历史年化率%.2f%%",returnRate*100];
     
     _labelForGetLimit.text = [NSString stringWithFormat:@"持有期限%@天",longProductSegment.duration];
     
-    //    _labelForRaiseSum.text = [NSString stringWithFormat:@"融资总额￥%@",@"100000000.00"];
     NSString *endTime = [longProductSegment.segment_time substringToIndex:10];
     _labelForSetDate.text = [NSString stringWithFormat:@"结算日期%@",endTime];
     
@@ -117,10 +116,10 @@
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 NSArray *dataArray = obj[@"data"];
                 if (dataArray.count == 0) {
-                    _hongbaoLabel.text = @"没有可使用的红包";
+                    _hongbaoLabel.text = @"没有可使用的红包或加息券";
                     [_hongbaoButton addTarget:self action:@selector(nibName) forControlEvents:UIControlEventTouchUpInside];
                 } else {
-                    _hongbaoLabel.text = @"有可使用的红包";
+                    _hongbaoLabel.text = @"有可使用的红包或加息券";
                     [_hongbaoButton addTarget:self action:@selector(jumpToRedPackageVC) forControlEvents:UIControlEventTouchUpInside];
                 }
                 [SVProgressHUD dismiss];
@@ -272,7 +271,7 @@
     
     [_textFieldForBuy resignFirstResponder];
     if ([_textFieldForBuy.text isEqualToString:@""]) {
-        [SVProgressHUD showInfoWithStatus:@"请输入投资金额"];
+        [SVProgressHUD showInfoWithStatus:@"请输入出借金额"];
         return;
     }
     float investMoney = [_textFieldForBuy.text floatValue];
@@ -365,14 +364,37 @@
 
 #pragma mark - RedPackageVCDelegate方法
 - (void)selecNoRedPackage {
-    _hongbaoLabel.text = @"不使用红包";
+    _hongbaoLabel.text = @"不使用红包或加息券";
     _hongbaoLabel.textColor = RGBA(255, 88, 26, 1.0);
     _redPackageId = @"0";
     _red_low_buy = @"";
 }
 
 - (void)selectRedPackage:(RedPackageModel *)redPackageModel {
-    _hongbaoLabel.text = [NSString stringWithFormat:@"%@¥%@",redPackageModel.name,redPackageModel.money];
+    if ([redPackageModel.redpacket_type isEqualToString:@"2"]) {
+        NSString *quan_content;
+//        if ([redPackageModel.returnrate_plus isEqualToString:@"0.005"]) {
+//            quan_content = @"5‰";
+//        } else if ([redPackageModel.returnrate_plus isEqualToString:@"0.01"]) {
+//            quan_content = @"1%";
+//        } else if ([redPackageModel.returnrate_plus isEqualToString:@"0.015"]) {
+//            quan_content = @"1.5%";
+//        } else {
+//            quan_content = @"2%";
+//        }
+        double returnrate_plus = [redPackageModel.returnrate_plus doubleValue];
+        //转化成百分比
+        double baifenFloat = returnrate_plus*100;
+        if (baifenFloat<1) {
+            double qianfenFloat = returnrate_plus*1000;
+            quan_content = [NSString stringWithFormat:@"%g%‰",qianfenFloat];
+        } else {
+            quan_content = [NSString stringWithFormat:@"%g%%",baifenFloat];
+        }
+        _hongbaoLabel.text = [NSString stringWithFormat:@"%@+%@",redPackageModel.name,quan_content];
+    } else {
+        _hongbaoLabel.text = [NSString stringWithFormat:@"%@¥%@",redPackageModel.name,redPackageModel.money];
+    }
     _hongbaoLabel.textColor = RGBA(255, 88, 26, 1.0);
     _redPackageId = redPackageModel.redpacket_member_id;
     _red_low_buy = redPackageModel.low_use;

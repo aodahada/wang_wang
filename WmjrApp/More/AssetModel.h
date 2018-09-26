@@ -11,7 +11,7 @@
 @interface AssetModel : NSObject
 
 @property (nonatomic, copy) NSString *award;//累计奖励金额
-@property (nonatomic, copy) NSString *invest;//累计投资收益
+@property (nonatomic, copy) NSString *invest;//累计出借收益
 @property (nonatomic, copy) NSString *invite_count;//邀请财友人数
 @property (nonatomic, copy) NSString *invite_money;//累计财友奖励
 @property (nonatomic, copy) NSString *total;//总资产 余额除外

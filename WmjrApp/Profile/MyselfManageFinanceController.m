@@ -19,7 +19,7 @@
     
     UILabel *_newEarn;//今日收益
     UILabel *_accountEarn;//累计收益
-    UILabel *_conductNum;//理财金额
+    UILabel *_conductNum;//出借金额
     
     UIView *_aView;
     UIView *_redLine;
@@ -34,7 +34,7 @@
 @implementation MyselfManageFinanceController
 
 - (void)setUpNavigationBar {
-    self.title = @"我的理财";
+    self.title = @"我的优选";
     
     if ([_isPay isEqualToString:@"YES"]) {
         
@@ -98,17 +98,17 @@
     
     
     UIView *viewForLeft = [[UIView alloc]init];
-    viewForLeft.backgroundColor = NEWYEARCOLOR;
+    viewForLeft.backgroundColor = RGBA(254, 92, 49, 1.0);
     [headView addSubview:viewForLeft];
     [viewForLeft mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(140));
         make.left.equalTo(headView.mas_left);
-        make.width.mas_offset(SCREEN_WIDTH/2-0.5);
+        make.width.mas_offset(SCREEN_WIDTH/2);
         make.height.mas_offset(RESIZE_UI(64));
     }];
     
     UILabel *labelForFinalAmount = [[UILabel alloc]init];
-    labelForFinalAmount.text = @"理财金额(元)";
+    labelForFinalAmount.text = @"出借金额(元)";
     labelForFinalAmount.textColor = [UIColor whiteColor];
     labelForFinalAmount.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     [viewForLeft addSubview:labelForFinalAmount];
@@ -118,7 +118,7 @@
         make.height.mas_offset(RESIZE_UI(14));
     }];
     
-    //理财金额
+    //出借金额
     _conductNum = [[UILabel alloc]init];
     _conductNum.font = [UIFont systemFontOfSize:RESIZE_UI(14)];
     _conductNum.textColor = [UIColor whiteColor];
@@ -130,12 +130,12 @@
     }];
     
     UIView *viewForRight = [[UIView alloc]init];
-    viewForRight.backgroundColor = NEWYEARCOLOR;
+    viewForRight.backgroundColor = RGBA(254, 92, 49, 1.0);
     [headView addSubview:viewForRight];
     [viewForRight mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(140));
         make.right.equalTo(headView.mas_right);
-        make.width.mas_offset(SCREEN_WIDTH/2-0.5);
+        make.width.mas_offset(SCREEN_WIDTH/2);
         make.height.mas_offset(RESIZE_UI(64));
     }];
     
@@ -186,7 +186,7 @@
         [_aView addSubview:button];
     }
     _redLine = [[UIView alloc] initWithFrame:CGRectMake(0, RESIZE_UI(204+47), SCREEN_WIDTH / 2, RESIZE_UI(2))];
-    _redLine.backgroundColor = NAVBARCOLOR;
+    _redLine.backgroundColor = FOURNAVBARCOLOR;
     [headView addSubview:_redLine];
     
     return headView;
@@ -238,7 +238,7 @@
     
     _financeArray = [NSMutableArray array];
     
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc] init];
     _tableView.tag = 101;
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -246,6 +246,9 @@
     [self.view addSubview:_tableView];
     _tableView.tableHeaderView = [self setUpProfileHeadView];
     [_tableView registerClass:[MyselfManageFinanceCell class] forCellReuseIdentifier:@"cell1"];
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
     
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"正在加载"];
@@ -323,15 +326,19 @@
     TrandDetailViewController *trandDetailVC = [[TrandDetailViewController alloc] init];
     trandDetailVC.order_id = model.order_id;
     trandDetailVC.nameStr = model.name;
-    trandDetailVC.earnToatl = [NSString stringWithFormat:@"%.2f", [model.money floatValue] *[model.returnrate floatValue] / 365 *[model.day intValue]];
+//    trandDetailVC.earnToatl = [NSString stringWithFormat:@"%.2f", [model.money floatValue] *[model.returnrate floatValue] / 365 *[model.day intValue]];
+    trandDetailVC.earnToatl = model.returnrate_money;
     trandDetailVC.totalNum = model.money;
-    trandDetailVC.earnNum = [NSString stringWithFormat:@"%.2f", [model.money floatValue] + [model.money floatValue] *[model.returnrate floatValue] / 365 *[model.day intValue]];
+//    trandDetailVC.earnNum = [NSString stringWithFormat:@"%.2f", [model.money floatValue] + [model.money floatValue] *[model.returnrate floatValue] / 365 *[model.day intValue]];
+    trandDetailVC.earnNum = [NSString stringWithFormat:@"%g",[model.money floatValue]+[model.returnrate_money floatValue]];
     trandDetailVC.earnP = model.returnrate;
     trandDetailVC.duedate = model.duedate;
     trandDetailVC.expirydate = model.expirydate;
     trandDetailVC.createtime = model.createtime;
     trandDetailVC.redpacket = model.redpacket;
     trandDetailVC.returnrate_plus = model.returnrate_plus;
+    trandDetailVC.redpacket_type = model.redpacket_type;
+    trandDetailVC.redpacket_returnrate_plus = model.redpacket_returnrate_plus;
     [self.navigationController pushViewController:trandDetailVC animated:YES];
 }
 

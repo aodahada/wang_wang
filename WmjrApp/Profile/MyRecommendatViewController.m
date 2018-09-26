@@ -346,7 +346,6 @@
 
 //响应点击分享的方法
 - (void)clickSharedBtnAction {
-//    NSLog(@"-------点击分享----");
     _popMenu = [[PopMenu alloc] init];
     _popMenu.dimBackground = YES;
     _popMenu.coverNavigationBar = YES;
@@ -365,7 +364,7 @@
             NSString *contentStr = [NSString stringWithFormat:@"使用我的旺马财富推荐码 %@", _invitationcode];
 //            NSString *urlStr = [NSString stringWithFormat:@"http://m.wmjr888.com/?invitationcode=%@#login-register",_invitationcode];
             NSString *urlStr = [NSString stringWithFormat:@"http://m.wangmacaifu.com/#/register/wmcf-%@",[SingletonManager sharedManager].userModel.invitationcode];
-            [sharedManager shareContent:sender withTitle:@"这是一个值得信赖的的投资理财平台" andContent:contentStr andUrl:urlStr];
+            [sharedManager shareContent:sender withTitle:@"这是一个值得信赖的的投资出借平台" andContent:contentStr andUrl:urlStr];
             
         } else {
             [[SingletonManager sharedManager] alert1PromptInfo:@"推荐码获取失败,请重新分享"];

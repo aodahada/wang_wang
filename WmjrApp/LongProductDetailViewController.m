@@ -102,12 +102,10 @@
 
 - (void)keyboardFrameChange:(NSNotification *)noti {
     
-//    NSLog(@"键盘信息:%@",noti.userInfo);
     //获取键盘结束时frame
     CGRect keyboardFrame = [noti.userInfo[UIKeyboardFrameEndUserInfoKey]CGRectValue];
     //获取键盘结束时的y值
     CGFloat keyboardEndY = keyboardFrame.origin.y;
-//    NSLog(@"我的键盘高度:%.f",keyboardEndY);
     
     [UIView animateWithDuration:1.0 animations:^{
         _bottomview.frame = CGRectMake(0, keyboardEndY-RESIZE_UI(57)-64, SCREEN_WIDTH, RESIZE_UI(57));
@@ -152,7 +150,7 @@
 //        NSString *urlStr = [NSString stringWithFormat:@"http://wmjr888.com/home/download/product/id/%@", _productModel.proIntro_id];
         NSString *urlStr = [NSString stringWithFormat:@"http://m.wangmacaifu.com/#/long-detail/%@", _productModel.proIntro_id];
         SharedManager *sharedManager = [[SharedManager alloc] init];
-        [sharedManager shareContent:sender withTitle:@"旺马财富" andContent:@"这是一个值得信赖的的投资理财平台" andUrl:urlStr];
+        [sharedManager shareContent:sender withTitle:@"旺马财富" andContent:@"这是一个值得信赖的的出借平台" andUrl:urlStr];
     }];
     
 }
@@ -481,7 +479,7 @@
         UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
         [self presentViewController:loginNa animated:YES completion:nil];
     } else if(investmoney>restInvest) {
-        NSString *tip = [NSString stringWithFormat:@"投资金额不能超过%.2f元",restInvest];
+        NSString *tip = [NSString stringWithFormat:@"出借金额不能超过%.2f元",restInvest];
         [[[UIAlertView alloc]initWithTitle:tip message:@"" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil]show];
     } else if (investmoney<lowInvest){
         NSString *tip = [NSString stringWithFormat:@"产品起购金额为%.2f元",lowInvest];

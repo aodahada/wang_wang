@@ -62,6 +62,7 @@
     // Do any additional setup after loading the view.
     self.title = @"立即申请";
     self.view.backgroundColor = RGBA(240, 241, 243, 1.0);
+    
     _typeTag = 1;
     _selectDate = [NSDate date];
     _buttonArray1 = [[NSMutableArray alloc]init];
@@ -130,11 +131,11 @@
     _shangpiaoButton = [[UIButton alloc]init];
     [_shangpiaoButton setTitle:@"商票" forState:UIControlStateNormal];
     _shangpiaoButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [_shangpiaoButton setTitleColor:RGBA(0, 104, 178, 1.0) forState:UIControlStateNormal];
+    [_shangpiaoButton setTitleColor:FOURNAVBARCOLOR forState:UIControlStateNormal];
     [_shangpiaoButton.layer setMasksToBounds:YES];
     _shangpiaoButton.layer.cornerRadius = 5.0f;
     _shangpiaoButton.layer.borderWidth = 1.0f;
-    _shangpiaoButton.layer.borderColor = RGBA(0, 104, 178, 1.0).CGColor;
+    _shangpiaoButton.layer.borderColor = FOURNAVBARCOLOR.CGColor;
     [_shangpiaoButton addTarget:self action:@selector(selectShangPiaoMethod) forControlEvents:UIControlEventTouchUpInside];
     [row1View addSubview:_shangpiaoButton];
     [_shangpiaoButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -147,12 +148,12 @@
     _yinpiaoButton = [[UIButton alloc]init];
     [_yinpiaoButton setTitle:@"银票" forState:UIControlStateNormal];
     _yinpiaoButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
-    [_yinpiaoButton setBackgroundColor:RGBA(0, 104, 178, 1.0)];
+    [_yinpiaoButton setBackgroundColor:FOURNAVBARCOLOR];
     [_yinpiaoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_yinpiaoButton.layer setMasksToBounds:YES];
     _yinpiaoButton.layer.cornerRadius = 5.0f;
     _yinpiaoButton.layer.borderWidth = 1.0f;
-    _yinpiaoButton.layer.borderColor = RGBA(0, 104, 178, 1.0).CGColor;
+    _yinpiaoButton.layer.borderColor = FOURNAVBARCOLOR.CGColor;
     [_yinpiaoButton addTarget:self action:@selector(selectYinPiaoMethod) forControlEvents:UIControlEventTouchUpInside];
     [row1View addSubview:_yinpiaoButton];
     [_yinpiaoButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -544,19 +545,19 @@
 #pragma mark - 选择商票
 - (void)selectShangPiaoMethod {
     _typeTag = 1;
-    [_shangpiaoButton setBackgroundColor:RGBA(0, 104, 178, 1.0)];
+    [_shangpiaoButton setBackgroundColor:FOURNAVBARCOLOR];
     [_shangpiaoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_yinpiaoButton setBackgroundColor:[UIColor whiteColor]];
-    [_yinpiaoButton setTitleColor:RGBA(0, 104, 178, 1.0) forState:UIControlStateNormal];
+    [_yinpiaoButton setTitleColor:FOURNAVBARCOLOR forState:UIControlStateNormal];
 }
 
 #pragma mark - 选择银票
 - (void)selectYinPiaoMethod {
     _typeTag = 2;
-    [_yinpiaoButton setBackgroundColor:RGBA(0, 104, 178, 1.0)];
+    [_yinpiaoButton setBackgroundColor:FOURNAVBARCOLOR];
     [_yinpiaoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_shangpiaoButton setBackgroundColor:[UIColor whiteColor]];
-    [_shangpiaoButton setTitleColor:RGBA(0, 104, 178, 1.0) forState:UIControlStateNormal];
+    [_shangpiaoButton setTitleColor:FOURNAVBARCOLOR forState:UIControlStateNormal];
 }
 
 #pragma mark - 查看日期选择器

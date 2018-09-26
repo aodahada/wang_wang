@@ -16,12 +16,6 @@
 
 @implementation MoneyOrderMainViewController
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = NO;
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -30,7 +24,7 @@
     self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
     
     UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"申请记录" style:UIBarButtonItemStylePlain target:self action:@selector(watchApplyRecord)];
-    [rightBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:RESIZE_UI(15)], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
+    [rightBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:RESIZE_UI(15)], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightBarButtonItem;
     
     [self setUpLayout];
@@ -84,7 +78,7 @@
     
     UILabel *tipLabel = [[UILabel alloc]init];
     tipLabel.textColor = RGBA(139, 139, 139, 1.0);
-    tipLabel.text = @"备注:票据融资平台隶属上海旺马平台票据事业部";
+    tipLabel.text = @"备注:票据平台隶属上海旺马平台票据事业部";
     tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     tipLabel.numberOfLines = 2;
     [self.view addSubview:tipLabel];

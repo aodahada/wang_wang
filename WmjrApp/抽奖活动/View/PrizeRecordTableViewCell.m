@@ -89,7 +89,6 @@
 - (void)exchangePrizeMethod {
     if ([_currentPrizeModel.state isEqualToString:@"1"]) {
         if (self.exchangePrize) {
-            NSLog(@"我点击的:%@",_currentPrizeModel.prizeRecordId);
             self.exchangePrize(_currentPrizeModel.prizeRecordId);
         }
     }

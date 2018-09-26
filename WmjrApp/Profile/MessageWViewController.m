@@ -194,10 +194,28 @@
 //    
 //}
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+//
+//    return RESIZE_UI(12);
+//
+//}
 
-    return RESIZE_UI(12);
-    
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 0;
+    } else {
+        return RESIZE_UI(12);
+    }
+}
+
+#pragma mark - 去黏性
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat sectionHeaderHeight = RESIZE_UI(12);
+    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+    }
 }
 
 - (void)didReceiveMemoryWarning {

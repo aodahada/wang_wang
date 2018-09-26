@@ -53,7 +53,7 @@
         _timer = nil;
     } else {
         NSString *timeStr = [NSString stringWithFormat:@"%ld秒后重发", (long)_count];
-        NSLog(@"%@", timeStr);
+        
         [_getVerCerBtn setTitle:timeStr forState:UIControlStateNormal];
     }
 }

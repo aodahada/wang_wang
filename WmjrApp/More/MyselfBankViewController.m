@@ -130,7 +130,7 @@
             NSString *dataStr = obj[@"data"];
             dataStr = [self convertNullString:dataStr];
             if ([dataStr isEqualToString:@""]) {
-//                NSLog(@"haha1");
+
             } else {
                 NSArray *dataArray = [dataStr componentsSeparatedByString:@"^"];
                 [_bankInfoArray addObjectsFromArray:dataArray];
@@ -353,7 +353,7 @@
                 }];
             } else if ([_bankCardState isEqualToString:@"1"]) {
                 //审核成功
-                NSLog(@"ww");
+                
                 
             } else if ([_bankCardState isEqualToString:@"2"]) {
                 //审核驳回
@@ -391,7 +391,7 @@
 
 #pragma mark - 替代方法
 - (void)doNothingMethod {
-    NSLog(@"啥也不干");
+    
 }
 
 #pragma mark - 打电话

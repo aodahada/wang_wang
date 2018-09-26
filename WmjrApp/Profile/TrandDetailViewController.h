@@ -12,7 +12,7 @@
 
 @property (nonatomic, copy) NSString *nameStr;  /*  产品名字 */
 @property (nonatomic, copy) NSString *earnToatl;  /* 总收益 */
-@property (nonatomic, copy) NSString *totalNum;  /*  投资金额 */
+@property (nonatomic, copy) NSString *totalNum;  /*  出借金额 */
 @property (nonatomic, copy) NSString *earnNum;  /* 待收本息 */
 @property (nonatomic, copy) NSString *earnP;  /*  预期年收益 */
 @property (nonatomic, copy) NSString *duedate;  /*  结息日期 */
@@ -21,5 +21,7 @@
 @property (nonatomic, copy) NSString *redpacket;/* 红包收益，为0时不显示 */
 @property (nonatomic, copy) NSString *returnrate_plus;
 @property (nonatomic, copy) NSString *order_id;
+@property (nonatomic, copy) NSString *redpacket_type;//2时为使用加息券
+@property (nonatomic, copy) NSString *redpacket_returnrate_plus;
 
 @end

@@ -26,6 +26,7 @@
     // Do any additional setup after loading the view.
     self.title = @"累计财友奖励";
     self.view.backgroundColor = [UIColor whiteColor];
+    
     [self setUpLayout];
     [self getLiJiRewardMethod:1];
 }

@@ -38,7 +38,7 @@
 }
 
 - (void)clickAvatorBtnAction:(UIButton *)sender {
-    NSLog(@"－－－－点击头像－－－");
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(clickAvatorBtnWithCell:withIndexPath:)]) {
         [self.delegate clickAvatorBtnWithCell:self withIndexPath:self.indexPath];
     }

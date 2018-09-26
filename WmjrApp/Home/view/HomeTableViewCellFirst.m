@@ -213,7 +213,7 @@
     }];
     
     UILabel *labelForSumMoneyTitle = [[UILabel alloc]init];
-    labelForSumMoneyTitle.text = @"当前投资";
+    labelForSumMoneyTitle.text = @"当前出借";
     labelForSumMoneyTitle.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
     labelForSumMoneyTitle.textColor = RGBA(255, 255, 255, 1.0);
     [self addSubview:labelForSumMoneyTitle];

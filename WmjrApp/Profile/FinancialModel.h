@@ -23,5 +23,9 @@
 @property (nonatomic, copy) NSString *createtime;
 @property (nonatomic, copy) NSString *redpacket;//"0为没用红包  其余为收益"
 @property (nonatomic, copy) NSString *returnrate_plus;
+@property (nonatomic, copy) NSString *redpacket_type;//2时为使用加息券
+@property (nonatomic, copy) NSString *redpacket_returnrate_plus;
+@property (nonatomic, copy) NSString *returnrate_money;
+@property (nonatomic, copy) NSString *redpacket_money;//红包金额
 
 @end

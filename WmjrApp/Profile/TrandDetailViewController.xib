@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,7 +13,7 @@
             <connections>
                 <outlet property="earnTotal" destination="spj-LK-Xi7" id="7zT-Bj-h6Z"/>
                 <outlet property="hongbaoBenXi" destination="q4T-js-mOe" id="33y-Yl-jHL"/>
-                <outlet property="hongbaoLabel" destination="3fo-Ra-cYD" id="kgd-QD-Nwr"/>
+                <outlet property="hongbaoLabel" destination="T22-t8-9xa" id="jj5-8I-mjW"/>
                 <outlet property="name" destination="McQ-zm-sl3" id="tzJ-Po-wrL"/>
                 <outlet property="trandDetailTable" destination="dxS-BW-Ljw" id="gs1-od-sf4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -61,22 +61,22 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="红包本息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fo-Ra-cYD">
-                            <rect key="frame" x="276" y="101" width="49.5" height="14.5"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="红包本息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T22-t8-9xa">
+                            <rect key="frame" x="276.5" y="96" width="45" height="13.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.80784313725490198" green="0.0" blue="0.0078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="1" green="0.32941176470588235" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="3fo-Ra-cYD" firstAttribute="leading" secondItem="q4T-js-mOe" secondAttribute="leading" id="4Pz-HE-La9"/>
                         <constraint firstAttribute="height" constant="200" id="AH7-M6-6Tr"/>
+                        <constraint firstItem="T22-t8-9xa" firstAttribute="leading" secondItem="q4T-js-mOe" secondAttribute="leading" id="KRN-Gm-MjZ"/>
                         <constraint firstItem="q4T-js-mOe" firstAttribute="top" secondItem="spj-LK-Xi7" secondAttribute="top" constant="15" id="LCU-9t-BpN"/>
+                        <constraint firstItem="T22-t8-9xa" firstAttribute="top" secondItem="q4T-js-mOe" secondAttribute="bottom" id="RiR-Yi-gzi"/>
                         <constraint firstItem="spj-LK-Xi7" firstAttribute="centerY" secondItem="PZ0-ac-SAx" secondAttribute="centerY" id="SRP-nh-m4Z"/>
                         <constraint firstItem="ORB-fz-2LY" firstAttribute="centerX" secondItem="PZ0-ac-SAx" secondAttribute="centerX" id="arE-XH-Ei1"/>
                         <constraint firstItem="spj-LK-Xi7" firstAttribute="centerX" secondItem="PZ0-ac-SAx" secondAttribute="centerX" id="cif-ld-6Jl"/>
-                        <constraint firstItem="3fo-Ra-cYD" firstAttribute="top" secondItem="q4T-js-mOe" secondAttribute="bottom" constant="5" id="gpg-EX-dH6"/>
                         <constraint firstAttribute="bottom" secondItem="ORB-fz-2LY" secondAttribute="bottom" constant="5" id="pvT-eH-lAH"/>
                         <constraint firstItem="McQ-zm-sl3" firstAttribute="top" secondItem="PZ0-ac-SAx" secondAttribute="top" constant="15" id="rc6-jn-0az"/>
                         <constraint firstItem="q4T-js-mOe" firstAttribute="leading" secondItem="spj-LK-Xi7" secondAttribute="trailing" constant="15" id="wdX-XF-W9x"/>

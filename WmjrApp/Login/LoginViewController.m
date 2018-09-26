@@ -119,7 +119,6 @@
 
 /* 隐藏视图 */
 - (IBAction)dismissBtnAction:(id)sender {
-//    NSLog(@"loginIden ====  %@", self.loginIden);
     [self dismissViewControllerAnimated:YES completion:nil];
     if ([self.loginIden isEqualToString:@"login"] || [self.loginIden isEqualToString:@"login"]) {
         [AppDelegate sharedInstance].tabbarC.selectedIndex = 0;
@@ -151,7 +150,6 @@
                 [_passWord resignFirstResponder];
                 
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"loginSuccess" object:nil];
-                NSLog(@"我的id：%@",[SingletonManager sharedManager].uid);
                 [JPUSHService setAlias:[SingletonManager sharedManager].uid callbackSelector:nil object:self];
                 
                 BOOL isSave = [[SingletonManager sharedManager]isSave];

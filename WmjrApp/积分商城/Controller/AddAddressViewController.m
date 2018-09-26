@@ -45,11 +45,11 @@
     // Do any additional setup after loading the view.
     self.title = @"收货地址";
     self.view.backgroundColor = [UIColor whiteColor];
-    if (self.integralAddressModel) {
-        NSLog(@"好的");
-    } else {
-        NSLog(@"nnnn");
-    }
+//    if (self.integralAddressModel) {
+//        
+//    } else {
+//        
+//    }
     [self getAddressPlist];
     
     UIButton *saveAddressButton = [[UIButton alloc]init];

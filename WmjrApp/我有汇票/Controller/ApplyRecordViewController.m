@@ -119,7 +119,7 @@
 //navigationbar栏第一种
 - (void)setUpTop2ViewOne {
     _top2ViewOne = [[UIView alloc]init];
-    _top2ViewOne.backgroundColor = RGBA(0, 104, 178, 1.0);
+    _top2ViewOne.backgroundColor = FOURNAVBARCOLOR;
     [self.view addSubview:_top2ViewOne];
     [_top2ViewOne mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_top1View.mas_bottom);
@@ -173,7 +173,7 @@
 //navigationbar栏第二种
 - (void)setUpTop2ViewSecond {
     _top2ViewSecond = [[UIView alloc]init];
-    _top2ViewSecond.backgroundColor = RGBA(0, 104, 178, 1.0);
+    _top2ViewSecond.backgroundColor = FOURNAVBARCOLOR;
     [self.view addSubview:_top2ViewSecond];
     [_top2ViewSecond mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_top1View.mas_bottom);
@@ -317,7 +317,7 @@
 - (void)setUpLayout {
     
     _top1View = [[UIView alloc]init];
-    _top1View.backgroundColor = RGBA(0, 104, 178, 1.0);
+    _top1View.backgroundColor = FOURNAVBARCOLOR;
     [self.view addSubview:_top1View];
     [_top1View mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top);
@@ -351,7 +351,7 @@
     
     //三个分类按钮的部分
     _top3View = [[UIView alloc]init];
-    _top3View.backgroundColor = RGBA(0, 104, 178, 1.0);
+    _top3View.backgroundColor = FOURNAVBARCOLOR;
     [_viewMain addSubview:_top3View];
     [_top3View mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_viewMain.mas_top);
@@ -520,7 +520,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     //处理上部隐藏问题
     CGFloat scrollviewY = scrollView.contentOffset.y;
-//    NSLog(@"我的值:%.2f",scrollviewY);
     CGFloat alpha = (RESIZE_UI(100)-RESIZE_UI(scrollviewY)) / 100;
     if (alpha>0) {
         alpha = alpha;

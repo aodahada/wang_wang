@@ -7,7 +7,6 @@
 //
 
 #import "NewMoreViewController.h"
-#import "RealNameCertificationViewController.h"
 #import "PasswordManageViewController.h"
 #import "LoginViewController.h"
 #import "MMPopupWindow.h"
@@ -19,6 +18,7 @@
 #import "FeedbackViewController.h"
 #import "BaseNavigationController.h"
 #import "UIAlertView+Block.h"
+#import "JPUSHService.h"
 
 @interface NewMoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -93,6 +93,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"passWord"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"logout" object:nil];
+            [JPUSHService setAlias:@"" callbackSelector:nil object:self];
 #warning 待定
             //可能退出时也要删除手势密码
             //                [KeychainData forgotPsw];

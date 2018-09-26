@@ -10,7 +10,6 @@
 #import "PopMenu.h"
 #import "ComfirmFastPayView.h"
 #import "MMPopupWindow.h"
-#import "MyselfAccountController.h"
 #import "MMPopupItem.h"
 #import "UserInfoModel.h"
 #import "WebViewForPayViewController.h"
@@ -189,7 +188,6 @@
             NSString *dataStr = obj[@"data"];
             dataStr = [SingletonManager convertNullString:dataStr];
             if ([dataStr isEqualToString:@""]) {
-                //                NSLog(@"haha1");
             } else {
                 NSArray *dataArray = [dataStr componentsSeparatedByString:@"^"];
                 [_bankInfoArray addObjectsFromArray:dataArray];

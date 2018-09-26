@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -98,7 +98,7 @@
                             </constraints>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" red="0.12549019607843137" green="0.41960784313725491" blue="0.69411764705882351" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="1" green="0.32941176470588235" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="rc4-lM-g6d" firstAttribute="centerY" secondItem="RA7-Y7-Ipy" secondAttribute="centerY" id="0T7-MH-KmZ"/>
                         <constraint firstItem="rc4-lM-g6d" firstAttribute="centerY" secondItem="M3t-Ob-8pp" secondAttribute="centerY" id="1MV-l8-fjd"/>
@@ -177,8 +177,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PJ3-4X-3vH">
                     <rect key="frame" x="0.0" y="282" width="414" height="49"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="红包" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6kz-aS-oiY">
-                            <rect key="frame" x="12" y="15.333333333333314" width="31" height="18"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="红包或加息券" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6kz-aS-oiY">
+                            <rect key="frame" x="12" y="15.333333333333314" width="92" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>

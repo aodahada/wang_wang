@@ -29,6 +29,7 @@
     // Do any additional setup after loading the view.
     self.title = @"收益明细";
     self.view.backgroundColor = [UIColor whiteColor];
+    
     _type = 0;
     _currentPage = 1;
     [self setUpLayout];
@@ -64,8 +65,8 @@
     _leftButton.tag = 0;
     _leftButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(13)];
     _leftButton.layer.borderWidth = 2;
-    _leftButton.layer.borderColor = NEWYEARCOLOR.CGColor;
-    [_leftButton setBackgroundColor:NEWYEARCOLOR];
+    _leftButton.layer.borderColor = FOURNAVBARCOLOR.CGColor;
+    [_leftButton setBackgroundColor:FOURNAVBARCOLOR];
     [_leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_leftButton addTarget:self action:@selector(clickButtonType:) forControlEvents:UIControlEventTouchUpInside];
     [buttonView addSubview:_leftButton];
@@ -77,13 +78,13 @@
     }];
     
     _rightButton = [[UIButton alloc]init];
-    [_rightButton setTitle:@"累计投资收益" forState:UIControlStateNormal];
+    [_rightButton setTitle:@"累计出借收益" forState:UIControlStateNormal];
     _rightButton.tag = 1;
     _rightButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(13)];
     _rightButton.layer.borderWidth = 2;
-    _rightButton.layer.borderColor = NEWYEARCOLOR.CGColor;
+    _rightButton.layer.borderColor = FOURNAVBARCOLOR.CGColor;
     [_rightButton setBackgroundColor:RGBA(242, 242, 242, 1.0)];
-    [_rightButton setTitleColor:NEWYEARCOLOR forState:UIControlStateNormal];
+    [_rightButton setTitleColor:FOURNAVBARCOLOR forState:UIControlStateNormal];
     [_rightButton addTarget:self action:@selector(clickButtonType:) forControlEvents:UIControlEventTouchUpInside];
     [buttonView addSubview:_rightButton];
     [_rightButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -175,19 +176,19 @@
         case 0:
         {
             _type = 0;
-            [_leftButton setBackgroundColor:NEWYEARCOLOR];
+            [_leftButton setBackgroundColor:FOURNAVBARCOLOR];
             [_leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [_rightButton setBackgroundColor:RGBA(242, 242, 242, 1.0)];
-            [_rightButton setTitleColor:NEWYEARCOLOR forState:UIControlStateNormal];
+            [_rightButton setTitleColor:FOURNAVBARCOLOR forState:UIControlStateNormal];
         }
             break;
         case 1:
         {
             _type = 1;
-            [_rightButton setBackgroundColor:NEWYEARCOLOR];
+            [_rightButton setBackgroundColor:FOURNAVBARCOLOR];
             [_rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [_leftButton setBackgroundColor:RGBA(242, 242, 242, 1.0)];
-            [_leftButton setTitleColor:NEWYEARCOLOR forState:UIControlStateNormal];
+            [_leftButton setTitleColor:FOURNAVBARCOLOR forState:UIControlStateNormal];
         }
             break;
             
@@ -224,7 +225,7 @@
     }];
 }
 
-#pragma mark - 获取累计投资收益
+#pragma mark - 获取累计出借收益
 - (void)getLiJiInvestMethod:(NSInteger)page {
     NetManager *manager = [[NetManager alloc] init];
     [SVProgressHUD showWithStatus:@"加载中"];

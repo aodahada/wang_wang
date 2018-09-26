@@ -21,6 +21,7 @@
 @property (nonatomic, strong)NSString *redpacket_member_id;
 @property (nonatomic, strong)NSString *start_date;
 @property (nonatomic, strong)NSString *status;//0：可使用 1：已使用 2：已过期 3：未开始 4：未激活
-@property (nonatomic, strong)NSString *redpacket_type;
+@property (nonatomic, strong)NSString *redpacket_type;// 1.出借红包  2.加息红包  3.现金红包
+@property (nonatomic, strong)NSString *returnrate_plus;//加息券的值
 
 @end

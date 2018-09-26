@@ -15,7 +15,7 @@
 #import "SharedView.h"
 #import "TotalRewardViewController.h"
 
-@interface CaiYouCircleViewController ()<UITableViewDelegate,UITableViewDataSource>{
+@interface CaiYouCircleViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>{
     PopMenu *_popMenu;
     SharedView *_sharedView;
 }
@@ -54,6 +54,14 @@
     AgViewController *agVC =[[AgViewController alloc] init];
     agVC.title = @"规则说明";
     agVC.webUrl = @"http://api.wmjr888.com/home/page/app/id/17";
+    agVC.isWhite = NO;
+    [self.navigationController pushViewController:agVC animated:YES];
+}
+
+- (void)secretShowMethod {
+    AgViewController *agVC =[[AgViewController alloc] init];
+    agVC.title = @"隐私策略";
+    agVC.webUrl = @"http://wmjr888.com/home/page/protocol";
     [self.navigationController pushViewController:agVC animated:YES];
 }
 
@@ -79,7 +87,7 @@
     [bottomView setTitle:@"邀请财友" forState:UIControlStateNormal];
     [bottomView setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     bottomView.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
-    [bottomView setBackgroundColor:YEARCOLOR];
+    [bottomView setBackgroundColor:RGBA(248, 127, 22, 1.0)];
     [bottomView addTarget:self action:@selector(clickSharedBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bottomView];
     [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -114,7 +122,7 @@
         make.top.equalTo(viewMain.mas_top);
         make.left.equalTo(viewMain.mas_left);
         make.right.equalTo(viewMain.mas_right);
-        make.height.mas_offset(RESIZE_UI(322));
+        make.height.mas_offset(RESIZE_UI(685*375/758));
     }];
     
     UITableView *tableViewMain = [[UITableView alloc]init];
@@ -439,8 +447,8 @@
             break;
         case 3:
         {
-            SortCaiYouViewController *sortCaiYouVC = [[SortCaiYouViewController alloc]init];
-            [self.navigationController pushViewController:sortCaiYouVC animated:YES];
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"旺马金融通讯录通知" message:@"为了提升您的使用体验，我们的应用需要采集您的手机通讯录信息，以便于您能够查看您的通讯录好友在本平台的投资排行榜，若您不同意上述内容的采集，您可以点击取消按钮。如需开启或关闭此功能，您可以通过手动设置来开启或关闭权限，以允许或终止上述数据的收集与处理。点击“同意协议”，即表示您同意上述内容" delegate:self cancelButtonTitle:nil otherButtonTitles:@"查看详情",@"同意协议", nil];
+            [alertView show];
         }
             break;
             
@@ -449,9 +457,17 @@
     }
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self secretShowMethod];
+    } else {
+        SortCaiYouViewController *sortCaiYouVC = [[SortCaiYouViewController alloc]init];
+        [self.navigationController pushViewController:sortCaiYouVC animated:YES];
+    }
+}
+
 //响应点击分享的方法
 - (void)clickSharedBtnAction {
-    //    NSLog(@"-------点击分享----");
     _popMenu = [[PopMenu alloc] init];
     _popMenu.dimBackground = YES;
     _popMenu.coverNavigationBar = YES;
@@ -467,10 +483,11 @@
         [_popMenu dismissMenu];
         SharedManager *sharedManager = [[SharedManager alloc] init];
         if ([SingletonManager sharedManager].userModel.invitationcode) {
-            NSString *contentStr = [NSString stringWithFormat:@"大吉大利，春节来“息”！工资不够，年终来凑！快快使用我的旺马财富推荐码%@立即出借吧！", [SingletonManager sharedManager].userModel.invitationcode];
+//            NSString *contentStr = [NSString stringWithFormat:@"大吉大利，春节来“息”！工资不够，年终来凑！快快使用我的旺马财富推荐码%@立即出借吧！", [SingletonManager sharedManager].userModel.invitationcode];
+            NSString *contentStr = @"旺马财富大富翁计划，邀请好友，建立财友圈，享好友附加收益。";
             //            NSString *urlStr = [NSString stringWithFormat:@"http://m.wmjr888.com/?invitationcode=%@#login-register",_invitationcode];
             NSString *urlStr = [NSString stringWithFormat:@"http://m.wangmacaifu.com/#/register/wmcf-%@",[SingletonManager sharedManager].userModel.invitationcode];
-            [sharedManager shareContent:sender withTitle:@"速来！你的年终奖已到达战场！" andContent:contentStr andUrl:urlStr];
+            [sharedManager shareContent:sender withTitle:@"参与大富翁计划，享财友收益" andContent:contentStr andUrl:urlStr];
             
         } else {
             [[SingletonManager sharedManager] alert1PromptInfo:@"推荐码获取失败,请重新分享"];

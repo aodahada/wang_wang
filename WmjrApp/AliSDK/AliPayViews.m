@@ -259,7 +259,7 @@
         item.tag = ITEMTAG + i ;
         [self addSubview:item];
         
-        //NSLog(@"item.frame = [%@]", NSStringFromCGPoint(item.center));
+        
     }
     
     if ([_type isEqualToString:@"更多"]) {

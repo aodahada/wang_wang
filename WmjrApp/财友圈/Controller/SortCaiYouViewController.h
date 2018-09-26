@@ -10,4 +10,6 @@
 
 @interface SortCaiYouViewController : UIViewController
 
+@property (nonatomic, assign) BOOL isHuanXing;
+
 @end

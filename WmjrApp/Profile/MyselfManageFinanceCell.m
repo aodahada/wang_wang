@@ -18,6 +18,7 @@
     UILabel *_weekOfYield;//仅七日年化收益率
     UILabel *_earnOfWan;//万份收益
     UILabel *_jiaxiLabel;//加息label
+    NSString *returnrateString;//加息券值字符串
 }
 
 @end
@@ -42,7 +43,7 @@
     [self.contentView addSubview:_fundWealth];
     [_fundWealth mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).with.offset(RESIZE_UI(20));
-        make.left.equalTo(self.mas_left).with.offset(RESIZE_UI(10));
+        make.left.equalTo(self.mas_left).with.offset(RESIZE_UI(20));
     }];
     
     _holdNum = [[UILabel alloc] init];
@@ -121,12 +122,28 @@
         _redBallEarn.hidden = YES;
     } else {
         _redBallEarn.hidden = NO;
-        _redBallEarn.text = [NSString stringWithFormat:@"使用红包 %@元",model.redpacket];
     }
+    if ([model.redpacket_type isEqualToString:@"2"]) {
+        double returnrate_plus = [model.redpacket_returnrate_plus doubleValue];
+        //转化成百分比
+        double baifenFloat = returnrate_plus*100;
+        if (baifenFloat<1) {
+            double qianfenFloat = returnrate_plus*1000;
+            returnrateString = [NSString stringWithFormat:@"%g%‰",qianfenFloat];
+        } else {
+            returnrateString = [NSString stringWithFormat:@"%g%%",baifenFloat];
+        }
+        _redBallEarn.text = [NSString stringWithFormat:@"使用加息券 %@",returnrateString];
+        _redBallEarn.hidden = NO;
+    } else {
+        _redBallEarn.text = [NSString stringWithFormat:@"使用红包 %@元",model.redpacket_money];
+    }
+    _redBallEarn.textColor = RGBA(243, 39, 68, 1.0);
     _holdNum.text = [NSString stringWithFormat:@"持有%@元", model.money];
     _ydayEarn.text = [NSString stringWithFormat:@"日收＋%.2f元", [model.day_income doubleValue]];
     double returnratefloat = [model.returnrate doubleValue];
     double returnrate_plus = [model.returnrate_plus doubleValue];
+    self.backgroundColor = [UIColor whiteColor];
     _weekOfYield.text = [NSString stringWithFormat:@"年化率%g%@", (returnratefloat-returnrate_plus) *100, @"%"];
     if ([[SingletonManager convertNullString:model.returnrate_plus] isEqualToString:@"0"]) {
         _jiaxiLabel.hidden = YES;
@@ -136,6 +153,25 @@
 //        NSString *returnrate_plusStr = [NSString stringWithFormat:@"%@％",returnrate_plusNumber];
         _jiaxiLabel.text = [NSString stringWithFormat:@"+%g％",returnrate_plus*100];
     }
+    if ([model.redpacket_type isEqualToString:@"2"]) {
+        double returnrate_plus = [model.redpacket_returnrate_plus doubleValue];
+        //转化成百分比
+        double baifenFloat = returnrate_plus*100;
+        if (baifenFloat<1) {
+            double qianfenFloat = returnrate_plus*1000;
+            returnrateString = [NSString stringWithFormat:@"%g%‰",qianfenFloat];
+        } else {
+            returnrateString = [NSString stringWithFormat:@"%g%%",baifenFloat];
+        }
+        _jiaxiLabel.text = [NSString stringWithFormat:@"+%@",returnrateString];
+        _jiaxiLabel.hidden = NO;
+    } else {
+        _jiaxiLabel.text = [NSString stringWithFormat:@"+%g％",returnrate_plus*100];
+    }
+    if (![model.returnrate_plus isEqualToString:@"0"]&&[model.redpacket_type isEqualToString:@"2"]) {
+        _jiaxiLabel.text = [NSString stringWithFormat:@"+%g％ +%@",returnrate_plus*100,returnrateString];
+    }
+    
     _earnOfWan.text = [NSString stringWithFormat:@"万元收益%.2f元", [model.returnrate doubleValue] * 10000 / 365];
 }
 

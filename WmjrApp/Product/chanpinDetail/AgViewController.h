@@ -16,4 +16,6 @@
 
 @property (nonatomic, copy) NSString *isNotification;//是否为推送跳转来的
 
+@property (nonatomic, assign)BOOL isWhite;
+
 @end

@@ -17,7 +17,6 @@
 #import "SharedView.h"
 #import "MMPopupItem.h"
 #import "MMPopupWindow.h"
-#import "RealNameCertificationViewController.h"
 #import "ShowBigImageView.h"
 #import "AgViewController.h"
 #import "BaseNavigationController.h"
@@ -27,6 +26,7 @@
 #import "ViewForJianJie.h"
 #import "AddBankViewController.h"
 #import "LongProductSegment.h"
+#import "RealNameCertificationViewController.h"
 
 @interface ProductIntroViewController ()  //ISSShareViewDelegate
 {
@@ -183,7 +183,7 @@
             
             if ([_productModel.isdown isEqualToString:@"0"]) {
                 _buyBtn.enabled = YES;
-                [_buyBtn setBackgroundColor:RGBA(255, 86, 45, 1.0)];
+                [_buyBtn setBackgroundColor:NAVBARCOLOR];
                 [_buyBtn setTitle:@"立 即 购 买" forState:UIControlStateNormal];
                 [_buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             } else {
@@ -231,7 +231,7 @@
     
     //最上方的篮框
     UIView *viewForTop = [[UIView alloc]init];
-    viewForTop.backgroundColor = NAVBARCOLOR;
+    viewForTop.backgroundColor = FOURNAVBARCOLOR;
     [bottomView addSubview:viewForTop];
     [viewForTop mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(bottomView.mas_top);
@@ -280,7 +280,7 @@
     }];
     
     _earnOfYearLable = [[UILabel alloc] init];
-    _earnOfYearLable.text = @"预期年化收益(%)";
+    _earnOfYearLable.text = @"历史年化收益(%)";
     _earnOfYearLable.textAlignment = NSTextAlignmentCenter;
     _earnOfYearLable.textColor = VIEWBACKCOLOR;
     _earnOfYearLable.font = [UIFont systemFontOfSize:RESIZE_UI(12)];
@@ -304,7 +304,7 @@
     }];
     
     _financingLable = [[UILabel alloc] init];
-    _financingLable.text = @"融资余额";
+    _financingLable.text = @"余额";
     _financingLable.textAlignment = NSTextAlignmentCenter;
     _financingLable.textColor = AUXILY_COLOR;
     _financingLable.font = [UIFont boldSystemFontOfSize:RESIZE_UI(14)];
@@ -339,7 +339,7 @@
     }];
     
     _financingTermLable = [[UILabel alloc] init];
-    _financingTermLable.text = @"融资期限";
+    _financingTermLable.text = @"期限";
     _financingTermLable.textAlignment = NSTextAlignmentCenter;
     _financingTermLable.textColor = AUXILY_COLOR;
     _financingTermLable.font = [UIFont boldSystemFontOfSize:RESIZE_UI(14)];
@@ -375,7 +375,7 @@
     }];
     
     _riskLable = [[UILabel alloc] init];
-    _riskLable.text = @"融资风险";
+    _riskLable.text = @"产品";
     _riskLable.textAlignment = NSTextAlignmentCenter;
     _riskLable.textColor = AUXILY_COLOR;
     _riskLable.font = [UIFont boldSystemFontOfSize:RESIZE_UI(14)];
@@ -390,7 +390,9 @@
     _financingRisk = [[UILabel alloc] init];
     _financingRisk.textAlignment = NSTextAlignmentCenter;
     _financingRisk.textColor = TITLE_COLOR;
-    _financingRisk.text = _productModel.risk;
+    NSInteger cutLength = _productModel.classify.length-2;
+    NSString *newrisk = [_productModel.classify substringToIndex:cutLength];
+    _financingRisk.text = newrisk;
     _financingRisk.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [viewForRisk addSubview:_financingRisk];
     [_financingRisk mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -482,7 +484,7 @@
     _viewForShuoMing.watchContract = ^(){
         @strongify(self)
         AgViewController *agVC =[[AgViewController alloc] init];
-        agVC.title = @"购买合同";
+        agVC.title = @"风险揭示书";
         agVC.webUrl = @"http://api.wmjr888.com/home/page/app/id/9";
         [self.navigationController pushViewController:agVC animated:YES];
 //        BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
@@ -594,7 +596,7 @@
 //        NSString *urlStr = [NSString stringWithFormat:@"http://wmjr888.com/home/download/product/id/%@", self.getPro_id];
         NSString *urlStr = [NSString stringWithFormat:@"http://m.wangmacaifu.com/#/regular-detail/%@", self.getPro_id];
         SharedManager *sharedManager = [[SharedManager alloc] init];
-        [sharedManager shareContent:sender withTitle:@"旺马财富" andContent:@"这是一个值得信赖的的投资理财平台" andUrl:urlStr];
+        [sharedManager shareContent:sender withTitle:@"旺马财富" andContent:@"这是一个值得信赖的的出借平台" andUrl:urlStr];
     }];
 
 }
@@ -645,9 +647,9 @@
                 [alertView show];
                 return;
             }
-            NSLog(@"我的身份:%@",[SingletonManager sharedManager].userModel.is_newer);
+            
             if ([_productModel.is_newer isEqualToString:@"1"]&&[[SingletonManager sharedManager].userModel.is_newer isEqualToString:@"0"]) {
-                    [SVProgressHUD showInfoWithStatus:@"该产品为新人购产品"];
+                [SVProgressHUD showInfoWithStatus:@"该产品为新人购产品"];
             } else {
                 /* 购买 */
                 //            FundBuyViewController *fundBuyVC = [[FundBuyViewController alloc] init];

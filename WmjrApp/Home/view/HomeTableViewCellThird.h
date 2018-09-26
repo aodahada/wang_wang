@@ -22,7 +22,7 @@
 @property (nonatomic, strong) UILabel *earnOfYearLable;//收益描述
 @property (nonatomic, strong) UILabel *earnOfPercent;//收益百分比
 
-@property (nonatomic,strong) UILabel *labelForManageMoneyDay;//理财期限
+@property (nonatomic,strong) UILabel *labelForManageMoneyDay;//出借期限
 @property (nonatomic, strong) UILabel *progressLable;  /* 进度 */
 @property (nonatomic, assign) CGFloat buyNum;//购买率
 

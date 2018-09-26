@@ -25,8 +25,7 @@
     // Do any additional setup after loading the view.
     self.title = @"可用红包";
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    
+
     UIScrollView *mainScrollView = [[UIScrollView alloc]init];
     [self.view addSubview:mainScrollView];
     [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -42,7 +41,7 @@
     }];
     
     UIButton *noRedPackageButton = [[UIButton alloc]init];
-    [noRedPackageButton setTitle:@"不使用红包" forState:UIControlStateNormal];
+    [noRedPackageButton setTitle:@"不使用" forState:UIControlStateNormal];
     noRedPackageButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
     [noRedPackageButton setTitleColor:RGBA(153, 153, 153, 1.0) forState:UIControlStateNormal];
     [noRedPackageButton addTarget:self action:@selector(selecNoRedPackageMethod) forControlEvents:UIControlEventTouchUpInside];

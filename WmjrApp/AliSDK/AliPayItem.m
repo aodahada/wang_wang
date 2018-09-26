@@ -217,7 +217,7 @@
         angle = .0f;
     }
     
-    //NSLog(@"..................... angle = [%f]", angle);
+    
     self.transform = CGAffineTransformMakeRotation(angle);
 
     

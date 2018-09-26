@@ -11,6 +11,8 @@
 #import "Base64Secret.h"
 #import "NSString+StringCode.h"
 #import "AFAppDotNetAPIClient.h"
+#import "Encryption.h"
+#import "CocoaSecurity.h"
 
 @implementation NetManager
 
@@ -30,11 +32,21 @@
          4.url编码
          */
         NSString *dateNew = [self getCurrentTimestamp];
-        NSDictionary *paramDic = @{@"timestamp":dateNew, @"action":actionStr, @"data":paramsDic};//参数序列
-//        NSMutableDictionary *paramDic;
-//        paramDic[@"timestamp"] = dateNew;
-//        paramDic[@"action"] = actionStr;
-//        paramDic[@"data"] = paramDic;
+        
+        
+        //将paramsDic字典转成json字符串进行md5加密获取对应结果字符串
+        //        NSDictionary *dicha = @{@"location":@"top"};
+        //转json方法
+        //        NSData *data=[NSJSONSerialization dataWithJSONObject:dicha options:NSJSONWritingPrettyPrinted error:nil];
+        //        NSString *personListString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSString *paraString = [self DataTOjsonString:paramsDic];
+        NSMutableString *paraMutableString = [NSMutableString stringWithString:paraString];
+        NSString *paraString2 = [[paraMutableString stringByReplacingOccurrencesOfString:@"\n" withString:@""] copy];
+        NSMutableString *paraMutableString2 = [NSMutableString stringWithString:paraString2];
+        NSString *param = [[paraMutableString2 stringByReplacingOccurrencesOfString:@" " withString:@""] copy];
+        NSString *sha256String = [self sha256WithString:param];
+//        NSString *sha256String = [self md5WithString:param];
+        NSDictionary *paramDic = @{@"timestamp":dateNew, @"action":actionStr, @"data":paramsDic,@"token":sha256String};//参数序列
         NSString *base64Str = [self paramCodeStr:paramDic];
         //base64Str是经过处理的字符串
         
@@ -148,6 +160,7 @@
     return base64Str;
 }
 
+
 - (id)paramUnCodeStr:(NSString *)encodeStr {
     
     NSData *unComData = [Base64Secret dataWithBase64Encoding:encodeStr];
@@ -156,6 +169,22 @@
     
     return string;
 
+}
+
+#pragma mark - 转json字符串
+-(NSString*)DataTOjsonString:(id)object
+{
+    NSString *jsonString = nil;
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:object
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    if (! jsonData) {
+        NSLog(@"Got an error: %@", error);
+    } else {
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    return jsonString;
 }
 
 - (id)jsonValueDecoded:(NSData *)encode {
@@ -193,6 +222,33 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:kNilOptions error:&paramError];
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
+
+/**
+ *  将n字符串sha加密
+ *
+ *  @param 要加密的字符串
+ *
+ *  @return sha字符串
+ */
+- (NSString *)sha256WithString:(NSString *)str
+{
+    CocoaSecurityResult *result = [CocoaSecurity sha256:str];
+    return result.hexLower;
+}
+
+/**
+ *  将n字符串md5加密
+ *
+ *  @param 要加密的字符串
+ *
+ *  @return sha字符串
+ */
+- (NSString *)md5WithString:(NSString *)str
+{
+    CocoaSecurityResult *result = [CocoaSecurity md5:str];
+    return result.hexLower;
+}
+
 
 //编码url
 - (NSString*)stringByURLEncodingStringParameter:(NSString *)urlStr

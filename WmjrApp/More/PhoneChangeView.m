@@ -112,7 +112,7 @@
 
 //获取验证码
 - (void)getVerfitionAction:(UIButton *)sender {
-//    NSLog(@"获取验证码");
+
     [_nPhoneCard resignFirstResponder];
     _nPhoneCard.textColor = AUXILY_COLOR;
     if ([_nPhoneCard.text isEqualToString:@""]) {
@@ -141,7 +141,7 @@
     [manager postDataWithUrlActionStr:@"App/verify" withParamDictionary:@{@"mobile":_nPhoneCard.text} withBlock:^(id obj) {
         if (obj) {
             _codeStr = [obj[@"data"] objectForKey:@"code"];
-            NSLog(@"%@", _codeStr);
+            
         }
     }];
     
@@ -160,7 +160,7 @@
     } else {
         NSString *timeStr = [NSString stringWithFormat:@"%ld秒后重发", (unsigned long)_count];
         [_getVerfitionBtn setTitle:timeStr forState:UIControlStateNormal];
-//        NSLog(@"%@", _getVerfitionBtn.titleLabel.text);
+
     }
 }
 
@@ -286,7 +286,6 @@
         // 取出键盘高度
 //        CGRect keyboardF = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
 //        CGFloat keyboardH = keyboardF.size.height;
-//        NSLog(@"keyboardH == %lf", keyboardH);
         self.transform = CGAffineTransformMakeTranslation(0, -100);
     }];
 }

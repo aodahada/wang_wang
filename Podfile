@@ -20,5 +20,8 @@ pod 'ZLPhotoBrowser'
 
 #跑马灯效果
 pod 'TXScrollLabelView'
+
+pod 'CocoaSecurity'
+
 end
 

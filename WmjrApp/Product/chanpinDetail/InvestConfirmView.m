@@ -33,7 +33,7 @@
         }
         
         UILabel *labelForTitle = [[UILabel alloc]init];
-        labelForTitle.text = @"投资确认";
+        labelForTitle.text = @"出借确认";
         labelForTitle.font = [UIFont systemFontOfSize:19];
         [self addSubview:labelForTitle];
         [labelForTitle mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -62,7 +62,7 @@
         }];
         
         UILabel *labelForInvesMoneyTitle = [[UILabel alloc]init];
-        labelForInvesMoneyTitle.text = @"投资金额";
+        labelForInvesMoneyTitle.text = @"出借金额";
         labelForInvesMoneyTitle.textColor = RGBA(102, 102, 102, 1.0);
         labelForInvesMoneyTitle.font = [UIFont systemFontOfSize:16];
         [self addSubview:labelForInvesMoneyTitle];

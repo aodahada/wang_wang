@@ -186,7 +186,6 @@
             NSString *dataStr = obj[@"data"];
             dataStr = [SingletonManager convertNullString:dataStr];
             if ([dataStr isEqualToString:@""]) {
-                //                NSLog(@"haha1");
             } else {
                 NSArray *dataArray = [dataStr componentsSeparatedByString:@"^"];
                 [_bankInfoArray addObjectsFromArray:dataArray];

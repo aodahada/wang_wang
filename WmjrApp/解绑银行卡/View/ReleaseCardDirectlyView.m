@@ -47,7 +47,7 @@
         }];
         
         _tipLabel = [[UILabel alloc]init];
-        _tipLabel.text = [NSString stringWithFormat:@"您将要解绑尾号为%@的%@卡，解绑后不可进行理财，确认要解绑?",bankNumber,bankName];
+        _tipLabel.text = [NSString stringWithFormat:@"您将要解绑尾号为%@的%@卡，解绑后不可进行出借，确认要解绑?",bankNumber,bankName];
         _tipLabel.font = [UIFont systemFontOfSize:RESIZE_UI(17)];
         _tipLabel.numberOfLines = 3;
         _tipLabel.textColor = RGBA(102, 102, 102, 1.0);

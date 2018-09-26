@@ -7,9 +7,9 @@
 //
 
 #import "AccountAndPasswordViewController.h"
-#import "RealNameCertificationViewController.h"
 #import "PasswordManageViewController.h"
 #import "AliGesturePasswordViewController.h"
+#import "RealNameCertificationViewController.h"
 
 @interface AccountAndPasswordViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -107,7 +107,7 @@
                 RealNameCertificationViewController *realNameCerVC = [[RealNameCertificationViewController alloc] init];
                 [self.navigationController pushViewController:realNameCerVC animated:YES];
             }
-
+            
         }
             break;
         case 1:
@@ -137,7 +137,7 @@
                     
                 }];
             }
-
+            
         }
             break;
             
@@ -145,7 +145,6 @@
             break;
     }
 }
-
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"AccountAndPasswordViewController"];

@@ -182,11 +182,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
-//        NSLog(@"点击广告图");
-        AgViewController *agVC =[[AgViewController alloc] init];
-        agVC.title = _adModel.title;
-        agVC.webUrl = _adModel.url;
-        [self.navigationController pushViewController:agVC animated:YES];
+//        AgViewController *agVC =[[AgViewController alloc] init];
+//        agVC.title = _adModel.title;
+//        agVC.webUrl = _adModel.url;
+//        [self.navigationController pushViewController:agVC animated:YES];
 //        BaseNavigationController *baseNa = [[BaseNavigationController alloc] initWithRootViewController:agVC];
 //        [self presentViewController:baseNa animated:YES completion:^{
 //        }];

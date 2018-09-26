@@ -91,13 +91,14 @@
                 }
                 [wakeFrinendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 wakeFrinendButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(9)];
-                [wakeFrinendButton setBackgroundColor:RGBA(235, 178, 77, 1.0)];
+//                [wakeFrinendButton setBackgroundColor:RGBA(235, 178, 77, 1.0)];
+                [wakeFrinendButton setBackgroundImage:[UIImage imageNamed:@"huanxingfriend"] forState:UIControlStateNormal];
                 [wakeFrinendButton addTarget:self action:@selector(wakeUpFriendMethod) forControlEvents:UIControlEventTouchUpInside];
                 [self addSubview:wakeFrinendButton];
                 [wakeFrinendButton mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.right.equalTo(self.mas_right).with.offset(-RESIZE_UI(35));
-                    make.width.mas_offset(RESIZE_UI(47));
-                    make.height.mas_offset(RESIZE_UI(20));
+                    make.width.mas_offset(RESIZE_UI(53));
+                    make.height.mas_offset(RESIZE_UI(28));
                     make.centerY.equalTo(self.mas_centerY);
                 }];
                 
@@ -115,8 +116,8 @@
         }
         
         if ([sortModel.is_myself isEqualToString:@"1"]) {
-            phoneLabel.textColor = RGBA(235, 178, 77, 1.0);
-            timeLable.textColor = RGBA(235, 178, 77, 1.0);
+            phoneLabel.textColor = RGBA(255, 108, 0, 1.0);
+            timeLable.textColor = RGBA(255, 108, 0, 1.0);
         }
     }
     return self;

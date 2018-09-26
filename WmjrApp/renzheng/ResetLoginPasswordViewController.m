@@ -111,7 +111,7 @@
     [manager postDataWithUrlActionStr:@"App/verify" withParamDictionary:@{@"mobile":_phoneNum.text} withBlock:^(id obj) {
         if (obj) {
             _codeStr = [obj[@"data"] objectForKey:@"code"];
-            NSLog(@"%@", _codeStr);
+            
         }
     }];
 }

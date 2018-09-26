@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "global.h"
 //平常状态的颜色
-#define NormalColor color(255,255,255,1.0)
+//#define NormalColor color(255,255,255,1.0)
+#define NormalColor [UIColor blackColor]
 //被选中状态的颜色
 //#define SelectedColor color(243.0,39.0,66.0,1.0)
 //#define SelectedColor color(52.0,35.0,52.0,1.0)
-#define SelectedColor color(255,255,255,1.0)
+//#define SelectedColor color(255,255,255,1.0)
+#define SelectedColor [UIColor whiteColor]
 //下划线的颜色
 //#define UnderlineColor color(243.0,39.0,66.0,1.0)
 #define UnderlineColor color(255,255,255,1.0)
@@ -27,7 +29,6 @@
 @property(nonatomic,assign)CGFloat underlineWidth;//下划线的宽度
 
 @property (nonatomic, strong) NSMutableArray *arrayForCategory;
-
 /**
  从某个item移动到另一个item
  */

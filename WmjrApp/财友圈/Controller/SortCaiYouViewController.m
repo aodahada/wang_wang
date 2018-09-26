@@ -13,6 +13,9 @@
 #import "PopMenu.h"
 #import "SharedView.h"
 #import <Contacts/Contacts.h>
+#import "AgViewController.h"
+
+#define currentButtonColor RGBA(255,108,0,1.0)
 
 @interface SortCaiYouViewController ()<UITableViewDelegate,UITableViewDataSource>{
     PopMenu *_popMenu;
@@ -39,18 +42,37 @@
     // Do any additional setup after loading the view.
     self.title = @"财友圈";
     self.view.backgroundColor = [UIColor whiteColor];
+    
+//    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc]initWithTitle:@"规则说明" style:UIBarButtonItemStylePlain target:self action:@selector(ruleShowMethod)];
+//    [rightBarButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:RESIZE_UI(15)], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
+//    self.navigationItem.rightBarButtonItem = rightBarButton;
+    
     _currentPage = 1;
-    _type = 0;
+    if (_isHuanXing) {
+        _type = 1;
+    } else {
+        _type = 0;
+    }
     //获取通讯录
     _contactListString = [[GetContactPersonList sharedManager] getPeronListMethod];
 //    [self setUpLayout];
     
-    
     [self setUpLayout];
     _contactListArray = [[NSMutableArray alloc]init];
-    [self qianchengBangMethod:1];
+    if (_isHuanXing) {
+        [self renmaiBangMethod:1];
+    } else {
+        [self qianchengBangMethod:1];
+    }
     
 }
+
+//- (void)ruleShowMethod {
+//    AgViewController *agVC =[[AgViewController alloc] init];
+//    agVC.title = @"隐私策略";
+//    agVC.webUrl = @"http://wmjr888.com/home/page/protocol";
+//    [self.navigationController pushViewController:agVC animated:YES];
+//}
 
 #pragma mark - 未授权获取通讯录
 - (void)showWhenRejectMethod {
@@ -65,8 +87,8 @@
     [_showWhenReject mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
         make.centerY.equalTo(self.view.mas_centerY);
-        make.width.mas_offset(RESIZE_UI(256.65));
-        make.height.mas_offset(RESIZE_UI(58));
+        make.width.mas_offset(RESIZE_UI(260));
+        make.height.mas_offset(RESIZE_UI(260*110/773));
     }];
 }
 
@@ -81,7 +103,6 @@
     if (status == CNAuthorizationStatusAuthorized) {
         [_mainTableView.mj_header beginRefreshing];
     } else {
-//        NSLog(@"还是没受权");
         [[[UIAlertView alloc]initWithTitle:@"提示" message:@"如若app要重新获得通讯录权限，需要您到设置-旺马财富-打开通讯录权限" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil] show];
     }
 }
@@ -112,10 +133,15 @@
     [_leftButton setTitle:@"钱程榜" forState:UIControlStateNormal];
     _leftButton.tag = 0;
     _leftButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(13)];
-    _leftButton.layer.borderWidth = 2;
-    _leftButton.layer.borderColor = NEWYEARCOLOR.CGColor;
-    [_leftButton setBackgroundColor:NEWYEARCOLOR];
-    [_leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _leftButton.layer.borderWidth = 0.5;
+    _leftButton.layer.borderColor = FOURNAVBARCOLOR.CGColor;
+    if (_isHuanXing) {
+        [_leftButton setBackgroundColor:RGBA(242, 242, 242, 1.0)];
+        [_leftButton setTitleColor:FOURNAVBARCOLOR forState:UIControlStateNormal];
+    } else {
+        [_leftButton setBackgroundColor:FOURNAVBARCOLOR];
+        [_leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    }
     [_leftButton addTarget:self action:@selector(clickButtonType:) forControlEvents:UIControlEventTouchUpInside];
     [buttonView addSubview:_leftButton];
     [_leftButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -129,10 +155,15 @@
     [_rightButton setTitle:@"富豪榜" forState:UIControlStateNormal];
     _rightButton.tag = 1;
     _rightButton.titleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(13)];
-    _rightButton.layer.borderWidth = 2;
-    _rightButton.layer.borderColor = NEWYEARCOLOR.CGColor;
-    [_rightButton setBackgroundColor:RGBA(242, 242, 242, 1.0)];
-    [_rightButton setTitleColor:NEWYEARCOLOR forState:UIControlStateNormal];
+    _rightButton.layer.borderWidth = 0.5;
+    _rightButton.layer.borderColor = FOURNAVBARCOLOR.CGColor;
+    if (_isHuanXing) {
+        [_rightButton setBackgroundColor:FOURNAVBARCOLOR];
+        [_rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    } else {
+        [_rightButton setBackgroundColor:RGBA(242, 242, 242, 1.0)];
+        [_rightButton setTitleColor:FOURNAVBARCOLOR forState:UIControlStateNormal];
+    }
     [_rightButton addTarget:self action:@selector(clickButtonType:) forControlEvents:UIControlEventTouchUpInside];
     [buttonView addSubview:_rightButton];
     [_rightButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -171,7 +202,12 @@
     }];
     
     _timeTitleLabel = [[UILabel alloc]init];
-    _timeTitleLabel.text = @"累计奖励金额(元)";
+    _timeTitleLabel.backgroundColor = [UIColor whiteColor];
+    if (_isHuanXing) {
+        _timeTitleLabel.text = @"邀请好友人数(人)";
+    } else {
+        _timeTitleLabel.text = @"累计奖励金额(元)";
+    }
     _timeTitleLabel.font = [UIFont systemFontOfSize:RESIZE_UI(15)];
     _timeTitleLabel.textAlignment = NSTextAlignmentCenter;
     [titleView addSubview:_timeTitleLabel];
@@ -230,20 +266,20 @@
         {
             _type = 0;
             _timeTitleLabel.text = @"累计奖励金额(元)";
-            [_leftButton setBackgroundColor:NEWYEARCOLOR];
+            [_leftButton setBackgroundColor:FOURNAVBARCOLOR];
             [_leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [_rightButton setBackgroundColor:RGBA(242, 242, 242, 1.0)];
-            [_rightButton setTitleColor:NEWYEARCOLOR forState:UIControlStateNormal];
+            [_rightButton setTitleColor:FOURNAVBARCOLOR forState:UIControlStateNormal];
         }
             break;
         case 1:
         {
             _type = 1;
             _timeTitleLabel.text = @"邀请好友人数(人)";
-            [_rightButton setBackgroundColor:NEWYEARCOLOR];
+            [_rightButton setBackgroundColor:FOURNAVBARCOLOR];
             [_rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [_leftButton setBackgroundColor:RGBA(242, 242, 242, 1.0)];
-            [_leftButton setTitleColor:NEWYEARCOLOR forState:UIControlStateNormal];
+            [_leftButton setTitleColor:FOURNAVBARCOLOR forState:UIControlStateNormal];
         }
             break;
             
@@ -392,7 +428,6 @@
 #pragma mark - 邀请好友
 //响应点击分享的方法
 - (void)clickSharedBtnAction {
-    //    NSLog(@"-------点击分享----");
     _popMenu = [[PopMenu alloc] init];
     _popMenu.dimBackground = YES;
     _popMenu.coverNavigationBar = YES;

@@ -51,7 +51,6 @@
         // 1.获取联系人的姓名
         NSString *lastname = contact.familyName;
         NSString *firstname = contact.givenName;
-//        NSLog(@"%@ %@", lastname, firstname);
         
         NSString *personName = [lastname stringByAppendingString:firstname];
         
@@ -66,7 +65,6 @@
             CNPhoneNumber *phoneNumer = labeledValue.value;
             NSString *phoneValue = phoneNumer.stringValue;
             
-//            NSLog(@"%@ %@", phoneLabel, phoneValue);
             phoneNumber = phoneValue;
         }
         NSDictionary *dict = @{@"mobile":phoneNumber,@"name":personName};
