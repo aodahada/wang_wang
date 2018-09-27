@@ -299,19 +299,6 @@
     wkActivityVC.title = @"唤醒活动";
     wkActivityVC.webUrl = @"https://7hg.oss-cn-shanghai.aliyuncs.com/huanxing.html";
     [self.navigationController pushViewController:wkActivityVC animated:YES];
-    
-    
-//    NSString *uid = [self convertNullString:[SingletonManager sharedManager].uid];
-//    if ([uid isEqualToString:@""]) {
-//        LoginViewController *loginVC = [[LoginViewController alloc] init];
-//        UINavigationController *loginNa = [[UINavigationController alloc] initWithRootViewController:loginVC];
-//        [self presentViewController:loginNa animated:YES completion:nil];
-//    } else {
-//        ZhongQiuActivityViewController *zhongqiuVC = [[ZhongQiuActivityViewController alloc]init];
-//        [zhongqiuVC setHidesBottomBarWhenPushed:YES];
-//        [self.navigationController pushViewController:zhongqiuVC animated:YES];
-//    }
-    
 }
 
 -(void)handlePan:(UIPanGestureRecognizer *)rec{
@@ -1134,6 +1121,7 @@
     _homeTableView.delegate = self;
     _homeTableView.dataSource = self;
 //    _homeTableView.bounces = NO;
+    
     _homeTableView.showsVerticalScrollIndicator = NO;
     _homeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_homeTableView registerClass:[HomeTableViewCellFirst class] forCellReuseIdentifier:@"HomeTableViewCellFirst"];

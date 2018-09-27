@@ -102,7 +102,7 @@
     imageViewForLeft.image = [UIImage imageNamed:@"icon_more"];
     [headView addSubview:imageViewForLeft];
     [imageViewForLeft mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(34));
+        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(54));
         make.left.equalTo(headView.mas_left).with.offset(RESIZE_UI(15));
         make.height.mas_offset(RESIZE_UI(16));
         make.width.mas_offset(RESIZE_UI(6));
@@ -115,7 +115,7 @@
     lableForMore.font = [UIFont systemFontOfSize:RESIZE_UI(16)];
     [headView addSubview:lableForMore];
     [lableForMore mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headView.mas_top).with.offset(RESIZE_UI(34));
+        make.centerY.equalTo(imageViewForLeft.mas_centerY);
         make.left.equalTo(headView.mas_left).with.offset(RESIZE_UI(34));
         make.height.mas_offset(RESIZE_UI(16));
     }];
@@ -746,6 +746,11 @@
     _tableView.bounces = NO;
     _tableView.showsVerticalScrollIndicator = NO;
     _tableView.tableFooterView = [[UIView alloc]init];
+    if (@available(iOS 11.0, *)) {
+        _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        // Fallback on earlier versions
+    }
     [self.view addSubview:_tableView];
     _tableView.tableHeaderView = [self setUpProfileHeadView];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
