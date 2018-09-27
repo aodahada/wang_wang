@@ -7,8 +7,12 @@
 //
 
 #import "NationalDayViewController.h"
+#import "GuoqingShowModel.h"
+#import "NationalActivityView.h"
 
 @interface NationalDayViewController ()
+
+@property (nonatomic, strong)UIWindow *window;
 
 @end
 
@@ -19,6 +23,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"国庆活动";
+    self.window = [[UIApplication sharedApplication].delegate window];
     
     UIScrollView *mainScrollView = [[UIScrollView alloc]init];
     mainScrollView.backgroundColor = [UIColor whiteColor];
@@ -66,7 +71,41 @@
 
 #pragma mark - button方法
 - (void)likeqiangMethod {
-    NSLog(@"立刻抢");
+    [self guoqing_interface];
+}
+
+#pragma mark - 请求国庆活动接口
+- (void)guoqing_interface {
+    NetManager *manager = [[NetManager alloc] init];
+    [manager postDataWithUrlActionStr:@"Redpacket/guoqingLists" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
+        
+        if (obj) {
+            if ([obj[@"result"] isEqualToString:@"1"]) {
+                NSDictionary *dataDic = obj[@"data"];
+                GuoqingShowModel *guoqingModel = [GuoqingShowModel mj_objectWithKeyValues:dataDic];
+                int contain_count = [guoqingModel.request_count_contain_this intValue];
+                //                if (contain_count == 1) {
+                [self navtionalActivityMethod:guoqingModel];
+                //                }
+                return ;
+            } else {
+                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+                alertConfig.defaultTextOK = @"确定";
+                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+                [alertView show];
+            }
+        }
+    }];
+}
+
+#pragma mark - 国庆活动
+- (void)navtionalActivityMethod:(GuoqingShowModel *)guoqingShowModel {
+    NationalActivityView *nationalView = [[NationalActivityView alloc]initWithGuoqingShowModel:guoqingShowModel];
+    [self.window addSubview:nationalView];
+    [nationalView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.window);
+    }];
 }
 
 /*

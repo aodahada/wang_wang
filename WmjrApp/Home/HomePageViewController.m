@@ -57,6 +57,7 @@
 //国庆活动
 #import "NationalDayViewController.h"
 #import "NationalActivityView.h"
+#import "GuoqingShowModel.h"
 
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,CAAnimationDelegate,UICollisionBehaviorDelegate>
 {
@@ -235,7 +236,7 @@
 //    [self ziyouluoTiDemo];
 //    [self ziyounihao];
     [self fanXianPicFloat];
-    [self navtionalActivityMethod];
+    [self guoqing_interface];
     
 }
 
@@ -258,9 +259,34 @@
     
 }
 
+#pragma mark - 请求国庆活动接口
+- (void)guoqing_interface {
+    NetManager *manager = [[NetManager alloc] init];
+    [manager postDataWithUrlActionStr:@"Redpacket/guoqingLists" withParamDictionary:@{@"member_id":[SingletonManager sharedManager].uid} withBlock:^(id obj) {
+        
+        if (obj) {
+            if ([obj[@"result"] isEqualToString:@"1"]) {
+                NSDictionary *dataDic = obj[@"data"];
+                GuoqingShowModel *guoqingModel = [GuoqingShowModel mj_objectWithKeyValues:dataDic];
+                int contain_count = [guoqingModel.request_count_contain_this intValue];
+                if (contain_count == 1) {
+                    [self navtionalActivityMethod:guoqingModel];
+                }
+                return ;
+            } else {
+                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+                alertConfig.defaultTextOK = @"确定";
+                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+                [alertView show];
+            }
+        }
+    }];
+}
+
 #pragma mark - 国庆活动
-- (void)navtionalActivityMethod {
-    NationalActivityView *nationalView = [[NationalActivityView alloc]init];
+- (void)navtionalActivityMethod:(GuoqingShowModel *)guoqingShowModel {
+    NationalActivityView *nationalView = [[NationalActivityView alloc]initWithGuoqingShowModel:guoqingShowModel];
     [self.window addSubview:nationalView];
     [nationalView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.window);

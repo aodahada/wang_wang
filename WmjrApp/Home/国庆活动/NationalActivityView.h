@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class GuoqingShowModel;
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NationalActivityView : UIView
+
+- (instancetype)initWithGuoqingShowModel:(GuoqingShowModel *)guoqingShowModel;
 
 @end
 

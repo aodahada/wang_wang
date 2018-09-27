@@ -84,6 +84,7 @@
 		64A0DFB0209C3B5D00F52D91 /* RealNameCertificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64A0DFAD209C3B5C00F52D91 /* RealNameCertificationViewController.xib */; };
 		64A0DFB1209C3B5D00F52D91 /* RealNameCertificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0DFAF209C3B5D00F52D91 /* RealNameCertificationViewController.m */; };
 		64A6BA381F31E5CE00057903 /* AccountAndPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */; };
+		64A8A903215BEADD00EC7C89 /* GuoqingShowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A8A902215BEADD00EC7C89 /* GuoqingShowModel.m */; };
 		64BB6A601F6B66C300AAD9EE /* GuideScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BB6A5F1F6B66C300AAD9EE /* GuideScrollViewController.m */; };
 		64C76E97215A078000C8A7EA /* NationalDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C76E96215A078000C8A7EA /* NationalDayViewController.m */; };
 		64C76E9A215A10E100C8A7EA /* NationalActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C76E99215A10E100C8A7EA /* NationalActivityView.m */; };
@@ -726,6 +727,8 @@
 		64A0DFAF209C3B5D00F52D91 /* RealNameCertificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RealNameCertificationViewController.m; sourceTree = "<group>"; };
 		64A6BA361F31E5CE00057903 /* AccountAndPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountAndPasswordViewController.h; sourceTree = "<group>"; };
 		64A6BA371F31E5CE00057903 /* AccountAndPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountAndPasswordViewController.m; sourceTree = "<group>"; };
+		64A8A901215BEADD00EC7C89 /* GuoqingShowModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GuoqingShowModel.h; sourceTree = "<group>"; };
+		64A8A902215BEADD00EC7C89 /* GuoqingShowModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GuoqingShowModel.m; sourceTree = "<group>"; };
 		64BB6A5E1F6B66C300AAD9EE /* GuideScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideScrollViewController.h; sourceTree = "<group>"; };
 		64BB6A5F1F6B66C300AAD9EE /* GuideScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideScrollViewController.m; sourceTree = "<group>"; };
 		64C76E95215A078000C8A7EA /* NationalDayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NationalDayViewController.h; sourceTree = "<group>"; };
@@ -1835,6 +1838,8 @@
 				64C76E96215A078000C8A7EA /* NationalDayViewController.m */,
 				64C76E98215A10E100C8A7EA /* NationalActivityView.h */,
 				64C76E99215A10E100C8A7EA /* NationalActivityView.m */,
+				64A8A901215BEADD00EC7C89 /* GuoqingShowModel.h */,
+				64A8A902215BEADD00EC7C89 /* GuoqingShowModel.m */,
 			);
 			path = "国庆活动";
 			sourceTree = "<group>";
@@ -3617,6 +3622,7 @@
 				6424260220E4B7D400F4A6BF /* WebViewForActivityViewController.m in Sources */,
 				C51B432A1C785549001679B5 /* InviteFriendsViewController.m in Sources */,
 				8B8018791DC8D6D600F7D65B /* PersonalMessageViewController.m in Sources */,
+				64A8A903215BEADD00EC7C89 /* GuoqingShowModel.m in Sources */,
 				8B1D23291E5D55BB0035FD5E /* FixLongAdCell.m in Sources */,
 				C51B43A71C785719001679B5 /* ResetTradePasswordViewController.m in Sources */,
 				8B16114A1D81373400C9B954 /* ViewForProductCategory.m in Sources */,
