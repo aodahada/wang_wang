@@ -142,6 +142,8 @@
         if (_enterViewNumber == 2 && _isSave) {
             [self signMethod];
         }
+        //获取国庆活动
+        [self guoqing_interface];
     }
     
     /* 获取数据 */
@@ -236,13 +238,12 @@
 //    [self ziyouluoTiDemo];
 //    [self ziyounihao];
     [self fanXianPicFloat];
-    [self guoqing_interface];
     
 }
 
 #pragma mark - 悬浮并可随意拖动的返现图标
 - (void)fanXianPicFloat {
-    NSInteger widthHeight = RESIZE_UI(90);
+    NSInteger widthHeight = RESIZE_UI(72);
     CGFloat topDistance = 0;
     if ([[UIDeviceHardware platformString] isEqualToString:@"iPhone X"]) {
         topDistance = -RESIZE_UI(60);
@@ -269,9 +270,9 @@
                 NSDictionary *dataDic = obj[@"data"];
                 GuoqingShowModel *guoqingModel = [GuoqingShowModel mj_objectWithKeyValues:dataDic];
                 int contain_count = [guoqingModel.request_count_contain_this intValue];
-                if (contain_count == 1) {
+//                if (contain_count == 1) {
                     [self navtionalActivityMethod:guoqingModel];
-                }
+//                }
                 return ;
             } else {
                 NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];

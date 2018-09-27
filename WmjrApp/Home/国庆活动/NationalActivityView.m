@@ -12,6 +12,7 @@
 @interface NationalActivityView ()
 {
     UIImageView *activityImageView;
+    UIImageView *jiangjinchiImageView;
     UIButton *qiangButton;
     UILabel *hongbao_daojishi_label;
     NSInteger timeDistance;
@@ -37,6 +38,26 @@
             make.centerY.equalTo(self.mas_centerY);
             make.width.mas_offset(RESIZE_UI(279));
             make.height.mas_offset(RESIZE_UI(321));
+        }];
+        
+        jiangjinchiImageView = [[UIImageView alloc]init];
+        if ([guoqingShowModel.pool isEqualToString:@"666666"]) {
+            jiangjinchiImageView.image = [UIImage imageNamed:@"元"];
+        } else if ([guoqingShowModel.pool isEqualToString:@"888888"]) {
+            jiangjinchiImageView.image = [UIImage imageNamed:@"元1"];
+        } else if ([guoqingShowModel.pool isEqualToString:@"100001"]) {
+            jiangjinchiImageView.image = [UIImage imageNamed:@"元2"];
+        } else if ([guoqingShowModel.pool isEqualToString:@"168888"]) {
+            jiangjinchiImageView.image = [UIImage imageNamed:@"元3"];
+        } else {
+            jiangjinchiImageView.image = [UIImage imageNamed:@"元4"];
+        }
+        [activityImageView addSubview:jiangjinchiImageView];
+        [jiangjinchiImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(activityImageView.mas_top).with.offset(RESIZE_UI(110));
+            make.centerX.equalTo(activityImageView.mas_centerX);
+            make.width.mas_offset(RESIZE_UI(213));
+            make.height.mas_offset(RESIZE_UI(75));
         }];
         
         qiangButton = [[UIButton alloc]init];
@@ -88,12 +109,13 @@
 - (void)likeqiangMethod {
     float pool_amount = [guoqingModel.pool_amount floatValue];
 //    pool_amount = 0.00;
-    if (guoqingModel.lists.count == 0) {
+    if (guoqingModel.lists.count != 0) {
         [hongbao_daojishi_label removeFromSuperview];
+        [jiangjinchiImageView removeFromSuperview];
+        [qiangButton removeFromSuperview];
         if (pool_amount == 0) {
             //奖金池没了的时候
             activityImageView.image = [UIImage imageNamed:@"guoqing_tanchuan03"];
-            [qiangButton removeFromSuperview];
             
             NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
             [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -129,9 +151,7 @@
             if ([obj[@"result"] isEqualToString:@"1"]) {
                 NSDictionary *dataDic = obj[@"data"];
                 [SVProgressHUD dismiss];
-                
                 activityImageView.image = [UIImage imageNamed:@"guoqing_tanchuang02"];
-                [qiangButton removeFromSuperview];
                 
                 UILabel *moneyLabel = [[UILabel alloc]init];
                 moneyLabel.textColor = RGBA(225, 69, 56, 1.0);

@@ -87,9 +87,15 @@
         _redView.backgroundColor = RGBA(255, 60, 8, 1.0);
         _redView.layer.masksToBounds = YES;
         _redView.layer.cornerRadius = RESIZE_UI(4.5);
+        float topDistance;
+        if (SCREEN_HEIGHT<700) {
+            topDistance = -32;
+        } else {
+            topDistance = -70;
+        }
         [self.tabbarC.view addSubview:_redView];
         [_redView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.tabbarC.view.mas_bottom).with.offset(-32);
+            make.bottom.equalTo(self.tabbarC.view.mas_bottom).with.offset(topDistance);
             make.right.equalTo(self.tabbarC.view.mas_right).with.offset(-RESIZE_UI(47));
             make.height.width.mas_offset(RESIZE_UI(9));
         }];

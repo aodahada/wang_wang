@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy)NSNumber *pool_amount;//奖金池余额
 @property (nonatomic, strong)NSNumber *request_count_contain_this;//显示次数
 @property (nonatomic, strong)NSArray *lists;
+@property (nonatomic, copy)NSString *pool;//奖金池余额
 
 @end
 
