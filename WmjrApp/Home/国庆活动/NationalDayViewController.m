@@ -84,9 +84,9 @@
                 NSDictionary *dataDic = obj[@"data"];
                 GuoqingShowModel *guoqingModel = [GuoqingShowModel mj_objectWithKeyValues:dataDic];
                 int contain_count = [guoqingModel.request_count_contain_this intValue];
-                //                if (contain_count == 1) {
-                [self navtionalActivityMethod:guoqingModel];
-                //                }
+//                if (contain_count == 1) {
+                    [self navtionalActivityMethod:guoqingModel];
+//                }
                 return ;
             } else {
                 NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];

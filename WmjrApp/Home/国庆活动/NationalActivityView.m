@@ -41,9 +41,9 @@
         }];
         
         jiangjinchiImageView = [[UIImageView alloc]init];
-        if ([guoqingShowModel.pool isEqualToString:@"666666"]) {
+        if ([guoqingShowModel.pool isEqualToString:@"66666"]) {
             jiangjinchiImageView.image = [UIImage imageNamed:@"元"];
-        } else if ([guoqingShowModel.pool isEqualToString:@"888888"]) {
+        } else if ([guoqingShowModel.pool isEqualToString:@"88888"]) {
             jiangjinchiImageView.image = [UIImage imageNamed:@"元1"];
         } else if ([guoqingShowModel.pool isEqualToString:@"100001"]) {
             jiangjinchiImageView.image = [UIImage imageNamed:@"元2"];
@@ -109,7 +109,7 @@
 - (void)likeqiangMethod {
     float pool_amount = [guoqingModel.pool_amount floatValue];
 //    pool_amount = 0.00;
-    if (guoqingModel.lists.count != 0) {
+    if (guoqingModel.lists.count == 0) {
         [hongbao_daojishi_label removeFromSuperview];
         [jiangjinchiImageView removeFromSuperview];
         [qiangButton removeFromSuperview];

@@ -270,9 +270,9 @@
                 NSDictionary *dataDic = obj[@"data"];
                 GuoqingShowModel *guoqingModel = [GuoqingShowModel mj_objectWithKeyValues:dataDic];
                 int contain_count = [guoqingModel.request_count_contain_this intValue];
-//                if (contain_count == 1) {
+                if (contain_count == 1) {
                     [self navtionalActivityMethod:guoqingModel];
-//                }
+                }
                 return ;
             } else {
                 NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
@@ -1342,7 +1342,7 @@
             productId = [self convertNullString:productId];
             url = [self convertNullString:url];
             //国庆活动
-            if ([activityId isEqualToString:@"219"]) {
+            if ([activityId isEqualToString:@"181001"]) {
                 NSString *uid = [self convertNullString:[SingletonManager sharedManager].uid];
                 if ([uid isEqualToString:@""]) {
                     LoginViewController *loginVC = [[LoginViewController alloc] init];
