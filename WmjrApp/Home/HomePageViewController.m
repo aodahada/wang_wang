@@ -142,8 +142,17 @@
         if (_enterViewNumber == 2 && _isSave) {
             [self signMethod];
         }
-        //获取国庆活动
-        [self guoqing_interface];
+        
+        NSString *guoqingEndString = @"2018-10-07 23:59:59";
+//        NSString *guoqingEndString = @"2018-09-28 20:53:00";
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSDate *guoqingEndDate = [formatter dateFromString:guoqingEndString];
+        int timeDistance = [guoqingEndDate timeIntervalSinceDate:[NSDate date]];
+        if (timeDistance>0) {
+            //获取国庆活动
+            [self guoqing_interface];
+        }
     }
     
     /* 获取数据 */
@@ -273,13 +282,15 @@
                 if (contain_count == 1) {
                     [self navtionalActivityMethod:guoqingModel];
                 }
+                NSLog(@"运行了");
                 return ;
             } else {
-                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
-                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
-                alertConfig.defaultTextOK = @"确定";
-                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
-                [alertView show];
+//                NSString *msgStr = [obj[@"data"] objectForKey:@"mes"];
+//                MMAlertViewConfig *alertConfig = [MMAlertViewConfig globalConfig];
+//                alertConfig.defaultTextOK = @"确定";
+//                MMAlertView *alertView = [[MMAlertView alloc] initWithConfirmTitle:@"提示" detail:msgStr];
+//                [alertView show];
+                NSLog(@"活动结束");
             }
         }
     }];
@@ -1341,7 +1352,7 @@
             NSString *activityId = [self convertNullString:imgModel.activity_id];
             productId = [self convertNullString:productId];
             url = [self convertNullString:url];
-            //国庆活动
+            //国庆活动 181001
             if ([activityId isEqualToString:@"181001"]) {
                 NSString *uid = [self convertNullString:[SingletonManager sharedManager].uid];
                 if ([uid isEqualToString:@""]) {
